@@ -7,46 +7,46 @@
 				</uni-forms-item>
 			</uni-row>
 			<uni-row>
-				<uni-col :span="12" style="padding-right: 10rpx;">
+				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="name" label="商品名称" label-width="80">
 					  <uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
-				<uni-col :span="12" style="padding-left: 10rpx;">
+				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="producer" label="商品产地" label-width="80">
 					  <uni-easyinput placeholder="请填写商品产地" v-model="formData.producer" trim="both"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
 			</uni-row>
 			<uni-row>
-				<uni-col :span="6" style="padding-right: 10rpx;">
+				<uni-col :xs="24" :sm="6">
 					<uni-forms-item name="unit" label="计量单位" label-width="80">
 					  <uni-data-select v-model="formData.unit" :localdata="formOptions.unit_localdata"></uni-data-select>
 					</uni-forms-item>
 				</uni-col>
-				<uni-col :span="6" style="padding-left: 10rpx;">
+				<uni-col :xs="24" :sm="6">
 					<uni-forms-item name="price_cost" label="成本价" label-align="right">
 					  <uni-easyinput placeholder="请填写成本价" type="number" v-model="formData.price_cost"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
-				<uni-col :span="6" style="padding-left: 10rpx;">
+				<uni-col :xs="24" :sm="6">
 					<uni-forms-item name="price_original" label="原价" label-align="right">
 					  <uni-easyinput placeholder="请填写原价" type="number" v-model="formData.price_original"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
-				<uni-col :span="6" style="padding-left: 10rpx;">
+				<uni-col :xs="24" :sm="6">
 					<uni-forms-item name="price_sell" label="售价" label-align="right">
 					  <uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
 			</uni-row>
 			<uni-row>
-				<uni-col :span="12" style="padding-right: 20rpx;">
+				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="source_type" label="商品来源" label-width="80">
 					  <uni-data-checkbox v-model="formData.source_type" :localdata="formOptions.source_type_localdata" style="padding-top: 5px;"></uni-data-checkbox>
 					</uni-forms-item>
 				</uni-col>
-				<uni-col :span="12" style="padding-left: 20rpx;" v-if="formData.source_type === 0">
+				<uni-col :xs="24" :sm="12" v-if="formData.source_type === 0">
 					<uni-forms-item name="stock" label="库存">
 					  <uni-easyinput placeholder="请填写库存" type="number" v-model="formData.stock"></uni-easyinput>
 					</uni-forms-item>
