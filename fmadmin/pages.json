@@ -150,6 +150,21 @@
 			"style": {
 				"navigationBarTitleText": "列表"
 			}
+		}, {
+			"path": "pages/fmgoods/trace/add",
+			"style": {
+				"navigationBarTitleText": "新增"
+			}
+		}, {
+			"path": "pages/fmgoods/trace/edit",
+			"style": {
+				"navigationBarTitleText": "编辑"
+			}
+		}, {
+			"path": "pages/fmgoods/trace/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
 		}
 	],
 	"subPackages": [{

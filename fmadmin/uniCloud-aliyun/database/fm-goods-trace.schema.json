@@ -1,0 +1,98 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["made_company", "create_time"],
+	"permission": {
+		"read": false,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "请填写商品名称",
+			"label": "商品名称",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"made_company": {
+			"bsonType": "string",
+			"description": "请填写生产企业",
+			"label": "生产企业",
+			"maxLength": 50,
+			"trim": "both"
+		},
+		"province_code": {
+			"bsonType": "string",
+			"description": "省级编码",
+			"label": "省"
+		},
+		"city_code": {
+			"bsonType": "string",
+			"description": "地级编码",
+			"label": "市"
+		},
+		"area_code": {
+			"bsonType": "string",
+			"description": "区级编码",
+			"label": "省市区",
+			"foreignKey": "opendb-city-china.code",
+			"enumType": "tree",
+			"enum": {
+				"collection": "opendb-city-china",
+				"orderby": "value asc",
+				"field": "code as value, name as text, eq(type, 2) as isleaf"
+			}
+		},
+		"province_name": {
+			"bsonType": "string",
+			"description": "省级名称",
+			"label": "省"
+		},
+		"city_name": {
+			"bsonType": "string",
+			"description": "地级名称",
+			"label": "市"
+		},
+		"area_name": {
+			"bsonType": "string",
+			"description": "区级名称",
+			"label": "区"
+		},
+		"made_address": {
+			"bsonType": "string",
+			"description": "请填写生产地址",
+			"label": "生产地址",
+			"maxLength": 50,
+			"trim": "both"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "请选择日期",
+			"label": "生产批次"
+		},
+		"expire_time": {
+			"bsonType": "timestamp",
+			"description": "请选择日期",
+			"title": "有效期至"
+		},
+		"image_produce": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择生产许可证",
+			"label": "生产许可证"
+		},
+		"image_report": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择质检报告",
+			"label": "质检报告"
+		}
+	}
+}
