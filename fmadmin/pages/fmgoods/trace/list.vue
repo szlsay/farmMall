@@ -81,7 +81,10 @@
 		enumConverter,
 		filterToWhere
 	} from '@/js_sdk/validator/fm-goods-trace.js';
-
+	import {
+		cloneObject,
+		formatDate
+	} from '@/utils/util.js'
 	const db = uniCloud.database()
 	// 表查询配置
 	const dbOrderBy = '' // 排序字段
@@ -138,7 +141,22 @@
 		},
 		methods: {
 			onqueryload(data) {
-				this.exportExcelData = data
+				const dataCopy = cloneObject(data)
+				const that = this
+				let tempData = dataCopy.map(item => {
+					if (item.image_produce && item.image_produce.url) {
+						item.image_produce = item.image_produce.url
+					}
+					if (item.image_report && item.image_report.url) {
+						item.image_report = item.image_report.url
+					}
+					item.create_time = formatDate(item.create_time, "yyyy/MM/dd")
+					item.expire_time = formatDate(item.expire_time, "yyyy/MM/dd")
+					return item
+				})
+				this.exportExcelData = tempData
+				
+				// this.exportExcelData = data
 			},
 			getWhere() {
 				const query = this.query.trim()
