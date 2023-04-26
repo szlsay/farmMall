@@ -44,7 +44,7 @@
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'stock')" sortable
 							@sort-change="sortChange($event, 'stock')">库存</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'storage')" sortable
-							@sort-change="sortChange($event, 'storage')">存储条件</uni-th>
+							@sort-change="sortChange($event, 'storage')" width="200">存储条件</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -60,7 +60,11 @@
 						<uni-td align="center">{{item.price_original}}</uni-td>
 						<uni-td align="center">{{item.price_sell}}</uni-td>
 						<uni-td align="center">{{item.stock}}</uni-td>
-						<uni-td align="center">{{item.storage}}</uni-td>
+						<uni-td align="center">
+							<uni-tooltip :content="item.storage">
+								<text class="text-3-line">{{item.storage}}</text>
+							</uni-tooltip>
+						</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -284,5 +288,11 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.text-3-line {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		overflow: hidden;
+	}
 </style>

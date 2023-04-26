@@ -17,11 +17,11 @@
 			"fileMediaType": "image",
 			"fileExtName": "jpg,png,webp",
 			"description": "请选择商品主图",
-			"title": "商品主图"
+			"label": "商品主图"
 		},
 		"source_type": {
 			"bsonType": "int",
-			"title": "商品来源",
+			"label": "商品来源",
 			"defaultValue": 0,
 			"enum": [{
 					"text": "库存现货",
@@ -36,28 +36,28 @@
 		"name": {
 			"bsonType": "string",
 			"description": "请填写商品名称",
-			"title": "商品名称",
+			"label": "商品名称",
 			"maxLength": 10,
 			"trim": "both"
 		},
 		"producer": {
 			"bsonType": "string",
 			"description": "请填写商品产地",
-			"title": "商品产地",
+			"label": "商品产地",
 			"maxLength": 50,
 			"trim": "both"
 		},
 		"description": {
 			"bsonType": "string",
 			"description": "请填写商品描述",
-			"title": "商品描述",
+			"label": "商品描述",
 			"maxLength": 200,
 			"trim": "both"
 		},
 		"unit": {
 			"bsonType": "int",
 			"description": "请填写计量单位",
-			"title": "计量单位",
+			"label": "计量单位",
 			"defaultValue": 0,
 			"enum": [{
 					"text": "斤",
@@ -79,46 +79,60 @@
 					"text": "箱",
 					"value": 4
 				}
-			]
+			],
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择计量单位"
+				}
+			}
 		},
 		"price_cost": {
 			"bsonType": "double",
 			"description": "请填写成本价",
-			"title": "成本价",
+			"label": "成本价",
 			"minimum": 0,
 			"maximum": 1000000,
-			"errorMessage": "{title}应该大于 {minimum} ，小于 {maximum} "
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"price_original": {
 			"bsonType": "double",
 			"description": "请填写原价",
-			"title": "原价",
+			"label": "原价",
 			"minimum": 0,
 			"maximum": 1000000,
-			"errorMessage": "{title}应该大于 {minimum} ，小于 {maximum} "
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"price_sell": {
 			"bsonType": "double",
 			"description": "请填写售价",
-			"title": "售价",
+			"label": "售价",
 			"minimum": 0,
 			"maximum": 1000000,
-			"errorMessage": "{title}应该大于 {minimum} ，小于 {maximum} "
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"stock": {
 			"bsonType": "int",
 			"description": "请填写库存",
-			"title": "库存",
+			"label": "库存",
 			"minimum": 0,
 			"maximum": 1000000,
-			"errorMessage": "{title}应该大于 {minimum} ，小于 {maximum} "
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"storage": {
 			"bsonType": "string",
 			"description": "请填写存储条件",
-			"title": "存储条件",
+			"label": "存储条件",
 			"maxLength": 200,
 			"trim": "both"
+		},
+		"image_content": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择展示图片",
+			"label": "展示图片"
 		}
 	}
 }

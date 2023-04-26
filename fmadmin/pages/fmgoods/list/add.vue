@@ -23,7 +23,7 @@
 			<uni-row>
 				<uni-col :xs="24" :sm="6">
 					<uni-forms-item name="unit" label="计量单位" label-width="80">
-						<uni-data-select v-model="formData.unit" :localdata="formOptions.unit_localdata"></uni-data-select>
+						<uni-data-select  placeholder="请选择" v-model="formData.unit" :localdata="formOptions.unit_localdata"></uni-data-select>
 					</uni-forms-item>
 				</uni-col>
 				<uni-col :xs="24" :sm="6">
@@ -62,6 +62,9 @@
 			<uni-forms-item name="description" label="商品描述" label-width="80">
 				<uni-easyinput type="textarea" placeholder="请填写商品描述" v-model="formData.description" trim="both"
 					maxlength="200"></uni-easyinput>
+			</uni-forms-item>
+			<uni-forms-item name="image_content" label="展示图片" label-width="80">
+			  <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array" v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
 			</uni-forms-item>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -107,7 +110,8 @@
 				"price_original": null,
 				"price_sell": null,
 				"stock": null,
-				"storage": ""
+				"storage": "",
+				"image_content": []
 			}
 			return {
 				imageStyles: {

@@ -1,6 +1,5 @@
 // 表单校验规则由 schema2code 生成，不建议直接修改校验规则，而建议通过 schema2code 生成, 详情: https://uniapp.dcloud.net.cn/uniCloud/schema
 
-
 const validator = {
   "image": {
     "rules": [
@@ -8,7 +7,6 @@ const validator = {
         "format": "file"
       }
     ],
-    "title": "商品主图",
     "label": "商品主图"
   },
   "source_type": {
@@ -29,9 +27,8 @@ const validator = {
         ]
       }
     ],
-    "title": "商品来源",
-    "defaultValue": 0,
-    "label": "商品来源"
+    "label": "商品来源",
+    "defaultValue": 0
   },
   "name": {
     "rules": [
@@ -42,7 +39,6 @@ const validator = {
         "maxLength": 10
       }
     ],
-    "title": "商品名称",
     "label": "商品名称"
   },
   "producer": {
@@ -54,7 +50,6 @@ const validator = {
         "maxLength": 50
       }
     ],
-    "title": "商品产地",
     "label": "商品产地"
   },
   "description": {
@@ -66,7 +61,6 @@ const validator = {
         "maxLength": 200
       }
     ],
-    "title": "商品描述",
     "label": "商品描述"
   },
   "unit": {
@@ -99,9 +93,8 @@ const validator = {
         ]
       }
     ],
-    "title": "计量单位",
-    "defaultValue": 0,
-    "label": "计量单位"
+    "label": "计量单位",
+    "defaultValue": 0
   },
   "price_cost": {
     "rules": [
@@ -115,7 +108,6 @@ const validator = {
         "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
       }
     ],
-    "title": "成本价",
     "label": "成本价"
   },
   "price_original": {
@@ -130,7 +122,6 @@ const validator = {
         "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
       }
     ],
-    "title": "原价",
     "label": "原价"
   },
   "price_sell": {
@@ -145,7 +136,6 @@ const validator = {
         "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
       }
     ],
-    "title": "售价",
     "label": "售价"
   },
   "stock": {
@@ -160,7 +150,6 @@ const validator = {
         "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
       }
     ],
-    "title": "库存",
     "label": "库存"
   },
   "storage": {
@@ -172,8 +161,18 @@ const validator = {
         "maxLength": 200
       }
     ],
-    "title": "存储条件",
     "label": "存储条件"
+  },
+  "image_content": {
+    "rules": [
+      {
+        "format": "array"
+      },
+      {
+        "arrayType": "file"
+      }
+    ],
+    "label": "商品展示图片"
   }
 }
 
