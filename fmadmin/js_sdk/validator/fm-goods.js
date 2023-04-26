@@ -21,6 +21,54 @@ const validator = {
     ],
     "label": "商品名称"
   },
+  "province_code": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "省"
+  },
+  "city_code": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "市"
+  },
+  "area_code": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "省市区"
+  },
+  "province_name": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "省"
+  },
+  "city_name": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "市"
+  },
+  "area_name": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "区"
+  },
   "producer": {
     "rules": [
       {
