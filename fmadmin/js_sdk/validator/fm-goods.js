@@ -1,5 +1,6 @@
 // 表单校验规则由 schema2code 生成，不建议直接修改校验规则，而建议通过 schema2code 生成, 详情: https://uniapp.dcloud.net.cn/uniCloud/schema
 
+
 const validator = {
   "image": {
     "rules": [
@@ -8,27 +9,6 @@ const validator = {
       }
     ],
     "label": "商品主图"
-  },
-  "source_type": {
-    "rules": [
-      {
-        "format": "int"
-      },
-      {
-        "range": [
-          {
-            "text": "库存现货",
-            "value": 0
-          },
-          {
-            "text": "预售采购",
-            "value": 1
-          }
-        ]
-      }
-    ],
-    "label": "商品来源",
-    "defaultValue": 0
   },
   "name": {
     "rules": [
@@ -51,17 +31,6 @@ const validator = {
       }
     ],
     "label": "商品产地"
-  },
-  "description": {
-    "rules": [
-      {
-        "format": "string"
-      },
-      {
-        "maxLength": 200
-      }
-    ],
-    "label": "商品描述"
   },
   "unit": {
     "rules": [
@@ -138,6 +107,27 @@ const validator = {
     ],
     "label": "售价"
   },
+  "source_type": {
+    "rules": [
+      {
+        "format": "int"
+      },
+      {
+        "range": [
+          {
+            "text": "库存现货",
+            "value": 0
+          },
+          {
+            "text": "预售采购",
+            "value": 1
+          }
+        ]
+      }
+    ],
+    "label": "商品来源",
+    "defaultValue": 0
+  },
   "stock": {
     "rules": [
       {
@@ -163,6 +153,59 @@ const validator = {
     ],
     "label": "存储条件"
   },
+  "expiry": {
+    "rules": [
+      {
+        "format": "int",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "保质期"
+  },
+  "buy_min": {
+    "rules": [
+      {
+        "format": "int",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "最小起购"
+  },
+  "buy_max": {
+    "rules": [
+      {
+        "format": "int",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "最大起购"
+  },
+  "description": {
+    "rules": [
+      {
+        "format": "string"
+      },
+      {
+        "maxLength": 200
+      }
+    ],
+    "label": "商品描述"
+  },
   "image_content": {
     "rules": [
       {
@@ -172,21 +215,21 @@ const validator = {
         "arrayType": "file"
       }
     ],
-    "label": "商品展示图片"
+    "label": "展示图片"
   }
 }
 
 const enumConverter = {
-  "source_type_valuetotext": {
-    "0": "库存现货",
-    "1": "预售采购"
-  },
   "unit_valuetotext": {
     "0": "斤",
     "1": "吨",
     "2": "只",
     "3": "袋",
     "4": "箱"
+  },
+  "source_type_valuetotext": {
+    "0": "库存现货",
+    "1": "预售采购"
   }
 }
 

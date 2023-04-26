@@ -19,7 +19,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="image,source_type,name,producer,description,unit,price_cost,price_original,price_sell,stock,storage"
+				field="image,name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
 				loadtime="manual" @load="onqueryload">
@@ -27,8 +27,6 @@
 					@selection-change="selectionChange">
 					<uni-tr>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">商品主图</uni-th>
-						<uni-th align="center" filter-type="select" :filter-data="options.filterData.source_type_localdata"
-							@filter-change="filterChange($event, 'source_type')">商品来源</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')" sortable
 							@sort-change="sortChange($event, 'name')">商品名称</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'producer')" sortable
@@ -41,10 +39,18 @@
 							@sort-change="sortChange($event, 'price_original')">原价</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')" sortable
 							@sort-change="sortChange($event, 'price_sell')">售价</uni-th>
+						<uni-th align="center" filter-type="select" :filter-data="options.filterData.source_type_localdata"
+							@filter-change="filterChange($event, 'source_type')">商品来源</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'stock')" sortable
 							@sort-change="sortChange($event, 'stock')">库存</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'storage')" sortable
 							@sort-change="sortChange($event, 'storage')" width="200">存储条件</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')" sortable
+							@sort-change="sortChange($event, 'expiry')">保质期</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_min')" sortable
+							@sort-change="sortChange($event, 'buy_min')">最小起购</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_max')" sortable
+							@sort-change="sortChange($event, 'buy_max')">最大起购</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -52,19 +58,22 @@
 							<image style="width: 60px; height: 60px;" v-if="item.image && item.image.fileType == 'image'"
 								:src="item.image.url"></image>
 						</uni-td>
-						<uni-td align="center">{{options.source_type_valuetotext[item.source_type]}}</uni-td>
 						<uni-td align="center">{{item.name}}</uni-td>
 						<uni-td align="center">{{item.producer}}</uni-td>
 						<uni-td align="center">{{options.unit_valuetotext[item.unit]}}</uni-td>
 						<uni-td align="center">{{item.price_cost}}</uni-td>
 						<uni-td align="center">{{item.price_original}}</uni-td>
 						<uni-td align="center">{{item.price_sell}}</uni-td>
+						<uni-td align="center">{{options.source_type_valuetotext[item.source_type]}}</uni-td>
 						<uni-td align="center">{{item.stock}}</uni-td>
 						<uni-td align="center">
 							<uni-tooltip :content="item.storage">
 								<text class="text-3-line">{{item.storage}}</text>
 							</uni-tooltip>
 						</uni-td>
+						<uni-td align="center">{{item.expiry}}</uni-td>
+						<uni-td align="center">{{item.buy_min}}</uni-td>
+						<uni-td align="center">{{item.buy_max}}</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -88,7 +97,6 @@
 		enumConverter,
 		filterToWhere
 	} from '@/js_sdk/validator/fm-goods.js';
-
 	import {
 		cloneObject
 	} from '@/utils/util.js'
@@ -118,15 +126,6 @@
 					pageSize,
 					pageCurrent,
 					filterData: {
-						"source_type_localdata": [{
-								"text": "库存现货",
-								"value": 0
-							},
-							{
-								"text": "预售采购",
-								"value": 1
-							}
-						],
 						"unit_localdata": [{
 								"text": "斤",
 								"value": 0
@@ -147,6 +146,15 @@
 								"text": "箱",
 								"value": 4
 							}
+						],
+						"source_type_localdata": [{
+								"text": "库存现货",
+								"value": 0
+							},
+							{
+								"text": "预售采购",
+								"value": 1
+							}
 						]
 					},
 					...enumConverter
@@ -160,16 +168,19 @@
 					"type": "xls",
 					"fields": {
 						"商品主图": "image",
-						"商品来源": "source_type",
 						"商品名称": "name",
 						"商品产地": "producer",
-						"商品描述": "description",
 						"计量单位": "unit",
 						"成本价": "price_cost",
 						"原价": "price_original",
 						"售价": "price_sell",
+						"商品来源": "source_type",
 						"库存": "stock",
-						"存储条件": "storage"
+						"存储条件": "storage",
+						"保质期": "expiry",
+						"最小起购": "buy_min",
+						"最大起购": "buy_max",
+						"商品描述": "description"
 					}
 				},
 				exportExcelData: []

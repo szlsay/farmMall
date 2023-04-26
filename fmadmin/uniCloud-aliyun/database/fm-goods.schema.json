@@ -19,20 +19,6 @@
 			"description": "请选择商品主图",
 			"label": "商品主图"
 		},
-		"source_type": {
-			"bsonType": "int",
-			"label": "商品来源",
-			"defaultValue": 0,
-			"enum": [{
-					"text": "库存现货",
-					"value": 0
-				},
-				{
-					"text": "预售采购",
-					"value": 1
-				}
-			]
-		},
 		"name": {
 			"bsonType": "string",
 			"description": "请填写商品名称",
@@ -45,13 +31,6 @@
 			"description": "请填写商品产地",
 			"label": "商品产地",
 			"maxLength": 50,
-			"trim": "both"
-		},
-		"description": {
-			"bsonType": "string",
-			"description": "请填写商品描述",
-			"label": "商品描述",
-			"maxLength": 200,
 			"trim": "both"
 		},
 		"unit": {
@@ -111,6 +90,20 @@
 			"maximum": 1000000,
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
+		"source_type": {
+			"bsonType": "int",
+			"label": "商品来源",
+			"defaultValue": 0,
+			"enum": [{
+					"text": "库存现货",
+					"value": 0
+				},
+				{
+					"text": "预售采购",
+					"value": 1
+				}
+			]
+		},
 		"stock": {
 			"bsonType": "int",
 			"description": "请填写库存",
@@ -123,6 +116,37 @@
 			"bsonType": "string",
 			"description": "请填写存储条件",
 			"label": "存储条件",
+			"maxLength": 200,
+			"trim": "both"
+		},
+		"expiry": {
+			"bsonType": "int",
+			"description": "请填写保质期",
+			"label": "保质期",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"buy_min": {
+			"bsonType": "int",
+			"description": "请填写最小起购",
+			"label": "最小起购",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"buy_max": {
+			"bsonType": "int",
+			"description": "请填写最大起购",
+			"label": "最大起购",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "请填写商品描述",
+			"label": "商品描述",
 			"maxLength": 200,
 			"trim": "both"
 		},
