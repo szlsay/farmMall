@@ -51,7 +51,7 @@ const validator = {
         "format": "string"
       },
       {
-        "maxLength": 10
+        "maxLength": 50
       }
     ],
     "title": "商品产地",

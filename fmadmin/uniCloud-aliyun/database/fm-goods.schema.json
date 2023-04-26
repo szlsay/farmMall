@@ -44,7 +44,7 @@
 			"bsonType": "string",
 			"description": "请填写商品产地",
 			"title": "商品产地",
-			"maxLength": 10,
+			"maxLength": 50,
 			"trim": "both"
 		},
 		"description": {
