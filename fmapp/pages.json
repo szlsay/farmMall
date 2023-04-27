@@ -1,5 +1,17 @@
 {
-	"pages": [{
+	"pages": [
+		{
+			"path": "pages/goods/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
+		}, {
+			"path": "pages/goods/detail",
+			"style": {
+				"navigationBarTitleText": "详情"
+			}
+		},
+		{
 			"path": "pages/list/list",
 			"style": {
 				// #ifndef APP-PLUS
@@ -238,7 +250,7 @@
 		"borderStyle": "black",
 		"backgroundColor": "#FFFFFF",
 		"list": [{
-			"pagePath": "pages/list/list",
+			"pagePath": "pages/goods/list",
 			"iconPath": "static/tabbar/list.png",
 			"selectedIconPath": "static/tabbar/list_active.png",
 			"text": "列表"
