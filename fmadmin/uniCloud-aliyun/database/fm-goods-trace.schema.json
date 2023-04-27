@@ -12,12 +12,15 @@
 		"_id": {
 			"description": "ID，系统自动生成"
 		},
-		"name": {
+		"goods_id": {
 			"bsonType": "string",
-			"description": "请填写商品名称",
-			"label": "商品名称",
-			"maxLength": 10,
-			"trim": "both"
+			"description": "商品id",
+			"label": "商品id"
+		},
+		"goods_name": {
+			"bsonType": "string",
+			"description": "请选择商品名称",
+			"label": "商品名称"
 		},
 		"made_company": {
 			"bsonType": "string",

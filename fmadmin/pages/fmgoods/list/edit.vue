@@ -204,7 +204,6 @@
 		},
 		methods: {
 			onChange(e) {
-				console.log(e)
 				if (e.detail && e.detail.value && e.detail.value.length === 3) {
 					const value = e.detail.value
 					this.formData.province_name = value[0].text
@@ -212,6 +211,12 @@
 					this.formData.city_name = value[1].text
 					this.formData.city_code = value[1].value
 					this.formData.area_name = value[2].text
+				} else {
+					this.formData.province_name = ""
+					this.formData.province_code = ""
+					this.formData.city_name = ""
+					this.formData.city_code = ""
+					this.formData.area_name = ""
 				}
 			},
 

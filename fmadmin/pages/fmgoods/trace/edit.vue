@@ -1,8 +1,9 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-forms-item name="name" label="商品名称" :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both"></uni-easyinput>
+			<uni-forms-item name="goods_id" label="商品名称" :label-width="labelWidth" label-align="right">
+				<uni-data-select collection="fm-goods" field="_id as value, name as text" v-model="formData.goods_id"
+					:clear="true" @change="onChangeGoods" ref="dataSelect" placeholder="请选择商品名称" />
 			</uni-forms-item>
 			<uni-forms-item name="made_company" label="生产企业" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="请填写生产企业" v-model="formData.made_company" trim="both"></uni-easyinput>
@@ -56,12 +57,11 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
-				"name": "",
+				"goods_id": "",
+				"goods_name": "",
 				"made_company": "",
 				"province_code": "",
 				"city_code": "",
@@ -99,8 +99,14 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onChangeGoods(e) {
+				if (e) {
+					this.formData.goods_name = this.$refs.dataSelect.current
+				} else {
+					this.formData.goods_name = ''
+				}
+			},
 			onChange(e) {
-				console.log(e)
 				if (e.detail && e.detail.value && e.detail.value.length === 3) {
 					const value = e.detail.value
 					this.formData.province_name = value[0].text
@@ -108,6 +114,12 @@
 					this.formData.city_name = value[1].text
 					this.formData.city_code = value[1].value
 					this.formData.area_name = value[2].text
+				} else {
+					this.formData.province_name = ""
+					this.formData.province_code = ""
+					this.formData.city_name = ""
+					this.formData.city_code = ""
+					this.formData.area_name = ""
 				}
 			},
 			/**
@@ -128,6 +140,7 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				value.goods_name = this.formData.goods_name
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
 				value.city_name = this.formData.city_name
@@ -158,7 +171,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,made_company,province_code,city_code,area_code,province_name,city_name,area_name,made_address,create_time,expire_time,image_produce,image_report"
+					"goods_id,goods_name,made_company,province_code,city_code,area_code,province_name,city_name,area_name,made_address,create_time,expire_time,image_produce,image_report"
 					).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {

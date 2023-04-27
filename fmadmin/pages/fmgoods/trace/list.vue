@@ -19,15 +19,15 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,made_company,made_address,create_time,expire_time,image_produce,image_report"
+				field="goods_name,made_company,made_address,create_time,expire_time,image_produce,image_report"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
 				loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection"
 					@selection-change="selectionChange">
 					<uni-tr>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')" sortable
-							@sort-change="sortChange($event, 'name')">商品名称</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'goods_name')" sortable
+							@sort-change="sortChange($event, 'goods_name')">商品名称</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'made_company')" sortable
 							@sort-change="sortChange($event, 'made_company')">生产企业</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'made_address')" sortable
@@ -41,7 +41,7 @@
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
-						<uni-td align="center">{{item.name}}</uni-td>
+						<uni-td align="center">{{item.goods_name}}</uni-td>
 						<uni-td align="center">{{item.made_company}}</uni-td>
 						<uni-td align="center">{{item.made_address}}</uni-td>
 						<uni-td align="center">
@@ -121,7 +121,7 @@
 					"filename": "fm-goods-trace.xls",
 					"type": "xls",
 					"fields": {
-						"商品名称": "name",
+						"商品名称": "goods_name",
 						"生产企业": "made_company",
 						"生产地址": "made_address",
 						"生产批次": "create_time",

@@ -2,13 +2,18 @@
 
 
 const validator = {
-  "name": {
+  "goods_id": {
     "rules": [
       {
         "format": "string"
-      },
+      }
+    ],
+    "label": "商品id"
+  },
+  "goods_name": {
+    "rules": [
       {
-        "maxLength": 10
+        "format": "string"
       }
     ],
     "label": "商品名称"
