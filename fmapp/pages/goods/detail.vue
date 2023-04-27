@@ -33,6 +33,9 @@
 			</view>
 			<image v-for="(item, index) in formData.image_content" :key="index" :src="item.url" mode="widthFix"></image>
 		</view>
+		<view class="back" @click="onClickBack">
+			<uni-icons type="back" size="30" color="white"></uni-icons>
+		</view>
 	</view>
 </template>
 
@@ -71,17 +74,6 @@
 			}
 			return {
 				formData,
-
-				// queryWhere: '',
-				// collectionList: [db.collection('fm-goods').field(
-				// 	'image,name,province_code,city_code,area_code,province_name,city_name,area_name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,image_content'
-				// 	).getTemp(), db.collection('opendb-city-china').field('code, name as text, eq(type, 2) as isleaf')
-				// .getTemp()],
-				// loadMore: {
-				// 	contentdown: '',
-				// 	contentrefresh: '',
-				// 	contentnomore: ''
-				// },
 				options: {
 					// 将scheme enum 属性静态数据中的value转成text
 					...enumConverter
@@ -96,6 +88,9 @@
 			}
 		},
 		methods: {
+			onClickBack() {
+				uni.navigateBack()
+			},
 			/**
 			 * 获取表单数据
 			 * @param {Object} id
@@ -134,7 +129,6 @@
 
 			uni-swiper {
 				height: 100%;
-
 				.fm_image {
 					width: 100%;
 					height: 100%;
@@ -187,6 +181,19 @@
 		}
 	}
 
+	.back {
+		position: fixed;
+		top: 32rpx;
+		left: 32rpx;
+		width: 88rpx;
+		height: 88rpx;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background-color: #00000033;
+		border-radius: 44rpx;
+	}
+
 	.divider {
 		height: 16rpx;
 		background-color: #f2f2f2;
@@ -203,7 +210,8 @@
 			color: #666;
 			font-size: 30rpx;
 		}
-		image{
+
+		image {
 			width: 100%;
 		}
 	}
