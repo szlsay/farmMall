@@ -52,5 +52,8 @@
 </script>
 
 <style>
+	body {
+		background-color: rgb(0, 204, 153);
+	}
 	/*每个页面公共css */
 </style>
