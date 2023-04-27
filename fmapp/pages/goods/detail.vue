@@ -1,111 +1,5 @@
 <template>
 	<view class="container">
-		<!-- <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options"
-			:collection="collectionList" :getone="true" :manual="true">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="loading">
-				<uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
-			</view>
-			<view v-else-if="data">
-				<view>
-					<text>商品主图</text>
-					<uni-file-picker v-if="data.image && data.image.fileType == 'image'" :value="data.image"
-						:file-mediatype="data.image && data.image.fileType" return-type="object" readonly></uni-file-picker>
-					<uni-link v-else-if="data.image" :href="data.image.url" :text="data.image.url"></uni-link>
-					<text v-else></text>
-				</view>
-				<view>
-					<text>商品名称</text>
-					<text>{{data.name}}</text>
-				</view>
-				<view>
-					<text>省</text>
-					<text>{{data.province_code}}</text>
-				</view>
-				<view>
-					<text>市</text>
-					<text>{{data.city_code}}</text>
-				</view>
-				<view>
-					<text>省市区</text>
-					<text>{{data.area_code && data.area_code[0] && data.area_code[0].text}}</text>
-				</view>
-				<view>
-					<text>省</text>
-					<text>{{data.province_name}}</text>
-				</view>
-				<view>
-					<text>市</text>
-					<text>{{data.city_name}}</text>
-				</view>
-				<view>
-					<text>区</text>
-					<text>{{data.area_name}}</text>
-				</view>
-				<view>
-					<text>商品产地</text>
-					<text>{{data.producer}}</text>
-				</view>
-				<view>
-					<text>计量单位</text>
-					<text>{{options.unit_valuetotext[data.unit]}}</text>
-				</view>
-				<view>
-					<text>成本价</text>
-					<text>{{data.price_cost}}</text>
-				</view>
-				<view>
-					<text>原价</text>
-					<text>{{data.price_original}}</text>
-				</view>
-				<view>
-					<text>售价</text>
-					<text>{{data.price_sell}}</text>
-				</view>
-				<view>
-					<text>商品来源</text>
-					<text>{{options.source_type_valuetotext[data.source_type]}}</text>
-				</view>
-				<view>
-					<text>库存</text>
-					<text>{{data.stock}}</text>
-				</view>
-				<view>
-					<text>存储条件</text>
-					<text>{{data.storage}}</text>
-				</view>
-				<view>
-					<text>保质期</text>
-					<text>{{data.expiry}}</text>
-				</view>
-				<view>
-					<text>最小起购</text>
-					<text>{{data.buy_min}}</text>
-				</view>
-				<view>
-					<text>最大起购</text>
-					<text>{{data.buy_max}}</text>
-				</view>
-				<view>
-					<text>商品描述</text>
-					<text>{{data.description}}</text>
-				</view>
-				<view>
-					<text>展示图片</text>
-					<template v-for="(file, j) in data.image_content">
-						<uni-file-picker v-if="file.fileType == 'image'" :value="file" :file-mediatype="file.fileType"
-							return-type="object" readonly></uni-file-picker>
-						<uni-link v-else :href="file.url" :text="file.url"></uni-link>
-					</template>
-				</view>
-			</view>
-		</unicloud-db> -->
-		<!--    <view class="btns">
-      <button type="primary" @click="handleUpdate">修改</button>
-      <button type="warn" class="btn-delete" @click="handleDelete">删除</button>
-    </view> -->
-
-
 		<view class="header">
 			<view class="banner">
 				<swiper circular indicator-dots>
@@ -117,18 +11,36 @@
 					</swiper-item>
 				</swiper>
 			</view>
+			<view class="title">
+				<view class="title-price">￥<text>{{formData.price_sell}}</text>/{{options.unit_valuetotext[formData.unit]}}
+				</view>
+				<view class="title-buy">
+					{{formData.buy_min}}{{options.unit_valuetotext[formData.unit]}}起购
+				</view>
+			</view>
+			<view class="name">
+				{{formData.name}}
+			</view>
+			<view class="area">
+				<uni-icons type="location" size="20" color="#999"></uni-icons>
+				<text>{{formData.producer}}</text>
+			</view>
 		</view>
-		<view class="footer"></view>
-
-		<!-- {{formData}} -->
+		<view class="divider"></view>
+		<view class="footer">
+			<view class="desc">
+				{{formData.description}}
+			</view>
+			<image v-for="(item, index) in formData.image_content" :key="index" :src="item.url" mode="widthFix"></image>
+		</view>
 	</view>
 </template>
 
 <script>
 	// 由schema2code生成，包含校验规则和enum静态数据
-	// import {
-	// 	enumConverter
-	// } from '@/js_sdk/validator/fm-goods.js'
+	import {
+		enumConverter
+	} from '@/js_sdk/validator/fm-goods.js'
 	const db = uniCloud.database()
 	const dbCollectionName = 'fm-goods';
 
@@ -170,10 +82,10 @@
 				// 	contentrefresh: '',
 				// 	contentnomore: ''
 				// },
-				// options: {
-				// 	// 将scheme enum 属性静态数据中的value转成text
-				// 	...enumConverter
-				// }
+				options: {
+					// 将scheme enum 属性静态数据中的value转成text
+					...enumConverter
+				}
 			}
 		},
 		onLoad(e) {
@@ -212,17 +124,87 @@
 	}
 </script>
 <style lang="scss" scoped>
-	.banner {
-		$view-width : 100vw;
-		height: calc(#{$view-width});
+	.header {
+		background-color: white;
+		padding-bottom: 16rpx;
 
-		uni-swiper {
-			height: 100%;
+		.banner {
+			$view-width : 100vw;
+			height: calc(#{$view-width});
 
-			.fm_image {
-				width: 100%;
+			uni-swiper {
 				height: 100%;
+
+				.fm_image {
+					width: 100%;
+					height: 100%;
+				}
 			}
+		}
+
+		.title {
+			display: flex;
+			align-items: center;
+			padding-left: 32rpx;
+			padding-top: 16rpx;
+
+			.title-price {
+				color: #ff4f01;
+				font-size: 32rpx;
+
+				text {
+					font-size: 52rpx;
+				}
+			}
+
+			.title-buy {
+				margin-left: 8rpx;
+				margin-top: 8rpx;
+				padding: 8rpx;
+				background-color: #ff4f01;
+				border-radius: 4rpx;
+				color: white;
+				font-size: 24rpx;
+			}
+		}
+
+		.name {
+			padding-left: 32rpx;
+			padding-top: 16rpx;
+			font-size: 34rpx;
+			color: #444;
+			font-weight: 700;
+		}
+
+		.area {
+			padding-left: 32rpx;
+			padding-top: 16rpx;
+
+			text {
+				font-size: 30rpx;
+				color: #999;
+			}
+		}
+	}
+
+	.divider {
+		height: 16rpx;
+		background-color: #f2f2f2;
+	}
+
+	.footer {
+		background-color: white;
+
+		.desc {
+			padding-left: 32rpx;
+			padding-right: 32rpx;
+			padding-top: 16rpx;
+			padding-bottom: 16rpx;
+			color: #666;
+			font-size: 30rpx;
+		}
+		image{
+			width: 100%;
 		}
 	}
 </style>
