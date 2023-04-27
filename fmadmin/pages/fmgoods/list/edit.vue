@@ -2,18 +2,20 @@
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
 			<uni-row>
-				<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
-					<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
-						v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
-					<text style="color: red; font-size: 14px;">请选择上传400*400px尺寸图片</text>
-				</uni-forms-item>
-			</uni-row>
-			<uni-row>
+				<uni-col :xs="24" :sm="12">
+					<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
+						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
+							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
+						<text style="color: red; font-size: 14px;">请选择上传400*400px尺寸图片</text>
+					</uni-forms-item>
+				</uni-col>
 				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="name" label="商品名称" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both" maxlength="10"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
+			</uni-row>
+			<uni-row>
 				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="area_code" label="商品产地" :label-width="labelWidth" label-align="right">
 						<uni-data-picker self-field="code" parent-field="parent_code" v-model="formData.area_code"
@@ -21,28 +23,31 @@
 							field="code as value, name as text, eq(type, 2) as isleaf" @change="onChange"></uni-data-picker>
 					</uni-forms-item>
 				</uni-col>
-			</uni-row>
-			<uni-row>
-				<uni-col :xs="24" :sm="6">
+				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 						<uni-data-select placeholder="请选择" v-model="formData.unit"
 							:localdata="formOptions.unit_localdata"></uni-data-select>
 					</uni-forms-item>
 				</uni-col>
+			</uni-row>
+			<uni-row>
 				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_cost" label="成本价" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写成本价" type="number" v-model="formData.price_cost"></uni-easyinput>
+					<uni-forms-item name="price_cost" label="成本价(元)" :label-width="labelWidth" label-align="right">
+						<uni-easyinput placeholder="请填写成本" type="number" v-model="formData.price_cost"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
 				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_original" label="原价" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="price_original" label="原价(元)" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="请填写原价" type="number" v-model="formData.price_original"></uni-easyinput>
 					</uni-forms-item>
 				</uni-col>
 				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_sell" label="售价" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="price_sell" label="售价(元)" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
 					</uni-forms-item>
+				</uni-col>
+				<uni-col :xs="24" :sm="6">
+					<text class="gpm-text">&nbsp;&nbsp;毛利率 {{gpmStr}}</text>
 				</uni-col>
 			</uni-row>
 			<uni-row>
@@ -269,7 +274,7 @@
 				})
 				db.collection(dbCollectionName).doc(id).field(
 					"image,name,province_code,city_code,area_code,province_name,city_name,area_name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,image_content"
-					).get().then((res) => {
+				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
@@ -284,6 +289,23 @@
 					uni.hideLoading()
 				})
 			}
+		},
+		computed: {
+			gpmStr: function() {
+				if (this.formData.price_sell > 0) {
+					const number = (this.formData.price_sell - this.formData.price_cost) / this.formData.price_sell
+					return Math.round(number * 10000) / 100 + '%';
+				} else {
+					return '0.00%'
+				}
+			}
 		}
 	}
 </script>
+<style lang="scss" scoped>
+	.gpm-text {
+		font-size: 14px;
+		line-height: 35px;
+		color: #1fbf9e;
+	}
+</style>
