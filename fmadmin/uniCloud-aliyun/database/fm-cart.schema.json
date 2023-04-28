@@ -6,7 +6,7 @@
 		"read": "doc.uid == auth.uid",
 		"create": true,
 		"update": "doc.uid == auth.uid",
-		"delete": "doc.uid == auth.uid",
+		"delete": "doc.uid == auth.uid"
 	},
 	"properties": {
 		"_id": {
@@ -45,6 +45,11 @@
 			"description": "购物车数量",
 			"title": "数量",
 			"defaultValue": 0
+		},
+		"select": {
+			"bsonType": "bool",
+			"label": "选中状态",
+			"defaultValue": false
 		}
 	}
 }

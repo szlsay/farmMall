@@ -15,8 +15,12 @@
 			"style": {
 				"navigationStyle": "custom"
 			}
-		},
-		{
+		}, {
+			"path": "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
+		}, {
 			"path": "pages/list/list",
 			"style": {
 				// #ifndef APP-PLUS
@@ -260,7 +264,7 @@
 			"selectedIconPath": "static/tabbar/home1.png",
 			"text": "首页"
 		}, {
-			"pagePath": "pages/grid/grid",
+			"pagePath": "pages/cart/cart",
 			"iconPath": "static/tabbar/cart0.png",
 			"selectedIconPath": "static/tabbar/cart1.png",
 			"text": "购物车"

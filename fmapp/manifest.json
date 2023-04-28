@@ -2,7 +2,7 @@
     "name" : "fmapp",
     "appid" : "__UNI__D7A6B26",
     "description" : "云端一体应用快速开发基本项目模版",
-    "versionName" : "",
+    "versionName" : "用户端",
     "versionCode" : "100",
     "transformPx" : false,
     "app-plus" : {
