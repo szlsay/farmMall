@@ -1,0 +1,50 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["uid", "goods_id"],
+	"permission": {
+		"read": "doc.uid == auth.uid",
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户的唯一id",
+			"title": "用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"goods_id": {
+			"bsonType": "string",
+			"description": "商品的唯一id",
+			"title": "商品id",
+			"foreignKey": "fm-goods._id"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"last_modify_date": {
+			"bsonType": "timestamp",
+			"description": "最后修改时间",
+			"title": "最后修改时间"
+		},
+		"qty": {
+			"bsonType": "int",
+			"description": "购物车数量",
+			"title": "数量",
+			"defaultValue": 0
+		}
+	}
+}

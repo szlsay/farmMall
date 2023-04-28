@@ -36,6 +36,16 @@
 		<view class="back" @click="onClickBack">
 			<uni-icons type="back" size="30" color="white"></uni-icons>
 		</view>
+		<view class="bottom-buy">
+			<view class="collect">
+				<uni-icons type="star" size="24"></uni-icons>
+				<text>收藏</text>
+			</view>
+			<view class="btns">
+				<view class="cart" @click="handleCart">加入购物车</view>
+				<view class="buy" @click="handleBuy">立即购买</view>
+			</view>
+		</view>
 	</view>
 </template>
 
@@ -119,6 +129,10 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.container {
+		padding-bottom: 110rpx;
+	}
+
 	.header {
 		background-color: white;
 		padding-bottom: 16rpx;
@@ -129,6 +143,7 @@
 
 			uni-swiper {
 				height: 100%;
+
 				.fm_image {
 					width: 100%;
 					height: 100%;
@@ -213,6 +228,62 @@
 
 		image {
 			width: 100%;
+		}
+	}
+
+	.bottom-buy {
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		height: 100rpx;
+		background-color: #fff;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: space-between;
+
+		.collect {
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			flex: 1;
+
+			text {
+				text-align: center;
+				font-size: 24rpx;
+			}
+		}
+
+		.btns {
+			display: flex;
+			margin-right: 32rpx;
+
+			.cart {
+				width: 240rpx;
+				height: 80rpx;
+				border-radius: 40rpx 0 0 40rpx;
+				background-image: linear-gradient(90deg, #ffb401, #f80);
+
+				font-size: 30rpx;
+				color: #fff;
+				line-height: 80rpx;
+				text-align: center;
+				font-weight: 500;
+			}
+
+			.buy {
+				width: 240rpx;
+				height: 80rpx;
+				background-color: #ff442e;
+				border-radius: 0 40rpx 40rpx 0;
+
+				font-size: 30rpx;
+				color: #fff;
+				line-height: 80rpx;
+				text-align: center;
+				font-weight: 500;
+			}
 		}
 	}
 </style>
