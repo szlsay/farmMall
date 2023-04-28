@@ -4,9 +4,9 @@
 	"required": ["uid", "goods_id"],
 	"permission": {
 		"read": "doc.uid == auth.uid",
-		"create": false,
-		"update": false,
-		"delete": false
+		"create": true,
+		"update": "doc.uid == auth.uid",
+		"delete": "doc.uid == auth.uid",
 	},
 	"properties": {
 		"_id": {
@@ -35,10 +35,10 @@
 				"$env": "now"
 			}
 		},
-		"last_modify_date": {
+		"update_time": {
 			"bsonType": "timestamp",
-			"description": "最后修改时间",
-			"title": "最后修改时间"
+			"description": "更新时间",
+			"title": "更新时间"
 		},
 		"qty": {
 			"bsonType": "int",

@@ -56,7 +56,7 @@
 	} from '@/js_sdk/validator/fm-goods.js'
 	const db = uniCloud.database()
 	const dbCollectionName = 'fm-goods';
-
+	const cartCollectionName = 'fm-cart';
 	export default {
 		data() {
 			let formData = {
@@ -124,6 +124,55 @@
 				}).finally(() => {
 					uni.hideLoading()
 				})
+			},
+			async handleCart() {
+				uni.showLoading({
+					mask: true
+				})
+				let {
+					result
+				} = await db.collection(cartCollectionName).where({
+					goods_id: this._id,
+				}).get()
+				if (result.data.length === 0) {
+					let value = {
+						"goods_id": this._id,
+						"qty": 1,
+						"update_time": new Date().valueOf()
+					}
+					db.collection(cartCollectionName).add(value).then((res) => {
+						uni.showToast({
+							icon: 'none',
+							title: '添加成功'
+						})
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					}).finally(() => {
+						uni.hideLoading()
+					})
+				} else {
+					let cartData = result.data[0]
+					cartData.qty += 1
+					db.collection(cartCollectionName).doc(cartData._id).update({
+						qty: cartData.qty,
+						update_time: new Date().valueOf()
+					}).then((res) => {
+						uni.showToast({
+							icon: 'none',
+							title: '添加成功'
+						})
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					}).finally(() => {
+						uni.hideLoading()
+					})
+				}
 			},
 		}
 	}
