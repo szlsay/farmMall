@@ -34,8 +34,8 @@
 		<!-- 用户菜单 -->
 		<view class="user-menu">
 			<uni-list v-for="(sublist , index) in menuList" :key="index">
-				<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i"
-					:clickable="true" :to="item.to" @click="ucenterListClick(item)">
+				<uni-list-item v-for="(item,i) in sublist" :title="item.title" link :key="i" :clickable="true" :to="item.to"
+					@click="ucenterListClick(item)">
 				</uni-list-item>
 			</uni-list>
 		</view>
@@ -83,8 +83,7 @@
 					}
 				],
 				menuList: [
-					[
-						{
+					[{
 							"title": "每日签到",
 							"event": 'signIn',
 						},
@@ -121,84 +120,9 @@
 						{
 							"title": "关于",
 							"to": '/pages/ucenter/about/about',
-						},]
-				],
-				gridList: [{
-						"text": this.$t('mine.showText'),
-						"icon": "chat"
-					},
-					{
-						"text": this.$t('mine.showText'),
-						"icon": "cloud-upload"
-					},
-					{
-						"text": this.$t('mine.showText'),
-						"icon": "contact"
-					},
-					{
-						"text": this.$t('mine.showText'),
-						"icon": "download"
-					}
-				],
-				ucenterList: [
-					[
-						{
-							"title": this.$t('mine.signInByAd'),
-							"event": 'signInByAd',
-							"icon": "compose"
-						},
-						{
-							"title": this.$t('mine.signIn'),
-							"event": 'signIn',
-							"icon": "compose"
-						},
-						{
-							"title": this.$t('mine.toEvaluate'),
-							"event": 'gotoMarket',
-							"icon": "star"
-						},
-						{
-							"title": this.$t('mine.readArticles'),
-							"to": '/pages/ucenter/read-news-log/read-news-log',
-							"icon": "flag"
-						},
-						{
-							"title": this.$t('mine.myScore'),
-							"to": '',
-							"event": 'getScore',
-							"icon": "paperplane"
 						}
-						, {
-							"title": this.$t('mine.invite'),
-							"event": 'share',
-							"icon": "redo"
-						}
-					],
-					[{
-						"title": this.$t('mine.feedback'),
-						"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
-						"icon": "help"
-					}, {
-						"title": this.$t('mine.settings'),
-						"to": '/pages/ucenter/settings/settings',
-						"icon": "gear"
-					}],
-					[{
-						"title": this.$t('mine.about'),
-						"to": '/pages/ucenter/about/about',
-						"icon": "info"
-					}]
-				],
-				listStyles: {
-					"height": "150rpx", // 边框高度
-					"width": "150rpx", // 边框宽度
-					"border": { // 如果为 Boolean 值，可以控制边框显示与否
-						"color": "#eee", // 边框颜色
-						"width": "1px", // 边框宽度
-						"style": "solid", // 边框样式
-						"radius": "100%" // 边框圆角，支持百分比
-					}
-				}
+					]
+				]
 			}
 		},
 		onLoad() {
@@ -474,69 +398,9 @@
 		}
 	}
 
-	// .center-list {
-	// 	margin-bottom: 30rpx;
-	// 	background-color: #f9f9f9;
-	// }
-
-	// .center-list-cell {
-	// 	width: 750rpx;
-	// 	background-color: #007AFF;
-	// 	height: 40rpx;
-	// }
-
-	// .grid {
-	// 	background-color: #FFFFFF;
-	// 	margin-bottom: 6px;
-	// }
-
-	// .uni-grid .text {
-	// 	font-size: 16px;
-	// 	height: 25px;
-	// 	line-height: 25px;
-	// 	color: #817f82;
-	// }
-
-	// .uni-grid .item ::v-deep .uni-grid-item__box {
-	// 	justify-content: center;
-	// 	align-items: center;
-	// }
-
-
-	// /*修改边线粗细示例*/
-	// /* #ifndef APP-NVUE */
-	// .center-list ::v-deep .uni-list--border:after {
-	// 	-webkit-transform: scaleY(0.2);
-	// 	transform: scaleY(0.2);
-	// 	margin-left: 80rpx;
-	// }
-
-	// .center-list ::v-deep .uni-list--border-top,
-	// .center-list ::v-deep .uni-list--border-bottom {
-	// 	display: none;
-	// }
-
-	// /* #endif */
-	// .item-footer {
-	// 	flex-direction: row;
-	// 	align-items: center;
-	// }
-
-	// .item-footer-text {
-	// 	color: #999;
-	// 	font-size: 24rpx;
-	// 	padding-right: 10rpx;
-	// }
-
-	// .item-footer-badge {
-	// 	width: 20rpx;
-	// 	height: 20rpx;
-	// 	/* #ifndef APP-NVUE */
-	// 	border-radius: 50%;
-	// 	/* #endif */
-	// 	/* #ifdef APP-NVUE */
-	// 	border-radius: 10rpx;
-	// 	/* #endif */
-	// 	background-color: #DD524D;
-	// }
+	.user-menu {
+		.uni-list {
+			margin-top: 20rpx;
+		}
+	}
 </style>
