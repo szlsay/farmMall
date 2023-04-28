@@ -14,7 +14,7 @@
 							<text>{{item.producer}}</text>
 							<view class="price">
 								<text>￥{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)" />
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)" @blur="onChangeNum(item)" />
 							</view>
 						</view>
 					</view>
@@ -91,7 +91,14 @@
 		})
 	}
 
-	async function onChangeNum(data) {
+	function onChangeNum(data) {
+		const that = this
+		setTimeout(() => {
+			that.updateQty(data)
+		})
+	}
+
+	async function updateQty(data) {
 		await db.collection(cartCollectionName).doc(data._id).update({
 			qty: data.qty
 		})
