@@ -5,7 +5,7 @@
 				<template v-slot:body>
 					<view class="body-content">
 						<view class="item-left">
-							<radio :checked="item.select" @click="onSelectItem(item)" />
+							<radio color="#00CC99" :checked="item.select" @click="onSelectItem(item)" />
 							<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
 								mode="aspectFill"></image>
 						</view>
@@ -13,8 +13,8 @@
 							<text class="title">{{item.name}}</text>
 							<text>{{item.producer}}</text>
 							<view class="price">
-								<text class="num">价格：{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" />
+								<text>￥{{item.price_sell}}</text>
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum" />
 							</view>
 						</view>
 					</view>
@@ -23,12 +23,12 @@
 		</uni-list>
 		<view class="footer">
 			<view class="select">
-				<radio :checked="selectAll" @click="onSelectAll"></radio>
+				<radio color="#00CC99" :checked="selectAll" @click="onSelectAll"></radio>
 				<text>全选</text>
 			</view>
 			<view class="price">
 				<text>合计：</text>
-				<text>￥33333</text>
+				<text>￥{{priceAll}}</text>
 			</view>
 			<view class="buy">
 				去结算
@@ -44,11 +44,20 @@
 	import {
 		onActivated,
 		onMounted,
+		computed,
 		ref
 	} from "vue";
 	const cart = useCartStore();
 	const selectAll = ref(false);
-
+	const priceAll = computed(() => {
+		let number = 0
+		cart.cartList.forEach( item => {
+			if (item.select) {
+				number += item.price_sell * item.qty
+			}
+		})
+		return number
+	})
 	onActivated(() => {
 		cart.getCartList()
 		console.log("onActivated")
@@ -63,7 +72,7 @@
 	}
 
 	function onSelectAll() {
-		selectAll = !selectAll
+		selectAll.value = !selectAll.value
 		cart.cartList.map(item => {
 			item.select = selectAll
 		})
@@ -71,7 +80,11 @@
 
 	function onSelectItem(data) {
 		data.select = !data.select
-		selectAll = !cart.cartList.some(item => item.select == false)
+		selectAll.value = !cart.cartList.some(item => item.select == false)
+	}
+
+	function onChangeNum() {
+
 	}
 </script>
 
@@ -119,7 +132,6 @@
 	.body-content {
 		width: 100%;
 		display: flex;
-		// justify-content: space-between;
 	}
 
 	.item-left {
@@ -139,24 +151,31 @@
 		}
 
 	}
+
 	.item-right {
 		flex: 1;
-			margin-left: 20rpx;
+		margin-left: 20rpx;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+
+		.title {
+			font-weight: 600;
+			overflow: hidden;
+			-webkit-line-clamp: 2;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-box-orient: vertical;
+		}
+
+		.price {
 			display: flex;
-			flex-direction: column;
 			justify-content: space-between;
-				.title {
-					font-weight: 600;
-					overflow: hidden;
-					-webkit-line-clamp: 2;
-					text-overflow: ellipsis;
-					display: -webkit-box;
-					-webkit-box-orient: vertical;
-				}
-				.price{
-					display: flex;
-					justify-content: space-between;
-					align-items: center;
-				}
+			align-items: center;
+
+			text:nth-child(1) {
+				color: #ff442f;
+			}
+		}
 	}
 </style>
