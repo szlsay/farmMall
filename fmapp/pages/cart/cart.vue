@@ -14,14 +14,14 @@
 							<text>{{item.producer}}</text>
 							<view class="price">
 								<text>￥{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum" />
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)" />
 							</view>
 						</view>
 					</view>
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<view class="footer">
+		<view class="footer" v-if="cart.cartList && cart.cartList.length > 0">
 			<view class="select">
 				<radio color="#00CC99" :checked="selectAll" @click="onSelectAll"></radio>
 				<text>全选</text>
@@ -45,13 +45,17 @@
 		onActivated,
 		onMounted,
 		computed,
-		ref
+		ref,
+		nextTick
 	} from "vue";
+	const db = uniCloud.database()
+	const cartCollectionName = 'fm-cart';
+
 	const cart = useCartStore();
-	const selectAll = ref(false);
+	const selectAll = computed(() => !cart.cartList.some(item => item.select == false))
 	const priceAll = computed(() => {
 		let number = 0
-		cart.cartList.forEach( item => {
+		cart.cartList.forEach(item => {
 			if (item.select) {
 				number += item.price_sell * item.qty
 			}
@@ -62,29 +66,35 @@
 		cart.getCartList()
 		console.log("onActivated")
 	})
-	onMounted(() => {
+
+	onMounted(async () => {
 		console.log("onMounted")
 		cart.getCartList()
 	})
 
-	function onClickBuy() {
-
-	}
-
-	function onSelectAll() {
-		selectAll.value = !selectAll.value
+	async function onSelectAll() {
+		const selectValue = !selectAll.value
+		console.log("onSelectAll", selectAll)
 		cart.cartList.map(item => {
-			item.select = selectAll
+			item.select = selectValue
+		})
+		await db.collection(cartCollectionName).update({
+			select: selectValue
 		})
 	}
 
-	function onSelectItem(data) {
+	async function onSelectItem(data) {
+		console.log("onSelectItem", data)
 		data.select = !data.select
-		selectAll.value = !cart.cartList.some(item => item.select == false)
+		await db.collection(cartCollectionName).doc(data._id).update({
+			select: data.select
+		})
 	}
 
-	function onChangeNum() {
-
+	async function onChangeNum(data) {
+		await db.collection(cartCollectionName).doc(data._id).update({
+			qty: data.qty
+		})
 	}
 </script>
 
