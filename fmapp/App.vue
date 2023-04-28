@@ -53,7 +53,12 @@
 
 <style>
 	body {
-		background-color: rgb(0, 204, 153);
+		background-color: #f8f8f8;
+		box-sizing: border-box;
+	}
+	text{
+		color: #333333;
+		font-size: 28rpx;
 	}
 	/*每个页面公共css */
 </style>
