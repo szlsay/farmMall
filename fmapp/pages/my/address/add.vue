@@ -3,7 +3,7 @@
 		<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item name="receive_name" label="收货人姓名" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="收货人姓名" v-model="formData.receive_name" trim="both"
-					primaryColor="#00CC99"></uni-easyinput>
+					maxlength="10" maryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="receive_mobile" label="手机号码" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" trim="both" maxlength="11"
@@ -15,7 +15,7 @@
 					@change="onChangeArea"></uni-data-picker>
 			</uni-forms-item>
 			<uni-forms-item name="address" label="详细住址" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="省市区后面的详细住址，包含街道小区房间号" type="textarea" v-model="formData.address" trim="both" primaryColor="#00CC99"></uni-easyinput>
+				<uni-easyinput placeholder="省市区后面的详细住址，包含街道小区房间号" type="textarea" v-model="formData.address" trim="both" primaryColor="#00CC99" maxlength="50"></uni-easyinput >
 			</uni-forms-item>
 			<uni-forms-item name="is_default" label="设置为默认地址" label-width="150" label-align="right">
 				<switch @change="binddata('is_default', $event.detail.value)" :checked="formData.is_default" color="#00CC99">
