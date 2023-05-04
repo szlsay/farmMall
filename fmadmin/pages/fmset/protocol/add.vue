@@ -8,7 +8,9 @@
 				<uni-data-checkbox v-model="formData.type" :localdata="formOptions.type_localdata"></uni-data-checkbox>
 			</uni-forms-item>
 			<uni-forms-item name="content" label="协议内容" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="请填写协议内容" v-model="formData.content"></uni-easyinput>
+				<!-- <uni-easyinput placeholder="请填写协议内容" v-model="formData.content"></uni-easyinput> -->
+				<view id="wangeditor">
+				</view>
 			</uni-forms-item>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -21,6 +23,7 @@
 </template>
 
 <script>
+	import E from 'wangeditor'
 	import {
 		validator
 	} from '@/js_sdk/validator/fm-protocol.js';
@@ -39,8 +42,7 @@
 		return result
 	}
 
-
-
+	let editor = null
 	export default {
 		data() {
 			let formData = {
@@ -73,8 +75,40 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.initEditor()
 		},
 		methods: {
+			/**
+			 * 初始化富文本编辑器
+			 */
+			initEditor() {
+				editor = new E('#wangeditor')
+				// 配置菜单栏，设置不需要的菜单
+				editor.config.excludeMenus = [
+					'emoticon',
+					'image',
+					'video'
+				]
+				editor.config.zIndex = 0
+				// 取消自动 focus
+				editor.config.focus = false
+				editor.config.placeholder = '请填写协议内容'
+				editor.config.onblur = function(newHtml) {
+					console.log('onblur', newHtml) // 获取最新的 html 内容
+				}
+				editor.config.onfocus = function(newHtml) {
+					console.log('onfocus', newHtml) // 获取最新的 html 内容
+				}
+				// 配置 onchange 回调函数
+				const that = this
+				editor.config.onchange = function(newHtml) {
+					console.log("change 之后最新的 html", newHtml);
+					that.formData.content = newHtml
+				};
+				// 配置触发 onchange 的时间频率，默认为 200ms
+				editor.config.onchangeTimeout = 500; // 修改为 500ms
+				editor.create()
+			},
 
 			/**
 			 * 验证表单并提交
