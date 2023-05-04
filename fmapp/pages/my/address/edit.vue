@@ -90,12 +90,25 @@
 		},
 		methods: {
 			onClickRemove() {
+				const that = this;
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除此收货地址吗？',
+					success: function(res) {
+						if (res.confirm) {
+							console.log('用户点击确定');
+							that.handleDelete();
+						} else if (res.cancel) {
+							console.log('用户点击取消');
+						}
+					}
+				});
+			},
+			handleDelete() {
 				db.collection(dbCollectionName).doc(this.formDataId).remove().then((res) => {
 					uni.showToast({
-						icon: 'none',
 						title: '删除成功'
 					})
-					// 删除数据成功后跳转到list页面
 					uni.navigateTo({
 						url: './list'
 					})
@@ -149,7 +162,6 @@
 				// 使用 clientDB 提交数据
 				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
 					uni.showToast({
-						icon: 'none',
 						title: '修改成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')
@@ -172,7 +184,7 @@
 				})
 				db.collection(dbCollectionName).doc(id).field(
 					"receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default"
-					).get().then((res) => {
+				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
