@@ -126,10 +126,24 @@
 		}
 		// #endif
 	],
-	"subPackages": [
-		{
+	"subPackages": [{
 			"root": "pages/my",
-			"pages": []
+			"pages": [{
+				"path": "address/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "address/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "address/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
+			}]
 		},
 		{
 			"root": "uni_modules/uni-feedback",

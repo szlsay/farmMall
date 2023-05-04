@@ -93,7 +93,7 @@
 						},
 						{
 							"title": "收货地址",
-							"event": 'signIn',
+							"to": '/pages/my/address/list',
 						},
 						{
 							"title": "我的积分",
