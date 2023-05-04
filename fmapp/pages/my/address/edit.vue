@@ -6,7 +6,7 @@
 					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="receive_mobile" label="手机号码" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" trim="both" maxlength="11"
+				<uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" trim="both" type="number" maxlength="11"
 					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="area_code" label="所在地区" required :label-width="labelWidth" label-align="right">

@@ -94,6 +94,7 @@
 		}
 		
 		.address{
+			margin-top: 10rpx;
 			.default{
 				background-color: #00CC99;
 				padding: 2rpx 8rpx 2rpx;
@@ -121,5 +122,11 @@
 			text-align: center;
 			line-height: 80rpx;
 		}
+	}
+	.container{
+		padding-bottom: 100rpx;
+	}
+	page{
+		background-color: white;
 	}
 </style>
