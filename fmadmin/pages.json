@@ -165,6 +165,21 @@
 			"style": {
 				"navigationBarTitleText": "列表"
 			}
+		}, {
+			"path": "pages/fmset/protocol/add",
+			"style": {
+				"navigationBarTitleText": "新增"
+			}
+		}, {
+			"path": "pages/fmset/protocol/edit",
+			"style": {
+				"navigationBarTitleText": "编辑"
+			}
+		}, {
+			"path": "pages/fmset/protocol/list",
+			"style": {
+				"navigationBarTitleText": "列表"
+			}
 		}
 	],
 	"subPackages": [{

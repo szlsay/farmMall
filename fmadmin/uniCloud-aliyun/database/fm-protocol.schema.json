@@ -1,0 +1,59 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["title", "type", "content"],
+	"permission": {
+		"read": true,
+		"create": false,
+		"update": false,
+		"delete": false
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "请选择创建时间",
+			"label": "创建时间",
+			"forceDefaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "请选择更新时间",
+			"label": "更新时间"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "请填写协议标题",
+			"label": "协议标题",
+			"maxLength": 50,
+			"trim": "both"
+		},
+		"type": {
+			"bsonType": "int",
+			"label": "协议类型",
+			"defaultValue": 0,
+			"enum": [{
+					"text": "用户服务协议",
+					"value": 0
+				},
+				{
+					"text": "用户授权协议",
+					"value": 1
+				},
+				{
+					"text": "隐私政策",
+					"value": 2
+				}
+			]
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "请填写协议内容",
+			"label": "协议内容"
+		}
+	}
+}
