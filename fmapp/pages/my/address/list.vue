@@ -52,7 +52,7 @@
     methods: {
       handleItemClick(id) {
         uni.navigateTo({
-          url: './detail?id=' + id
+          url: './edit?id=' + id
         })
       },
       onClickAdd() {
