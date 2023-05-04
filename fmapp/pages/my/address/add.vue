@@ -22,7 +22,7 @@
 				</switch>
 			</uni-forms-item>
 			<view class="footer">
-				<view class="btn-add" @click="onClickAdd">
+				<view class="btn-add" @click="submit">
 					保存
 				</view>
 			</view>
