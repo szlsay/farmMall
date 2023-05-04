@@ -7,29 +7,11 @@
       <uni-forms-item name="receive_mobile" label="手机号码" required>
         <uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="province_code" label="省">
-        <uni-easyinput placeholder="省级编码" v-model="formData.province_code"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="city_code" label="市">
-        <uni-easyinput placeholder="地级编码" v-model="formData.city_code"></uni-easyinput>
-      </uni-forms-item>
       <uni-forms-item name="area_code" label="所在地区" required>
         <uni-data-picker self-field="code" parent-field="parent_code" v-model="formData.area_code" collection="opendb-city-china" orderby="value asc" field="code as value, name as text, eq(type, 2) as isleaf"></uni-data-picker>
       </uni-forms-item>
-      <uni-forms-item name="province_name" label="省">
-        <uni-easyinput placeholder="省级名称" v-model="formData.province_name"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="city_name" label="市">
-        <uni-easyinput placeholder="地级名称" v-model="formData.city_name"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="area_name" label="区">
-        <uni-easyinput placeholder="区级名称" v-model="formData.area_name"></uni-easyinput>
-      </uni-forms-item>
       <uni-forms-item name="address" label="详细住址" required>
         <uni-easyinput placeholder="省市区后面的详细住址，包含街道小区房间号" v-model="formData.address" trim="both"></uni-easyinput>
-      </uni-forms-item>
-      <uni-forms-item name="full_address" label="">
-        <uni-easyinput placeholder="完整地址信息，包括省市区及街道小区房间号" v-model="formData.full_address" trim="both"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="is_default" label="是否为默认地址">
         <switch @change="binddata('is_default', $event.detail.value)" :checked="formData.is_default"></switch>

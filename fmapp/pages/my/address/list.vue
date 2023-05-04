@@ -17,7 +17,12 @@
       </view>
       <uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
     </unicloud-db>
-    <uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" />
+		<view class="footer">
+			<view class="btn-add" @click="onClickAdd">
+				新增收货地址
+			</view>
+		</view>
+    <!-- <uni-fab ref="fab" horizontal="right" vertical="bottom" :pop-menu="false" @fabClick="fabClick" /> -->
   </view>
 </template>
 
@@ -50,7 +55,7 @@
           url: './detail?id=' + id
         })
       },
-      fabClick() {
+      onClickAdd() {
         // 打开新增页面
         uni.navigateTo({
           url: './add',
@@ -68,5 +73,22 @@
   }
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.footer{
+		position: fixed;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		padding: 10rpx 32rpx 10rpx;
+		background-color: white;
+		.btn-add{
+			width: 100%;
+			height: 80rpx;
+			background-color: #00CC99;
+			border-radius: 40rpx;
+			color: white;
+			text-align: center;
+			line-height: 80rpx;
+		}
+	}
 </style>
