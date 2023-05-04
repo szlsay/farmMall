@@ -109,9 +109,8 @@
 					uni.showToast({
 						title: '删除成功'
 					})
-					uni.navigateTo({
-						url: './list'
-					})
+					this.getOpenerEventChannel().emit('refreshData')
+					setTimeout(() => uni.navigateBack(), 500)
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',

@@ -60,7 +60,15 @@
 		methods: {
 			handleItemClick(id) {
 				uni.navigateTo({
-					url: './edit?id=' + id
+					url: './edit?id=' + id,
+					events: {
+						// 监听新增数据成功后, 刷新当前页面数据
+						refreshData: () => {
+							this.$refs.udb.loadData({
+								clear: true
+							})
+						}
+					}
 				})
 			},
 			onClickAdd() {
