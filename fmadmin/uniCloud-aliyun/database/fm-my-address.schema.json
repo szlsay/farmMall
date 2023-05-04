@@ -1,0 +1,91 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["receive_name", "receive_mobile", "area_code", "address"],
+	"permission": {
+		"read": "doc.uid == auth.uid",
+		"create": true,
+		"update": "doc.uid == auth.uid",
+		"delete": "doc.uid == auth.uid"
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户的唯一id",
+			"title": "用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			}
+		},
+		"receive_name": {
+			"bsonType": "string",
+			"description": "收货人姓名",
+			"label": "收货人姓名",
+			"trim": "both"
+		},
+		"receive_mobile": {
+			"bsonType": "string",
+			"description": "手机号码",
+			"pattern": "^1[34578][0-9]{9}$",
+			"label": "手机号码",
+			"trim": "both"
+		},
+		"province_code": {
+			"bsonType": "string",
+			"description": "省级编码",
+			"label": "省"
+		},
+		"city_code": {
+			"bsonType": "string",
+			"description": "地级编码",
+			"label": "市"
+		},
+		"area_code": {
+			"bsonType": "string",
+			"description": "所在地区",
+			"label": "所在地区",
+			"foreignKey": "opendb-city-china.code",
+			"enumType": "tree",
+			"enum": {
+				"collection": "opendb-city-china",
+				"orderby": "value asc",
+				"field": "code as value, name as text, eq(type, 2) as isleaf"
+			}
+		},
+		"province_name": {
+			"bsonType": "string",
+			"description": "省级名称",
+			"label": "省"
+		},
+		"city_name": {
+			"bsonType": "string",
+			"description": "地级名称",
+			"label": "市"
+		},
+		"area_name": {
+			"bsonType": "string",
+			"description": "区级名称",
+			"label": "区"
+		},
+		"address": {
+			"bsonType": "string",
+			"description": "省市区后面的详细住址，包含街道小区房间号",
+			"label": "详细住址",
+			"trim": "both"
+		},
+		"full_address": {
+			"bsonType": "string",
+			"description": "完整地址信息，包括省市区及街道小区房间号",
+			"trim": "both"
+		},
+		"is_default": {
+			"bsonType": "bool",
+			"description": "是否为默认地址",
+			"label": "是否为默认地址",
+			"defaultValue": false
+		}
+	}
+}

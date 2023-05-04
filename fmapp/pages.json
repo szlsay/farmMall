@@ -126,7 +126,12 @@
 		}
 		// #endif
 	],
-	"subPackages": [{
+	"subPackages": [
+		{
+			"root": "pages/my",
+			"pages": []
+		},
+		{
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
 				"path": "pages/opendb-feedback/opendb-feedback",
