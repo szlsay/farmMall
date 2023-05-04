@@ -3,7 +3,7 @@
 		<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item name="receive_name" label="收货人姓名" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="收货人姓名" v-model="formData.receive_name" trim="both" maxlength="10"
-					maryColor="#00CC99"></uni-easyinput>
+					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="receive_mobile" label="手机号码" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" trim="both" maxlength="11"
