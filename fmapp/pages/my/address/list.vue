@@ -21,8 +21,12 @@
 						</template>
 					</uni-list-item>
 				</uni-list>
+				<view v-if="data.length === 0" class="nodata">
+					<image src="@/static/default-nodata.png"></image>
+					<text>亲，请添加收货地址~</text>
+				</view>
 			</view>
-			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
+			<uni-load-more v-if="data.length" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
 		<view class="footer">
 			<view class="btn-add" @click="onClickAdd">
@@ -99,6 +103,20 @@
 </script>
 
 <style lang="scss" scoped>
+	.nodata{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 400rpx;;
+		image{
+			width: 160rpx;
+			height: 160rpx;
+		}
+		text{
+			margin-top: 20rpx;
+		}
+	}
 	.item {
 		.user {
 			text {
