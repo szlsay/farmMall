@@ -7,7 +7,12 @@
 					<text>{{item.title}}</text>
 				</view>
 			</view>
-			<view class="search"></view>
+			<view class="search-contant">
+				<button class="btn-search" @click="submit">
+					<i class="iconfont fm-search"></i>
+					<text>买好货 上农福</text>
+				</button>
+			</view>
 
 		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
@@ -83,7 +88,7 @@
 	}
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 	@import "@/static/css/iconfont.css";
 
 	.top {
@@ -93,14 +98,35 @@
 			display: flex;
 			justify-content: space-evenly;
 			color: white;
-			padding-top: 20rpx;
+			padding-top: 32rpx;
 			padding-bottom: 20rpx;
+
 			.item-menu {
 				display: flex;
 				align-items: center;
 
 				text {
 					color: white;
+					margin-left: 8rpx;
+				}
+			}
+		}
+
+		.search-contant {
+			padding-left: 32rpx;
+			padding-right: 32rpx;
+			padding-bottom: 20rpx;
+
+			.btn-search {
+				width: 100%;
+				height: 80rpx;
+				background-color: white;
+				border-radius: 40rpx;
+				color: #333333;
+				text-align: center;
+				line-height: 80rpx;
+				
+				text{
 					margin-left: 8rpx;
 				}
 			}
