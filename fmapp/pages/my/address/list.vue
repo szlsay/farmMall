@@ -1,6 +1,7 @@
 <template>
 	<view class="container">
-		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList">
+		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
+			:where="where">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<uni-list>
@@ -37,15 +38,23 @@
 		data() {
 			return {
 				collectionList: [db.collection('fm-my-address').field(
-					'receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default'
+						'receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default,uid'
 					).getTemp(), db.collection('opendb-city-china').field('code, name as text, eq(type, 2) as isleaf')
-				.getTemp()],
+					.getTemp()
+				],
 				loadMore: {
 					contentdown: '',
 					contentrefresh: '',
 					contentnomore: ''
-				}
+				},
+				where: ''
 			}
+		},
+		onLoad() {
+			this.where = "uid=='" + uniCloud.getCurrentUserInfo().uid + "'"
+			this.$nextTick(() => {
+				this.$refs.udb.loadData()
+			})
 		},
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
@@ -91,19 +100,21 @@
 
 <style lang="scss" scoped>
 	.item {
-		.user{
-			text{
+		.user {
+			text {
 				font-size: 32rpx;
 				font-weight: bold;
 			}
+
 			text:nth-child(2) {
 				margin-left: 20rpx;
 			}
 		}
-		
-		.address{
+
+		.address {
 			margin-top: 10rpx;
-			.default{
+
+			.default {
 				background-color: #00CC99;
 				padding: 2rpx 8rpx 2rpx;
 				color: white;
@@ -113,6 +124,7 @@
 			}
 		}
 	}
+
 	.footer {
 		position: fixed;
 		left: 0;
@@ -131,10 +143,12 @@
 			line-height: 80rpx;
 		}
 	}
-	.container{
+
+	.container {
 		padding-bottom: 100rpx;
 	}
-	page{
+
+	page {
 		background-color: white;
 	}
 </style>
