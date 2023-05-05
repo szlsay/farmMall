@@ -158,39 +158,8 @@
 				value.city_code = this.formData.city_code
 				value.area_name = this.formData.area_name
 				value.full_address = value.province_name + value.city_name + value.area_name + value.address
-				if (value.is_default) {
-					const defaultData = await db.collection(dbCollectionName).where({
-						'is_default': value.is_default
-					}).get()
-					console.log('submitForm---', defaultData, defaultData.result.data.length)
-					if (defaultData.result.data.length == 1) {
-						const defaultId = defaultData.result.data[0]._id
-						this.transactionSubmit(value, defaultId)
-					} else {
-						this.updateSubmit(value)
-					}
-				} else {
-					this.updateSubmit(value)
-				}
-
-				// 使用 clientDB 提交数据
-				// return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
-				// 	uni.showToast({
-				// 		title: '修改成功'
-				// 	})
-				// 	this.getOpenerEventChannel().emit('refreshData')
-				// 	setTimeout(() => uni.navigateBack(), 500)
-				// }).catch((err) => {
-				// 	uni.showModal({
-				// 		content: err.message || '请求服务失败',
-				// 		showCancel: false
-				// 	})
-				// })
-			},
-
-			updateSubmit(value) {
-				// 使用 clientDB 提交数据
-				db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
+				const fmmyaddress = uniCloud.importObject("fmmyaddress")
+				fmmyaddress.update(this.formDataId, value).then((res) => {
 					uni.showToast({
 						title: '修改成功'
 					})
@@ -202,33 +171,6 @@
 						showCancel: false
 					})
 				})
-			},
-
-			async transactionSubmit(value, defaultId) {
-				// await db.collection(dbCollectionName).where({"is_default": true}).get()
-				const transaction = await db.startTransaction()
-				try {
-					const updateOld = await transaction.collection(dbCollectionName).doc(defaultId).update({
-						"is_default": false
-					})
-					const updateNew = await transaction.collection(dbCollectionName).doc(this.formDataId).update(value)
-					if (updateOld.data && updateNew.data) {
-						await transaction.commit()
-						uni.showToast({
-							title: '修改成功'
-						})
-						this.getOpenerEventChannel().emit('refreshData')
-						setTimeout(() => uni.navigateBack(), 500)
-					} else {
-						await transaction.rollback()
-					}
-				} catch (err) {
-					await transaction.rollback()
-					uni.showModal({
-						content: err.message || '请求服务失败',
-						showCancel: false
-					})
-				}
 			},
 			/**
 			 * 获取表单数据

@@ -1,0 +1,7 @@
+{
+  "name": "fmmyaddress",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
