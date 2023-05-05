@@ -1,5 +1,15 @@
 <template>
 	<view class="container">
+		<view class="top">
+			<view class="menu-contant">
+				<view class="item-menu" v-for="(item, index) in menus" :key="index">
+					<i class="iconfont" :class="item.icon"></i>
+					<text>{{item.title}}</text>
+				</view>
+			</view>
+			<view class="search"></view>
+
+		</view>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="image,name,description">
 			<view v-if="error">{{error.message}}</view>
@@ -25,7 +35,20 @@
 					contentdown: '',
 					contentrefresh: '',
 					contentnomore: ''
-				}
+				},
+				menus: [{
+						"title": "农货批发",
+						"icon": "fm-jinpaigongyings"
+					},
+					{
+						"title": "产地资源",
+						"icon": "fm-suyuan"
+					},
+					{
+						"title": "买家保障",
+						"icon": "fm-maijiabz"
+					}
+				]
 			}
 		},
 		onPullDownRefresh() {
@@ -60,5 +83,27 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	@import "@/static/css/iconfont.css";
+
+	.top {
+		background-color: #36A54B;
+
+		.menu-contant {
+			display: flex;
+			justify-content: space-evenly;
+			color: white;
+			padding-top: 20rpx;
+			padding-bottom: 20rpx;
+			.item-menu {
+				display: flex;
+				align-items: center;
+
+				text {
+					color: white;
+					margin-left: 8rpx;
+				}
+			}
+		}
+	}
 </style>
