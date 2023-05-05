@@ -42,7 +42,7 @@
 		},
 		"description": {
 			"bsonType": "string",
-			"description": "请填写描述",
+			"description": "请填写备注",
 			"maxLength": 100,
 			"label": "备注",
 			"trim": "both"

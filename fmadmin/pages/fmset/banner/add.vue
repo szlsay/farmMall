@@ -1,23 +1,24 @@
 <template>
   <view class="uni-container">
     <uni-forms ref="form" :model="formData" validateTrigger="bind">
-      <uni-forms-item name="image" label="广告图片" required>
+      <uni-forms-item name="image" label="广告图片" required :label-width="labelWidth" label-align="right">
         <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object" v-model="formData.image"></uni-file-picker>
+				<text style="color: red; font-size: 14px;">请选择上传400*400px尺寸图片</text>
       </uni-forms-item>
-      <uni-forms-item name="open_url" label="点击目标地址">
+      <uni-forms-item name="open_url" label="目标地址" :label-width="labelWidth" label-align="right">
         <uni-easyinput placeholder="点击跳转目标地址。如果是web地址则使用内置web-view打开；如果是本地页面则跳转本地页面；如果是schema地址则打开本地的app" v-model="formData.open_url" trim="both"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="title" label="标题">
-        <uni-easyinput placeholder="请填写标题" v-model="formData.title" trim="both"></uni-easyinput>
+      <uni-forms-item name="title" label="标题" :label-width="labelWidth" label-align="right">
+        <uni-easyinput placeholder="请填写标题" v-model="formData.title" trim="both" maxlength="20"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="sort" label="排序">
+      <uni-forms-item name="sort" label="排序" :label-width="labelWidth" label-align="right">
         <uni-easyinput placeholder="数字越小，排序越前" type="number" v-model="formData.sort"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="status" label="生效状态">
+      <uni-forms-item name="status" label="生效状态" :label-width="labelWidth" label-align="right">
         <switch @change="binddata('status', $event.detail.value)" :checked="formData.status"></switch>
       </uni-forms-item>
-      <uni-forms-item name="description" label="备注">
-        <uni-easyinput placeholder="请填写描述" v-model="formData.description" trim="both"></uni-easyinput>
+      <uni-forms-item name="description" label="备注" :label-width="labelWidth" label-align="right">
+        <uni-easyinput type="textarea" placeholder="请填写备注" v-model="formData.description" trim="both"  maxlength="100"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -55,10 +56,11 @@
         "open_url": "",
         "title": "",
         "sort": null,
-        "status": true,
+        "status": false,
         "description": ""
       }
       return {
+				labelWidth: 80,
         formData,
         formOptions: {},
         rules: {
