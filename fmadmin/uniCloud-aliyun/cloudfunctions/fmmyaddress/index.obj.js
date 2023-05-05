@@ -2,10 +2,20 @@
 // jsdoc语法提示教程：https://ask.dcloud.net.cn/docs/#//ask.dcloud.net.cn/article/129
 const db = uniCloud.database();
 const dbCollectionName = 'fm-my-address';
+// 云对象代码传入clientInfo
+const uniID = require('uni-id-common')
 module.exports = {
 	_before: function() { // 通用预处理器
+		const clientInfo = this.getClientInfo()
+		this.uniID = uniID.createInstance({ // 创建uni-id实例，其上方法同uniID
+			clientInfo
+		})
 	},
 	add: async function(value) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		value.uid = uid
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
 				'is_default': value.is_default
