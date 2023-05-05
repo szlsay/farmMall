@@ -16,9 +16,12 @@ module.exports = {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
 		value.uid = uid
+		value.create_time = Date.now()
+		value.update_time = Date.now()
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
-				'is_default': value.is_default
+				'is_default': value.is_default,
+				'uid': uid
 			}).get()
 			if (defaultData.data.length == 1) {
 				const defaultId = defaultData.data[0]._id
@@ -45,9 +48,14 @@ module.exports = {
 		}
 	},
 	update: async function(id, value) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		value.update_time = Date.now()
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
-				'is_default': value.is_default
+				'is_default': value.is_default,
+				'uid': uid
 			}).get()
 
 			if (defaultData.data.length == 1) {

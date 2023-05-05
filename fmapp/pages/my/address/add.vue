@@ -2,8 +2,8 @@
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validate-trigger="submit" err-show-type="toast">
 			<uni-forms-item name="receive_name" label="收货人姓名" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="收货人姓名" v-model="formData.receive_name" trim="both"
-					maxlength="10" primaryColor="#00CC99"></uni-easyinput>
+				<uni-easyinput placeholder="收货人姓名" v-model="formData.receive_name" trim="both" maxlength="10"
+					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="receive_mobile" label="手机号码" required :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="手机号码" v-model="formData.receive_mobile" type="number" trim="both" maxlength="11"
@@ -15,16 +15,17 @@
 					@change="onChangeArea"></uni-data-picker>
 			</uni-forms-item>
 			<uni-forms-item name="address" label="详细住址" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="省市区后面的详细住址，包含街道小区房间号" type="textarea" v-model="formData.address" trim="both" primaryColor="#00CC99" maxlength="50"></uni-easyinput >
+				<uni-easyinput placeholder="省市区后面的详细住址，包含街道小区房间号" type="textarea" v-model="formData.address" trim="both"
+					primaryColor="#00CC99" maxlength="50"></uni-easyinput>
 			</uni-forms-item>
 			<uni-forms-item name="is_default" label="设置为默认地址" label-width="150" label-align="right">
 				<switch @change="binddata('is_default', $event.detail.value)" :checked="formData.is_default" color="#00CC99">
 				</switch>
 			</uni-forms-item>
 			<view class="footer">
-				<view class="btn-add" @click="submit">
+				<button class="btn-add" @click="submit" :disabled="disabled">
 					保存
-				</view>
+				</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -48,8 +49,6 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
@@ -66,6 +65,7 @@
 				"is_default": false
 			}
 			return {
+				disabled: false,
 				labelWidth: 90,
 				formData,
 				formOptions: {},
@@ -98,13 +98,16 @@
 			 * 验证表单并提交
 			 */
 			submit() {
+				this.disabled = true
 				uni.showLoading({
 					mask: true
 				})
+				const that = this
 				this.$refs.form.validate().then((res) => {
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
+					that.disabled = false
 				})
 			},
 
@@ -112,6 +115,7 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				console.log('submitForm-------')
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
 				value.city_name = this.formData.city_name
@@ -121,17 +125,22 @@
 				// value.uid = uniCloud.getCurrentUserInfo().uid
 				const fmmyaddress = uniCloud.importObject("fmmyaddress")
 				// 使用 clientDB 提交数据
-			  fmmyaddress.add(value).then((res) => {
+				const that = this
+
+				fmmyaddress.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 500)
+					uni.navigateBack()
+					// setTimeout(() => uni.navigateBack(), 500)
+					that.disabled = false
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',
 						showCancel: false
 					})
+					that.disabled = false
 				})
 			}
 		}
