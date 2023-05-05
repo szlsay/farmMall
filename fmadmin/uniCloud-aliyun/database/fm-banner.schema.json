@@ -1,0 +1,51 @@
+{
+	"bsonType": "object",
+	"required": ["image"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择广告图片",
+			"label": "广告图片"
+		},
+		"open_url": {
+			"bsonType": "string",
+			"description": "点击跳转目标地址。如果是web地址则使用内置web-view打开；如果是本地页面则跳转本地页面；如果是schema地址则打开本地的app",
+			"title": "点击目标地址",
+			"format": "url",
+			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
+			"trim": "both"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "请填写标题",
+			"maxLength": 20,
+			"label": "标题",
+			"trim": "both"
+		},
+		"sort": {
+			"bsonType": "int",
+			"description": "数字越小，排序越前",
+			"label": "排序"
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"label": "生效状态"
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "请填写描述",
+			"maxLength": 100,
+			"label": "备注",
+			"trim": "both"
+		}
+	}
+}
