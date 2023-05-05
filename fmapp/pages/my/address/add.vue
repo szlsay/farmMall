@@ -118,11 +118,11 @@
 				value.city_code = this.formData.city_code
 				value.area_name = this.formData.area_name
 				value.full_address = value.province_name + value.city_name + value.area_name + value.address
+				value.uid = uniCloud.getCurrentUserInfo().uid
 				const fmmyaddress = uniCloud.importObject("fmmyaddress")
 				// 使用 clientDB 提交数据
-			  return db.collection(dbCollectionName).add(value).then((res) => {
+			  fmmyaddress.add(value).then((res) => {
 					uni.showToast({
-						icon: 'none',
 						title: '新增成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')

@@ -4,7 +4,6 @@ const db = uniCloud.database();
 const dbCollectionName = 'fm-my-address';
 module.exports = {
 	_before: function() { // 通用预处理器
-
 	},
 	add: async function(value) {
 		if (value.is_default) {
@@ -19,8 +18,7 @@ module.exports = {
 						"is_default": false
 					})
 					const addNew = await transaction.collection(dbCollectionName).add(value)
-					console.log('add---', updateOld, addNew)
-					if (updateOld.updated && addNew.updated) {
+					if (updateOld.updated && addNew.id) {
 						await transaction.commit()
 						return addNew
 					} else {
