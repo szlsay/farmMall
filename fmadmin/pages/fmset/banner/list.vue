@@ -10,13 +10,10 @@
         <button class="uni-button" type="default" size="mini" @click="search">搜索</button>
         <button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
         <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length" @click="delTable">批量删除</button>
-        <download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData" :type="exportExcel.type" :name="exportExcel.filename">
-          <button class="uni-button" type="primary" size="mini">导出 Excel</button>
-        </download-excel>
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="image,open_url,title,sort,status,description" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="image,open_url,title,sort,status" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -26,7 +23,6 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'title')" sortable @sort-change="sortChange($event, 'title')">标题</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sort')" sortable @sort-change="sortChange($event, 'sort')">排序</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'status')">生效状态</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'description')" sortable @sort-change="sortChange($event, 'description')">备注</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
@@ -40,7 +36,6 @@
             <uni-td align="center">{{item.title}}</uni-td>
             <uni-td align="center">{{item.sort}}</uni-td>
             <uni-td align="center">{{item.status == true ? '✅' : '❌'}}</uni-td>
-            <uni-td align="center">{{item.description}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
@@ -91,20 +86,7 @@
         imageStyles: {
           width: 64,
           height: 64
-        },
-        exportExcel: {
-          "filename": "fm-banner.xls",
-          "type": "xls",
-          "fields": {
-            "广告图片": "image",
-            "点击目标地址": "open_url",
-            "标题": "title",
-            "排序": "sort",
-            "生效状态": "status",
-            "备注": "description"
-          }
-        },
-        exportExcelData: []
+        }
       }
     },
     onLoad() {
@@ -114,9 +96,6 @@
       this.$refs.udb.loadData()
     },
     methods: {
-      onqueryload(data) {
-        this.exportExcelData = data
-      },
       getWhere() {
         const query = this.query.trim()
         if (!query) {
