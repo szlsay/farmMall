@@ -14,7 +14,8 @@
 							<text>{{item.producer}}</text>
 							<view class="price">
 								<text>￥{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)" @blur="onChangeNum(item)" />
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
+									@blur="onChangeNum(item)" />
 							</view>
 						</view>
 					</view>
@@ -33,6 +34,10 @@
 			<view class="buy">
 				去结算
 			</view>
+		</view>
+		<view v-else class="nodata">
+			<image src="@/static/default-nodata.png"></image>
+			<text>亲，购物车空空如也~</text>
 		</view>
 	</view>
 </template>
@@ -106,6 +111,24 @@
 </script>
 
 <style lang="scss" scoped>
+	.nodata {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 400rpx;
+		;
+
+		image {
+			width: 160rpx;
+			height: 160rpx;
+		}
+
+		text {
+			margin-top: 20rpx;
+		}
+	}
+
 	.footer {
 		position: fixed;
 		bottom: 100rpx;
