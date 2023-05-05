@@ -6,6 +6,36 @@ module.exports = {
 	_before: function() { // 通用预处理器
 
 	},
+	add: async function(value) {
+		if (value.is_default) {
+			const defaultData = await db.collection(dbCollectionName).where({
+				'is_default': value.is_default
+			}).get()
+			if (defaultData.data.length == 1) {
+				const defaultId = defaultData.data[0]._id
+				const transaction = await db.startTransaction()
+				try {
+					const updateOld = await transaction.collection(dbCollectionName).doc(defaultId).update({
+						"is_default": false
+					})
+					const addNew = await transaction.collection(dbCollectionName).add(value)
+					console.log('add---', updateOld, addNew)
+					if (updateOld.updated && addNew.updated) {
+						await transaction.commit()
+						return addNew
+					} else {
+						await transaction.rollback()
+					}
+				} catch (err) {
+					await transaction.rollback()
+				}
+			} else {
+				return db.collection(dbCollectionName).add(value)
+			}
+		} else {
+			return db.collection(dbCollectionName).add(value)
+		}
+	},
 	update: async function(id, value) {
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
