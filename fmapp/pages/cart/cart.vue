@@ -49,9 +49,8 @@
 		ref,
 		nextTick
 	} from "vue";
-	const db = uniCloud.database()
-	const cartCollectionName = 'fm-cart';
 
+	const fmcart = uniCloud.importObject("fmcart")
 	const cart = useCartStore();
 	const selectAll = computed(() => !cart.cartList.some(item => item.select == false))
 	const priceAll = computed(() => {
@@ -79,17 +78,13 @@
 		cart.cartList.map(item => {
 			item.select = selectValue
 		})
-		await db.collection(cartCollectionName).update({
-			select: selectValue
-		})
+		await fmcart.updateAllSelect(selectValue)
 	}
 
 	async function onSelectItem(data) {
 		console.log("onSelectItem", data)
 		data.select = !data.select
-		await db.collection(cartCollectionName).doc(data._id).update({
-			select: data.select
-		})
+		await fmcart.updateSelect(data._id, data.select)
 	}
 
 	function onChangeNum(data) {
@@ -100,9 +95,7 @@
 	}
 
 	async function updateQty(data) {
-		await db.collection(cartCollectionName).doc(data._id).update({
-			qty: data.qty
-		})
+		await fmcart.updateQty(data._id, data.qty)
 	}
 </script>
 

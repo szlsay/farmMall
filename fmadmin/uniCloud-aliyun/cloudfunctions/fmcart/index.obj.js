@@ -2,7 +2,7 @@
 // jsdoc语法提示教程：https://ask.dcloud.net.cn/docs/#//ask.dcloud.net.cn/article/129
 const db = uniCloud.database();
 const dbJql = uniCloud.databaseForJQL();
-// const dbCollectionName = 'fm-cart';
+const dbCollectionName = 'fm-cart';
 // 云对象代码传入clientInfo
 const uniID = require('uni-id-common')
 module.exports = {
@@ -12,11 +12,41 @@ module.exports = {
 			clientInfo
 		})
 	},
+	async updateQty(_id, qty) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		return await db.collection(dbCollectionName).doc(_id).where({
+			uid
+		}).update({
+			qty
+		})
+	},
+	async updateSelect(_id, select) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		return await db.collection(dbCollectionName).doc(_id).where({
+			uid
+		}).update({
+			select
+		})
+	},
+	async updateAllSelect(select) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		return await db.collection(dbCollectionName).where({
+			uid
+		}).update({
+			select
+		})
+	},
 	async getList() {
 		const {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
-		const cart_data = await dbJql.collection('fm-cart').where({
+		const cart_data = await dbJql.collection(dbCollectionName).where({
 			uid
 		}).getTemp()
 		const result = await dbJql.collection(cart_data, 'fm-goods').field(
