@@ -155,6 +155,15 @@
 			}]
 		},
 		{
+			"root": "pages/order",
+			"pages": [
+				{
+					"needLogin": true,
+					"path": "confirm"
+				}
+			]
+		},
+		{
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
 				"path": "pages/opendb-feedback/opendb-feedback",

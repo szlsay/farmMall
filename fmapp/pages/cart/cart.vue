@@ -27,7 +27,7 @@
 				<text>合计：</text>
 				<text>￥{{priceAll}}</text>
 			</view>
-			<view class="buy">
+			<view class="buy" @click="onClickBuy">
 				去结算
 			</view>
 		</view>
@@ -72,19 +72,34 @@
 		cart.getCartList()
 	})
 
+	function onClickBuy() {
+		if (cart.cartList.some(item => item.select)) {
+			uni.navigateTo({
+				url: "/pages/order/confirm"
+			})
+		} else {
+			uni.showToast({
+				icon:'none',
+				title: '您还没选择商品哦'
+			})
+		}
+	}
+
 	async function onSelectAll() {
 		const selectValue = !selectAll.value
-		console.log("onSelectAll", selectAll)
-		cart.cartList.map(item => {
-			item.select = selectValue
-		})
-		await fmcart.updateAllSelect(selectValue)
+		const result = await fmcart.updateAllSelect(selectValue)
+		if (result.updated && result.updated > 0) {
+			cart.cartList.map(item => {
+				item.select = selectValue
+			})
+		}
 	}
 
 	async function onSelectItem(data) {
-		console.log("onSelectItem", data)
-		data.select = !data.select
-		await fmcart.updateSelect(data._id, data.select)
+		const result = await fmcart.updateSelect(data._id, !data.select)
+		if (result.updated && result.updated > 0) {
+			data.select = !data.select
+		}
 	}
 
 	function onChangeNum(data) {
@@ -96,6 +111,8 @@
 
 	async function updateQty(data) {
 		await fmcart.updateQty(data._id, data.qty)
+		const result = await fmcart.updateSelect(data._id, data.select)
+		console.log('onSelectItem--', result)
 	}
 </script>
 
