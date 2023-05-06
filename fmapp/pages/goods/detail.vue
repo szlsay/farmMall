@@ -211,6 +211,7 @@
 				font-size: 32rpx;
 
 				text {
+					color: #ff4f01;
 					font-size: 52rpx;
 				}
 			}
