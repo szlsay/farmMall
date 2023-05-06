@@ -11,7 +11,7 @@
 		"image": {
 			"bsonType": "file",
 			"fileMediaType": "image",
-			"fileExtName": "jpg,png,webp",
+			"fileExtName": "jpeg,jpg,png,webp",
 			"description": "请选择广告图片",
 			"label": "广告图片"
 		},
