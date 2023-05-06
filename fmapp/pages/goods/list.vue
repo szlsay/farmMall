@@ -14,11 +14,13 @@
 				</button>
 			</view>
 		</view>
-		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionListBanner" field="image,open_url,title,sort,status,description" where="status == true">
+		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}"
+			:collection="collectionListBanner" field="image,open_url,title,sort,status,description" where="status == true">
 			<view class="banner">
 				<swiper circular indicator-dots>
 					<swiper-item v-for="(item, index) in data" :key="index">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image" mode="aspectFill"></image>
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
+							mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -100,6 +102,24 @@
 <style lang="scss">
 	@import "@/static/css/iconfont.css";
 
+	.banner {
+		// $view-width : 100vw;
+		// height: calc(#{$view-width});
+		padding: 16rpx 32rpx 16rpx;
+		height: 300rpx;
+		background: linear-gradient(to bottom, #36A54B 50%, #86f59B 100%);
+
+		uni-swiper {
+			height: 100%;
+
+			.fm_image {
+				width: 100%;
+				height: 100%;
+				border-radius: 16rpx;
+			}
+		}
+	}
+
 	.top {
 		background-color: #36A54B;
 
@@ -134,8 +154,8 @@
 				color: #333333;
 				text-align: center;
 				line-height: 80rpx;
-				
-				text{
+
+				text {
 					margin-left: 8rpx;
 				}
 			}
