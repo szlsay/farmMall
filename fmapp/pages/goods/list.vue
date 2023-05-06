@@ -13,8 +13,16 @@
 					<text>买好货 上农福</text>
 				</button>
 			</view>
-
 		</view>
+		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionListBanner" field="image,open_url,title,sort,status,description" where="status == true">
+			<view class="banner">
+				<swiper circular indicator-dots>
+					<swiper-item v-for="(item, index) in data" :key="index">
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image" mode="aspectFill"></image>
+					</swiper-item>
+				</swiper>
+			</view>
+		</unicloud-db>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="image,name,description">
 			<view v-if="error">{{error.message}}</view>
@@ -35,6 +43,7 @@
 	export default {
 		data() {
 			return {
+				collectionListBanner: "fm-banner",
 				collectionList: "fm-goods",
 				loadMore: {
 					contentdown: '',
