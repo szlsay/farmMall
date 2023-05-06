@@ -28,7 +28,7 @@
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="image,name,description">
 			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="data">
+			<view v-else-if="data" class="goods">
 				<pp-waterfall-flow :value="changeShowData(data)" @clickItem="handleItemClick"
 					@clickImage="handleItemClick"></pp-waterfall-flow>
 			</view>
@@ -101,10 +101,12 @@
 
 <style lang="scss">
 	@import "@/static/css/iconfont.css";
+	.goods{
+		padding: 16rpx 32rpx 16rpx;
+	}
 
 	.banner {
-		// $view-width : 100vw;
-		// height: calc(#{$view-width});
+		margin-top: -2rpx;
 		padding: 16rpx 32rpx 16rpx;
 		height: 300rpx;
 		background: linear-gradient(to bottom, #36A54B 50%, #86f59B 100%);
