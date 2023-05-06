@@ -5,8 +5,8 @@
 	"permission": {
 		"read": true,
 		"create": true,
-		"update": "doc.uid == auth.uid",
-		"delete": "doc.uid == auth.uid"
+		"update": true,
+		"delete": true
 	},
 	"properties": {
 		"_id": {

@@ -16,9 +16,7 @@ module.exports = {
 		const {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
-		return await db.collection(dbCollectionName).doc(_id).where({
-			uid
-		}).update({
+		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			qty
 		})
 	},
@@ -26,9 +24,7 @@ module.exports = {
 		const {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
-		return await db.collection(dbCollectionName).doc(_id).where({
-			uid
-		}).update({
+		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			select
 		})
 	},
@@ -36,7 +32,7 @@ module.exports = {
 		const {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
-		return await db.collection(dbCollectionName).where({
+		return await dbJql.collection(dbCollectionName).where({
 			uid
 		}).update({
 			select
