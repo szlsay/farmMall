@@ -12,12 +12,41 @@ module.exports = {
 			clientInfo
 		})
 	},
+	async add(goods_id) {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		const value = {
+			goods_id,
+			uid
+		}
+		let result = await db.collection(dbCollectionName).where({
+			goods_id: value.goods_id,
+			uid
+		}).get()
+		if (result.data && result.data.length === 1) {
+			let cartData = result.data[0]
+			cartData.qty += 1
+			return db.collection(dbCollectionName).doc(cartData._id).update({
+				qty: cartData.qty,
+				update_time: Date.now()
+			})
+		} else {
+			value.create_time = Date.now()
+			value.update_time = Date.now()
+			value.qty = 1
+			value.select = false
+			return db.collection(dbCollectionName).add(value)
+
+		}
+	},
 	async updateQty(_id, qty) {
 		const {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
-			qty
+			qty,
+			update_time: Date.now()
 		})
 	},
 	async updateSelect(_id, select) {
@@ -25,7 +54,8 @@ module.exports = {
 			uid
 		} = await this.uniID.checkToken(this.getUniIdToken());
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
-			select
+			select,
+			update_time: Date.now()
 		})
 	},
 	async updateAllSelect(select) {
@@ -35,7 +65,8 @@ module.exports = {
 		return await dbJql.collection(dbCollectionName).where({
 			uid
 		}).update({
-			select
+			select,
+			update_time: Date.now()
 		})
 	},
 	async getList() {
