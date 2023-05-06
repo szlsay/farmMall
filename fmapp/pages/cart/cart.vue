@@ -1,27 +1,23 @@
 <template>
 	<view class="container">
-		<uni-list v-for="item in cart.cartList">
-			<uni-list-item>
-				<template v-slot:body>
-					<view class="body-content">
-						<view class="item-left">
-							<radio color="#00CC99" :checked="item.select" @click="onSelectItem(item)" />
-							<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
-								mode="aspectFill"></image>
-						</view>
-						<view class="item-right">
-							<text class="title">{{item.name}}</text>
-							<text>{{item.producer}}</text>
-							<view class="price">
-								<text>￥{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
-									@blur="onChangeNum(item)" />
-							</view>
-						</view>
+		<view v-for="item in cart.cartList" class="cart-list">
+			<view class="cart-item">
+				<view class="item-left">
+					<radio color="#00CC99" :checked="item.select" @click="onSelectItem(item)" />
+					<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
+						mode="aspectFill"></image>
+				</view>
+				<view class="item-right">
+					<text class="title">{{item.name}}</text>
+					<text>{{item.producer}}</text>
+					<view class="price">
+						<text>￥{{item.price_sell}}</text>
+						<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
+							@blur="onChangeNum(item)" />
 					</view>
-				</template>
-			</uni-list-item>
-		</uni-list>
+				</view>
+			</view>
+		</view>
 		<view class="footer" v-if="cart.cartList && cart.cartList.length > 0">
 			<view class="select">
 				<radio color="#00CC99" :checked="selectAll" @click="onSelectAll"></radio>
@@ -169,9 +165,18 @@
 		}
 	}
 
-	.body-content {
-		width: 100%;
+	.cart-list {
 		display: flex;
+		flex-direction: column;
+
+		.cart-item {
+			display: flex;
+			padding: 32rpx;
+			background-color: white;
+			margin: 32rpx;
+			margin-bottom: 0;
+			border-radius: 16rpx;
+		}
 	}
 
 	.item-left {
