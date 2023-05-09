@@ -42,3 +42,23 @@ export function formatDate(value, fmt) {
     return value.substr(0,fmt.length);
   }
 }
+
+	/**
+	 * 价格格式化
+	 * @param value
+	 * @param fmt
+	 * @returns {*}
+	 */
+	export function formatPrice(value) {
+		var result = Math.round(parseFloat(value) * 100) / 100
+		const arrayNum = value.toString().split('.')
+		if (arrayNum.length < 2) {
+			return value.toString() + '.00'
+		} else {
+			if (arrayNum[1].length < 2) {
+				return value.toString() + '0'
+			} else {
+				return value.toString()
+			}
+		}
+	}

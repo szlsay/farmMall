@@ -8,23 +8,35 @@
 			</view>
 		</view>
 		<view class="goods">
-			<!-- 			{{cartList}} -->
 			<view v-for="item in cartList" class="cart-list">
-				<view class="cart-item">
-					<view class="item-left">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
-							mode="aspectFill"></image>
+				<view class="cart-cell">
+					<view class="cart-item">
+						<view class="item-left">
+							<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
+								mode="aspectFill"></image>
+						</view>
+						<view class="item-right">
+							<text class="title">{{item.name}}</text>
+							<text>{{item.producer}}</text>
+							<view class="price">
+								<text>￥{{item.price_sell}}</text>
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
+									@blur="onChangeNum(item)" />
+							</view>
+						</view>
 					</view>
-					<view class="item-right">
-						<text class="title">{{item.name}}</text>
-						<text>{{item.producer}}</text>
-						<view class="price">
-							<text>￥{{item.price_sell}}</text>
-							<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
-								@blur="onChangeNum(item)" />
+					<view class="cart-price">
+						<view class="subtotal">
+							<text>小计</text>
+							<text>￥{{formatPrice(item.qty * item.price_sell)}}</text>
+						</view>
+						<view class="subtotal">
+							<text>运杂费</text>
+							<text></text>
 						</view>
 					</view>
 				</view>
+
 			</view>
 		</view>
 		<view class="footer">
@@ -37,6 +49,9 @@
 	import {
 		useCartStore
 	} from '@/stores/cart.js';
+	import {
+		formatPrice
+	} from '@/utils/util.js';
 	import {
 		onActivated,
 		onMounted,
@@ -72,6 +87,18 @@
 </script>
 
 <style lang="scss" scoped>
+	.cart-price {
+		.subtotal {
+			padding-top: 16rpx;
+			display: flex;
+			justify-content: space-between;
+
+			text:nth-child(2) {
+				color: #ff442f;
+			}
+		}
+	}
+
 	.address {
 		.no-address {
 			background-color: white;
@@ -93,13 +120,17 @@
 		display: flex;
 		flex-direction: column;
 
-		.cart-item {
-			display: flex;
+		.cart-cell {
 			padding: 32rpx;
 			background-color: white;
 			margin: 32rpx;
 			margin-bottom: 0;
 			border-radius: 16rpx;
+		}
+
+		.cart-item {
+			display: flex;
+
 		}
 	}
 
