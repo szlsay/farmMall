@@ -111,8 +111,6 @@
 
 	async function updateQty(data) {
 		await fmcart.updateQty(data._id, data.qty)
-		const result = await fmcart.updateSelect(data._id, data.select)
-		console.log('onSelectItem--', result)
 	}
 </script>
 
