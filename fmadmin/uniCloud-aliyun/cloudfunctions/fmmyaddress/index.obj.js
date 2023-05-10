@@ -11,6 +11,15 @@ module.exports = {
 			clientInfo
 		})
 	},
+	async getDefault() {
+		const {
+			uid
+		} = await this.uniID.checkToken(this.getUniIdToken());
+		return db.collection(dbCollectionName).where({
+			'is_default': true,
+			'uid': uid
+		}).get()
+	},
 	add: async function(value) {
 		const {
 			uid

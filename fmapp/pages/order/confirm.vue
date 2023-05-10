@@ -83,6 +83,9 @@
 		ref,
 		reactive
 	} from "vue";
+	import {
+		onShow
+	} from '@dcloudio/uni-app'
 	const fmcart = uniCloud.importObject("fmcart")
 	const cart = useCartStore();
 	const cartList = computed(() => cart.cartList.filter(item => item.select))
@@ -97,6 +100,14 @@
 	})
 	const addressId = ref('')
 	const addressData = reactive({})
+
+	onShow(async () => {
+		const fmmyaddress = uniCloud.importObject('fmmyaddress')
+		const result = await fmmyaddress.getDefault()
+		if (addressData.data == null && result.data.length === 1) {
+			addressData.data = result.data[0]
+		}
+	})
 
 	function onSelectAddress() {
 		let id = ''
