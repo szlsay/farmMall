@@ -125,16 +125,14 @@
 			}
 		}
 		// #endif
-	    ,{
-            "path" : "pages/order/order",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+		, {
+			"path": "pages/order/order",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
+	],
 	"subPackages": [{
 			"root": "pages/my",
 			"pages": [{
@@ -152,16 +150,19 @@
 				"style": {
 					"navigationBarTitleText": "列表"
 				}
+			}, {
+				"path": "address/select",
+				"style": {
+					"navigationBarTitleText": "选择"
+				}
 			}]
 		},
 		{
 			"root": "pages/order",
-			"pages": [
-				{
-					"needLogin": true,
-					"path": "confirm"
-				}
-			]
+			"pages": [{
+				"needLogin": true,
+				"path": "confirm"
+			}]
 		},
 		{
 			"root": "uni_modules/uni-feedback",

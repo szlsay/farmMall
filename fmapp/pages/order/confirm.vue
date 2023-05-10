@@ -2,7 +2,7 @@
 	<view class="container">
 		<view class="address">
 			<view class="no-address">
-				<view class="no-btn">
+				<view class="no-btn" @click="onSelectAddress">
 					添加收货地址
 				</view>
 			</view>
@@ -43,7 +43,7 @@
 				<text>合计：</text>
 				<text>￥{{formatPrice(priceAll)}}</text>
 			</view>
-			<view class="buy" @click="">
+			<view class="buy" @click="onSubmit">
 				提交订单
 			</view>
 		</view>
@@ -60,9 +60,13 @@
 	import {
 		onActivated,
 		onMounted,
-		computed
+		computed,
+		ref
 	} from "vue";
-
+	// import {
+	// 	onReady,
+	// 	onShow
+	// } from '@dcloudio/uni-app'
 	const fmcart = uniCloud.importObject("fmcart")
 	const cart = useCartStore();
 	const cartList = computed(() => cart.cartList.filter(item => item.select))
@@ -75,6 +79,32 @@
 		})
 		return number
 	})
+	const addressId = ref('')
+
+	function onSelectAddress() {
+		uni.navigateTo({
+			url: '/pages/my/address/select',
+			events: {
+				// 监听新增数据成功后, 刷新当前页面数据
+				selectData: (data) => {
+					console.log('onSelectAddress-', data)
+				}
+			}
+		})
+	}
+
+	function onSubmit() {
+		if (addressId.value == null || addressId.value === '') {
+			uni.showToast({
+				icon: 'none',
+				title: '请先选择收货地址'
+			})
+		} else {
+			// uni.navigateTo({
+			// 	url: '/pages/my/address/list'
+			// })
+		}
+	}
 
 	function onChangeNum(data) {
 		const that = this
@@ -136,6 +166,7 @@
 
 	.goods {
 		padding-bottom: 140rpx;
+
 		.cart-list {
 			display: flex;
 			flex-direction: column;
