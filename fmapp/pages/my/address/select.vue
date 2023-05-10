@@ -5,17 +5,21 @@
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
 				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true"
-						@click="handleItemClick(item)">
+					<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true" @click="handleItemClick(item)">
 						<template v-slot:body>
 							<view class="item">
-								<view class="user">
-									<text>{{item.receive_name}}</text>
-									<text>{{item.receive_mobile}}</text>
+								<view class="left">
+									<radio color="#00CC99" :checked="item._id === $route.query.id" />
 								</view>
-								<view class="address">
-									<text class="default" v-if="item.is_default">默认</text>
-									<text>收货地址：{{item.full_address}}</text>
+								<view class="right">
+									<view class="user">
+										<text>{{item.receive_name}}</text>
+										<text>{{item.receive_mobile}}</text>
+									</view>
+									<view class="address">
+										<text class="default" v-if="item.is_default">默认</text>
+										<text>收货地址：{{item.full_address}}</text>
+									</view>
 								</view>
 							</view>
 						</template>
@@ -73,6 +77,7 @@
 		methods: {
 			handleItemClick(item) {
 				this.getOpenerEventChannel().emit('selectData', item)
+				uni.navigateBack()
 			},
 			onClickAdd() {
 				// 打开新增页面
@@ -104,29 +109,36 @@
 	}
 
 	.item {
-		.user {
-			text {
-				font-size: 32rpx;
-				font-weight: bold;
+		display: flex;
+		align-items: center;
+		.left {}
+
+		.right {
+			.user {
+				text {
+					font-size: 32rpx;
+					font-weight: bold;
+				}
+
+				text:nth-child(2) {
+					margin-left: 20rpx;
+				}
 			}
 
-			text:nth-child(2) {
-				margin-left: 20rpx;
+			.address {
+				margin-top: 10rpx;
+
+				.default {
+					background-color: #00CC99;
+					padding: 2rpx 8rpx 2rpx;
+					color: white;
+					border-radius: 8rpx;
+					font-size: 24rpx;
+					margin-right: 16rpx;
+				}
 			}
 		}
 
-		.address {
-			margin-top: 10rpx;
-
-			.default {
-				background-color: #00CC99;
-				padding: 2rpx 8rpx 2rpx;
-				color: white;
-				border-radius: 8rpx;
-				font-size: 24rpx;
-				margin-right: 16rpx;
-			}
-		}
 	}
 
 	.footer {

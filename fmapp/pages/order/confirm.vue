@@ -1,8 +1,27 @@
 <template>
 	<view class="container">
-		<view class="address">
-			<view class="no-address">
-				<view class="no-btn" @click="onSelectAddress">
+		<view class="address" @click="onSelectAddress">
+			<view class="" v-if="addressData.data">
+				<view class="data-address">
+					<view class="left">
+						<i class="iconfont fm-map" style="color: #00CC99; font-size: 40rpx;"></i>
+					</view>
+					<view class="middle">
+						<view class="user">
+							<text>{{addressData.data.receive_name}}</text>
+							<text>{{addressData.data.receive_mobile}}</text>
+						</view>
+						<view class="full">
+							<text>收货地址：{{addressData.data.full_address}}</text>
+						</view>
+					</view>
+					<view class="right">
+						<i class="iconfont fm-arrowright" style="color: #00CC99; font-size: 40rpx;"></i>
+					</view>
+				</view>
+			</view>
+			<view class="no-address" v-else>
+				<view class="no-btn">
 					添加收货地址
 				</view>
 			</view>
@@ -61,12 +80,9 @@
 		onActivated,
 		onMounted,
 		computed,
-		ref
+		ref,
+		reactive
 	} from "vue";
-	// import {
-	// 	onReady,
-	// 	onShow
-	// } from '@dcloudio/uni-app'
 	const fmcart = uniCloud.importObject("fmcart")
 	const cart = useCartStore();
 	const cartList = computed(() => cart.cartList.filter(item => item.select))
@@ -80,21 +96,27 @@
 		return number
 	})
 	const addressId = ref('')
+	const addressData = reactive({})
 
 	function onSelectAddress() {
+		let id = ''
+		if (addressData.data && addressData.data._id) {
+			id = addressData.data._id
+		}
 		uni.navigateTo({
-			url: '/pages/my/address/select',
+			url: '/pages/my/address/select?id=' + id,
 			events: {
 				// 监听新增数据成功后, 刷新当前页面数据
 				selectData: (data) => {
 					console.log('onSelectAddress-', data)
+					addressData.data = data
 				}
 			}
 		})
 	}
 
 	function onSubmit() {
-		if (addressId.value == null || addressId.value === '') {
+		if (addressData.data == null) {
 			uni.showToast({
 				icon: 'none',
 				title: '请先选择收货地址'
@@ -129,6 +151,8 @@
 </script>
 
 <style lang="scss" scoped>
+	@import "@/static/css/iconfont.css";
+
 	.footer {
 		position: fixed;
 		bottom: 0;
@@ -245,6 +269,41 @@
 
 
 	.address {
+		.data-address {
+			background-color: white;
+			padding: 32rpx 32rpx 32rpx;
+			display: flex;
+			align-items: center;
+
+			.left {
+				width: 60rpx;
+			}
+
+			.right {
+				width: 60rpx;
+			}
+
+			.middle {
+				flex: 1;
+
+				.user {
+					text {
+						font-size: 32rpx;
+						font-weight: bold;
+					}
+
+					text:nth-child(2) {
+						margin-left: 20rpx;
+					}
+				}
+
+				.full {
+					margin-top: 10rpx;
+				}
+			}
+
+		}
+
 		.no-address {
 			background-color: white;
 			padding: 32rpx 100rpx 32rpx;
