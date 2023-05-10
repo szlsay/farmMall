@@ -55,13 +55,30 @@
 					contentrefresh: '',
 					contentnomore: ''
 				},
-				where: ''
+				where: '',
+				dataTemp: {}
 			}
 		},
 		onLoad() {
 			this.where = "uid=='" + uniCloud.getCurrentUserInfo().uid + "'"
+		},
+		onShow() {
+			const that = this
 			this.$nextTick(() => {
-				this.$refs.udb.loadData()
+				that.$refs.udb.loadData({
+					clear: true
+				}, (data) => {
+					//
+					const result = data.filter(item => item._id === that.$route.query.id)
+					console.log('onShow---------000000', result)
+					if (result && result.length === 1) {
+						that.dataTemp.value = result[0]
+						console.log('onShow---------1111', that.dataTemp)
+						console.log('onShow---------1111', that.dataTemp.value)
+						that.getOpenerEventChannel().emit('selectData', that.dataTemp.value)
+					}
+					 uni.stopPullDownRefresh()
+				})
 			})
 		},
 		onPullDownRefresh() {
@@ -76,14 +93,16 @@
 		},
 		methods: {
 			handleItemClick(item) {
+				console.log('handleItemClick====', item)
 				this.getOpenerEventChannel().emit('selectData', item)
 				uni.navigateBack()
 			},
 			onClickAdd() {
+				this.getOpenerEventChannel().emit('selectData', "1111")
 				// 打开新增页面
-				uni.navigateTo({
-					url: './list'
-				})
+				// uni.navigateTo({
+				// 	url: './list'
+				// })
 			}
 		}
 	}
@@ -111,6 +130,7 @@
 	.item {
 		display: flex;
 		align-items: center;
+
 		.left {}
 
 		.right {

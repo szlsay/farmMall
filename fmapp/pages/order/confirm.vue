@@ -102,10 +102,12 @@
 	const addressData = reactive({})
 
 	onShow(async () => {
-		const fmmyaddress = uniCloud.importObject('fmmyaddress')
-		const result = await fmmyaddress.getDefault()
-		if (addressData.data == null && result.data.length === 1) {
-			addressData.data = result.data[0]
+		if (addressData.data == null) {
+			const fmmyaddress = uniCloud.importObject('fmmyaddress')
+			const result = await fmmyaddress.getDefault()
+			if (result.data.length === 1) {
+				addressData.data = result.data[0]
+			}
 		}
 	})
 
