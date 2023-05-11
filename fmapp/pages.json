@@ -163,7 +163,11 @@
 			"root": "pages/order",
 			"pages": [{
 				"needLogin": true,
-				"path": "confirm"
+				"path": "confirm",
+				"style": {
+					"navigationBarTitleText": "确认订单"
+				}
+
 			}]
 		},
 		{
