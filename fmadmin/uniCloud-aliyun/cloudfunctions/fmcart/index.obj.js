@@ -6,23 +6,26 @@ const dbCollectionName = 'fm-cart';
 // 云对象代码传入clientInfo
 const uniID = require('uni-id-common')
 module.exports = {
-	_before: function() { // 通用预处理器
+	_before: async function() { // 通用预处理器
 		const clientInfo = this.getClientInfo()
 		this.uniID = uniID.createInstance({ // 创建uni-id实例，其上方法同uniID
 			clientInfo
 		})
+		this.token = this.getUniIdToken()
+		if (this.token) {
+			this.userInfo = await this.uniID.checkToken(this.token);
+		} else {
+			return
+		}
 	},
 	async add(goods_id) {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		const value = {
 			goods_id,
-			uid
+			uid: this.userInfo.uid
 		}
 		let result = await db.collection(dbCollectionName).where({
 			goods_id: value.goods_id,
-			uid
+			uid: this.userInfo.uid
 		}).get()
 		if (result.data && result.data.length === 1) {
 			let cartData = result.data[0]
@@ -37,44 +40,31 @@ module.exports = {
 			value.qty = 1
 			value.select = false
 			return db.collection(dbCollectionName).add(value)
-
 		}
 	},
 	async updateQty(_id, qty) {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			qty,
 			update_time: Date.now()
 		})
 	},
 	async updateSelect(_id, select) {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			select,
 			update_time: Date.now()
 		})
 	},
 	async updateAllSelect(select) {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		return await dbJql.collection(dbCollectionName).where({
-			uid
+			uid: this.userInfo.uid
 		}).update({
 			select,
 			update_time: Date.now()
 		})
 	},
 	async getList() {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		const cart_data = await dbJql.collection(dbCollectionName).where({
-			uid
+			uid: this.userInfo.uid
 		}).getTemp()
 		const result = await dbJql.collection(cart_data, 'fm-goods').field(
 			'goods_id{image, name, price_sell, producer}, qty, select').get()

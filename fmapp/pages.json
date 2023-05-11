@@ -2,7 +2,8 @@
 	"pages": [{
 			"path": "pages/goods/list",
 			"style": {
-				"navigationBarTitleText": "列表"
+				"navigationBarTitleText": "首页",
+				"navigationBarBackgroundColor": "#36A54B"
 			}
 		}, {
 			"path": "pages/goods/detail",
@@ -18,7 +19,7 @@
 		}, {
 			"path": "pages/cart/cart",
 			"style": {
-				"navigationBarTitleText": "列表"
+				"navigationBarTitleText": "购物车"
 			}
 		}, {
 			"path": "pages/list/list",
@@ -319,7 +320,8 @@
 	"uniIdRouter": {
 		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
 		"needLogin": [
-			"/uni_modules/uni-id-pages/pages/userinfo/userinfo"
+			"/uni_modules/uni-id-pages/pages/userinfo/userinfo",
+			"/pages/cart/cart"
 		],
 		"resToLogin": true
 	}

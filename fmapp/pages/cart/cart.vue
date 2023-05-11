@@ -79,7 +79,7 @@
 			})
 		} else {
 			uni.showToast({
-				icon:'none',
+				icon: 'none',
 				title: '您还没选择商品哦'
 			})
 		}
@@ -115,6 +115,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.container{
+		padding-bottom: 180rpx;
+	}
 	.nodata {
 		display: flex;
 		flex-direction: column;
@@ -176,7 +179,6 @@
 	.cart-list {
 		display: flex;
 		flex-direction: column;
-
 		.cart-item {
 			display: flex;
 			padding: 32rpx;
