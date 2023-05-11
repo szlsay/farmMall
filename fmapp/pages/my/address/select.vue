@@ -98,11 +98,10 @@
 				uni.navigateBack()
 			},
 			onClickAdd() {
-				this.getOpenerEventChannel().emit('selectData', "1111")
 				// 打开新增页面
-				// uni.navigateTo({
-				// 	url: './list'
-				// })
+				uni.navigateTo({
+					url: './list'
+				})
 			}
 		}
 	}

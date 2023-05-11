@@ -265,13 +265,16 @@
 	],
 	"globalStyle": {
 		// #ifdef H5
-		"h5": {
-			"titleNView": false
-		},
+		// "h5": {
+		// 	"titleNView": false
+		// },
 		// #endif
-		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-starter",
-		"navigationBarBackgroundColor": "#FFFFFF",
+		// "navigationBarTextStyle": "black",
+		// "navigationBarTitleText": "uni-starter",
+		// "navigationBarBackgroundColor": "#FFFFFF",
+		"navigationBarTextStyle": "#FFFFFF",
+		"navigationBarTitleText": "",
+		"navigationBarBackgroundColor": "#00CC99",
 		"backgroundColor": "#F8F8F8",
 		"enablePullDownRefresh": false,
 		// "maxWidth":375,

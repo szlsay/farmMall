@@ -1,0 +1,33 @@
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"uid_buy": {
+			"bsonType": "string",
+			"description": "用户的唯一id",
+			"title": "用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"order_goodslist": {
+			"bsonType": "array",
+			"arrayType": "object",
+			"description": "商品列表",
+			"label": "商品列表",
+			"properties": {
+				
+			}
+		}
+	}
+}
