@@ -26,7 +26,46 @@
 			"description": "商品列表",
 			"label": "商品列表",
 			"properties": {
-				
+				"goods_id": {
+					"bsonType": "string",
+					"description": "商品的唯一id",
+					"label": "商品id"
+				},
+				"name": {
+					"bsonType": "string",
+					"description": "请填写商品名称",
+					"label": "商品名称"
+				},
+				"producer": {
+					"bsonType": "string",
+					"description": "请填写商品产地",
+					"label": "商品产地"
+				},
+				"price_original": {
+					"bsonType": "double",
+					"description": "请填写原价",
+					"label": "原价"
+				},
+				"price_sell": {
+					"bsonType": "double",
+					"description": "请填写售价",
+					"label": "售价"
+				},
+				"image_url": {
+					"bsonType": "string",
+					"description": "图片地址",
+					"label": "图片地址"
+				},
+				"qty": {
+					"bsonType": "int",
+					"description": "购物车数量",
+					"title": "数量"
+				},
+				"price_total": {
+					"bsonType": "double",
+					"description": "请填写合计",
+					"label": "合计"
+				}
 			}
 		}
 	}
