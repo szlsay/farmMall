@@ -14,8 +14,14 @@ module.exports = {
 		this.token = this.getUniIdToken()
 		if (this.token) {
 			this.userInfo = await this.uniID.checkToken(this.token);
+			if (this.userInfo.errCode) {
+				return {
+					errCode: this.userInfo.errCode,
+					errMsg: this.userInfo.errMsg
+				}
+			}
 		} else {
-			return
+			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
 	async add(goods_id) {
@@ -23,6 +29,7 @@ module.exports = {
 			goods_id,
 			uid: this.userInfo.uid
 		}
+		console.log("add--", value)
 		let result = await db.collection(dbCollectionName).where({
 			goods_id: value.goods_id,
 			uid: this.userInfo.uid

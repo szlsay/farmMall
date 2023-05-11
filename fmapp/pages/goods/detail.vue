@@ -54,6 +54,9 @@
 	import {
 		enumConverter
 	} from '@/js_sdk/validator/fm-goods.js'
+	import {
+		isLogin
+	} from '@/utils/util.js'
 	const db = uniCloud.database()
 	const dbCollectionName = 'fm-goods';
 	const cartCollectionName = 'fm-cart';
@@ -98,6 +101,15 @@
 			}
 		},
 		methods: {
+			handleBuy() {
+				if (!isLogin()) {
+					uni.showToast({
+						icon:'none',
+						title: '请先登录'
+					})
+					return
+				}
+			},
 			onClickBack() {
 				uni.navigateBack()
 			},
@@ -126,6 +138,13 @@
 				})
 			},
 			async handleCart() {
+				if (!isLogin()) {
+					uni.showToast({
+						icon:'none',
+						title: '请先登录'
+					})
+					return
+				}
 				uni.showLoading({
 					mask: true
 				})
