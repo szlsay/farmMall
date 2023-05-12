@@ -1,37 +1,30 @@
 <template>
 	<view class="container">
-		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
-			:where="where" orderby="update_time desc">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="data">
-				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" :clickable="true" @click="handleItemClick(item)">
-						<template v-slot:body>
-							<view class="item">
-								<view class="left">
-									<radio color="#00CC99" :checked="item._id === $route.query.id" />
-								</view>
-								<view class="right">
-									<view class="user">
-										<text>{{item.receive_name}}</text>
-										<text>{{item.receive_mobile}}</text>
-									</view>
-									<view class="address">
-										<text class="default" v-if="item.is_default">默认</text>
-										<text>收货地址：{{item.full_address}}</text>
-									</view>
-								</view>
+		<uni-list>
+			<uni-list-item v-for="(item, index) in addressList" :key="index" :clickable="true" @click="handleItemClick(item)">
+				<template v-slot:body>
+					<view class="item">
+						<view class="left">
+							<radio color="#00CC99" :checked="item._id === $route.query.id" />
+						</view>
+						<view class="right">
+							<view class="user">
+								<text>{{item.receive_name}}</text>
+								<text>{{item.receive_mobile}}</text>
 							</view>
-						</template>
-					</uni-list-item>
-				</uni-list>
-				<view v-if="data.length === 0" class="nodata">
-					<image src="@/static/default-nodata.png"></image>
-					<text>亲，请添加收货地址~</text>
-				</view>
-			</view>
-			<uni-load-more v-if="data.length" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
-		</unicloud-db>
+							<view class="address">
+								<text class="default" v-if="item.is_default">默认</text>
+								<text>收货地址：{{item.full_address}}</text>
+							</view>
+						</view>
+					</view>
+				</template>
+			</uni-list-item>
+		</uni-list>
+		<view v-if="addressList.length === 0" class="nodata">
+			<image src="@/static/default-nodata.png"></image>
+			<text>亲，请添加收货地址~</text>
+		</view>
 		<view class="footer">
 			<view class="btn-add" @click="onClickAdd">
 				管理收货地址
@@ -41,64 +34,29 @@
 </template>
 
 <script>
-	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
-				collectionList: [db.collection('fm-my-address').field(
-						'receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default,uid,update_time'
-					).getTemp(), db.collection('opendb-city-china').field('code, name as text, eq(type, 2) as isleaf')
-					.getTemp()
-				],
-				loadMore: {
-					contentdown: '',
-					contentrefresh: '',
-					contentnomore: ''
-				},
-				where: '',
-				dataTemp: {}
+				addressList: []
 			}
 		},
-		onLoad() {
-			this.where = "uid=='" + uniCloud.getCurrentUserInfo().uid + "'"
-		},
 		onShow() {
-			const that = this
-			this.$nextTick(() => {
-				that.$refs.udb.loadData({
-					clear: true
-				}, (data) => {
-					//
-					const result = data.filter(item => item._id === that.$route.query.id)
-					console.log('onShow---------000000', result)
-					if (result && result.length === 1) {
-						that.dataTemp.value = result[0]
-						console.log('onShow---------1111', that.dataTemp)
-						console.log('onShow---------1111', that.dataTemp.value)
-						that.getOpenerEventChannel().emit('selectData', that.dataTemp.value)
-					}
-					 uni.stopPullDownRefresh()
-				})
-			})
+			this.loadData()
 		},
-		onPullDownRefresh() {
-			this.$refs.udb.loadData({
-				clear: true
-			}, () => {
-				uni.stopPullDownRefresh()
-			})
-		},
-		onReachBottom() {
-			this.$refs.udb.loadMore()
-		},
+
 		methods: {
+			async loadData() {
+				const fmaddress = uniCloud.importObject('fm-address')
+				const result = await fmaddress.getList()
+				if (result.data) {
+					this.addressList = result.data
+				}
+			},
 			handleItemClick(item) {
-				console.log('handleItemClick====', item)
 				this.getOpenerEventChannel().emit('selectData', item)
 				uni.navigateBack()
 			},
 			onClickAdd() {
-				// 打开新增页面
 				uni.navigateTo({
 					url: './list'
 				})
