@@ -52,8 +52,6 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
@@ -134,9 +132,7 @@
 					this.formData.area_name = ""
 				}
 			},
-			/**
-			 * 验证表单并提交
-			 */
+
 			submit() {
 				uni.showLoading({
 					mask: true
@@ -148,9 +144,6 @@
 				})
 			},
 
-			/**
-			 * 提交表单
-			 */
 			async submitForm(value) {
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
@@ -158,13 +151,13 @@
 				value.city_code = this.formData.city_code
 				value.area_name = this.formData.area_name
 				value.full_address = value.province_name + value.city_name + value.area_name + value.address
-				const fmmyaddress = uniCloud.importObject("fmmyaddress")
-				fmmyaddress.update(this.formDataId, value).then((res) => {
+				const fmaddress = uniCloud.importObject("fm-address")
+				fmaddress.update(this.formDataId, value).then((res) => {
 					uni.showToast({
 						title: '修改成功'
 					})
 					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 500)
+					uni.navigateBack()
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',

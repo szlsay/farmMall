@@ -1,33 +1,26 @@
 <template>
 	<view class="container">
-		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
-			:where="where" orderby="update_time desc">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="data">
-				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" showArrow :clickable="true"
-						@click="handleItemClick(item._id)">
-						<template v-slot:body>
-							<view class="item">
-								<view class="user">
-									<text>{{item.receive_name}}</text>
-									<text>{{item.receive_mobile}}</text>
-								</view>
-								<view class="address">
-									<text class="default" v-if="item.is_default">默认</text>
-									<text>收货地址：{{item.full_address}}</text>
-								</view>
-							</view>
-						</template>
-					</uni-list-item>
-				</uni-list>
-				<view v-if="data.length === 0" class="nodata">
-					<image src="@/static/default-nodata.png"></image>
-					<text>亲，请添加收货地址~</text>
-				</view>
-			</view>
-			<uni-load-more v-if="data.length" :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
-		</unicloud-db>
+		<uni-list>
+			<uni-list-item v-for="(item, index) in addressList" :key="index" showArrow :clickable="true"
+				@click="handleItemClick(item._id)">
+				<template v-slot:body>
+					<view class="item">
+						<view class="user">
+							<text>{{item.receive_name}}</text>
+							<text>{{item.receive_mobile}}</text>
+						</view>
+						<view class="address">
+							<text class="default" v-if="item.is_default">默认</text>
+							<text>收货地址：{{item.full_address}}</text>
+						</view>
+					</view>
+				</template>
+			</uni-list-item>
+		</uni-list>
+		<view v-if="addressList.length === 0" class="nodata">
+			<image src="@/static/default-nodata.png"></image>
+			<text>亲，请添加收货地址~</text>
+		</view>
 		<view class="footer">
 			<view class="btn-add" @click="onClickAdd">
 				新增收货地址
@@ -37,63 +30,41 @@
 </template>
 
 <script>
-	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
-				collectionList: [db.collection('fm-address').field(
-						'receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default,uid,update_time'
-					).getTemp(), db.collection('opendb-city-china').field('code, name as text, eq(type, 2) as isleaf')
-					.getTemp()
-				],
-				loadMore: {
-					contentdown: '',
-					contentrefresh: '',
-					contentnomore: ''
-				},
-				where: ''
+				addressList: []
 			}
 		},
-		onLoad() {
-			this.where = "uid=='" + uniCloud.getCurrentUserInfo().uid + "'"
-			this.$nextTick(() => {
-				this.$refs.udb.loadData()
-			})
-		},
-		onPullDownRefresh() {
-			this.$refs.udb.loadData({
-				clear: true
-			}, () => {
-				uni.stopPullDownRefresh()
-			})
-		},
-		onReachBottom() {
-			this.$refs.udb.loadMore()
+		onShow() {
+			this.loadData()
 		},
 		methods: {
+			async loadData() {
+				const fmaddress = uniCloud.importObject('fm-address')
+				const result = await fmaddress.getList()
+				if (result.data) {
+					this.addressList = result.data
+				}
+			},
 			handleItemClick(id) {
+				const that = this;
 				uni.navigateTo({
 					url: './edit?id=' + id,
 					events: {
-						// 监听新增数据成功后, 刷新当前页面数据
 						refreshData: () => {
-							this.$refs.udb.loadData({
-								clear: true
-							})
+							that.loadData()
 						}
 					}
 				})
 			},
 			onClickAdd() {
-				// 打开新增页面
+				const that = this;
 				uni.navigateTo({
 					url: './add',
 					events: {
-						// 监听新增数据成功后, 刷新当前页面数据
 						refreshData: () => {
-							this.$refs.udb.loadData({
-								clear: true
-							})
+							that.loadData()
 						}
 					}
 				})
@@ -103,20 +74,23 @@
 </script>
 
 <style lang="scss" scoped>
-	.nodata{
+	.nodata {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		padding-top: 400rpx;;
-		image{
+		padding-top: 400rpx;
+
+		image {
 			width: 160rpx;
 			height: 160rpx;
 		}
-		text{
+
+		text {
 			margin-top: 20rpx;
 		}
 	}
+
 	.item {
 		.user {
 			text {

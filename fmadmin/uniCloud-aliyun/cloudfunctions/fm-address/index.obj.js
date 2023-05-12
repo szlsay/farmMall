@@ -17,29 +17,34 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
-	async getDefault() {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
+	getDefault() {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
 		return db.collection(dbCollectionName).where({
 			'is_default': true,
-			'uid': uid
+			uid: this.userInfo.uid
+		}).get()
+	},
+	getList() {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return db.collection(dbCollectionName).where({
+			uid: this.userInfo.uid
 		}).get()
 	},
 	add: async function(value) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
-		value.uid = uid
+		value.uid = this.userInfo.uid
 		value.create_time = Date.now()
 		value.update_time = Date.now()
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
 				'is_default': value.is_default,
-				'uid': uid
+				'uid': this.userInfo.uid
 			}).get()
 			if (defaultData.data.length == 1) {
 				const defaultId = defaultData.data[0]._id
@@ -66,16 +71,12 @@ module.exports = {
 		}
 	},
 	update: async function(id, value) {
-		const {
-			uid
-		} = await this.uniID.checkToken(this.getUniIdToken());
 		value.update_time = Date.now()
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
 				'is_default': value.is_default,
-				'uid': uid
+				'uid': this.userInfo.uid
 			}).get()
-
 			if (defaultData.data.length == 1) {
 				const defaultId = defaultData.data[0]._id
 				if (defaultId !== id) {

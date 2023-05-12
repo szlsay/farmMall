@@ -91,9 +91,7 @@
 					this.formData.area_name = ""
 				}
 			},
-			/**
-			 * 验证表单并提交
-			 */
+
 			submit() {
 				this.disabled = true
 				uni.showLoading({
@@ -108,11 +106,7 @@
 				})
 			},
 
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
-				console.log('submitForm-------')
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
 				value.city_name = this.formData.city_name
@@ -128,7 +122,6 @@
 					})
 					this.getOpenerEventChannel().emit('refreshData')
 					uni.navigateBack()
-					// setTimeout(() => uni.navigateBack(), 500)
 					that.disabled = false
 				}).catch((err) => {
 					uni.showModal({
