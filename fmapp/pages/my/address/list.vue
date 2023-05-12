@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<uni-list>
-			<uni-list-item v-for="(item, index) in addressList.data" :key="index" showArrow :clickable="true"
+			<uni-list-item v-for="(item, index) in address.list" :key="index" showArrow :clickable="true"
 				@click="handleItemClick(item._id)">
 				<template v-slot:body>
 					<view class="item">
@@ -17,7 +17,7 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<view v-if="addressList.data.length === 0" class="nodata">
+		<view v-if="address.list && address.list.length === 0" class="nodata">
 			<image src="@/static/default-nodata.png"></image>
 			<text>亲，请添加收货地址~</text>
 		</view>
@@ -30,8 +30,8 @@
 </template>
 <script setup>
 	import {
-		useCartStore
-	} from '@/stores/cart.js';
+		useAddressStore
+	} from '@/stores/address.js';
 	import {
 		reactive
 	} from "vue";
@@ -39,38 +39,29 @@
 		onShow
 	} from '@dcloudio/uni-app'
 
+	const address = useAddressStore();
 
-	const addressList = reactive({
-		data: []
-	})
-
-	async function loadData() {
-		const fmaddress = uniCloud.importObject('fm-address')
-		const result = await fmaddress.getList()
-		if (result.data) {
-			addressList.data = result.data
-		}
+	function loadData() {
+		address.getList()
 	}
 
 	function handleItemClick(id) {
-		const that = this;
 		uni.navigateTo({
 			url: './edit?id=' + id,
 			events: {
 				refreshData: () => {
-					that.loadData()
+					loadData()
 				}
 			}
 		})
 	}
 
 	function onClickAdd() {
-		const that = this;
 		uni.navigateTo({
 			url: './add',
 			events: {
 				refreshData: () => {
-					that.loadData()
+					loadData()
 				}
 			}
 		})

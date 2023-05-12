@@ -2,7 +2,7 @@ import {
 	defineStore
 } from 'pinia';
 const db = uniCloud.database()
-export const useCartStore = defineStore('address', {
+export const useAddressStore = defineStore('address', {
 	state: () => {
 		return {
 			list: [],
@@ -14,8 +14,9 @@ export const useCartStore = defineStore('address', {
 	},
 	actions: {
 		async getList() {
-			const fmcart = uniCloud.importObject("fm-address")
-			let result = await fmcart.getList()
+			const fmaddress = uniCloud.importObject("fm-address")
+			let result = await fmaddress.getList()
+			console.log("getList-", result)
 			if (result.data) {
 				this.list = result.data
 			}
