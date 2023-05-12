@@ -71,6 +71,9 @@ module.exports = {
 		}
 	},
 	update: async function(id, value) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
 		value.update_time = Date.now()
 		if (value.is_default) {
 			const defaultData = await db.collection(dbCollectionName).where({
@@ -105,5 +108,14 @@ module.exports = {
 			return db.collection(dbCollectionName).doc(id).update(value)
 		}
 	},
+	delete: function(_id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return db.collection(dbCollectionName).where({
+			_id,
+			uid: this.userInfo.uid
+		}).remove()
+	}
 
 }

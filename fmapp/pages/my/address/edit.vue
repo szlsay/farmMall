@@ -103,7 +103,8 @@
 				});
 			},
 			handleDelete() {
-				db.collection(dbCollectionName).doc(this.formDataId).remove().then((res) => {
+				const fmaddress = uniCloud.importObject('fm-address')
+				fmaddress.delete(this.formDataId).then((res) => {
 					uni.showToast({
 						title: '删除成功'
 					})
@@ -132,7 +133,6 @@
 					this.formData.area_name = ""
 				}
 			},
-
 			submit() {
 				uni.showLoading({
 					mask: true
@@ -143,7 +143,6 @@
 					uni.hideLoading()
 				})
 			},
-
 			async submitForm(value) {
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
@@ -165,10 +164,6 @@
 					})
 				})
 			},
-			/**
-			 * 获取表单数据
-			 * @param {Object} id
-			 */
 			getDetail(id) {
 				uni.showLoading({
 					mask: true
