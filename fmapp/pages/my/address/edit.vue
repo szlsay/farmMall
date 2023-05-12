@@ -167,10 +167,8 @@
 				})
 				const fmaddress = uniCloud.importObject('fm-address')
 				fmaddress.get(id).then((res) => {
-					const data = res.result.data[0]
-					if (data) {
-						this.formData = data
-
+					if (res.data && res.data.length === 1) {
+						this.formData = res.data[0]
 					}
 				}).catch((err) => {
 					uni.showModal({

@@ -1,6 +1,7 @@
 // 云对象教程: https://uniapp.dcloud.net.cn/uniCloud/cloud-obj
 // jsdoc语法提示教程：https://ask.dcloud.net.cn/docs/#//ask.dcloud.net.cn/article/129
 const db = uniCloud.database();
+const dbJql = uniCloud.databaseForJQL();
 const dbCollectionName = 'fm-address';
 // 云对象代码传入clientInfo
 const uniID = require('uni-id-common')
@@ -17,15 +18,14 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
-	get(id) {
+	get(_id) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		return db.collection(dbCollectionName).doc(id).where({
+		return dbJql.collection(dbCollectionName).where({
+			_id,
 			uid: this.userInfo.uid
-		}).field(
-			"receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default"
-		).get()
+		}).get()
 	},
 	getDefault() {
 		if (this.userInfo.errCode) {
