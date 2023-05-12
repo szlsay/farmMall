@@ -47,6 +47,10 @@ module.exports = {
 		}
 	},
 	async updateQty(_id, qty) {
+		return {
+			errCode: '999',
+			errMsg: '哈哈哈'
+		}
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			qty,
 			update_time: Date.now()

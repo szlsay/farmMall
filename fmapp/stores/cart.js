@@ -10,7 +10,7 @@ export const useCartStore = defineStore('cart', {
 	},
 	actions: {
 		async getCartList() {
-			const fmcart = uniCloud.importObject("fmcart")
+			const fmcart = uniCloud.importObject("fm-cart")
 			let result = await fmcart.getList()
 			if (result.data && result.data.length > 0) {
 				this.cartList = result.data

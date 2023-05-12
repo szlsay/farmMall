@@ -12,8 +12,8 @@
 					<text>{{item.producer}}</text>
 					<view class="price">
 						<text>￥{{item.price_sell}}</text>
-						<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
-							@blur="onChangeNum(item)" />
+						{{item.qty}}
+						<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"/>
 					</view>
 				</view>
 			</view>
@@ -50,7 +50,7 @@
 		nextTick
 	} from "vue";
 
-	const fmcart = uniCloud.importObject("fmcart")
+	const fmcart = uniCloud.importObject("fm-cart")
 	const cart = useCartStore();
 	const selectAll = computed(() => !cart.cartList.some(item => item.select == false))
 	const priceAll = computed(() => {
@@ -62,6 +62,24 @@
 		})
 		return number
 	})
+	const tempQty = ref(null)
+	async function onSelectItem(data) {
+		const result = await fmcart.updateSelect(data._id, !data.select)
+		if (result.updated && result.updated > 0) {
+			data.select = !data.select
+		}
+	}
+
+	async function onSelectAll() {
+		const selectValue = !selectAll.value
+		const result = await fmcart.updateAllSelect(selectValue)
+		if (result.updated && result.updated > 0) {
+			cart.cartList.map(item => {
+				item.select = selectValue
+			})
+		}
+	}
+
 	onActivated(() => {
 		cart.getCartList()
 		console.log("onActivated")
@@ -85,39 +103,60 @@
 		}
 	}
 
-	async function onSelectAll() {
-		const selectValue = !selectAll.value
-		const result = await fmcart.updateAllSelect(selectValue)
-		if (result.updated && result.updated > 0) {
-			cart.cartList.map(item => {
-				item.select = selectValue
-			})
-		}
-	}
-
-	async function onSelectItem(data) {
-		const result = await fmcart.updateSelect(data._id, !data.select)
-		if (result.updated && result.updated > 0) {
-			data.select = !data.select
-		}
-	}
-
 	function onChangeNum(data) {
-		const that = this
+		console.log("onChangeNum---", data)
 		setTimeout(() => {
-			that.updateQty(data)
-		})
+			const findData = cart.cartList.find(item => item._id === data._id)
+			console.log("onChangeNum---setTimeout", data.qty, findData)
+		}, 1000)
+		// tempQty.value = data.qty
+		// console.log('updateQty000---', tempQty)
+		// const that = this
+		// setTimeout(() => {
+		// 	that.updateQty(data)
+		// })
 	}
 
+	function onInputNum(data) {
+		console.log("onInputNum", data)
+		setTimeout(() => {
+			const findData = cart.cartList.find(item => item._id === data._id)
+			console.log("onInputNum---setTimeout", data.qty, findData)
+		}, 1000)
+	}
+
+	// function blur(data) {
+	// 	console.log("blur", data)
+	// 	setTimeout(() => {
+	// 		console.log("blur---setTimeout", data.qty)
+	// 	}, 300)
+	// }
+	
+	// function focus(data) {
+	// 	console.log("focus", data)
+	// 	setTimeout(() => {
+	// 		console.log("focus---setTimeout", data.qty)
+	// 	}, 300)
+	// }
 	async function updateQty(data) {
-		await fmcart.updateQty(data._id, data.qty)
+		console.log('updateQty111---', data)
+		fmcart.updateQty(data._id, data.qty).then(res => {
+			console.log('updateQty222---', data)
+		}).catch(err => {
+			console.log('updateQty333---', data)
+			data.qty = tempQty.value
+		})
+		// if (result)
+		// console.log('updateQty222---', result)
+
 	}
 </script>
 
 <style lang="scss" scoped>
-	.container{
+	.container {
 		padding-bottom: 180rpx;
 	}
+
 	.nodata {
 		display: flex;
 		flex-direction: column;
@@ -179,6 +218,7 @@
 	.cart-list {
 		display: flex;
 		flex-direction: column;
+
 		.cart-item {
 			display: flex;
 			padding: 32rpx;
