@@ -7,24 +7,21 @@ const dbCollectionName = 'fm-cart';
 const uniID = require('uni-id-common')
 module.exports = {
 	_before: async function() { // 通用预处理器
-		const clientInfo = this.getClientInfo()
-		this.uniID = uniID.createInstance({ // 创建uni-id实例，其上方法同uniID
-			clientInfo
-		})
 		this.token = this.getUniIdToken()
 		if (this.token) {
+			const clientInfo = this.getClientInfo()
+			this.uniID = uniID.createInstance({ // 创建uni-id实例，其上方法同uniID
+				clientInfo
+			})
 			this.userInfo = await this.uniID.checkToken(this.token);
-			if (this.userInfo.errCode) {
-				return {
-					errCode: this.userInfo.errCode,
-					errMsg: this.userInfo.errMsg
-				}
-			}
 		} else {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
 	async add(goods_id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
 		const value = {
 			goods_id,
 			uid: this.userInfo.uid

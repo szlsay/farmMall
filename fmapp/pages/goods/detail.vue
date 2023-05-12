@@ -104,7 +104,7 @@
 			handleBuy() {
 				if (!isLogin()) {
 					uni.showToast({
-						icon:'none',
+						icon: 'none',
 						title: '请先登录'
 					})
 					return
@@ -140,7 +140,7 @@
 			async handleCart() {
 				if (!isLogin()) {
 					uni.showToast({
-						icon:'none',
+						icon: 'none',
 						title: '请先登录'
 					})
 					return
@@ -148,17 +148,20 @@
 				uni.showLoading({
 					mask: true
 				})
-
-				const fmcart = uniCloud.importObject('fmcart')
+				const fmcart = uniCloud.importObject('fm-cart')
 				fmcart.add(this._id).then((res) => {
 					uni.showToast({
 						title: '添加成功'
 					})
 				}).catch((err) => {
-					uni.showModal({
-						content: err.message || '请求服务失败',
-						showCancel: false
-					})
+					if (err.errCode && err.errCode === 'uni-id-token-expired') {
+
+					} else {
+						uni.showModal({
+							content: err.errMsg || '请求服务失败',
+							showCancel: false
+						})
+					}
 				}).finally(() => {
 					uni.hideLoading()
 				})
