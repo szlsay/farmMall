@@ -17,6 +17,16 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
+	get(id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return db.collection(dbCollectionName).doc(id).where({
+			uid: this.userInfo.uid
+		}).field(
+			"receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default"
+		).get()
+	},
 	getDefault() {
 		if (this.userInfo.errCode) {
 			return this.userInfo

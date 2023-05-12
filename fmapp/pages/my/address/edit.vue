@@ -39,9 +39,6 @@
 		validator
 	} from '@/js_sdk/validator/fm-address.js';
 
-	const db = uniCloud.database();
-	const dbCollectionName = 'fm-address';
-
 	function getValidator(fields) {
 		let result = {}
 		for (let key in validator) {
@@ -168,9 +165,8 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection(dbCollectionName).doc(id).field(
-					"receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default"
-				).get().then((res) => {
+				const fmaddress = uniCloud.importObject('fm-address')
+				fmaddress.get(id).then((res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
