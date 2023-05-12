@@ -34,10 +34,7 @@
 <script>
 	import {
 		validator
-	} from '@/js_sdk/validator/fm-my-address.js';
-
-	const db = uniCloud.database();
-	const dbCollectionName = 'fm-my-address';
+	} from '@/js_sdk/validator/fm-address.js';
 
 	function getValidator(fields) {
 		let result = {}
@@ -122,12 +119,10 @@
 				value.city_code = this.formData.city_code
 				value.area_name = this.formData.area_name
 				value.full_address = value.province_name + value.city_name + value.area_name + value.address
-				// value.uid = uniCloud.getCurrentUserInfo().uid
-				const fmmyaddress = uniCloud.importObject("fmmyaddress")
-				// 使用 clientDB 提交数据
+				const fmaddress = uniCloud.importObject("fm-address")
 				const that = this
 
-				fmmyaddress.add(value).then((res) => {
+				fmaddress.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})

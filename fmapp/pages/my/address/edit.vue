@@ -37,10 +37,10 @@
 <script>
 	import {
 		validator
-	} from '@/js_sdk/validator/fm-my-address.js';
+	} from '@/js_sdk/validator/fm-address.js';
 
 	const db = uniCloud.database();
-	const dbCollectionName = 'fm-my-address';
+	const dbCollectionName = 'fm-address';
 
 	function getValidator(fields) {
 		let result = {}

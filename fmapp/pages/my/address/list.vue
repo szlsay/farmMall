@@ -41,7 +41,7 @@
 	export default {
 		data() {
 			return {
-				collectionList: [db.collection('fm-my-address').field(
+				collectionList: [db.collection('fm-address').field(
 						'receive_name,receive_mobile,province_code,city_code,area_code,province_name,city_name,area_name,address,full_address,is_default,uid,update_time'
 					).getTemp(), db.collection('opendb-city-china').field('code, name as text, eq(type, 2) as isleaf')
 					.getTemp()
