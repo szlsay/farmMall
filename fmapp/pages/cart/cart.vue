@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view v-for="item in cart.cartList" class="cart-list">
+		<view v-for="item in cartStore.list" class="cart-list">
 			<view class="cart-item">
 				<view class="item-left">
 					<radio color="#00CC99" :checked="item.select" @click="onSelectItem(item)" />
@@ -17,7 +17,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="footer" v-if="cart.cartList && cart.cartList.length > 0">
+		<view class="footer" v-if="cartStore.list.length > 0">
 			<view class="select">
 				<radio color="#00CC99" :checked="selectAll" @click="onSelectAll"></radio>
 				<text>全选</text>
@@ -47,15 +47,15 @@
 		nextTick
 	} from "vue";
 	import {
-		onShow
+		onLoad
 	} from '@dcloudio/uni-app'
 
 	const fmcart = uniCloud.importObject("fm-cart")
-	const cart = useCartStore();
-	const selectAll = computed(() => !cart.cartList.some(item => item.select == false))
+	const cartStore = useCartStore();
+	const selectAll = computed(() => !cartStore.list.some(item => item.select == false))
 	const priceAll = computed(() => {
 		let number = 0
-		cart.cartList.forEach(item => {
+		cartStore.list.forEach(item => {
 			if (item.select) {
 				number += item.price_sell * item.qty
 			}
@@ -74,7 +74,7 @@
 		const selectValue = !selectAll.value
 		const result = await fmcart.updateAllSelect(selectValue)
 		if (result.updated && result.updated > 0) {
-			cart.cartList.map(item => {
+			cartStore.list.map(item => {
 				item.select = selectValue
 			})
 		}
@@ -90,7 +90,7 @@
 	}
 
 	function onClickBuy() {
-		if (cart.cartList.some(item => item.select)) {
+		if (cartStore.list.some(item => item.select)) {
 			uni.navigateTo({
 				url: "/pages/order/confirm?from=cart"
 			})
@@ -102,8 +102,8 @@
 		}
 	}
 
-	onShow(() => {
-		cart.getCartList()
+	onLoad(() => {
+		cartStore.getList()
 	})
 </script>
 

@@ -5,17 +5,17 @@ const db = uniCloud.database()
 export const useCartStore = defineStore('cart', {
 	state: () => {
 		return {
-			cartList: []
+			list: []
 		};
 	},
 	actions: {
-		async getCartList() {
+		async getList() {
 			const fmcart = uniCloud.importObject("fm-cart")
 			let result = await fmcart.getList()
 			if (result.data && result.data.length > 0) {
-				this.cartList = result.data
+				this.list = result.data
 			} else {
-				this.cartList = []
+				this.list = []
 			}
 		}
 	},

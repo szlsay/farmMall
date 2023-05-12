@@ -93,7 +93,7 @@
 	} from 'vue-router';
 
 	const fmcart = uniCloud.importObject("fm-cart")
-	const cart = useCartStore();
+	const cartStore = useCartStore();
 	const router = useRouter()
 	const route = useRoute()
 
@@ -146,7 +146,7 @@
 
 	onLoad(() => {
 		if (route.query && route.query.from === 'cart') {
-			goodsList.data = cart.cartList
+			goodsList.data = cartStore.list
 		}
 		console.log(goodsList.data)
 		if (addressStore.list.length === 0) {
