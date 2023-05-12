@@ -1,7 +1,7 @@
 <template>
 	<view class="container">
 		<uni-list>
-			<uni-list-item v-for="(item, index) in addressList" :key="index" showArrow :clickable="true"
+			<uni-list-item v-for="(item, index) in addressList.data" :key="index" showArrow :clickable="true"
 				@click="handleItemClick(item._id)">
 				<template v-slot:body>
 					<view class="item">
@@ -17,7 +17,7 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<view v-if="addressList.length === 0" class="nodata">
+		<view v-if="addressList.data.length === 0" class="nodata">
 			<image src="@/static/default-nodata.png"></image>
 			<text>亲，请添加收货地址~</text>
 		</view>
@@ -28,50 +28,59 @@
 		</view>
 	</view>
 </template>
+<script setup>
+	import {
+		useCartStore
+	} from '@/stores/cart.js';
+	import {
+		reactive
+	} from "vue";
+	import {
+		onShow
+	} from '@dcloudio/uni-app'
 
-<script>
-	export default {
-		data() {
-			return {
-				addressList: []
-			}
-		},
-		onShow() {
-			this.loadData()
-		},
-		methods: {
-			async loadData() {
-				const fmaddress = uniCloud.importObject('fm-address')
-				const result = await fmaddress.getList()
-				if (result.data) {
-					this.addressList = result.data
-				}
-			},
-			handleItemClick(id) {
-				const that = this;
-				uni.navigateTo({
-					url: './edit?id=' + id,
-					events: {
-						refreshData: () => {
-							that.loadData()
-						}
-					}
-				})
-			},
-			onClickAdd() {
-				const that = this;
-				uni.navigateTo({
-					url: './add',
-					events: {
-						refreshData: () => {
-							that.loadData()
-						}
-					}
-				})
-			}
+
+	const addressList = reactive({
+		data: []
+	})
+
+	async function loadData() {
+		const fmaddress = uniCloud.importObject('fm-address')
+		const result = await fmaddress.getList()
+		if (result.data) {
+			addressList.data = result.data
 		}
 	}
+
+	function handleItemClick(id) {
+		const that = this;
+		uni.navigateTo({
+			url: './edit?id=' + id,
+			events: {
+				refreshData: () => {
+					that.loadData()
+				}
+			}
+		})
+	}
+
+	function onClickAdd() {
+		const that = this;
+		uni.navigateTo({
+			url: './add',
+			events: {
+				refreshData: () => {
+					that.loadData()
+				}
+			}
+		})
+	}
+
+	onShow(() => {
+		loadData()
+	})
 </script>
+
 
 <style lang="scss" scoped>
 	.nodata {
