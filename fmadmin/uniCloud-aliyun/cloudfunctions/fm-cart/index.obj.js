@@ -26,7 +26,6 @@ module.exports = {
 			goods_id,
 			uid: this.userInfo.uid
 		}
-		console.log("add--", value)
 		let result = await db.collection(dbCollectionName).where({
 			goods_id: value.goods_id,
 			uid: this.userInfo.uid
@@ -47,10 +46,6 @@ module.exports = {
 		}
 	},
 	async updateQty(_id, qty) {
-		return {
-			errCode: '999',
-			errMsg: '哈哈哈'
-		}
 		return await dbJql.collection(dbCollectionName).doc(_id).update({
 			qty,
 			update_time: Date.now()

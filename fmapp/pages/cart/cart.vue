@@ -12,8 +12,7 @@
 					<text>{{item.producer}}</text>
 					<view class="price">
 						<text>￥{{item.price_sell}}</text>
-						{{item.qty}}
-						<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"/>
+						<uni-number-box :min="0" :max="100" v-model="item.qty" @input="onInputNum(item)" />
 					</view>
 				</view>
 			</view>
@@ -80,6 +79,15 @@
 		}
 	}
 
+	function onInputNum(data) {
+		tempQty.value = data.qty
+		setTimeout(() => {
+			fmcart.updateQty(data._id, data.qty).catch(err => {
+				data.qty = tempQty.value
+			})
+		})
+	}
+
 	onActivated(() => {
 		cart.getCartList()
 		console.log("onActivated")
@@ -101,54 +109,6 @@
 				title: '您还没选择商品哦'
 			})
 		}
-	}
-
-	function onChangeNum(data) {
-		console.log("onChangeNum---", data)
-		setTimeout(() => {
-			const findData = cart.cartList.find(item => item._id === data._id)
-			console.log("onChangeNum---setTimeout", data.qty, findData)
-		}, 1000)
-		// tempQty.value = data.qty
-		// console.log('updateQty000---', tempQty)
-		// const that = this
-		// setTimeout(() => {
-		// 	that.updateQty(data)
-		// })
-	}
-
-	function onInputNum(data) {
-		console.log("onInputNum", data)
-		setTimeout(() => {
-			const findData = cart.cartList.find(item => item._id === data._id)
-			console.log("onInputNum---setTimeout", data.qty, findData)
-		}, 1000)
-	}
-
-	// function blur(data) {
-	// 	console.log("blur", data)
-	// 	setTimeout(() => {
-	// 		console.log("blur---setTimeout", data.qty)
-	// 	}, 300)
-	// }
-	
-	// function focus(data) {
-	// 	console.log("focus", data)
-	// 	setTimeout(() => {
-	// 		console.log("focus---setTimeout", data.qty)
-	// 	}, 300)
-	// }
-	async function updateQty(data) {
-		console.log('updateQty111---', data)
-		fmcart.updateQty(data._id, data.qty).then(res => {
-			console.log('updateQty222---', data)
-		}).catch(err => {
-			console.log('updateQty333---', data)
-			data.qty = tempQty.value
-		})
-		// if (result)
-		// console.log('updateQty222---', result)
-
 	}
 </script>
 
