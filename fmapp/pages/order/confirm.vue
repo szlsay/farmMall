@@ -135,9 +135,9 @@
 				title: '请先选择收货地址'
 			})
 		} else {
-			// uni.navigateTo({
-			// 	url: '/pages/my/address/list'
-			// })
+			const value = {}
+			value.order_delivery = addressData.data
+			value.order_goodslist = ''
 		}
 	}
 

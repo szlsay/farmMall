@@ -1,0 +1,7 @@
+{
+  "name": "fm-order",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
