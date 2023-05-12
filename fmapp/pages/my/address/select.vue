@@ -1,11 +1,12 @@
 <template>
 	<view class="container">
 		<uni-list>
-			<uni-list-item v-for="(item, index) in addressList" :key="index" :clickable="true" @click="handleItemClick(item)">
+			<uni-list-item v-for="(item, index) in addressStore.list" :key="index" :clickable="true"
+				@click="handleItemClick(item._id)">
 				<template v-slot:body>
 					<view class="item">
 						<view class="left">
-							<radio color="#00CC99" :checked="item._id === $route.query.id" />
+							<radio color="#00CC99" :checked="item._id === addressStore.selectId" />
 						</view>
 						<view class="right">
 							<view class="user">
@@ -21,7 +22,7 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<view v-if="addressList.length === 0" class="nodata">
+		<view v-if="addressStore.list.length === 0" class="nodata">
 			<image src="@/static/default-nodata.png"></image>
 			<text>亲，请添加收货地址~</text>
 		</view>
@@ -33,36 +34,34 @@
 	</view>
 </template>
 
-<script>
-	export default {
-		data() {
-			return {
-				addressList: []
-			}
-		},
-		onShow() {
-			this.loadData()
-		},
+<script setup>
+	import {
+		useAddressStore
+	} from '@/stores/address.js';
+	import {
+		onShow
+	} from '@dcloudio/uni-app'
 
-		methods: {
-			async loadData() {
-				const fmaddress = uniCloud.importObject('fm-address')
-				const result = await fmaddress.getList()
-				if (result.data) {
-					this.addressList = result.data
-				}
-			},
-			handleItemClick(item) {
-				this.getOpenerEventChannel().emit('selectData', item)
-				uni.navigateBack()
-			},
-			onClickAdd() {
-				uni.navigateTo({
-					url: './list'
-				})
-			}
-		}
+	const addressStore = useAddressStore();
+
+	function loadData() {
+		addressStore.getList()
 	}
+
+	function handleItemClick(id) {
+		addressStore.selectId = id
+		uni.navigateBack()
+	}
+
+	function onClickAdd() {
+		uni.navigateTo({
+			url: './list'
+		})
+	}
+
+	onShow(() => {
+		loadData()
+	})
 </script>
 
 <style lang="scss" scoped>

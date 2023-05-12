@@ -1,18 +1,18 @@
 <template>
 	<view class="container">
 		<view class="address" @click="onSelectAddress">
-			<view class="" v-if="addressData.data">
+			<view class="" v-if="addressStore.getSelect">
 				<view class="data-address">
 					<view class="left">
 						<i class="iconfont fm-map" style="color: #00CC99; font-size: 40rpx;"></i>
 					</view>
 					<view class="middle">
 						<view class="user">
-							<text>{{addressData.data.receive_name}}</text>
-							<text>{{addressData.data.receive_mobile}}</text>
+							<text>{{addressStore.getSelect.receive_name}}</text>
+							<text>{{addressStore.getSelect.receive_mobile}}</text>
 						</view>
 						<view class="full">
-							<text>收货地址：{{addressData.data.full_address}}</text>
+							<text>收货地址：{{addressStore.getSelect.full_address}}</text>
 						</view>
 					</view>
 					<view class="right">
@@ -73,6 +73,9 @@
 		useCartStore
 	} from '@/stores/cart.js';
 	import {
+		useAddressStore
+	} from '@/stores/address.js';
+	import {
 		formatPrice
 	} from '@/utils/util.js';
 	import {
@@ -107,35 +110,28 @@
 		return number
 	})
 	const tempQty = ref(null)
-	const addressId = ref('')
-	const addressData = reactive({})
+
+	const addressStore = useAddressStore()
+	// const addressId = ref('')
+	// const addressData = reactive({})
 
 	function onSelectAddress() {
-		let id = ''
-		if (addressData.data && addressData.data._id) {
-			id = addressData.data._id
-		}
 		uni.navigateTo({
-			url: '/pages/my/address/select?id=' + id,
-			events: {
-				selectData: (data) => {
-					console.log('onSelectAddress-', data)
-					addressData.data = data
-				}
-			}
+			url: '/pages/my/address/select'
 		})
 	}
 
 	function onSubmit() {
-		if (addressData.data == null) {
+		if (addressStore.selectId === '') {
 			uni.showToast({
 				icon: 'none',
 				title: '请先选择收货地址'
 			})
 		} else {
 			const value = {}
-			value.order_delivery = addressData.data
-			value.order_goodslist = ''
+			value.order_delivery = addressStore.getSelect
+			console.log('onSubmit---', value)
+			// value.order_goodslist = ''
 		}
 	}
 
@@ -153,6 +149,9 @@
 			goodsList.data = cart.cartList
 		}
 		console.log(goodsList.data)
+		if (addressStore.list.length === 0) {
+			addressStore.getList()
+		}
 	})
 
 	// onShow(async () => {

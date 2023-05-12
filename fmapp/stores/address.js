@@ -19,6 +19,12 @@ export const useAddressStore = defineStore('address', {
 			console.log("getList-", result)
 			if (result.data) {
 				this.list = result.data
+				if (this.selectId === '') {
+					 const selectData = this.list.find(item => item.is_default === true)
+					 if (selectData && selectData._id) {
+						 this.selectId = selectData._id
+					 }
+				}
 			}
 		}
 	},
