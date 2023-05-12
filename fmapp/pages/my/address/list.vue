@@ -1,8 +1,8 @@
 <template>
 	<view class="container">
 		<uni-list>
-			<uni-list-item v-for="(item, index) in address.list" :key="index" showArrow :clickable="true"
-				@click="handleItemClick(item._id)">
+			<uni-list-item v-for="(item, index) in addressStore.list" :key="index" showArrow :clickable="true"
+				@click="onClickItem(item._id)">
 				<template v-slot:body>
 					<view class="item">
 						<view class="user">
@@ -17,7 +17,7 @@
 				</template>
 			</uni-list-item>
 		</uni-list>
-		<view v-if="address.list && address.list.length === 0" class="nodata">
+		<view v-if="addressStore.list.length === 0" class="nodata">
 			<image src="@/static/default-nodata.png"></image>
 			<text>亲，请添加收货地址~</text>
 		</view>
@@ -31,21 +31,19 @@
 <script setup>
 	import {
 		useAddressStore
-	} from '@/stores/address.js';
+	} from '@/stores/address.js'
+
 	import {
-		reactive
-	} from "vue";
-	import {
-		onShow
+		onLoad
 	} from '@dcloudio/uni-app'
 
-	const address = useAddressStore();
+	const addressStore = useAddressStore();
 
 	function loadData() {
-		address.getList()
+		addressStore.getList()
 	}
 
-	function handleItemClick(id) {
+	function onClickItem(id) {
 		uni.navigateTo({
 			url: './edit?id=' + id,
 			events: {
@@ -67,8 +65,10 @@
 		})
 	}
 
-	onShow(() => {
-		loadData()
+	onLoad(() => {
+		if (addressStore.list.length === 0) {
+			loadData()
+		}
 	})
 </script>
 

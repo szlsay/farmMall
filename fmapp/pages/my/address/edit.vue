@@ -39,6 +39,14 @@
 		validator
 	} from '@/js_sdk/validator/fm-address.js';
 
+	import {
+		mapState,
+		mapActions
+	} from 'pinia'
+	import {
+		useAddressStore
+	} from '@/stores/address.js'
+
 	function getValidator(fields) {
 		let result = {}
 		for (let key in validator) {
@@ -73,6 +81,9 @@
 				}
 			}
 		},
+		computed: {
+			...mapState(useAddressStore, ['selectId'])
+		},
 		onLoad(e) {
 			if (e.id) {
 				const id = e.id
@@ -84,6 +95,7 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			...mapActions(useAddressStore, ['clearSelect']),
 			onClickRemove() {
 				const that = this;
 				uni.showModal({
@@ -102,6 +114,9 @@
 			handleDelete() {
 				const fmaddress = uniCloud.importObject('fm-address')
 				fmaddress.delete(this.formDataId).then((res) => {
+					if (this.selectId === this.formDataId) {
+						this.clearSelect()
+					}
 					uni.showToast({
 						title: '删除成功'
 					})

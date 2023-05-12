@@ -26,6 +26,9 @@ export const useAddressStore = defineStore('address', {
 					 }
 				}
 			}
+		},
+		clearSelect() {
+			this.selectId = ''
 		}
 	},
 });

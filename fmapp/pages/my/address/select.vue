@@ -2,7 +2,7 @@
 	<view class="container">
 		<uni-list>
 			<uni-list-item v-for="(item, index) in addressStore.list" :key="index" :clickable="true"
-				@click="handleItemClick(item._id)">
+				@click="onClickItem(item._id)">
 				<template v-slot:body>
 					<view class="item">
 						<view class="left">
@@ -39,7 +39,7 @@
 		useAddressStore
 	} from '@/stores/address.js';
 	import {
-		onShow
+		onLoad
 	} from '@dcloudio/uni-app'
 
 	const addressStore = useAddressStore();
@@ -48,7 +48,7 @@
 		addressStore.getList()
 	}
 
-	function handleItemClick(id) {
+	function onClickItem(id) {
 		addressStore.selectId = id
 		uni.navigateBack()
 	}
@@ -59,8 +59,10 @@
 		})
 	}
 
-	onShow(() => {
-		loadData()
+	onLoad(() => {
+		if (addressStore.list.length === 0) {
+			loadData()
+		}
 	})
 </script>
 
