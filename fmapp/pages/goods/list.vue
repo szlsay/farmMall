@@ -8,7 +8,7 @@
 				</view>
 			</view>
 			<view class="search-contant">
-				<button class="btn-search" @click="submit">
+				<button class="btn-search">
 					<i class="iconfont fm-search"></i>
 					<text>买好货 上农福</text>
 				</button>

@@ -43,7 +43,7 @@
 			</view>
 			<view class="btns">
 				<view class="cart" @click="handleCart">加入购物车</view>
-				<view class="buy" @click="handleBuy">立即购买</view>
+				<view class="buy" @click="">立即购买</view>
 			</view>
 		</view>
 	</view>

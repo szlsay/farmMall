@@ -27,7 +27,7 @@
 			</view>
 		</view>
 		<view class="goods">
-			<view v-for="item in cartList" class="cart-list">
+			<view v-for="item in goodsList.data" class="cart-list">
 				<view class="cart-cell">
 					<view class="cart-item">
 						<view class="item-left">
@@ -39,8 +39,7 @@
 							<text>{{item.producer}}</text>
 							<view class="price">
 								<text>￥{{item.price_sell}}</text>
-								<uni-number-box :min="0" :max="100" v-model="item.qty" @change="onChangeNum(item)"
-									@blur="onChangeNum(item)" />
+								<uni-number-box :min="0" :max="100" v-model="item.qty" @input="onInputNum(item)" />
 							</view>
 						</view>
 					</view>
@@ -77,39 +76,39 @@
 		formatPrice
 	} from '@/utils/util.js';
 	import {
-		onActivated,
-		onMounted,
 		computed,
 		ref,
 		reactive
 	} from "vue";
 	import {
+		onLoad,
 		onShow
-	} from '@dcloudio/uni-app'
-	const fmcart = uniCloud.importObject("fmcart")
+	} from '@dcloudio/uni-app';
+	import {
+		useRouter,
+		useRoute
+	} from 'vue-router';
+
+	const fmcart = uniCloud.importObject("fm-cart")
 	const cart = useCartStore();
-	const cartList = computed(() => cart.cartList.filter(item => item.select))
+	const router = useRouter()
+	const route = useRoute()
+
+	const goodsList = reactive({
+		data: []
+	})
 	const priceAll = computed(() => {
 		let number = 0
-		cart.cartList.forEach(item => {
+		goodsList.data.forEach(item => {
 			if (item.select) {
 				number += item.price_sell * item.qty
 			}
 		})
 		return number
 	})
+	const tempQty = ref(null)
 	const addressId = ref('')
 	const addressData = reactive({})
-
-	onShow(async () => {
-		if (addressData.data == null) {
-			const fmmyaddress = uniCloud.importObject('fmmyaddress')
-			const result = await fmmyaddress.getDefault()
-			if (result.data.length === 1) {
-				addressData.data = result.data[0]
-			}
-		}
-	})
 
 	function onSelectAddress() {
 		let id = ''
@@ -119,7 +118,6 @@
 		uni.navigateTo({
 			url: '/pages/my/address/select?id=' + id,
 			events: {
-				// 监听新增数据成功后, 刷新当前页面数据
 				selectData: (data) => {
 					console.log('onSelectAddress-', data)
 					addressData.data = data
@@ -141,26 +139,31 @@
 		}
 	}
 
-	function onChangeNum(data) {
-		const that = this
+	function onInputNum(data) {
+		tempQty.value = data.qty
 		setTimeout(() => {
-			that.updateQty(data)
+			fmcart.updateQty(data._id, data.qty).catch(err => {
+				data.qty = tempQty.value
+			})
 		})
 	}
 
-	async function updateQty(data) {
-		await fmcart.updateQty(data._id, data.qty)
-	}
-
-	onActivated(() => {
-		cart.getCartList()
-		console.log("onActivated")
+	onLoad(() => {
+		if (route.query && route.query.from === 'cart') {
+			goodsList.data = cart.cartList
+		}
+		console.log(goodsList.data)
 	})
 
-	onMounted(async () => {
-		console.log("onMounted")
-		cart.getCartList()
-	})
+	// onShow(async () => {
+	// 	if (addressData.data == null) {
+	// 		const fmmyaddress = uniCloud.importObject('fmmyaddress')
+	// 		const result = await fmmyaddress.getDefault()
+	// 		if (result.data.length === 1) {
+	// 			addressData.data = result.data[0]
+	// 		}
+	// 	}
+	// })
 </script>
 
 <style lang="scss" scoped>

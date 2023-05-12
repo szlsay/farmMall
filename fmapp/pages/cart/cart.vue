@@ -42,12 +42,13 @@
 		useCartStore
 	} from '@/stores/cart.js';
 	import {
-		onActivated,
-		onMounted,
 		computed,
 		ref,
 		nextTick
 	} from "vue";
+	import {
+		onShow
+	} from '@dcloudio/uni-app'
 
 	const fmcart = uniCloud.importObject("fm-cart")
 	const cart = useCartStore();
@@ -88,20 +89,10 @@
 		})
 	}
 
-	onActivated(() => {
-		cart.getCartList()
-		console.log("onActivated")
-	})
-
-	onMounted(async () => {
-		console.log("onMounted")
-		cart.getCartList()
-	})
-
 	function onClickBuy() {
 		if (cart.cartList.some(item => item.select)) {
 			uni.navigateTo({
-				url: "/pages/order/confirm"
+				url: "/pages/order/confirm?from=cart"
 			})
 		} else {
 			uni.showToast({
@@ -110,6 +101,10 @@
 			})
 		}
 	}
+
+	onShow(() => {
+		cart.getCartList()
+	})
 </script>
 
 <style lang="scss" scoped>
@@ -123,7 +118,6 @@
 		justify-content: center;
 		align-items: center;
 		padding-top: 400rpx;
-		;
 
 		image {
 			width: 160rpx;
