@@ -144,28 +144,27 @@
 
 			let order_goodslist = []
 			goodsList.data.forEach(item => {
-					const goods = {
-						goods_id: item._id,
-						name: item.name,
-						producer: item.producer,
-						price_original: item.price_original,
-						price_sell: item.price_sell,
-						image_url: item.image && item.image.fileType == 'image' ? item.image.url : '',
-						qty: item.qty,
-						price_amount: item.qty * item.price_sell
-					}
-					order_goodslist.push(goods)
+				const goods = {
+					goods_id: item._id,
+					name: item.name,
+					producer: item.producer,
+					price_original: item.price_original,
+					price_sell: item.price_sell,
+					image_url: item.image && item.image.fileType == 'image' ? item.image.url : '',
+					qty: item.qty,
+					price_amount: item.qty * item.price_sell
+				}
+				order_goodslist.push(goods)
 			})
 			value.order_goodslist = order_goodslist
 			value.price_amount_total = priceAll.value
-			console.log('onSubmit---', value)
 			const fmOrder = uniCloud.importObject('fm-order')
-			fmOrder.add(value).then(res => {
-				
+			fmOrder.add(value, 'cart').then(res => {
+				cartStore.getList()
+				uni.navigateBack()
 			}).catch(err => {
-				
+				console.log('fmOrder.add-err-', err)
 			})
-			// value.order_goodslist = ''
 		}
 	}
 
@@ -180,7 +179,7 @@
 
 	onLoad(() => {
 		if (route.query && route.query.from === 'cart') {
-			goodsList.data = cartStore.list
+			goodsList.data = cartStore.list.filter(item => item.select === true)
 		}
 		console.log(goodsList.data)
 		if (addressStore.list.length === 0) {

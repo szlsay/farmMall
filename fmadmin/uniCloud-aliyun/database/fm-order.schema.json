@@ -45,6 +45,24 @@
 			"description": "请填写总合计",
 			"label": "总合计"
 		},
+		"state": {
+			"bsonType": "int",
+			"title": "订单类型",
+			"defaultValue": 1,
+			"enum": [{
+					"text": "待支付",
+					"value": 1
+				},
+				{
+					"text": "待发货",
+					"value": 2
+				},
+				{
+					"text": "待收货",
+					"value": 3
+				}
+			]
+		},
 		"order_delivery": {
 			"bsonType": "object",
 			"properties": {

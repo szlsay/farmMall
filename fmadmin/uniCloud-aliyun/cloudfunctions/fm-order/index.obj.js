@@ -18,8 +18,7 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
-	
-	add(value) {
+	async add(value, from) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
@@ -28,6 +27,40 @@ module.exports = {
 		value.uid = this.uniID.uid
 		value.cancel_time = value.create_time + 10800000
 		value.update_time = Date.now()
-		return db.collection(dbCollectionName).add(value)
+		value.state = 1
+		if (from === 'cart') {
+			const cartList = await dbJql.collection('fm-cart').where({
+				uid: this.uniID.uid,
+				select: true
+			}).get()
+			const cartIds = []
+			if (cartList && cartList.data && cartList.data.length > 0) {
+				cartList.data.forEach(item => {
+					cartIds.push(item._id)
+				})
+			}
+			const transaction = await db.startTransaction()
+			try {
+				let deleteNum = 0
+				for(let index = 0; index < cartIds.length; index++) {
+					const deleteCart = await transaction.collection('fm-cart').doc(cartIds[index]).remove()
+					console.log('00000-', deleteCart)
+					if (deleteCart && deleteCart.deleted) {
+						deleteNum += 1
+					}
+				}
+				const addNew = await transaction.collection(dbCollectionName).add(value)
+				if (deleteNum === cartIds.length && addNew.id) {
+					await transaction.commit()
+					return addNew
+				} else {
+					await transaction.rollback()
+				}
+			} catch (err) {
+				await transaction.rollback()
+			}
+		} else {
+			return db.collection(dbCollectionName).add(value)
+		}
 	},
 }
