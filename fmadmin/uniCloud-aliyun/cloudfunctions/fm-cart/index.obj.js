@@ -70,7 +70,7 @@ module.exports = {
 			uid: this.userInfo.uid
 		}).getTemp()
 		const result = await dbJql.collection(cart_data, 'fm-goods').field(
-			'goods_id{image, name, price_sell, producer}, qty, select').get()
+			'goods_id{image, name, price_sell, producer, price_original}, qty, select').get()
 		if (result.data && result.data.length > 0) {
 			result.data.map(item => {
 				if (item.goods_id && item.goods_id.length > 0) {
@@ -78,6 +78,7 @@ module.exports = {
 					item.image = goods_id.image
 					item.name = goods_id.name
 					item.price_sell = goods_id.price_sell
+					item.price_original = goods_id.price_original
 					item.producer = goods_id.producer
 				}
 			})

@@ -47,6 +47,7 @@ export default async function() {
 			methodName, // 云对象的方法名称
 			params // 参数列表
 		}) {
+			console.log('interceptObject---',objectName, methodName, params)
 			// console.log('interceptObject',{
 			// 	objectName, // 云对象名称
 			// 	methodName, // 云对象的方法名称

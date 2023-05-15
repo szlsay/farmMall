@@ -129,7 +129,35 @@
 			})
 		} else {
 			const value = {}
-			value.order_delivery = addressStore.getSelect
+			value.order_delivery = {
+				'receive_name': addressStore.getSelect.receive_name,
+				'receive_mobile': addressStore.getSelect.receive_mobile,
+				'province_code': addressStore.getSelect.province_code,
+				'city_code': addressStore.getSelect.city_code,
+				'area_code': addressStore.getSelect.area_code,
+				'province_name': addressStore.getSelect.province_name,
+				'city_name': addressStore.getSelect.city_name,
+				'area_name': addressStore.getSelect.area_name,
+				'address': addressStore.getSelect.address,
+				'full_address': addressStore.getSelect.full_address
+			}
+
+			let order_goodslist = []
+			goodsList.data.forEach(item => {
+					const goods = {
+						goods_id: item._id,
+						name: item.name,
+						producer: item.producer,
+						price_original: item.price_original,
+						price_sell: item.price_sell,
+						image_url: item.image && item.image.fileType == 'image' ? item.image.url : '',
+						qty: item.qty,
+						price_amount: item.qty * item.price_sell
+					}
+					order_goodslist.push(goods)
+			})
+			value.order_goodslist = order_goodslist
+			value.price_amount_total = priceAll.value
 			console.log('onSubmit---', value)
 			// value.order_goodslist = ''
 		}
