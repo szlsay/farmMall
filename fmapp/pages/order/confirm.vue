@@ -159,6 +159,12 @@
 			value.order_goodslist = order_goodslist
 			value.price_amount_total = priceAll.value
 			console.log('onSubmit---', value)
+			const fmOrder = uniCloud.importObject('fm-order')
+			fmOrder.add(value).then(res => {
+				
+			}).catch(err => {
+				
+			})
 			// value.order_goodslist = ''
 		}
 	}
