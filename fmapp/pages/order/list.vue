@@ -5,7 +5,7 @@
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery"
 			:where="where">
-			<view class="order-cell" v-for="(item, index) in data" :key="index">
+			<view class="order-cell" v-for="(item, index) in data" :key="index" @click="handleItemClick(item._id)">
 				<view class="cell-top">
 					<text>订单号：{{item.oid}}</text>
 					<text>{{getStateText(item.state)}}</text>
@@ -89,6 +89,11 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
+			handleItemClick(id) {
+			  uni.navigateTo({
+			    url: './detail?id=' + id
+			  })
+			},
 			handleItemClick(id) {
 			  uni.navigateTo({
 			    url: './detail?id=' + id
