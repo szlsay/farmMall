@@ -3,7 +3,8 @@
 		<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text"
 			activeColor="#00CC99" style="background-color: #FFF;"></uni-segmented-control>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
-			field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery" :where="where">
+			field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery"
+			:where="where">
 			<view class="order-cell" v-for="(item, index) in data" :key="index">
 				<view class="cell-top">
 					<text>订单号：{{item.oid}}</text>
@@ -29,7 +30,12 @@
 					</view>
 				</view>
 			</view>
-			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
+			<view v-if="!(data && data.length > 0)" class="nodata">
+				<image src="@/static/default-nodata.png"></image>
+				<text>亲，订单空空如也~</text>
+			</view>
+			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"
+				v-if="(data && data.length > 0)"></uni-load-more>
 		</unicloud-db>
 	</view>
 </template>
@@ -122,29 +128,48 @@
 </script>
 
 <style lang="scss" scoped>
+	.nodata {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		padding-top: 400rpx;
+
+		image {
+			width: 160rpx;
+			height: 160rpx;
+		}
+
+		text {
+			margin-top: 20rpx;
+		}
+	}
+
 	.order-cell {
 		margin: 20rpx;
 		background-color: white;
 		border-radius: 16rpx;
 
-.cell-down{
-	padding-top: 16rpx;
-	padding-bottom: 16rpx;
-	margin-left: 16rpx;
-	margin-right: 16rpx;
-	display: flex;
-	justify-content: end;
-	.btn-pay{
-		color: #00CC99;
-		text-align: center;
-		border: 2rpx solid #00CC99;
-		background-color: white;
-		height: 60rpx;
-		width: 160rpx;
-		border-radius: 30rpx;
-		line-height: 60rpx;
-	}
-}
+		.cell-down {
+			padding-top: 16rpx;
+			padding-bottom: 16rpx;
+			margin-left: 16rpx;
+			margin-right: 16rpx;
+			display: flex;
+			justify-content: end;
+
+			.btn-pay {
+				color: #00CC99;
+				text-align: center;
+				border: 2rpx solid #00CC99;
+				background-color: white;
+				height: 60rpx;
+				width: 160rpx;
+				border-radius: 30rpx;
+				line-height: 60rpx;
+			}
+		}
+
 		.cell-mid {
 			padding-top: 16rpx;
 			padding-bottom: 16rpx;
