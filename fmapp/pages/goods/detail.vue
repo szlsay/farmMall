@@ -43,7 +43,7 @@
 			</view>
 			<view class="btns">
 				<view class="cart" @click="handleCart">加入购物车</view>
-				<view class="buy" @click="">立即购买</view>
+				<view class="buy" @click="handleBuy">立即购买</view>
 			</view>
 		</view>
 	</view>
@@ -109,13 +109,9 @@
 		methods: {
 			...mapActions(useCartStore, ['getList']),
 			handleBuy() {
-				if (!isLogin()) {
-					uni.showToast({
-						icon: 'none',
-						title: '请先登录'
-					})
-					return
-				}
+				uni.navigateTo({
+					url: "/pages/order/confirm?from=goods&goodsId=" + this._id
+				})
 			},
 			onClickBack() {
 				uni.navigateBack()

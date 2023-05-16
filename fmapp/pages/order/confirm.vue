@@ -27,9 +27,9 @@
 			</view>
 		</view>
 		<view class="goods">
-			<view v-for="item in goodsList.data" class="cart-list">
-				<view class="cart-cell">
-					<view class="cart-item">
+			<view v-for="item in goodsList.data" class="goods-list">
+				<view class="goods-cell">
+					<view class="goods-item">
 						<view class="item-left">
 							<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="item-img"
 								mode="aspectFill"></image>
@@ -43,7 +43,7 @@
 							</view>
 						</view>
 					</view>
-					<view class="cart-price">
+					<view class="goods-price">
 						<view class="subtotal">
 							<text>小计</text>
 							<text>￥{{formatPrice(item.qty * item.price_sell)}}</text>
@@ -110,10 +110,8 @@
 		return number
 	})
 	const tempQty = ref(null)
-
+	const from = ref(null)
 	const addressStore = useAddressStore()
-	// const addressId = ref('')
-	// const addressData = reactive({})
 
 	function onSelectAddress() {
 		uni.navigateTo({
@@ -159,8 +157,11 @@
 			value.order_goodslist = order_goodslist
 			value.price_amount_total = priceAll.value
 			const fmOrder = uniCloud.importObject('fm-order')
-			fmOrder.add(value, 'cart').then(res => {
-				cartStore.getList()
+			fmOrder.add(value, from.value).then(res => {
+				if (from.value === 'cart') {
+					cartStore.getList()
+				}
+
 				uni.navigateBack()
 			}).catch(err => {
 				console.log('fmOrder.add-err-', err)
@@ -170,32 +171,38 @@
 
 	function onInputNum(data) {
 		tempQty.value = data.qty
-		setTimeout(() => {
-			fmcart.updateQty(data._id, data.qty).catch(err => {
-				data.qty = tempQty.value
+		if (from.value === 'cart') {
+			setTimeout(() => {
+				fmcart.updateQty(data._id, data.qty).catch(err => {
+					data.qty = tempQty.value
+				})
 			})
-		})
+		}
 	}
 
-	onLoad(() => {
-		if (route.query && route.query.from === 'cart') {
-			goodsList.data = cartStore.list.filter(item => item.select === true)
-		}
-		console.log(goodsList.data)
+	onLoad(async () => {
+		// 地址管理
 		if (addressStore.list.length === 0) {
 			addressStore.getList()
 		}
+		// 商品管理
+		from.value = route.query.from
+		if (route.query && route.query.from === 'cart') {
+			goodsList.data = cartStore.list.filter(item => item.select === true)
+		}
+		if (route.query && route.query.from === 'goods') {
+			const db = uniCloud.database();
+			const dbCollectionName = 'fm-goods'
+			const goodsId = route.query.goodsId
+			const {
+				result
+			} = await db.collection(dbCollectionName).doc(goodsId).get()
+			if (result && result.data && result.data.length > 0) {
+				result.data.map(item => item.qty = 1)
+				goodsList.data = result.data
+			}
+		}
 	})
-
-	// onShow(async () => {
-	// 	if (addressData.data == null) {
-	// 		const fmmyaddress = uniCloud.importObject('fmmyaddress')
-	// 		const result = await fmmyaddress.getDefault()
-	// 		if (result.data.length === 1) {
-	// 			addressData.data = result.data[0]
-	// 		}
-	// 	}
-	// })
 </script>
 
 <style lang="scss" scoped>
@@ -239,11 +246,11 @@
 	.goods {
 		padding-bottom: 140rpx;
 
-		.cart-list {
+		.goods-list {
 			display: flex;
 			flex-direction: column;
 
-			.cart-cell {
+			.goods-cell {
 				padding: 32rpx;
 				background-color: white;
 				margin: 32rpx;
@@ -251,7 +258,7 @@
 				border-radius: 16rpx;
 			}
 
-			.cart-price {
+			.goods-price {
 				.subtotal {
 					padding-top: 16rpx;
 					display: flex;
@@ -263,7 +270,7 @@
 				}
 			}
 
-			.cart-item {
+			.goods-item {
 				display: flex;
 
 				.item-left {
