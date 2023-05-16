@@ -1,5 +1,10 @@
 <template>
 	<view class="container">
+		<view class="header-order">
+			<text>等待买家付款</text>
+			<text v-if="dataOrder.data.surplus_time"> {{surplusTime}}后自动取消订单</text>
+			<text v-if="dataOrder.data.surplus_time"> {{formatTimeout(dataOrder.data.surplus_time)}}后自动取消订单</text>
+		</view>
 		<view class="delivery-order" v-if="dataOrder.data.order_delivery">
 			<view class="left">
 				<i class="iconfont fm-map" style="color: #00CC99; font-size: 40rpx;"></i>
@@ -66,6 +71,7 @@
 		onLoad
 	} from '@dcloudio/uni-app';
 	import {
+		computed,
 		reactive
 	} from "vue";
 
@@ -73,6 +79,48 @@
 		data: {}
 	})
 
+	const surplusTime = computed(() => {
+		const surplus_time = dataOrder.data.surplus_time ? dataOrder.data.surplus_time : 0
+		const hours = Math.floor(surplus_time / 1000 / 60 / 60);
+		const minutes = Math.floor((surplus_time - hours * 1000 * 3600) / 1000 / 60);
+		let hourStr = ''
+		if (hours > 9) {
+			hourStr = hours + '时'
+		} else if (hours > 0) {
+			hourStr = '0' + hours.toString() + '时'
+		} else {
+			hourStr = ''
+		}
+
+		let minuteStr = ''
+		if (minutes > 9) {
+			minuteStr = minutes + '分'
+		} else {
+			minuteStr = '0' + minutes.toString() + '分'
+		}
+		return hourStr + minuteStr
+	})
+
+	function formatTimeout(surplus_time) {
+		const hours = Math.floor(surplus_time / 1000 / 60 / 60);
+		const minutes = Math.floor((surplus_time - hours * 1000 * 3600) / 1000 / 60);
+		let hourStr = ''
+		if (hours > 9) {
+			hourStr = hours + '时'
+		} else if (hours > 0) {
+			hourStr = '0' + hours.toString() + '时'
+		} else {
+			hourStr = ''
+		}
+
+		let minuteStr = ''
+		if (minutes > 9) {
+			minuteStr = minutes + '分'
+		} else {
+			minuteStr = '0' + minutes.toString() + '分'
+		}
+		return hourStr + minuteStr
+	}
 	onLoad(async (query) => {
 		console.log(query)
 		const fmOrder = uniCloud.importObject('fm-order')
@@ -85,6 +133,19 @@
 
 <style lang="scss" scoped>
 	@import "@/static/css/iconfont.css";
+
+	.header-order {
+		box-sizing: border-box;
+		height: 200rpx;
+		padding: 40rpx;
+		display: flex;
+		flex-direction: column;
+		background-color: #00CC99;
+
+		text {
+			color: #FFF;
+		}
+	}
 
 	.info-order {
 		background-color: #FFF;
@@ -108,7 +169,8 @@
 		.detail {
 			padding-top: 20rpx;
 			display: flex;
-			text:nth-child(2){
+
+			text:nth-child(2) {
 				margin-left: 16rpx;
 			}
 		}

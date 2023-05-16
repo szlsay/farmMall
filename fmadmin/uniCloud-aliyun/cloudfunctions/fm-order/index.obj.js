@@ -18,11 +18,18 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
-	get(id) {
+	async get(id) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		return db.collection(dbCollectionName).doc(id).get()
+		const result = await db.collection(dbCollectionName).doc(id).get()
+		console.log('get---', result)
+		if (result.data && result.data.length > 0) {
+			result.data.map(item =>
+				item.surplus_time = item.cancel_time - Date.now()
+			)
+		}
+		return result
 	},
 	async add(value, from) {
 		if (this.userInfo.errCode) {
