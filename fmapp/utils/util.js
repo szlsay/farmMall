@@ -24,7 +24,7 @@ export function cloneObject(obj) {
  * @param fmt
  * @returns {*}
  */
-export function formatDate(value, fmt) {
+export function formatDate(value, fmt = 'yyyy/MM/dd hh:mm:ss') {
 	let regPos = /^\d+(\.\d+)?$/;
 	if (regPos.test(value)) {
 		//如果是数字
