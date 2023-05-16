@@ -18,6 +18,18 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
+	getList(state) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+
+		if (state && state > 0) {
+			return db.collection(dbCollectionName).where({
+				state,
+				uid: this.userInfo.uid
+			})
+		}
+	},
 	async add(value, from) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
@@ -42,7 +54,7 @@ module.exports = {
 			const transaction = await db.startTransaction()
 			try {
 				let deleteNum = 0
-				for(let index = 0; index < cartIds.length; index++) {
+				for (let index = 0; index < cartIds.length; index++) {
 					const deleteCart = await transaction.collection('fm-cart').doc(cartIds[index]).remove()
 					console.log('00000-', deleteCart)
 					if (deleteCart && deleteCart.deleted) {
