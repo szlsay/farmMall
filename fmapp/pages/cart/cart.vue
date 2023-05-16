@@ -11,7 +11,7 @@
 					<text class="title">{{item.name}}</text>
 					<text>{{item.producer}}</text>
 					<view class="price">
-						<text>￥{{item.price_sell}}</text>
+						<text>￥{{formatPrice(item.price_sell)}}</text>
 						<uni-number-box :min="0" :max="100" v-model="item.qty" @input="onInputNum(item)" />
 					</view>
 				</view>
@@ -24,7 +24,7 @@
 			</view>
 			<view class="price">
 				<text>合计：</text>
-				<text>￥{{priceAll}}</text>
+				<text>￥{{formatPrice(priceAll)}}</text>
 			</view>
 			<view class="buy" @click="onClickBuy">
 				去结算
@@ -49,6 +49,9 @@
 	import {
 		onLoad
 	} from '@dcloudio/uni-app'
+	import {
+		formatPrice
+	} from '@/utils/util.js';
 
 	const fmcart = uniCloud.importObject("fm-cart")
 	const cartStore = useCartStore();
