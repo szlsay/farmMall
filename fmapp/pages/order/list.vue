@@ -4,21 +4,28 @@
 			activeColor="#00CC99" style="background-color: #FFF;"></uni-segmented-control>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery">
-			<view v-if="error">{{error.message}}</view>
-			<view v-else-if="data">
-				<view class="order-cell" v-for="(item, index) in data" :key="index">
-					<view class="cell-top">
-						<text>订单号：{{item.oid}}</text>
-						<text>{{getStateText(item.state)}}</text>
+			<view class="order-cell" v-for="(item, index) in data" :key="index">
+				<view class="cell-top">
+					<text>订单号：{{item.oid}}</text>
+					<text>{{getStateText(item.state)}}</text>
+				</view>
+				<view class="cell-goods" v-for="goods in item.order_goodslist" :key="goods.goods_id">
+					<view class="goods-left">
+						<image :src="goods.image_url" mode="aspectFill"></image>
 					</view>
-					<view class="cell-goods" v-for="goods in item.order_goodslist" :key="goods.goods_id">
-						{{goods}}
+					<view class="goods-right">
+						<text class="title">{{goods.name}}</text>
+						<text>{{goods.producer}}</text>
 					</view>
-					<view class="cell-mid">
-						{{item.order_delivery}}
-					</view>
-					<view class="cell-down">
-
+				</view>
+				<view class="cell-mid">
+					<text>收货人：{{item.order_delivery.receive_name}}</text>
+					<text>收货地址：{{item.order_delivery.full_address}}</text>
+					<text>合计：<text class="price">￥{{getPriceText(item.price_amount_total)}}</text> </text>
+				</view>
+				<view class="cell-down">
+					<view class="btn-pay" v-if="item.state === 1">
+						去支付
 					</view>
 				</view>
 			</view>
@@ -28,7 +35,11 @@
 </template>
 
 <script>
+	import {
+		formatPrice
+	} from '@/utils/util.js';
 	const db = uniCloud.database()
+
 	export default {
 		data() {
 			return {
@@ -53,6 +64,9 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
+			getPriceText(price) {
+				return formatPrice(price)
+			},
 			getStateText(state) {
 				const state_valuetotext = {
 					"1": "待支付",
@@ -95,6 +109,43 @@
 		background-color: white;
 		border-radius: 16rpx;
 
+.cell-down{
+	padding-top: 16rpx;
+	padding-bottom: 16rpx;
+	margin-left: 16rpx;
+	margin-right: 16rpx;
+	display: flex;
+	justify-content: end;
+	.btn-pay{
+		color: #00CC99;
+		text-align: center;
+		border: 2rpx solid #00CC99;
+		background-color: white;
+		height: 60rpx;
+		width: 160rpx;
+		border-radius: 30rpx;
+		line-height: 60rpx;
+	}
+}
+		.cell-mid {
+			padding-top: 16rpx;
+			padding-bottom: 16rpx;
+			margin-left: 16rpx;
+			margin-right: 16rpx;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			border-bottom: 1rpx solid #EEE;
+
+			text {
+				padding-bottom: 10rpx;
+			}
+
+			.price {
+				color: #ff442f;
+			}
+		}
+
 		.cell-top {
 			padding-top: 16rpx;
 			padding-bottom: 16rpx;
@@ -102,10 +153,46 @@
 			margin-right: 16rpx;
 			display: flex;
 			justify-content: space-between;
-			text:nth-child(2){
+			border-bottom: 1rpx solid #EEE;
+
+			text:nth-child(2) {
 				color: #ff442f;
 			}
+		}
+
+		.cell-goods {
+			padding-top: 16rpx;
+			padding-bottom: 16rpx;
+			margin-left: 16rpx;
+			margin-right: 16rpx;
+			display: flex;
 			border-bottom: 1rpx solid #EEE;
+
+			.goods-left {
+				image {
+					width: 200rpx;
+					height: 180rpx;
+					border-radius: 16rpx;
+				}
+			}
+
+			.goods-right {
+				flex: 1;
+				margin-left: 20rpx;
+				display: flex;
+				flex-direction: column;
+				justify-content: space-evenly;
+
+				.title {
+					font-weight: 600;
+					overflow: hidden;
+					-webkit-line-clamp: 2;
+					text-overflow: ellipsis;
+					display: -webkit-box;
+					-webkit-box-orient: vertical;
+				}
+
+			}
 		}
 	}
 </style>
