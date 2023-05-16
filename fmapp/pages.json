@@ -167,7 +167,13 @@
 				"style": {
 					"navigationBarTitleText": "确认订单"
 				}
-
+			}, {
+				"needLogin": true,
+				"path": "list",
+				"style": {
+					"navigationBarTitleText": "我的订单",
+					"enablePullDownRefresh": false
+				}
 			}]
 		},
 		{

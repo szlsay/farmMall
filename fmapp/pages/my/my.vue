@@ -17,9 +17,12 @@
 		<view class="user-order">
 			<view class="order-title">
 				<text class="my-order">我的订单</text>
-				<view class="all-order">
-					<text>全部订单</text>
-					<uni-icons type="right" size="16" color="#333333"></uni-icons>
+				<view class="all-order" >
+					<navigator url="../order/list">
+						<text>全部订单</text>
+						<uni-icons type="right" size="16" color="#333333"></uni-icons>
+					</navigator>
+
 				</view>
 			</view>
 			<uni-grid class="order-grid" :column="orderList.length" :showBorder="false" :square="false" :highlight="false">
