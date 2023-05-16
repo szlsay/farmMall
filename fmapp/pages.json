@@ -127,13 +127,6 @@
 			}
 		}
 		// #endif
-		, {
-			"path": "pages/order/order",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-		}
 	],
 	"subPackages": [{
 			"root": "pages/my",

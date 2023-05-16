@@ -49,7 +49,7 @@
 
 <script>
   // 由schema2code生成，包含校验规则和enum静态数据
-  import { enumConverter } from '../../js_sdk/validator/fm-order.js'
+  import { enumConverter } from '@/js_sdk/validator/fm-order.js'
   const db = uniCloud.database()
 
   export default {
