@@ -61,10 +61,22 @@
 			}
 		},
 		onLoad() {
-			this.where = {
-				uid: uniCloud.getCurrentUserInfo().uid
+			if (this.$route.query && this.$route.query.state != null) {
+				const state = this.$route.query.state
+				this.current = parseInt(state)
+			} else {
+				this.current = 0
 			}
-			this.current = 0
+			if (this.current === 0) {
+				this.where = {
+					uid: uniCloud.getCurrentUserInfo().uid
+				}
+			} else {
+				this.where = {
+					state: this.current,
+					uid: uniCloud.getCurrentUserInfo().uid
+				}
+			}
 		},
 		onPullDownRefresh() {
 			this.$refs.udb.loadData({
@@ -101,7 +113,6 @@
 							uid: uniCloud.getCurrentUserInfo().uid
 						}
 					}
-					console.log('onClickItem--', this.where)
 				}
 			},
 			handleItemClick(id) {

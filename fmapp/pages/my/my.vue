@@ -25,7 +25,7 @@
 				</view>
 			</view>
 			<uni-grid class="order-grid" :column="orderList.length" :showBorder="false" :square="false" :highlight="false">
-				<uni-grid-item v-for="(item,index) in orderList" @click.native="tapGrid(index)" :key="index">
+				<uni-grid-item v-for="(item,index) in orderList" @click.native="onClickOrder(item.value)" :key="index">
 					<view class="grid-item-box">
 						<uni-icons color="#00CC99" :type="item.icon" size="26"></uni-icons>
 						<text class="text">{{item.text}}</text>
@@ -72,16 +72,19 @@
 		data() {
 			return {
 				orderList: [{
-						"text": "待付款",
-						"icon": "email-filled"
+						"text": "待支付",
+						"icon": "email-filled",
+						"value": 1
 					},
 					{
 						"text": "待发货",
-						"icon": "navigate-filled"
+						"icon": "navigate-filled",
+						"value": 2
 					},
 					{
 						"text": "待收货",
-						"icon": "cart-filled"
+						"icon": "cart-filled",
+						"value": 3
 					}
 				],
 				menuList: [
@@ -192,12 +195,10 @@
 					url: '/uni_modules/uni-id-pages/pages/userinfo/userinfo'
 				})
 			},
-			tapGrid(index) {
-				uni.showToast({
-					// title: '你点击了，第' + (index + 1) + '个',
-					title: this.$t('mine.clicked') + " " + (index + 1),
-					icon: 'none'
-				});
+			onClickOrder(index) {
+				uni.navigateTo({
+					url: '/pages/order/list?state=' + index
+				})
 			},
 			/**
 			 * 去应用市场评分
