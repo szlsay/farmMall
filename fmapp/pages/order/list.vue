@@ -1,23 +1,26 @@
 <template>
 	<view class="container">
-		<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="button"
-			activeColor="#4cd964"></uni-segmented-control>
+		<uni-segmented-control :current="current" :values="items" @clickItem="onClickItem" styleType="text"
+			activeColor="#00CC99" style="background-color: #FFF;"></uni-segmented-control>
 		<unicloud-db ref="udb" v-slot:default="{data, pagination, loading, hasMore, error}" :collection="collectionList"
 			field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery">
 			<view v-if="error">{{error.message}}</view>
 			<view v-else-if="data">
-				<uni-list>
-					<uni-list-item v-for="(item, index) in data" :key="index" showArrow :clickable="true"
-						@click="handleItemClick(item._id)">
-						<template v-slot:body>
-							<text>
-								<!-- 此处默认显示为_id，请根据需要自行修改为其他字段 -->
-								<!-- 如果使用了联表查询，请参考生成的 admin 项目中 list.vue 页面 -->
-								{{item}}
-							</text>
-						</template>
-					</uni-list-item>
-				</uni-list>
+				<view class="order-cell" v-for="(item, index) in data" :key="index">
+					<view class="cell-top">
+						<text>订单号：{{item.oid}}</text>
+						<text>{{getStateText(item.state)}}</text>
+					</view>
+					<view class="cell-goods" v-for="goods in item.order_goodslist" :key="goods.goods_id">
+						{{goods}}
+					</view>
+					<view class="cell-mid">
+						{{item.order_delivery}}
+					</view>
+					<view class="cell-down">
+
+					</view>
+				</view>
 			</view>
 			<uni-load-more :status="loading?'loading':(hasMore ? 'more' : 'noMore')"></uni-load-more>
 		</unicloud-db>
@@ -30,7 +33,7 @@
 		data() {
 			return {
 				current: 0,
-				items: ['选项1', '选项2', '选项3'],
+				items: ['全部', '待支付', '待发货', '待收货'],
 				collectionList: "fm-order",
 				loadMore: {
 					contentdown: '',
@@ -50,6 +53,14 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
+			getStateText(state) {
+				const state_valuetotext = {
+					"1": "待支付",
+					"2": "待发货",
+					"3": "待收货"
+				}
+				return state_valuetotext[state]
+			},
 			onClickItem(e) {
 				if (this.current != e.currentIndex) {
 					this.current = e.currentIndex;
@@ -78,5 +89,23 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.order-cell {
+		margin: 20rpx;
+		background-color: white;
+		border-radius: 16rpx;
+
+		.cell-top {
+			padding-top: 16rpx;
+			padding-bottom: 16rpx;
+			margin-left: 16rpx;
+			margin-right: 16rpx;
+			display: flex;
+			justify-content: space-between;
+			text:nth-child(2){
+				color: #ff442f;
+			}
+			border-bottom: 1rpx solid #EEE;
+		}
+	}
 </style>
