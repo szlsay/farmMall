@@ -18,31 +18,19 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
-	getList(state) {
-		if (this.userInfo.errCode) {
-			return this.userInfo
-		}
-
-		if (state && state > 0) {
-			return db.collection(dbCollectionName).where({
-				state,
-				uid: this.userInfo.uid
-			})
-		}
-	},
 	async add(value, from) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
 		value.create_time = Date.now()
 		value.oid = '' + (Math.floor(Math.random() * 900) + 100) + Date.now()
-		value.uid = this.uniID.uid
+		value.uid = this.userInfo.uid
 		value.cancel_time = value.create_time + 10800000
 		value.update_time = Date.now()
 		value.state = 1
 		if (from === 'cart') {
 			const cartList = await dbJql.collection('fm-cart').where({
-				uid: this.uniID.uid,
+				uid: this.userInfo.uid,
 				select: true
 			}).get()
 			const cartIds = []
@@ -56,7 +44,6 @@ module.exports = {
 				let deleteNum = 0
 				for (let index = 0; index < cartIds.length; index++) {
 					const deleteCart = await transaction.collection('fm-cart').doc(cartIds[index]).remove()
-					console.log('00000-', deleteCart)
 					if (deleteCart && deleteCart.deleted) {
 						deleteNum += 1
 					}
