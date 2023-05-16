@@ -1,128 +1,75 @@
 <template>
-  <view class="container">
-    <unicloud-db ref="udb" v-slot:default="{data, loading, error, options}" :options="options" :collection="collectionList" field="oid,create_time,update_time,cancel_time,price_amount_total,state,order_goodslist,order_delivery" :where="queryWhere" :getone="true" :manual="true">
-      <view v-if="error">{{error.message}}</view>
-      <view v-else-if="loading">
-        <uni-load-more :contentText="loadMore" status="loading"></uni-load-more>
-      </view>
-      <view v-else-if="data">
-        <view>
-          <text>订单id</text>
-          <text>{{data.oid}}</text>
-        </view>
-        <view>
-          <text>创建时间</text>
-          <uni-dateformat :threshold="[0, 0]" :date="data.create_time"></uni-dateformat>
-        </view>
-        <view>
-          <text>更新时间</text>
-          <uni-dateformat :threshold="[0, 0]" :date="data.update_time"></uni-dateformat>
-        </view>
-        <view>
-          <text>取消时间</text>
-          <uni-dateformat :threshold="[0, 0]" :date="data.cancel_time"></uni-dateformat>
-        </view>
-        <view>
-          <text>总合计</text>
-          <text>{{data.price_amount_total}}</text>
-        </view>
-        <view>
-          <text>订单类型</text>
-          <text>{{options.state_valuetotext[data.state]}}</text>
-        </view>
-        <view>
-          <text>商品列表</text>
-          <text>{{data.order_goodslist}}</text>
-        </view>
-        <view>
-          <text>order_delivery</text>
-          <text>{{data.order_delivery}}</text>
-        </view>
-      </view>
-    </unicloud-db>
-    <view class="btns">
-      <button type="primary" @click="handleUpdate">修改</button>
-      <button type="warn" class="btn-delete" @click="handleDelete">删除</button>
-    </view>
-  </view>
+	<view class="container">
+		<view class="delivery" v-if="dataOrder.data.order_delivery">
+			<view class="left">
+				<i class="iconfont fm-map" style="color: #00CC99; font-size: 40rpx;"></i>
+			</view>
+			<view class="right">
+				<text>姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名：<text class="info"> {{dataOrder.data.order_delivery.receive_name}}</text></text>
+				<text>联系方式：<text class="info"> {{dataOrder.data.order_delivery.receive_mobile}}</text></text>
+				<text>收货地址：<text class="info"> {{dataOrder.data.order_delivery.full_address}}</text></text>
+			</view>
+		</view>
+		<view class="goods">
+
+		</view>
+		<view class="price">
+
+		</view>
+		<view class="info">
+
+		</view>
+		<view class="footer">
+
+			{{dataOrder.data}}
+		</view>
+	</view>
+
 </template>
 
-<script>
-  // 由schema2code生成，包含校验规则和enum静态数据
-  import { enumConverter } from '@/js_sdk/validator/fm-order.js'
-  const db = uniCloud.database()
+<script setup>
+	import {
+		onLoad
+	} from '@dcloudio/uni-app';
+	import {
+		reactive
+	} from "vue";
 
-  export default {
-    data() {
-      return {
-        queryWhere: '',
-        collectionList: "fm-order",
-        loadMore: {
-          contentdown: '',
-          contentrefresh: '',
-          contentnomore: ''
-        },
-        options: {
-          // 将scheme enum 属性静态数据中的value转成text
-          ...enumConverter
-        }
-      }
-    },
-    onLoad(e) {
-      this._id = e.id
-    },
-    onReady() {
-      if (this._id) {
-        this.queryWhere = '_id=="' + this._id + '"'
-      }
-    },
-    methods: {
-      handleUpdate() {
-        // 打开修改页面
-        uni.navigateTo({
-          url: './edit?id=' + this._id,
-          events: {
-            // 监听修改页面成功修改数据后, 刷新当前页面数据
-            refreshData: () => {
-              this.$refs.udb.loadData({
-                clear: true
-              })
-            }
-          }
-        })
-      },
-      handleDelete() {
-        this.$refs.udb.remove(this._id, {
-          success: (res) => {
-            // 删除数据成功后跳转到list页面
-            uni.navigateTo({
-              url: './list'
-            })
-          }
-        })
-      }
-    }
-  }
+	const dataOrder = reactive({
+		data: {}
+	})
+
+	onLoad(async (query) => {
+		console.log(query)
+		const fmOrder = uniCloud.importObject('fm-order')
+		const result = await fmOrder.get(query.id)
+		if (result && result.data && result.data.length === 1) {
+			dataOrder.data = result.data[0]
+		}
+	})
 </script>
 
-<style>
-  .container {
-    padding: 10px;
-  }
+<style lang="scss" scoped>
+	@import "@/static/css/iconfont.css";
 
-  .btns {
-    margin-top: 10px;
-    /* #ifndef APP-NVUE */
-    display: flex;
-    /* #endif */
-    flex-direction: row;
-  }
+	.delivery {
+		background-color: white;
+		padding: 32rpx 32rpx 32rpx;
+		display: flex;
+		align-items: center;
 
-  .btns button {
-    flex: 1;
-  }
+		.left {
+			width: 60rpx;
+		}
 
-  .btn-delete {
-    margin-left: 10px;
-  }
+		.right {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			line-height: 40rpx;
+			.info{
+				font-weight: 700;
+			}
+		}
+	}
 </style>

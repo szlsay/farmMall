@@ -18,6 +18,12 @@ module.exports = {
 			throw new Error('token凭证不存在，请重新登录')
 		}
 	},
+	get(id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return db.collection(dbCollectionName).doc(id).get()
+	},
 	async add(value, from) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
