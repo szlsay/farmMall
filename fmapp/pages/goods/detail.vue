@@ -57,6 +57,12 @@
 	import {
 		isLogin
 	} from '@/utils/util.js'
+	import {
+		mapActions
+	} from 'pinia'
+	import {
+		useCartStore
+	} from '@/stores/cart.js';
 	const db = uniCloud.database()
 	const dbCollectionName = 'fm-goods';
 	const cartCollectionName = 'fm-cart';
@@ -101,6 +107,7 @@
 			}
 		},
 		methods: {
+			...mapActions(useCartStore, ['getList']),
 			handleBuy() {
 				if (!isLogin()) {
 					uni.showToast({
@@ -153,6 +160,7 @@
 					uni.showToast({
 						title: '添加成功'
 					})
+					this.getList()
 				}).catch((err) => {
 					if (err.errCode && err.errCode === 'uni-id-token-expired') {
 
