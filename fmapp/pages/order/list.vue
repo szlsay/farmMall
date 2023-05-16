@@ -89,6 +89,11 @@
 			this.$refs.udb.loadMore()
 		},
 		methods: {
+			handleItemClick(id) {
+			  uni.navigateTo({
+			    url: './detail?id=' + id
+			  })
+			},
 			getPriceText(price) {
 				return formatPrice(price)
 			},
