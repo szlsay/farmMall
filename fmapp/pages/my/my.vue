@@ -116,7 +116,7 @@
 						},
 						{
 							"title": "问题反馈",
-							"to": '/uni_modules/uni-feedback/pages/opendb-feedback/opendb-feedback',
+							"to": '/pages/my/feedback/add',
 						},
 						{
 							"title": "设置",

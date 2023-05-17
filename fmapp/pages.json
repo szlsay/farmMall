@@ -150,6 +150,11 @@
 				"style": {
 					"navigationBarTitleText": "地址选择"
 				}
+			}, {
+				"path": "feedback/add",
+				"style": {
+					"navigationBarTitleText": "意见反馈"
+				}
 			}]
 		},
 		{
@@ -332,7 +337,8 @@
 		"loginPage": "uni_modules/uni-id-pages/pages/login/login-withoutpwd",
 		"needLogin": [
 			"/uni_modules/uni-id-pages/pages/userinfo/userinfo",
-			"/pages/cart/cart"
+			"/pages/cart/cart",
+			"/pages/my/*"
 		],
 		"resToLogin": true
 	}
