@@ -1,0 +1,64 @@
+{
+	"bsonType": "object",
+	"required": [
+		"uid",
+		"content"
+	],
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"uid": {
+			"bsonType": "string",
+			"description": "用户的唯一id",
+			"title": "用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"content": {
+			"bsonType": "string",
+			"description": "留言内容",
+			"trim": "right"
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择意见图片",
+			"label": "意见图片"
+		},
+		"contact": {
+			"bsonType": "string",
+			"description": "联系人",
+			"trim": "both"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"description": "联系电话",
+			"trim": "both"
+		},
+		"is_reply": {
+			"bsonType": "bool",
+			"description": "是否是回复类型"
+		},
+		"feedback_id": {
+			"bsonType": "string",
+			"description": "被回复留言ID"
+		},
+		"reply_count": {
+			"bsonType": "int",
+			"description": "被回复条数"
+		}
+	},
+	"version": "0.0.1"
+}
