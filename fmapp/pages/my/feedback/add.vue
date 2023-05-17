@@ -18,7 +18,7 @@
 					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
 			<view class="footer">
-				<button class="btn-add" @click="submit">提交</button>
+				<button class="btn-add" @click="submit" :disabled="disabled">提交</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -51,6 +51,7 @@
 				"mobile": ""
 			}
 			return {
+				disabled: false,
 				formData,
 				formOptions: {},
 				rules: {
@@ -63,22 +64,27 @@
 		},
 		methods: {
 			submit() {
+				this.disabled = true
 				uni.showLoading({
 					mask: true
 				})
+				const that = this
 				this.$refs.form.validate().then((res) => {
 					this.submitForm(res)
 				}).catch(() => {
 					uni.hideLoading()
+					that.disabled = false
 				})
 			},
 
 			submitForm(value) {
+				const that = this
 				db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({
 						title: '提交成功'
 					})
-					setTimeout(() => uni.navigateBack(), 500)
+					uni.navigateBack()
+					that.disabled = false
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',
@@ -86,6 +92,7 @@
 					})
 				}).finally(() => {
 					uni.hideLoading()
+					that.disabled = false
 				})
 			}
 		}
