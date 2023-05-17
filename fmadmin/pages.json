@@ -198,6 +198,15 @@
 		}
 	],
 	"subPackages": [{
+			"root": "pages/fmuser",
+			"pages": [{
+				"path": "feedback/list",
+				"style": {
+					"navigationBarTitleText": "留言列表"
+				}
+			}],
+		},
+		{
 			"root": "pages/system",
 			"pages": [{
 					"path": "menu/list",
