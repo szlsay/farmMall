@@ -204,7 +204,7 @@
 				"style": {
 					"navigationBarTitleText": "留言列表"
 				}
-			}],
+			}]
 		},
 		{
 			"root": "pages/system",
