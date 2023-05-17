@@ -16,20 +16,17 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="uid,create_time,content,image,contact,mobile,feedback_id,reply_count,is_reply" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="uid,create_time,content,image,contact,mobile" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
           <uni-tr>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'uid')">用户id</uni-th>
             <uni-th align="center" filter-type="timestamp" @filter-change="filterChange($event, 'create_time')" sortable @sort-change="sortChange($event, 'create_time')">创建时间</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'content')" sortable @sort-change="sortChange($event, 'content')">content</uni-th>
+            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'content')" sortable @sort-change="sortChange($event, 'content')">意见内容</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">意见图片</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'contact')" sortable @sort-change="sortChange($event, 'contact')">contact</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'mobile')" sortable @sort-change="sortChange($event, 'mobile')">mobile</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'feedback_id')" sortable @sort-change="sortChange($event, 'feedback_id')">feedback_id</uni-th>
-            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'reply_count')" sortable @sort-change="sortChange($event, 'reply_count')">reply_count</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'is_reply')">is_reply</uni-th>
+            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'contact')" sortable @sort-change="sortChange($event, 'contact')">联系人</uni-th>
+            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'mobile')" sortable @sort-change="sortChange($event, 'mobile')">联系电话</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
@@ -38,15 +35,12 @@
               <uni-dateformat :threshold="[0, 0]" :date="item.create_time"></uni-dateformat>
             </uni-td>
             <uni-td align="center">{{item.content}}</uni-td>
-            <uni-td align="center">
-              <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
-              <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link>
-            </uni-td>
+						<uni-td align="center">
+							<image style="width: 60px; height: 60px;" v-if="item.image && item.image.fileType == 'image'"
+								:src="item.image.url"></image>
+						</uni-td>
             <uni-td align="center">{{item.contact}}</uni-td>
             <uni-td align="center">{{item.mobile}}</uni-td>
-            <uni-td align="center">{{item.feedback_id}}</uni-td>
-            <uni-td align="center">{{item.reply_count}}</uni-td>
-            <uni-td align="center">{{item.is_reply == true ? '✅' : '❌'}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
@@ -107,10 +101,7 @@
             "content": "content",
             "意见图片": "image",
             "contact": "contact",
-            "mobile": "mobile",
-            "feedback_id": "feedback_id",
-            "reply_count": "reply_count",
-            "is_reply": "is_reply"
+            "mobile": "mobile"
           }
         },
         exportExcelData: []

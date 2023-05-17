@@ -5,7 +5,7 @@
 				<uni-easyinput placeholder="请输入留言内容" type="textarea" v-model="formData.content" trim="both"
 					primaryColor="#00CC99" maxlength="200"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="imgs" label="意见图片" label-width="160rpx">
+			<uni-forms-item name="image" label="意见图片" label-width="160rpx">
 				<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
 					v-model="formData.image"></uni-file-picker>
 			</uni-forms-item>
