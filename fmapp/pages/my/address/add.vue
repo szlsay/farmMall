@@ -156,7 +156,7 @@
 	}
 
 	.uni-container {
-		padding: 15px;
+		padding: 15rpx;
 	}
 
 	page {

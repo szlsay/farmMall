@@ -1,22 +1,28 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :value="formData" validate-trigger="submit" err-show-type="toast">
-			<uni-forms-item name="content" label="留言内容/回复内容" required>
-				<textarea @input="binddata('content', $event.detail.value)" class="uni-textarea-border"
-					v-model="formData.content" trim="right"></textarea>
+			<uni-forms-item name="content" label="留言内容" required label-width="160rpx">
+				<!-- 		<textarea @input="binddata('content', $event.detail.value)" class="uni-textarea-border"
+					v-model="formData.content" trim="right"></textarea> -->
+				<uni-easyinput placeholder="请输入留言内容" type="textarea" v-model="formData.content" trim="both"
+					primaryColor="#00CC99" maxlength="200"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="imgs" label="图片列表">
-				<uni-file-picker file-mediatype="image" :limit="6" return-type="array" v-model="formData.imgs">
+			<uni-forms-item name="imgs" label="意见图片" label-width="160rpx">
+				<uni-file-picker file-mediatype="image" :limit="1" return-type="array" v-model="formData.imgs">
 				</uni-file-picker>
 			</uni-forms-item>
-			<uni-forms-item name="contact" label="联系人">
-				<uni-easyinput v-model="formData.contact" trim="both"></uni-easyinput>
+			<uni-forms-item name="contact" label="联系人" label-width="160rpx">
+				<uni-easyinput placeholder="请输入联系人" v-model="formData.contact" trim="both" maxlength="10"
+					primaryColor="#00CC99"></uni-easyinput>
+				<!-- <uni-easyinput v-model="formData.contact" trim="both"></uni-easyinput> -->
 			</uni-forms-item>
-			<uni-forms-item name="mobile" label="联系电话">
-				<uni-easyinput v-model="formData.mobile" trim="both"></uni-easyinput>
+			<uni-forms-item name="mobile" label="联系电话" label-width="160rpx">
+				<!-- <uni-easyinput v-model="formData.mobile" trim="both"></uni-easyinput> -->
+				<uni-easyinput placeholder="请输入联系电话" v-model="formData.mobile" type="number" trim="both" maxlength="11"
+					primaryColor="#00CC99"></uni-easyinput>
 			</uni-forms-item>
-			<view class="uni-button-group">
-				<button type="primary" class="uni-button" @click="submit">提交</button>
+			<view class="footer">
+				<button class="btn-add" @click="submit">提交</button>
 			</view>
 		</uni-forms>
 	</view>
@@ -96,46 +102,29 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.footer {
+		padding: 10rpx 32rpx 10rpx;
+		margin-top: 100rpx;
+		background-color: white;
+	
+		.btn-add {
+			width: 100%;
+			height: 80rpx;
+			background-color: #00CC99;
+			border-radius: 40rpx;
+			color: white;
+			text-align: center;
+			line-height: 80rpx;
+		}
+	}
+	
 	.uni-container {
-		padding: 15px;
+		padding: 32rpx;
+	}
+	
+	page {
+		background-color: white;
 	}
 
-	.uni-input-border,
-	.uni-textarea-border {
-		width: 100%;
-		font-size: 14px;
-		color: #666;
-		border: 1px #e5e5e5 solid;
-		border-radius: 5px;
-		box-sizing: border-box;
-	}
-
-	.uni-input-border {
-		padding: 0 10px;
-		height: 35px;
-
-	}
-
-	.uni-textarea-border {
-		padding: 10px;
-		height: 80px;
-	}
-
-	.uni-button-group {
-		margin-top: 50px;
-		/* #ifndef APP-NVUE */
-		display: flex;
-		/* #endif */
-		justify-content: center;
-	}
-
-	.uni-button {
-		width: 184px;
-		padding: 12px 20px;
-		font-size: 14px;
-		border-radius: 4px;
-		line-height: 1;
-		margin: 0;
-	}
 </style>
