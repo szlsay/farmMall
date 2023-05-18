@@ -1,5 +1,5 @@
 {
-    "name" : "fmadmin",
+    "name" : "福农果蔬平台",
     "appid" : "__UNI__FFDA6AB",
     "description" : "",
     "versionName" : "1.0.0",
@@ -73,7 +73,8 @@
         "router" : {
             "mode" : "hash",
             "base" : "/admin/"
-        }
+        },
+        "title" : "福农果蔬平台"
     },
     "vueVersion" : "3",
     "networkTimeout" : {
