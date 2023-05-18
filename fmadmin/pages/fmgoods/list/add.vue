@@ -315,8 +315,8 @@
 				value.area_name = this.formData.area_name
 				value.producer = value.province_name + value.city_name + value.area_name
 				value.sku = this.checkSku()
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				const fmgoods = uniCloud.importObject('fm-goods')
+				fmgoods.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})
@@ -328,6 +328,19 @@
 						showCancel: false
 					})
 				})
+				// 使用 clientDB 提交数据
+				// return db.collection(dbCollectionName).add(value).then((res) => {
+				// 	uni.showToast({
+				// 		title: '新增成功'
+				// 	})
+				// 	this.getOpenerEventChannel().emit('refreshData')
+				// 	setTimeout(() => uni.navigateBack(), 500)
+				// }).catch((err) => {
+				// 	uni.showModal({
+				// 		content: err.message || '请求服务失败',
+				// 		showCancel: false
+				// 	})
+				// })
 			}
 		},
 		computed: {

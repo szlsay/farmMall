@@ -195,6 +195,15 @@
 			"description": "请选择展示图片",
 			"label": "展示图片"
 		},
+		"create_uid": {
+			"bsonType": "string",
+			"description": "创建人用户的唯一id",
+			"label": "创建人用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
 		"create_time": {
 			"bsonType": "timestamp",
 			"description": "创建时间",
