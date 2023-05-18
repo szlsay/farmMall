@@ -195,6 +195,19 @@
 			"description": "请选择展示图片",
 			"label": "展示图片"
 		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"title": "更新时间"
+		},
 		"sku": {
 			"bsonType": "array",
 			"arrayType": "object",

@@ -318,6 +318,7 @@
 				value.area_name = this.formData.area_name
 				value.producer = value.province_name + value.city_name + value.area_name
 				value.sku = this.checkSku()
+				value.update_time = Date.now()
 				// 使用 clientDB 提交数据
 				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
 					uni.showToast({
