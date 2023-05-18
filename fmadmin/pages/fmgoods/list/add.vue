@@ -1,6 +1,47 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
+			<view class="uni-stat--x p-m">
+				<view class="card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="name" label="商品名称" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both" maxlength="10"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="area_code" label="商品产地" :label-width="labelWidth" label-align="right">
+							<uni-data-picker self-field="code" parent-field="parent_code" v-model="formData.area_code"
+								collection="opendb-city-china" orderby="value asc"
+								field="code as value, name as text, eq(type, 2) as isleaf" @change="onChange"></uni-data-picker>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择" v-model="formData.unit"
+								:localdata="formOptions.unit_localdata"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="24">
+						<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
+							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
+								v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
+							<text style="color: red; font-size: 14px;">用于商品的封面展示。格式：jpg,png,webp，建议400*400px的图片</text>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="24">
+						<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
+							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
+								v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
+							<text style="color: red; font-size: 14px;" class="title-alert">用于商品的详情展示，最多六张。格式：jpg,png,webp</text>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
 			<uni-row>
 				<uni-col :xs="24" :sm="12">
 					<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
@@ -269,6 +310,16 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		color: #555;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 10px 0;
+		margin-bottom: 15px;
+	}
+
 	.gpm-text {
 		font-size: 14px;
 		line-height: 35px;
