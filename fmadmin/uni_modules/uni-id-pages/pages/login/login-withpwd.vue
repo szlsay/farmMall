@@ -4,9 +4,9 @@
 		<view class="login-bg">
 			<image src="@/static/login/bg.jpg"></image>
 		</view>
-		<view class="login-logo">
+<!-- 		<view class="login-logo">
 			<image :src="logo"></image>
-		</view>
+		</view> -->
 		<!-- 顶部文字 -->
 		<text class="title title-box">账号密码登录</text>
 		<uni-forms>

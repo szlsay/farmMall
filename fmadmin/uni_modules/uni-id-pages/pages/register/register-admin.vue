@@ -5,9 +5,9 @@
 			<image src="@/static/login/bg.jpg"></image>
 		</view>
 		<match-media :min-width="690">
-			<view class="login-logo">
+<!-- 			<view class="login-logo">
 				<image :src="logo"></image>
-			</view>
+			</view> -->
 			<!-- 顶部文字 -->
 			<text class="title title-box">创建超级管理员</text>
 		</match-media>
