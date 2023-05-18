@@ -306,10 +306,6 @@
 					uni.hideLoading()
 				})
 			},
-
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
 				value.province_name = this.formData.province_name
 				value.province_code = this.formData.province_code
@@ -318,9 +314,8 @@
 				value.area_name = this.formData.area_name
 				value.producer = value.province_name + value.city_name + value.area_name
 				value.sku = this.checkSku()
-				value.update_time = Date.now()
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
+				const fmgoods = uniCloud.importObject('fm-goods')
+				fmgoods.update(this.formDataId, value).then((res) => {
 					uni.showToast({
 						title: '修改成功'
 					})
