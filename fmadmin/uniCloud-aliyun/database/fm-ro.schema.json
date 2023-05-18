@@ -1,0 +1,68 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "请填写合作社名称",
+			"label": "合作社名称",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"mobile": {
+			"bsonType": "string",
+			"description": "手机号码",
+			"pattern": "^1[34578][0-9]{9}$",
+			"label": "手机号码",
+			"maxLength": 11,
+			"trim": "both"
+		},
+		"start": {
+			"bsonType": "int",
+			"description": "请选择星级",
+			"label": "星级",
+			"defaultValue": 0,
+			"enum": [{
+					"text": "无",
+					"value": 0
+				},
+				{
+					"text": "一星",
+					"value": 1
+				},
+				{
+					"text": "二星",
+					"value": 2
+				},
+				{
+					"text": "三星",
+					"value": 3
+				},
+				{
+					"text": "四星",
+					"value": 4
+				},
+				{
+					"text": "五星",
+					"value": 5
+				}
+			],
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择星级"
+				}
+			}
+		}
+	}
+}
