@@ -264,6 +264,17 @@ const validator = {
       }
     ],
     "label": "展示图片"
+  },
+  "sku": {
+    "rules": [
+      {
+        "format": "array"
+      },
+      {
+        "arrayType": "object"
+      }
+    ],
+    "label": "商品规格"
   }
 }
 

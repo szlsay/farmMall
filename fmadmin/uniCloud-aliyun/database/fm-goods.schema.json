@@ -194,6 +194,68 @@
 			"fileExtName": "jpg,png,webp",
 			"description": "请选择展示图片",
 			"label": "展示图片"
+		},
+		"sku": {
+			"bsonType": "array",
+			"arrayType": "object",
+			"description": "商品规格",
+			"label": "商品规格",
+			"properties": {
+				"title": {
+					"bsonType": "string",
+					"description": "请填写规格标题",
+					"label": "规格标题"
+				},
+				"price_original": {
+					"bsonType": "double",
+					"description": "请填写原价",
+					"label": "原价",
+					"minimum": 0,
+					"maximum": 1000000,
+					"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+				},
+				"price_sell": {
+					"bsonType": "double",
+					"description": "请填写售价",
+					"label": "售价",
+					"minimum": 0,
+					"maximum": 1000000,
+					"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+				},
+				"unit": {
+					"bsonType": "int",
+					"description": "请填写计量单位",
+					"label": "计量单位",
+					"defaultValue": 0,
+					"enum": [{
+							"text": "斤",
+							"value": 0
+						},
+						{
+							"text": "吨",
+							"value": 1
+						},
+						{
+							"text": "只",
+							"value": 2
+						},
+						{
+							"text": "袋",
+							"value": 3
+						},
+						{
+							"text": "箱",
+							"value": 4
+						}
+					],
+					"componentForEdit": {
+						"name": "uni-data-select",
+						"props": {
+							"placeholder": "请选择计量单位"
+						}
+					}
+				}
+			}
 		}
 	}
 }

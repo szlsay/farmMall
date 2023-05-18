@@ -1,104 +1,155 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-row>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
-						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
-							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
-						<text style="color: red; font-size: 14px;">请选择上传400*400px尺寸图片</text>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="name" label="商品名称" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both" maxlength="10"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-			</uni-row>
-			<uni-row>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="area_code" label="商品产地" :label-width="labelWidth" label-align="right">
-						<uni-data-picker self-field="code" parent-field="parent_code" v-model="formData.area_code"
-							collection="opendb-city-china" orderby="value asc"
-							field="code as value, name as text, eq(type, 2) as isleaf" @change="onChange"></uni-data-picker>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-						<uni-data-select placeholder="请选择" v-model="formData.unit"
-							:localdata="formOptions.unit_localdata"></uni-data-select>
-					</uni-forms-item>
-				</uni-col>
-			</uni-row>
-			<uni-row>
-				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_cost" label="成本价(元)" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写成本" type="number" v-model="formData.price_cost"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_original" label="原价(元)" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写原价" type="number" v-model="formData.price_original"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="6">
-					<uni-forms-item name="price_sell" label="售价(元)" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="6">
-					<text class="gpm-text">&nbsp;&nbsp;毛利率 {{gpmStr}}</text>
-				</uni-col>
-			</uni-row>
-			<uni-row>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="source_type" label="商品来源" :label-width="labelWidth" label-align="right">
-						<uni-data-checkbox v-model="formData.source_type" :localdata="formOptions.source_type_localdata"
-							style="padding-top: 5px;"></uni-data-checkbox>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="12" v-if="formData.source_type === 0">
-					<uni-forms-item name="stock" label="库存" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写库存" type="number" v-model="formData.stock"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-			</uni-row>
-
-			<uni-row>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="storage" label="存储条件" :label-width="labelWidth">
-						<uni-easyinput type="textarea" placeholder="请填写存储条件" v-model="formData.storage" trim="both"
-							maxlength="200"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="expiry" label="保质期(天)" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry" maxlength="6"
-							width="100"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-			</uni-row>
-			<uni-row>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="buy_min" label="最小起购" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写最小起购" type="number" v-model="formData.buy_min" maxlength="7"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-				<uni-col :xs="24" :sm="12">
-					<uni-forms-item name="buy_max" label="最大起购" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="请填写最大起购" type="number" v-model="formData.buy_max" maxlength="7"></uni-easyinput>
-					</uni-forms-item>
-				</uni-col>
-			</uni-row>
-
-			<uni-forms-item name="description" label="商品描述" :label-width="labelWidth" label-align="right">
-				<uni-easyinput type="textarea" placeholder="请填写商品描述" v-model="formData.description" trim="both"
-					maxlength="200"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
-				<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
-					v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
-			</uni-forms-item>
+			<view class="uni-stat--x p-m">
+				<view class="card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="name" label="商品名称" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写商品名称" v-model="formData.name" trim="both" maxlength="10"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="area_code" label="商品产地" :label-width="labelWidth" label-align="right">
+							<uni-data-picker self-field="code" parent-field="parent_code" v-model="formData.area_code"
+								collection="opendb-city-china" orderby="value asc"
+								field="code as value, name as text, eq(type, 2) as isleaf" @change="onChange"></uni-data-picker>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择" v-model="formData.unit"
+								:localdata="formOptions.unit_localdata"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="24">
+						<uni-forms-item name="image" label="商品主图" :label-width="labelWidth" label-align="right">
+							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
+								v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
+							<text style="color: red; font-size: 14px;">用于商品的封面展示。格式：jpg,png,webp，建议400*400px的图片</text>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="24">
+						<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
+							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
+								v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
+							<text style="color: red; font-size: 14px;" class="title-alert">用于商品的详情展示，最多六张。格式：jpg,png,webp</text>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+			<view class="uni-stat--x p-m">
+				<view class="card-header">价格信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="price_cost" label="成本价(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写成本" type="number" v-model="formData.price_cost"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="price_original" label="原价(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写原价" type="number" v-model="formData.price_original"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="price_sell" label="售价(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<text class="gpm-text">&nbsp;&nbsp;毛利率 {{gpmStr}}</text><text>&nbsp;&nbsp;(仅作参考)</text>
+					</uni-col>
+				</uni-row>
+			</view>
+			<view class="uni-stat--x p-m">
+				<view class="card-header">商品规格 (最大数量为{{skuMax}}个)</view>
+				<uni-row v-for="(item, index) in formData.sku" :key="index">
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item label="规格标题" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写规格标题" v-model="item.name" trim="both" maxlength="10"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="4">
+						<uni-forms-item label="原价(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写原价" type="number" v-model="item.price_original"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="4">
+						<uni-forms-item label="售价(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写售价" type="number" v-model="item.price_sell"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="4">
+						<uni-forms-item label="计量单位" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择" v-model="item.unit"
+								:localdata="formOptions.unit_localdata"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="4">
+						<button @click="onDeleteSku(index)" class="uni-button" size="mini" type="warn"
+							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
+					</uni-col>
+				</uni-row>
+				<view class="uni-button-group" style="margin-top: 0;" v-if="formData.sku && formData.sku.length < 6">
+					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddSku">新增规格</button>
+				</view>
+			</view>
+			<view class="uni-stat--x p-m">
+				<view class="card-header">商品设置</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="source_type" label="商品来源" :label-width="labelWidth" label-align="right">
+							<uni-data-checkbox v-model="formData.source_type" :localdata="formOptions.source_type_localdata"
+								style="padding-top: 5px;"></uni-data-checkbox>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12" v-if="formData.source_type === 0">
+						<uni-forms-item name="stock" label="库存" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写库存" type="number" v-model="formData.stock"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="storage" label="存储条件" :label-width="labelWidth">
+							<uni-easyinput type="textarea" placeholder="请填写存储条件" v-model="formData.storage" trim="both"
+								maxlength="200"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="expiry" label="保质期(天)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry" maxlength="6"
+								width="100"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="buy_min" label="最小起购" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写最小起购" type="number" v-model="formData.buy_min"
+								maxlength="7"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="buy_max" label="最大起购" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写最大起购" type="number" v-model="formData.buy_max"
+								maxlength="7"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="24">
+						<uni-forms-item name="description" label="商品描述" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请填写商品描述" v-model="formData.description" trim="both"
+								maxlength="200"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -151,9 +202,11 @@
 				"buy_min": null,
 				"buy_max": null,
 				"description": "",
-				"image_content": []
+				"image_content": [],
+				"sku": []
 			}
 			return {
+				skuMax: 6,
 				labelWidth: 80,
 				imageStyles: {
 					width: 140,
@@ -208,6 +261,18 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onAddSku() {
+				const sku = {
+					"title": "",
+					"price_original": null,
+					"price_sell": null,
+					"unit": null,
+				}
+				this.formData.sku.push(sku)
+			},
+			onDeleteSku(index) {
+				this.formData.sku.splice(index, 1)
+			},
 			onChange(e) {
 				if (e.detail && e.detail.value && e.detail.value.length === 3) {
 					const value = e.detail.value
@@ -273,7 +338,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"image,name,province_code,city_code,area_code,province_name,city_name,area_name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,image_content"
+					"image,name,province_code,city_code,area_code,province_name,city_name,area_name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,image_content,sku"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
@@ -303,6 +368,15 @@
 	}
 </script>
 <style lang="scss" scoped>
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		color: #555;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 10px 0;
+		margin-bottom: 15px;
+	}
 	.gpm-text {
 		font-size: 14px;
 		line-height: 35px;
