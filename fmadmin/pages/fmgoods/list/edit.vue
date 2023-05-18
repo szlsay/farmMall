@@ -67,25 +67,25 @@
 			</view>
 			<view class="uni-stat--x p-m">
 				<view class="card-header">商品规格 (最大数量为{{skuMax}}个)</view>
-				<uni-row v-for="(item, index) in formData.sku" :key="index">
+				<uni-row v-for="(sku, index) in formData.sku" :key="index">
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item label="规格标题" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写规格标题" v-model="item.name" trim="both" maxlength="10"></uni-easyinput>
+						<uni-forms-item name="sku.title" label="规格标题" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写规格标题" v-model="sku.title" trim="both" maxlength="10"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="4">
 						<uni-forms-item label="原价(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写原价" type="number" v-model="item.price_original"></uni-easyinput>
+							<uni-easyinput placeholder="请填写原价" type="number" v-model="sku.price_original"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="4">
 						<uni-forms-item label="售价(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写售价" type="number" v-model="item.price_sell"></uni-easyinput>
+							<uni-easyinput placeholder="请填写售价" type="number" v-model="sku.price_sell"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="4">
 						<uni-forms-item label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择" v-model="item.unit"
+							<uni-data-select placeholder="请选择" v-model="sku.unit"
 								:localdata="formOptions.unit_localdata"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
@@ -261,6 +261,9 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			checkSku() {
+				return this.formData.sku.filter(item => item.title && item.title.length > 0)
+			},
 			onAddSku() {
 				const sku = {
 					"title": "",
@@ -314,6 +317,7 @@
 				value.city_code = this.formData.city_code
 				value.area_name = this.formData.area_name
 				value.producer = value.province_name + value.city_name + value.area_name
+				value.sku = this.checkSku()
 				// 使用 clientDB 提交数据
 				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
 					uni.showToast({
@@ -343,7 +347,14 @@
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
-
+						if (!(this.formData.sku && this.formData.sku.length > 0)) {
+							this.formData.sku = [{
+								"title": "",
+								"price_original": null,
+								"price_sell": null,
+								"unit": null,
+							}]
+						}
 					}
 				}).catch((err) => {
 					uni.showModal({
@@ -377,6 +388,7 @@
 		padding: 10px 0;
 		margin-bottom: 15px;
 	}
+
 	.gpm-text {
 		font-size: 14px;
 		line-height: 35px;
