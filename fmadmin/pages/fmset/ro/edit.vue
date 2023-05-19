@@ -150,7 +150,7 @@
       				zoom: 16, //初始化地图级别
       				center
       			});
-      
+						this.updateMap(this.formData.address, center)
       			// 自动获取用户IP，返回当前城市
       			let citysearch = new AMap.CitySearch();
       			citysearch.getLocalCity((status, result) => {
