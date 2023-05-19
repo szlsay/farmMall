@@ -1,8 +1,7 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-
-			<view class="uni-stat--x p-m">
+			<view class="uni-stat--x p-m" v-if="formData.oid">
 				<view class="card-header">订单信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
@@ -38,7 +37,7 @@
 				</uni-row>
 			</view>
 
-			<view class="uni-stat--x p-m">
+			<view class="uni-stat--x p-m" v-if="formData.order_goodslist">
 				<view class="card-header">商品信息</view>
 				<uni-table border>
 					<uni-tr>
@@ -65,6 +64,11 @@
 				</view>
 			</view>
 		</uni-forms>
+		<view class="uni-button-group">
+		  <navigator open-type="navigateBack">
+		    <button class="uni-button" style="width: 100px;">返回</button>
+		  </navigator>
+		</view>
 	</view>
 </template>
 
