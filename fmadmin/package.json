@@ -91,6 +91,7 @@
 		}
 	},
 	"dependencies": {
+		"@amap/amap-jsapi-loader": "^1.0.1",
 		"wangeditor": "^4.7.15"
 	}
 }
