@@ -22,10 +22,25 @@
 					</uni-col>
 				</uni-row>
 			</view>
-
-
-
-			<view id="map">
+			<view class="uni-stat--x p-m">
+				<view class="card-header">位置信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="11">
+						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address" trim="both"></uni-easyinput>
+						</uni-forms-item>
+		<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
+						</uni-forms-item>
+						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="11" :push="1">
+						<view id="map">
+						</view>
+					</uni-col>
+				</uni-row>
 
 			</view>
 			<view class="uni-button-group">
@@ -61,8 +76,6 @@
 		}
 		return result
 	}
-
-
 
 	export default {
 		data() {
@@ -155,10 +168,13 @@
 			handleClick(e) {
 				let longitude = e.lnglat.getLng(); //经度
 				let latitude = e.lnglat.getLat(); //纬度
+				this.formData.longitude = longitude
+				this.formData.latitude = latitude
 				// 逆向地理编码
 				this.geocoder.getAddress([longitude, latitude], (status, result) => {
 					if (status === "complete" && result.info == "OK") {
 						let address = result.regeocode.formattedAddress;
+						this.formData.address = address
 						// 更新点标记
 						this.updateMap(address, [longitude, latitude]);
 					} else {
@@ -226,9 +242,11 @@
 
 <style lang="scss" scoped>
 	#map {
-		width: 600px;
+		width: 100%;
+		// width: 600px;
 		height: 300px;
 	}
+
 	.card-header {
 		display: flex;
 		justify-content: space-between;
