@@ -23,12 +23,13 @@
 				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
 				loadtime="manual" @load="onqueryload">
-				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection"
+				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border type="selection"
 					@selection-change="selectionChange">
 					<uni-tr>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'oid')" sortable
 							@sort-change="sortChange($event, 'oid')">订单id</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'order_goodslist')">商品列表</uni-th>
+						<uni-th align="center" sortable @sort-change="sortChange($event, 'order_goodslist')"
+							width="400">商品列表</uni-th>
 						<uni-th align="center" filter-type="timestamp" @filter-change="filterChange($event, 'create_time')" sortable
 							@sort-change="sortChange($event, 'create_time')">创建时间</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_amount_total')"
@@ -41,14 +42,35 @@
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.oid}}</uni-td>
-						<uni-td align="center">{{item.order_goodslist}}</uni-td>
+						<uni-td align="center">
+							<view class="goods-list" v-for="(goods, index) in item.order_goodslist" :key="index">
+								<view class="goods-left">
+									<image :src="goods.image_url"></image>
+								</view>
+								<view class="goods-mid">
+									<text>{{goods.name}}</text>
+									<text>{{goods.producer}}</text>
+								</view>
+								<view class="goods-right">
+									<text>{{goods.price_sell}}</text>
+									<text>{{goods.qty}}</text>
+								</view>
+							</view>
+						</uni-td>
 						<uni-td align="center">
 							<uni-dateformat :threshold="[0, 0]" :date="item.create_time"></uni-dateformat>
 						</uni-td>
 						<uni-td align="center">{{item.price_amount_total}}</uni-td>
 						<uni-td align="center">{{options.state_valuetotext[item.state]}}</uni-td>
-						<uni-td align="center">{{item.order_delivery}}</uni-td>
-
+						<uni-td align="center" style="text-align: left;">
+							<view class="">
+								<text>{{item.order_delivery.receive_name}}</text>
+								<text style="margin-left: 8px;">{{item.order_delivery.receive_mobile}}</text>
+							</view>
+							<view class="">
+								<text>{{item.order_delivery.full_address}}</text>
+							</view>
+						</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -237,5 +259,41 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.goods-list:not(:last-child) {
+		border-bottom: 1px solid #EEE;
+	}
+	
+	.goods-list:not(:first-child) {
+		padding-top: 8px;
+	}
+	
+	.goods-list {
+		display: flex;
+
+		.goods-left {
+			image {
+				width: 60px;
+				height: 60px;
+			}
+		}
+
+		.goods-mid {
+			margin-left: 8px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: flex-start;
+		}
+
+		.goods-right {
+			margin-left: 8px;
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			justify-content: space-between;
+			align-items: flex-end;
+		}
+	}
 </style>
