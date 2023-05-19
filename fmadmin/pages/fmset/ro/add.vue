@@ -1,16 +1,30 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-forms-item name="name" label="合作社名称">
-				<uni-easyinput placeholder="请填写合作社名称" v-model="formData.name" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="mobile" label="手机号码">
-				<uni-easyinput placeholder="手机号码" v-model="formData.mobile" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="start" label="星级">
-				<uni-data-select placeholder="请选择星级" v-model="formData.start"
-					:localdata="formOptions.start_localdata"></uni-data-select>
-			</uni-forms-item>
+			<view class="uni-stat--x p-m">
+				<view class="card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="name" label="合作社名称" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写合作社名称" v-model="formData.name" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="mobile" label="手机号码" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="手机号码" v-model="formData.mobile" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="start" label="星级" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择星级" v-model="formData.start"
+								:localdata="formOptions.start_localdata"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+
+
+
 			<view id="map">
 
 			</view>
@@ -61,6 +75,7 @@
 				map: null, //高德实例
 				marker: null, //点标记 Marker
 				geocoder: null, //逆向地理
+				labelWidth: 90,
 				formData,
 				formOptions: {
 					"start_localdata": [{
@@ -112,7 +127,7 @@
 						this.map = new AMap.Map("map", { //设置地图容器id
 							viewMode: "3D", //是否为3D地图模式
 							zoom: 16, //初始化地图级别
-							center: [106.583541, 29.563475], //初始化地图中心点位置
+							// center: [106.583541, 29.563475], //初始化地图中心点位置
 						});
 
 						// 自动获取用户IP，返回当前城市
@@ -210,8 +225,17 @@
 </script>
 
 <style lang="scss" scoped>
-#map {
-  width: 600px;
-  height: 300px;
-}
+	#map {
+		width: 600px;
+		height: 300px;
+	}
+	.card-header {
+		display: flex;
+		justify-content: space-between;
+		color: #555;
+		font-size: 14px;
+		font-weight: 600;
+		padding: 10px 0;
+		margin-bottom: 15px;
+	}
 </style>
