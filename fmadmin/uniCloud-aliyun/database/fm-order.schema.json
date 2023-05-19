@@ -65,6 +65,8 @@
 		},
 		"order_delivery": {
 			"bsonType": "object",
+			"description": "收货信息",
+			"label": "收货信息",
 			"properties": {
 				"receive_name": {
 					"bsonType": "string",

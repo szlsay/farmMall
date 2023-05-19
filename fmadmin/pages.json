@@ -213,6 +213,24 @@
 		}
 	],
 	"subPackages": [{
+			"root": "pages/fmorder",
+			"pages": [{
+				"path": "list/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "list/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "list/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
+			}]
+		}, {
 			"root": "pages/fmuser",
 			"pages": [{
 				"path": "feedback/list",
