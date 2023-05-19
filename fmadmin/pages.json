@@ -215,9 +215,9 @@
 	"subPackages": [{
 			"root": "pages/fmorder",
 			"pages": [{
-				"path": "list/add",
+				"path": "list/detail",
 				"style": {
-					"navigationBarTitleText": "新增"
+					"navigationBarTitleText": "订单详情"
 				}
 			}, {
 				"path": "list/edit",
@@ -227,7 +227,7 @@
 			}, {
 				"path": "list/list",
 				"style": {
-					"navigationBarTitleText": "列表"
+					"navigationBarTitleText": "订单列表"
 				}
 			}]
 		}, {

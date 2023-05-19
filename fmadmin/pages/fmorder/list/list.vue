@@ -73,8 +73,8 @@
 						</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
-								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
-									type="primary">修改</button>
+								<button @click="navigateTo('./detail?id='+item._id, false)" class="uni-button" size="mini"
+									type="primary">详情</button>
 								<button @click="confirmDelete(item._id)" class="uni-button" size="mini" type="warn">删除</button>
 							</view>
 						</uni-td>
