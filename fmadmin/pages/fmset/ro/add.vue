@@ -6,12 +6,12 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="name" label="合作社名称" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写合作社名称" v-model="formData.name" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写合作社名称" v-model="formData.name" trim="both" maxlength="20"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="mobile" label="手机号码" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="手机号码" v-model="formData.mobile" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="手机号码" v-model="formData.mobile" trim="both" maxlength="11"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -81,7 +81,10 @@
 			let formData = {
 				"name": "",
 				"mobile": "",
-				"start": 0
+				"start": 0,
+				"address": "",
+				"longitude": "",
+				"latitude": ""
 			}
 			return {
 				map: null, //高德实例
@@ -167,8 +170,8 @@
 			handleClick(e) {
 				let longitude = e.lnglat.getLng(); //经度
 				let latitude = e.lnglat.getLat(); //纬度
-				this.formData.longitude = longitude
-				this.formData.latitude = latitude
+				this.formData.longitude = longitude.toString()
+				this.formData.latitude = latitude.toString()
 				// 逆向地理编码
 				this.geocoder.getAddress([longitude, latitude], (status, result) => {
 					if (status === "complete" && result.info == "OK") {
