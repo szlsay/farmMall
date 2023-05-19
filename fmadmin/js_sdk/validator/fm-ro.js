@@ -1,14 +1,37 @@
 // 表单校验规则由 schema2code 生成，不建议直接修改校验规则，而建议通过 schema2code 生成, 详情: https://uniapp.dcloud.net.cn/uniCloud/schema
 
-
 const validator = {
+	"latitude": {
+	  "rules": [
+	    {
+	      "format": "string"
+	    }
+	  ],
+	  "label": "纬度"
+	},
+	"longitude": {
+	  "rules": [
+	    {
+	      "format": "string"
+	    }
+	  ],
+	  "label": "经度"
+	},
+	"address": {
+	  "rules": [
+	    {
+	      "format": "string"
+	    }
+	  ],
+	  "label": "详细地址"
+	},
   "name": {
     "rules": [
       {
         "format": "string"
       },
       {
-        "maxLength": 10
+        "maxLength": 20
       }
     ],
     "label": "合作社名称"

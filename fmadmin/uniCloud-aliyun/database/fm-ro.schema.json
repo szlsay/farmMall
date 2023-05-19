@@ -16,7 +16,25 @@
 			"bsonType": "string",
 			"description": "请填写合作社名称",
 			"label": "合作社名称",
-			"maxLength": 10,
+			"maxLength": 20,
+			"trim": "both"
+		},
+		"address": {
+			"bsonType": "string",
+			"description": "请填写详细地址",
+			"label": "详细地址",
+			"trim": "both"
+		},
+		"longitude": {
+			"bsonType": "string",
+			"description": "请选择经度",
+			"label": "经度",
+			"trim": "both"
+		},
+		"latitude": {
+			"bsonType": "string",
+			"description": "请选择纬度",
+			"label": "纬度",
 			"trim": "both"
 		},
 		"mobile": {

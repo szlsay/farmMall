@@ -41,7 +41,6 @@
 						</view>
 					</uni-col>
 				</uni-row>
-
 			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -191,17 +190,18 @@
 				// 自定义标记点
 				this.marker = new AMap.Marker({
 					position: lnglat,
-					icon: "http://vdata.amap.com/icons/b18/1/2.png",
+					// icon: "http://vdata.amap.com/icons/b18/1/2.png",
 					anchor: "top-center",
-					offset: new AMap.Pixel(-10, -10),
+					offset: new AMap.Pixel(0, -30),
 				});
 				// 添加到实例
 				this.marker.setMap(this.map);
 				// 设置label标签，label默认蓝框白底左上角显示，样式className为：amap-marker-label
+				const content = "<div style='width:250px; font-size: 16px; font-weight: 700;'>" + address + "</div>"
 				this.marker.setLabel({
 					direction: "top-center",
 					offset: new AMap.Pixel(10, 0), //设置文本标注偏移量
-					content: "<div style='width:250px;'>" + address + "</div>", //设置文本标注内容
+					content //设置文本标注内容
 				});
 			},
 			/**
@@ -243,8 +243,8 @@
 <style lang="scss" scoped>
 	#map {
 		width: 100%;
-		// width: 600px;
 		height: 300px;
+		border-radius: 20rpx;
 	}
 
 	.card-header {
