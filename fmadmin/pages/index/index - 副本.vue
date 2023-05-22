@@ -7,9 +7,16 @@
 			</view>
 		</view>
 		<view class="uni-container">
-			
+
+			<uni-notice-bar v-if="showAddAppId" showGetMore showIcon class="mb-m pointer" text="检测到您还未添加应用，点击前往应用管理添加" @click="toAddAppId" />
+			<uni-notice-bar v-if="!deviceTableData.length && !userTableData.length && !query.platform_id && complete" showGetMore showIcon class="mb-m pointer" text="暂无数据, 统计相关功能需开通 uni 统计后才能使用, 如未开通, 点击查看具体流程" @click="navTo('https://uniapp.dcloud.io/uni-stat-v2.html')" />
+
+			<view class="uni-stat--x mb-m">
+				<uni-stat-tabs label="平台选择" type="boldLine" mode="platform" v-model="query.platform_id" />
+			</view>
+			<!-- <uni-stat-panel :items="panelData" :contrast="true" /> -->
 			<view class="uni-stat--x p-m">
-				<view class="fm-card-header">设备概览</view>
+				<view class="uni-stat-card-header">设备概览</view>
 				<uni-table :loading="loading" border stripe emptyText="暂无数据">
 					<uni-tr>
 						<!-- <uni-th align="center">操作</uni-th> -->
@@ -38,7 +45,7 @@
 				</uni-table>
 			</view>
 			<view class="uni-stat--x p-m">
-				<view class="fm-card-header">注册用户概览</view>
+				<view class="uni-stat-card-header">注册用户概览</view>
 				<uni-table :loading="loading" border stripe emptyText="暂无数据">
 					<uni-tr>
 						<block v-for="(mapper, index) in userTableFields" :key="index">
@@ -65,6 +72,9 @@
 					</uni-tr>
 				</uni-table>
 			</view>
+			<!-- <view class="uni-pagination-box">
+				<uni-pagination show-icon :page-size="pageSize" :current="pageCurrent" :total="tableData.length" />
+			</view> -->
 		</view>
 
 		<!-- #ifndef H5 -->

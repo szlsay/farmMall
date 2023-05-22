@@ -5,6 +5,18 @@ view {
 	color: #333;
 }
 
+.fm-card-header {
+	display: flex;
+	justify-content: space-between;
+	color: #555;
+	font-size: 15px;
+	font-weight: 600;
+	margin-top: 4px;
+	margin-bottom: 15px;
+	padding-left: 10px;
+	border-left: 4px solid #00CC99;
+}
+	
 /* 全局公共样式 */
 body,
 html {
