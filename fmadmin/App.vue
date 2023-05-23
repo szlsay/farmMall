@@ -75,4 +75,5 @@
 	@import '@/common/uni-icons.css';
 	@import '@/common/admin-icons.css';
 	@import '@/common/theme.scss';
+	@import '@/common/fm.css';
 </style>

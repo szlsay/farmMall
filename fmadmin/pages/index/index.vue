@@ -8,7 +8,7 @@
 		</view>
 		<view class="uni-container">
 			
-			<view class="uni-stat--x p-m">
+			<view class="fm-box">
 				<view class="fm-card-header">设备概览</view>
 				<uni-table :loading="loading" border stripe emptyText="暂无数据">
 					<uni-tr>
@@ -37,7 +37,7 @@
 					</uni-tr>
 				</uni-table>
 			</view>
-			<view class="uni-stat--x p-m">
+			<view class="fm-box">
 				<view class="fm-card-header">注册用户概览</view>
 				<uni-table :loading="loading" border stripe emptyText="暂无数据">
 					<uni-tr>
@@ -64,6 +64,18 @@
 						</block>
 					</uni-tr>
 				</uni-table>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">实时概况</view>
+				<uni-row>
+					
+				</uni-row>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">待办事项</view>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">常用功能</view>
 			</view>
 		</view>
 
@@ -313,15 +325,6 @@
 </script>
 
 <style>
-	.uni-stat-card-header {
-		display: flex;
-		justify-content: space-between;
-		color: #555;
-		font-size: 14px;
-		font-weight: 600;
-		padding: 10px 0;
-		margin-bottom: 15px;
-	}
 	.uni-table-scroll {
 		min-height: auto;
 	}
