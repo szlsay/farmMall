@@ -175,9 +175,6 @@
 								<view class="title">
 									待付款订单
 								</view>
-					<!-- 			<uni-tooltip content="线上订单未支付订单数">
-									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
-								</uni-tooltip> -->
 							</view>
 							<view class="summary-num">
 								12
@@ -246,6 +243,22 @@
 					</uni-col>
 				</uni-row>
 			</view>
+			<uni-row :gutter="20">
+				<uni-col :xs="24" :sm="12">
+					<view class="fm-box">
+						<view class="fm-card-header">
+							订单趋势（近十日）
+						</view>
+					</view>
+				</uni-col>
+				<uni-col :xs="24" :sm="12">
+					<view class="fm-box">
+						<view class="fm-card-header">
+							销售额（元）
+						</view>
+					</view>
+				</uni-col>
+			</uni-row>
 			<view class="fm-box">
 				<view class="fm-card-header">常用功能</view>
 			</view>
