@@ -7,7 +7,7 @@
 			</view>
 		</view>
 		<view class="uni-container">
-			
+
 			<view class="fm-box">
 				<view class="fm-card-header">设备概览</view>
 				<uni-table :loading="loading" border stripe emptyText="暂无数据">
@@ -68,7 +68,104 @@
 			<view class="fm-box">
 				<view class="fm-card-header">实时概况</view>
 				<uni-row>
-					
+					<uni-col :xs="24" :sm="6">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									今日订单数
+								</view>
+								<uni-tooltip content="统计时间内,订单数量">
+									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
+								</uni-tooltip>
+							</view>
+							<view class="summary-num">
+								12
+							</view>
+							<view class="summary-title">
+								昨日：88
+							</view>
+							<view class="summary-title">
+								订单总数
+							</view>
+							<view class="summary-num">
+								1542
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									今日销售额
+								</view>
+								<uni-tooltip content="统计时间内,订单销售金额">
+									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
+								</uni-tooltip>
+							</view>
+							<view class="summary-num">
+								12.00
+							</view>
+							<view class="summary-title">
+								昨日：88.00
+							</view>
+							<view class="summary-title">
+								订单总数
+							</view>
+							<view class="summary-num">
+								1542.00
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									今日新增用户
+								</view>
+								<uni-tooltip content="统计时间内,新增加的用户数量">
+									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
+								</uni-tooltip>
+							</view>
+							<view class="summary-num">
+								3
+							</view>
+							<view class="summary-title">
+								昨日：6
+							</view>
+							<view class="summary-title">
+								用户总数
+							</view>
+							<view class="summary-num">
+								885
+							</view>
+						</view>
+					</uni-col>
+
+					<uni-col :xs="24" :sm="6">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									今日浏览量
+								</view>
+								<uni-tooltip content="统计时间内,用户的浏览量">
+									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
+								</uni-tooltip>
+							</view>
+							<view class="summary-num">
+								4
+							</view>
+							<view class="summary-title">
+								昨日：156
+							</view>
+							<view class="summary-title">
+								总浏览量
+							</view>
+							<view class="summary-num">
+								9875
+							</view>
+						</view>
+					</uni-col>
+
 				</uni-row>
 			</view>
 			<view class="fm-box">
@@ -121,16 +218,24 @@
 				total: 0,
 				loading: false,
 				complete: false,
-				statSetting:{
-					mode:"",
-					day:7
+				statSetting: {
+					mode: "",
+					day: 7
 				},
-				statModeList:[
-					{"value": "open","text": "开启"	},
-					{"value": "close","text": "关闭"	},
-					{"value": "auto","text": "节能" },
+				statModeList: [{
+						"value": "open",
+						"text": "开启"
+					},
+					{
+						"value": "close",
+						"text": "关闭"
+					},
+					{
+						"value": "auto",
+						"text": "节能"
+					},
 				],
-				showAddAppId:false
+				showAddAppId: false
 			}
 		},
 		onReady() {
@@ -164,7 +269,7 @@
 			}
 		},
 		methods: {
-			getAllData(queryStr){
+			getAllData(queryStr) {
 				this.getApps(this.queryStr, deviceFeildsMap, 'device')
 				this.getApps(this.queryStr, userFeildsMap, 'user')
 			},
@@ -295,25 +400,25 @@
 				}
 			},
 
-			toUrl(url){
+			toUrl(url) {
 				// #ifdef H5
-				window.open(url,"_blank");
+				window.open(url, "_blank");
 				// #endif
 			},
 
-			toAddAppId(){
+			toAddAppId() {
 				this.showAddAppId = false;
 				uni.navigateTo({
-					url:"/pages/system/app/list",
-					events:{
-						refreshData:()=>{
+					url: "/pages/system/app/list",
+					events: {
+						refreshData: () => {
 							this.checkAppId();
 						}
 					}
 				})
 			},
 
-			async checkAppId(){
+			async checkAppId() {
 				const db = uniCloud.database();
 				let res = await db.collection('opendb-app-list').count();
 				this.showAddAppId = (!res.result || res.result.total === 0) ? true : false;
@@ -324,31 +429,27 @@
 	}
 </script>
 
-<style>
-	.uni-table-scroll {
-		min-height: auto;
-	}
-	.link-btn-color {
-		color: #007AFF;
-		cursor: pointer;
-	}
-	.uni-stat-text{
-		color: #606266;
-	}
-	.mt10{
-		margin-top: 10px;
-	}
-	.uni-radio-cell{
-		margin: 0 10px;
-	}
-	.uni-stat-tooltip-s {
-		width: 400px;
-		white-space: normal;
-	}
-	.uni-a{
-		cursor: pointer;
-		text-decoration: underline;
-		color: #555;
-		font-size: 14px;
+<style lang="scss" scoped>
+	.summary-wrap {
+		padding-left: 8px;
+		.summary-title {
+			display: flex;
+			color: #999999;
+			margin-top: 8px;
+			.title {
+				color: #999999;
+				min-width: 72px;
+			}
+
+			.uni-tooltip {
+				flex: 1;
+			}
+		}
+
+		.summary-num {
+			margin: 8px 0 8px;
+			color: #333333;
+			font-size: 22px;
+		}
 	}
 </style>
