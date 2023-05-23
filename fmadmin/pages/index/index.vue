@@ -247,21 +247,23 @@
 				<uni-col :xs="24" :sm="12">
 					<view class="fm-box">
 						<view class="fm-card-header">
-							订单趋势（近十日）
+							订单趋势（近六个月）
 						</view>
+						<qiun-data-charts type="line" :opts="opts" :chartData="chartData" :ontouch="true" />
 					</view>
 				</uni-col>
 				<uni-col :xs="24" :sm="12">
 					<view class="fm-box">
 						<view class="fm-card-header">
-							销售额（元）
+							消费商品占比
 						</view>
+						<qiun-data-charts type="pie" :opts="optsGoods" :chartData="chartDataGoods" />
 					</view>
 				</uni-col>
 			</uni-row>
-			<view class="fm-box">
+<!-- 			<view class="fm-box">
 				<view class="fm-card-header">常用功能</view>
-			</view>
+			</view> -->
 		</view>
 		<!-- #ifndef H5 -->
 		<fix-window />
@@ -290,6 +292,46 @@
 	export default {
 		data() {
 			return {
+				chartDataGoods: {},
+				optsGoods: {
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+					padding: [5, 5, 5, 5],
+					enableScroll: false,
+					extra: {
+						pie: {
+							activeOpacity: 0.5,
+							activeRadius: 10,
+							offsetAngle: 0,
+							labelWidth: 15,
+							border: true,
+							borderWidth: 3,
+							borderColor: "#FFFFFF"
+						}
+					}
+				},
+				chartData: {},
+				opts: {
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+					padding: [15, 0, 0, 0],
+					enableScroll: true,
+					legend: {},
+					xAxis: {
+						disableGrid: true,
+						scrollShow: true,
+						itemCount: 6
+					},
+					yAxis: {
+						gridType: "dash",
+						dashLength: 2
+					},
+					extra: {
+						line: {
+							type: "straight",
+							width: 2,
+							activeType: "hollow"
+						}
+					}
+				},
 				query: {
 					platform_id: '',
 					start_time: [getTimeOfSomeDayAgo(1), new Date().getTime()]
@@ -333,6 +375,8 @@
 
 			this.debounceGet();
 			this.checkAppId();
+			this.getServerData();
+			this.getServerDataGoods();
 		},
 		watch: {
 			query: {
@@ -356,6 +400,59 @@
 			}
 		},
 		methods: {
+			getServerDataGoods() {
+				setTimeout(() => {
+					let res = {
+						series: [{
+							data: [{
+								"name": "鸡蛋",
+								"value": 38,
+								"labelText":"鸡蛋:38%"
+							}, {
+								"name": "西瓜",
+								"value": 22,
+								"labelText":"西瓜:22%"
+							}, {
+								"name": "羊肉",
+								"value": 20,
+								"labelText":"羊肉:20%"
+							}, {
+								"name": "柴鸡",
+								"value": 15,
+								"labelText":"柴鸡:15%"
+							}, {
+								"name": "其他",
+								"value": 5,
+								"labelText":"其他:5%"
+							}]
+						}]
+					};
+					this.chartDataGoods = JSON.parse(JSON.stringify(res));
+				}, 500);
+			},
+			getServerData() {
+				//模拟从服务器获取数据时的延时
+				setTimeout(() => {
+					//模拟服务器返回数据，如果数据格式和标准格式不同，需自行按下面的格式拼接
+					let res = {
+						categories: ["2023/01", "2023/02", "2023/03", "2023/04", "2023/05", "2023/06"],
+						series: [{
+								name: "农产品成交量",
+								data: [853, 986, 1052, 768, 1475, 656]
+							},
+							{
+								name: "合作社成交量",
+								data: [125, 254, 785, 456, 457, 321]
+							},
+							{
+								name: "第三方成交量",
+								data: [89, 105, 98, 98, 104, 132]
+							}
+						]
+					};
+					this.chartData = JSON.parse(JSON.stringify(res));
+				}, 500);
+			},
 			getAllData(queryStr) {
 				this.getApps(this.queryStr, deviceFeildsMap, 'device')
 				this.getApps(this.queryStr, userFeildsMap, 'user')
