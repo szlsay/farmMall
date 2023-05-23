@@ -68,7 +68,7 @@
 			<view class="fm-box">
 				<view class="fm-card-header">实时概况</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="12" :sm="6">
 						<view class="summary-wrap">
 							<view class="summary-title">
 								<view class="title">
@@ -92,7 +92,7 @@
 							</view>
 						</view>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="12" :sm="6">
 						<view class="summary-wrap">
 							<view class="summary-title">
 								<view class="title">
@@ -116,7 +116,7 @@
 							</view>
 						</view>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="12" :sm="6">
 						<view class="summary-wrap">
 							<view class="summary-title">
 								<view class="title">
@@ -140,8 +140,7 @@
 							</view>
 						</view>
 					</uni-col>
-
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="12" :sm="6">
 						<view class="summary-wrap">
 							<view class="summary-title">
 								<view class="title">
@@ -165,17 +164,92 @@
 							</view>
 						</view>
 					</uni-col>
-
 				</uni-row>
 			</view>
 			<view class="fm-box">
 				<view class="fm-card-header">待办事项</view>
+				<uni-row>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									待付款订单
+								</view>
+					<!-- 			<uni-tooltip content="线上订单未支付订单数">
+									<uni-icons type="info" color="#00CC99" size="22"></uni-icons>
+								</uni-tooltip> -->
+							</view>
+							<view class="summary-num">
+								12
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									待发货订单
+								</view>
+							</view>
+							<view class="summary-num">
+								4
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									退款中订单
+								</view>
+							</view>
+							<view class="summary-num">
+								1
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									库存警告
+								</view>
+							</view>
+							<view class="summary-num">
+								0
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									出售中商品
+								</view>
+							</view>
+							<view class="summary-num">
+								8
+							</view>
+						</view>
+					</uni-col>
+					<uni-col :xs="8" :sm="4">
+						<view class="summary-wrap">
+							<view class="summary-title">
+								<view class="title">
+									仓库中商品
+								</view>
+							</view>
+							<view class="summary-num">
+								9
+							</view>
+						</view>
+					</uni-col>
+				</uni-row>
 			</view>
 			<view class="fm-box">
 				<view class="fm-card-header">常用功能</view>
 			</view>
 		</view>
-
 		<!-- #ifndef H5 -->
 		<fix-window />
 		<!-- #endif -->
@@ -386,7 +460,6 @@
 						this.complete = true;
 					})
 			},
-
 			navTo(url, id) {
 				if (url.indexOf('http') > -1) {
 					window.open(url)
@@ -399,13 +472,11 @@
 					})
 				}
 			},
-
 			toUrl(url) {
 				// #ifdef H5
 				window.open(url, "_blank");
 				// #endif
 			},
-
 			toAddAppId() {
 				this.showAddAppId = false;
 				uni.navigateTo({
@@ -417,28 +488,26 @@
 					}
 				})
 			},
-
 			async checkAppId() {
 				const db = uniCloud.database();
 				let res = await db.collection('opendb-app-list').count();
 				this.showAddAppId = (!res.result || res.result.total === 0) ? true : false;
 			}
-
 		}
-
 	}
 </script>
 
 <style lang="scss" scoped>
 	.summary-wrap {
 		padding-left: 8px;
+
 		.summary-title {
 			display: flex;
 			color: #999999;
 			margin-top: 8px;
+
 			.title {
 				color: #999999;
-				min-width: 72px;
 			}
 
 			.uni-tooltip {
