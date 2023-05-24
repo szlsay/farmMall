@@ -261,21 +261,46 @@
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
+			// confirmDelete(id) {
+			// 	const fmgoods = uniCloud.importObject("fm-goods")
+			// 	fmgoods.delete(id).then((res) => {
+			// 		this.$refs.table.clearSelection()
+			// 		this.$refs.udb.refresh()
+			// 	}).catch((err) => {
+			// 		uni.showModal({
+			// 			content: err.message || '请求服务失败',
+			// 			showCancel: false
+			// 		})
+			// 	})
+			// 	// this.$refs.udb.remove(id, {
+			// 	// 	success: (res) => {
+			// 	// 		this.$refs.table.clearSelection()
+			// 	// 	}
+			// 	// })
+			// },
 			confirmDelete(id) {
+				const that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除此商品？',
+					success: function(res) {
+						if (res.confirm) {
+							that.onDelete(id)
+						}
+					}
+				});
+			},
+			onDelete(id) {
 				const fmgoods = uniCloud.importObject("fm-goods")
 				fmgoods.delete(id).then((res) => {
 					this.$refs.table.clearSelection()
+					this.$refs.udb.refresh()
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',
 						showCancel: false
 					})
 				})
-				// this.$refs.udb.remove(id, {
-				// 	success: (res) => {
-				// 		this.$refs.table.clearSelection()
-				// 	}
-				// })
 			},
 			sortChange(e, name) {
 				this.orderByFieldName = name;

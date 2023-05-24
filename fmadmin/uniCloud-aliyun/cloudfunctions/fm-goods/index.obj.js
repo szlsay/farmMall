@@ -43,4 +43,12 @@ module.exports = {
 			is_delete: true
 		})
 	},
+	heal(_id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return dbJql.collection(dbCollectionName).doc(_id).update({
+			is_delete: false
+		})
+	},
 }

@@ -8,21 +8,15 @@
 			<view class="uni-group">
 				<input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
 				<button class="uni-button" type="default" size="mini" @click="search">搜索</button>
-				<button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-				<button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
-					@click="delTable">批量删除</button>
-				<download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData"
-					:type="exportExcel.type" :name="exportExcel.filename">
-					<button class="uni-button" type="primary" size="mini">导出 Excel</button>
-				</download-excel>
+				<!-- 	<button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
+					@click="delTable">批量删除</button> -->
 			</view>
 		</view>
 		<view class="uni-container">
-			<unicloud-db ref="udb" :collection="collectionList"
-				field="image,name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,is_delete"
+			<unicloud-db ref="udb" :collection="collectionList" field="image,name,producer,unit,source_type,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
-				loadtime="manual" @load="onqueryload">
+				loadtime="manual">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection"
 					@selection-change="selectionChange">
 					<uni-tr>
@@ -33,24 +27,8 @@
 							@sort-change="sortChange($event, 'producer')">商品产地</uni-th>
 						<uni-th align="center" filter-type="select" :filter-data="options.filterData.unit_localdata"
 							@filter-change="filterChange($event, 'unit')">计量单位</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_cost')" sortable
-							@sort-change="sortChange($event, 'price_cost')">成本价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_original')" sortable
-							@sort-change="sortChange($event, 'price_original')">原价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')" sortable
-							@sort-change="sortChange($event, 'price_sell')">售价</uni-th>
 						<uni-th align="center" filter-type="select" :filter-data="options.filterData.source_type_localdata"
 							@filter-change="filterChange($event, 'source_type')">商品来源</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'stock')" sortable
-							@sort-change="sortChange($event, 'stock')">库存</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'storage')" sortable
-							@sort-change="sortChange($event, 'storage')" width="200">存储条件</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')" sortable
-							@sort-change="sortChange($event, 'expiry')">保质期</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_min')" sortable
-							@sort-change="sortChange($event, 'buy_min')">最小起购</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_max')" sortable
-							@sort-change="sortChange($event, 'buy_max')">最大起购</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -61,24 +39,11 @@
 						<uni-td align="center">{{item.name}}</uni-td>
 						<uni-td align="center">{{item.producer}}</uni-td>
 						<uni-td align="center">{{options.unit_valuetotext[item.unit]}}</uni-td>
-						<uni-td align="center">{{item.price_cost}}</uni-td>
-						<uni-td align="center">{{item.price_original}}</uni-td>
-						<uni-td align="center">{{item.price_sell}}</uni-td>
 						<uni-td align="center">{{options.source_type_valuetotext[item.source_type]}}</uni-td>
-						<uni-td align="center">{{item.stock}}</uni-td>
-						<uni-td align="center">
-							<uni-tooltip :content="item.storage">
-								<text class="text-3-line">{{item.storage}}</text>
-							</uni-tooltip>
-						</uni-td>
-						<uni-td align="center">{{item.expiry}}</uni-td>
-						<uni-td align="center">{{item.buy_min}}</uni-td>
-						<uni-td align="center">{{item.buy_max}}</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
-								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
-									type="primary">修改</button>
-								<button @click="confirmDelete(item._id)" class="uni-button" size="mini" type="warn">删除</button>
+								<button @click="confirmHeal(item._id)" class="uni-button" size="mini" type="primary">恢复</button>
+								<!-- <button @click="confirmDelete(item._id)" class="uni-button" size="mini" type="warn">删除</button> -->
 							</view>
 						</uni-td>
 					</uni-tr>
@@ -118,7 +83,7 @@
 			return {
 				collectionList: "fm-goods",
 				query: '',
-				where: 'is_delete == false',
+				where: 'is_delete == true',
 				orderby: dbOrderBy,
 				orderByFieldName: "",
 				selectedIndexs: [],
@@ -162,28 +127,7 @@
 				imageStyles: {
 					width: 64,
 					height: 64
-				},
-				exportExcel: {
-					"filename": "fm-goods.xls",
-					"type": "xls",
-					"fields": {
-						"商品主图": "image",
-						"商品名称": "name",
-						"商品产地": "producer",
-						"计量单位": "unit",
-						"成本价": "price_cost",
-						"原价": "price_original",
-						"售价": "price_sell",
-						"商品来源": "source_type",
-						"库存": "stock",
-						"存储条件": "storage",
-						"保质期": "expiry",
-						"最小起购": "buy_min",
-						"最大起购": "buy_max",
-						"商品描述": "description"
-					}
-				},
-				exportExcelData: []
+				}
 			}
 		},
 		onLoad() {
@@ -193,29 +137,16 @@
 			this.$refs.udb.loadData()
 		},
 		methods: {
-			onqueryload(data) {
-				const dataCopy = cloneObject(data)
-				const that = this
-				let tempData = dataCopy.map(item => {
-					if (item.image && item.image.url) {
-						item.image = item.image.url
-					}
-					item.source_type = that.options.source_type_valuetotext[item.source_type]
-					item.unit = that.options.unit_valuetotext[item.unit]
-					return item
-				})
-				this.exportExcelData = tempData
-			},
 			getWhere() {
 				const query = this.query.trim()
 				if (!query) {
-					return 'is_delete == false'
+					return 'is_delete == true'
 				}
 				const queryRe = new RegExp(query, 'i')
 				return dbSearchFields.map(name => queryRe + '.test(' + name + ')').join(' || ')
 			},
 			search() {
-				const newWhere = this.getWhere() + ' && is_delete == false'
+				const newWhere = this.getWhere() + ' && is_delete == true'
 				this.where = newWhere
 				this.$nextTick(() => {
 					this.loadData()
@@ -261,21 +192,29 @@
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
-			confirmDelete(id) {
+			confirmHeal(id) {
+				const that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定要恢复此商品？',
+					success: function(res) {
+						if (res.confirm) {
+							that.onHeal(id)
+						}
+					}
+				});
+			},
+			onHeal(id) {
 				const fmgoods = uniCloud.importObject("fm-goods")
-				fmgoods.delete(id).then((res) => {
+				fmgoods.heal(id).then((res) => {
 					this.$refs.table.clearSelection()
+					this.$refs.udb.refresh()
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',
 						showCancel: false
 					})
 				})
-				// this.$refs.udb.remove(id, {
-				// 	success: (res) => {
-				// 		this.$refs.table.clearSelection()
-				// 	}
-				// })
 			},
 			sortChange(e, name) {
 				this.orderByFieldName = name;
@@ -297,9 +236,9 @@
 				let newWhere = filterToWhere(this._filter, db.command)
 				if (Object.keys(newWhere).length) {
 					this.where = newWhere
-					this.where.is_delete = false
+					this.where.is_delete = true
 				} else {
-					this.where = 'is_delete == false'
+					this.where = 'is_delete == true'
 				}
 				this.$nextTick(() => {
 					this.$refs.udb.loadData()
