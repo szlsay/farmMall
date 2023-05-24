@@ -24,12 +24,23 @@ module.exports = {
 		}
 		value.create_time = Date.now()
 		value.update_time = Date.now()
+		value.is_delete = false
 		value.create_uid = this.userInfo.uid
 		return db.collection(dbCollectionName).add(value)
 	},
-
 	update(_id, value) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
 		value.update_time = Date.now()
 		return dbJql.collection(dbCollectionName).doc(_id).update(value)
+	},
+	delete(_id) {
+		if (this.userInfo.errCode) {
+			return this.userInfo
+		}
+		return dbJql.collection(dbCollectionName).doc(_id).update({
+			is_delete: true
+		})
 	},
 }

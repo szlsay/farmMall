@@ -25,5 +25,5 @@ view {
 }
 
 .uni-table-scroll {
-	min-height: auto;
+	/* min-height: auto; */
 }
