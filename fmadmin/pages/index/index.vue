@@ -22,7 +22,8 @@
 					<uni-tr v-for="(item ,i) in deviceTableData" :key="i">
 						<block v-for="(mapper, index) in deviceTableFields" :key="index">
 							<uni-td v-if="mapper.field === 'appid'" align="center">
-								<view v-if="item.appid" @click="navTo('/pages/uni-stat/device/overview/overview', item.appid)"
+								<view v-if="item.appid"
+									@click="navTo('/pages/uni-stat/device/overview/overview', item.appid)"
 									class="link-btn-color">
 									{{item[mapper.field] !== undefined ? item[mapper.field] : '-'}}
 								</view>
@@ -50,7 +51,8 @@
 					<uni-tr v-for="(item ,i) in userTableData" :key="i">
 						<block v-for="(mapper, index) in userTableFields" :key="index">
 							<uni-td v-if="mapper.field === 'appid'" align="center">
-								<view v-if="item.appid" @click="navTo('/pages/uni-stat/user/overview/overview', item.appid)"
+								<view v-if="item.appid"
+									@click="navTo('/pages/uni-stat/user/overview/overview', item.appid)"
 									class="link-btn-color">
 									{{item[mapper.field] !== undefined ? item[mapper.field] : '-'}}
 								</view>
@@ -261,7 +263,7 @@
 					</view>
 				</uni-col>
 			</uni-row>
-<!-- 			<view class="fm-box">
+			<!-- 			<view class="fm-box">
 				<view class="fm-card-header">常用功能</view>
 			</view> -->
 		</view>
@@ -294,7 +296,9 @@
 			return {
 				chartDataGoods: {},
 				optsGoods: {
-					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4",
+						"#ea7ccc"
+					],
 					padding: [5, 5, 5, 5],
 					enableScroll: false,
 					extra: {
@@ -311,7 +315,9 @@
 				},
 				chartData: {},
 				opts: {
-					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4", "#ea7ccc"],
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4",
+						"#ea7ccc"
+					],
 					padding: [15, 0, 0, 0],
 					enableScroll: true,
 					legend: {},
@@ -407,23 +413,23 @@
 							data: [{
 								"name": "鸡蛋",
 								"value": 38,
-								"labelText":"鸡蛋:38%"
+								"labelText": "鸡蛋:38%"
 							}, {
 								"name": "西瓜",
 								"value": 22,
-								"labelText":"西瓜:22%"
+								"labelText": "西瓜:22%"
 							}, {
 								"name": "羊肉",
 								"value": 20,
-								"labelText":"羊肉:20%"
+								"labelText": "羊肉:20%"
 							}, {
 								"name": "柴鸡",
 								"value": 15,
-								"labelText":"柴鸡:15%"
+								"labelText": "柴鸡:15%"
 							}, {
 								"name": "其他",
 								"value": 5,
-								"labelText":"其他:5%"
+								"labelText": "其他:5%"
 							}]
 						}]
 					};
@@ -608,6 +614,10 @@
 </script>
 
 <style lang="scss" scoped>
+	.uni-table-scroll {
+		min-height: auto;
+	}
+
 	.summary-wrap {
 		padding-left: 8px;
 
