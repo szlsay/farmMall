@@ -90,14 +90,14 @@
 		},
 		methods: {
 			handleItemClick(id) {
-			  uni.navigateTo({
-			    url: './detail?id=' + id
-			  })
+				uni.navigateTo({
+					url: './detail?id=' + id
+				})
 			},
 			handleItemClick(id) {
-			  uni.navigateTo({
-			    url: './detail?id=' + id
-			  })
+				uni.navigateTo({
+					url: './detail?id=' + id
+				})
 			},
 			getPriceText(price) {
 				return formatPrice(price)
@@ -177,7 +177,7 @@
 			margin-left: 16rpx;
 			margin-right: 16rpx;
 			display: flex;
-			justify-content: end;
+			justify-content: flex-end;
 
 			.btn-pay {
 				color: #00CC99;
