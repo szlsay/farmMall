@@ -1,0 +1,191 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"is_delete": {
+			"bsonType": "bool",
+			"label": "是否删除",
+			"defaultValue": false
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择套餐主图",
+			"label": "套餐主图"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "请填写套餐名称",
+			"label": "套餐",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"unit": {
+			"bsonType": "int",
+			"description": "请填写计量单位",
+			"label": "计量单位",
+			"defaultValue": 0,
+			"enum": [{
+					"text": "份",
+					"value": 0
+				},
+				{
+					"text": "斤",
+					"value": 1
+				},
+				{
+					"text": "箱",
+					"value": 2
+				},
+				{
+					"text": "袋",
+					"value": 3
+				}
+			],
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择计量单位"
+				}
+			}
+		},
+		"price_cost": {
+			"bsonType": "double",
+			"description": "请填写成本价",
+			"label": "成本价",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"price_original": {
+			"bsonType": "double",
+			"description": "请填写原价",
+			"label": "原价",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"price_sell": {
+			"bsonType": "double",
+			"description": "请填写售价",
+			"label": "售价",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"source_type": {
+			"bsonType": "int",
+			"label": "商品来源",
+			"defaultValue": 0,
+			"enum": [{
+					"text": "库存现货",
+					"value": 0
+				},
+				{
+					"text": "预售采购",
+					"value": 1
+				}
+			]
+		},
+		"stock": {
+			"bsonType": "int",
+			"description": "请填写库存",
+			"label": "库存",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"storage": {
+			"bsonType": "string",
+			"description": "请填写存储条件",
+			"label": "存储条件",
+			"maxLength": 200,
+			"trim": "both"
+		},
+		"expiry": {
+			"bsonType": "int",
+			"description": "请填写保质期",
+			"label": "保质期",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"buy_min": {
+			"bsonType": "int",
+			"description": "请填写最小起购",
+			"label": "最小起购",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"buy_max": {
+			"bsonType": "int",
+			"description": "请填写最大起购",
+			"label": "最大起购",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "请填写产品描述",
+			"label": "产品描述",
+			"maxLength": 200,
+			"trim": "both"
+		},
+		"image_content": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择展示图片",
+			"label": "展示图片"
+		},
+		"create_uid": {
+			"bsonType": "string",
+			"description": "创建人用户的唯一id",
+			"label": "创建人用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"title": "更新时间"
+		},
+		"sku": {
+			"bsonType": "array",
+			"arrayType": "object",
+			"description": "套餐规格",
+			"label": "套餐规格",
+			"properties": {
+				"title": {
+					"bsonType": "string",
+					"description": "请填写规格标题",
+					"label": "规格标题"
+				}
+			}
+		}
+	}
+}

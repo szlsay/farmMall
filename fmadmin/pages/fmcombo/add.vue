@@ -1,0 +1,190 @@
+<template>
+  <view class="uni-container">
+    <uni-forms ref="form" :model="formData" validateTrigger="bind">
+      <uni-forms-item name="is_delete" label="是否删除">
+        <switch @change="binddata('is_delete', $event.detail.value)" :checked="formData.is_delete"></switch>
+      </uni-forms-item>
+      <uni-forms-item name="image" label="套餐主图">
+        <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object" v-model="formData.image"></uni-file-picker>
+      </uni-forms-item>
+      <uni-forms-item name="name" label="套餐">
+        <uni-easyinput placeholder="请填写套餐名称" v-model="formData.name" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="unit" label="计量单位">
+        <uni-data-select placeholder="请选择计量单位" v-model="formData.unit" :localdata="formOptions.unit_localdata"></uni-data-select>
+      </uni-forms-item>
+      <uni-forms-item name="price_cost" label="成本价">
+        <uni-easyinput placeholder="请填写成本价" type="number" v-model="formData.price_cost"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="price_original" label="原价">
+        <uni-easyinput placeholder="请填写原价" type="number" v-model="formData.price_original"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="price_sell" label="售价">
+        <uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="source_type" label="商品来源">
+        <uni-data-checkbox v-model="formData.source_type" :localdata="formOptions.source_type_localdata"></uni-data-checkbox>
+      </uni-forms-item>
+      <uni-forms-item name="stock" label="库存">
+        <uni-easyinput placeholder="请填写库存" type="number" v-model="formData.stock"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="storage" label="存储条件">
+        <uni-easyinput placeholder="请填写存储条件" v-model="formData.storage" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="expiry" label="保质期">
+        <uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="buy_min" label="最小起购">
+        <uni-easyinput placeholder="请填写最小起购" type="number" v-model="formData.buy_min"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="buy_max" label="最大起购">
+        <uni-easyinput placeholder="请填写最大起购" type="number" v-model="formData.buy_max"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="description" label="产品描述">
+        <uni-easyinput placeholder="请填写产品描述" v-model="formData.description" trim="both"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="image_content" label="展示图片">
+        <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array" v-model="formData.image_content"></uni-file-picker>
+      </uni-forms-item>
+      <uni-forms-item name="create_uid" label="创建人用户id">
+        <uni-easyinput placeholder="创建人用户的唯一id" v-model="formData.create_uid"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="create_time" label="创建时间">
+        <uni-datetime-picker return-type="timestamp" v-model="formData.create_time"></uni-datetime-picker>
+      </uni-forms-item>
+      <uni-forms-item name="update_time" label="更新时间">
+        <uni-datetime-picker return-type="timestamp" v-model="formData.update_time"></uni-datetime-picker>
+      </uni-forms-item>
+      <uni-forms-item name="sku" label="套餐规格">
+        <uni-data-checkbox :multiple="true" v-model="formData.sku"></uni-data-checkbox>
+      </uni-forms-item>
+      <view class="uni-button-group">
+        <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
+        <navigator open-type="navigateBack" style="margin-left: 15px;">
+          <button class="uni-button" style="width: 100px;">返回</button>
+        </navigator>
+      </view>
+    </uni-forms>
+  </view>
+</template>
+
+<script>
+  import { validator } from '../../js_sdk/validator/fm-combo.js';
+
+  const db = uniCloud.database();
+  const dbCmd = db.command;
+  const dbCollectionName = 'fm-combo';
+
+  function getValidator(fields) {
+    let result = {}
+    for (let key in validator) {
+      if (fields.includes(key)) {
+        result[key] = validator[key]
+      }
+    }
+    return result
+  }
+
+  
+
+  export default {
+    data() {
+      let formData = {
+        "is_delete": false,
+        "image": null,
+        "name": "",
+        "unit": 0,
+        "price_cost": null,
+        "price_original": null,
+        "price_sell": null,
+        "source_type": 0,
+        "stock": null,
+        "storage": "",
+        "expiry": null,
+        "buy_min": null,
+        "buy_max": null,
+        "description": "",
+        "image_content": [],
+        "create_uid": "",
+        "create_time": null,
+        "update_time": null,
+        "sku": []
+      }
+      return {
+        formData,
+        formOptions: {
+          "unit_localdata": [
+            {
+              "text": "份",
+              "value": 0
+            },
+            {
+              "text": "斤",
+              "value": 1
+            },
+            {
+              "text": "箱",
+              "value": 2
+            },
+            {
+              "text": "袋",
+              "value": 3
+            }
+          ],
+          "source_type_localdata": [
+            {
+              "text": "库存现货",
+              "value": 0
+            },
+            {
+              "text": "预售采购",
+              "value": 1
+            }
+          ]
+        },
+        rules: {
+          ...getValidator(Object.keys(formData))
+        }
+      }
+    },
+    onReady() {
+      this.$refs.form.setRules(this.rules)
+    },
+    methods: {
+      
+      /**
+       * 验证表单并提交
+       */
+      submit() {
+        uni.showLoading({
+          mask: true
+        })
+        this.$refs.form.validate().then((res) => {
+          return this.submitForm(res)
+        }).catch(() => {
+        }).finally(() => {
+          uni.hideLoading()
+        })
+      },
+
+      /**
+       * 提交表单
+       */
+      submitForm(value) {
+        // 使用 clientDB 提交数据
+        return db.collection(dbCollectionName).add(value).then((res) => {
+          uni.showToast({
+            title: '新增成功'
+          })
+          this.getOpenerEventChannel().emit('refreshData')
+          setTimeout(() => uni.navigateBack(), 500)
+        }).catch((err) => {
+          uni.showModal({
+            content: err.message || '请求服务失败',
+            showCancel: false
+          })
+        })
+      }
+    }
+  }
+</script>
