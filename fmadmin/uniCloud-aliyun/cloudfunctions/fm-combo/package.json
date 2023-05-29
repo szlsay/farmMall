@@ -1,0 +1,7 @@
+{
+  "name": "fm-combo",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}
