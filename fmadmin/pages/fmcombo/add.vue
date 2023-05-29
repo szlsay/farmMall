@@ -27,6 +27,12 @@
 					<text style="color: red; font-size: 14px;" class="title-alert">用于套餐的详情展示，最多六张。格式：jpg,png,webp</text>
 				</uni-forms-item>
 			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">套餐规格</view>
+				<uni-forms-item name="sku" label="套餐规格" :label-width="labelWidth" label-align="right">
+					<uni-data-checkbox :multiple="true" v-model="formData.sku"></uni-data-checkbox>
+				</uni-forms-item>
+			</view>
 
 			<view class="fm-box">
 				<view class="fm-card-header">价格信息</view>
@@ -46,12 +52,7 @@
 					<uni-easyinput placeholder="请填写产品描述" v-model="formData.description" trim="both"></uni-easyinput>
 				</uni-forms-item>
 			</view>
-			<view class="fm-box">
-				<view class="fm-card-header">价格信息</view>
-				<uni-forms-item name="sku" label="套餐规格" :label-width="labelWidth" label-align="right">
-					<uni-data-checkbox :multiple="true" v-model="formData.sku"></uni-data-checkbox>
-				</uni-forms-item>
-			</view>
+
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
