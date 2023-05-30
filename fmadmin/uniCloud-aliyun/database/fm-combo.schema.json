@@ -41,7 +41,7 @@
 		"name": {
 			"bsonType": "string",
 			"description": "请填写套餐名称",
-			"label": "套餐",
+			"label": "套餐名称",
 			"maxLength": 10,
 			"trim": "both"
 		},
@@ -95,10 +95,86 @@
 			"description": "套餐规格",
 			"label": "套餐规格",
 			"properties": {
-				"title": {
+				"goods_id": {
 					"bsonType": "string",
-					"description": "请填写规格标题",
-					"label": "规格标题"
+					"description": "商品id",
+					"label": "商品id"
+				},
+				"goods_name": {
+					"bsonType": "string",
+					"description": "请选择商品名称",
+					"label": "商品名称"
+				},
+				"qty": {
+					"bsonType": "int",
+					"description": "数量",
+					"title": "数量",
+					"defaultValue": 0
+				},
+				"unit": {
+					"bsonType": "int",
+					"description": "请填写计量单位",
+					"label": "计量单位",
+					"defaultValue": 0,
+					"enum": [{
+							"text": "份",
+							"value": 0
+						},
+						{
+							"text": "千斤",
+							"value": 1
+						},
+						{
+							"text": "克",
+							"value": 2
+						},
+						{
+							"text": "只",
+							"value": 3
+						}
+					],
+					"componentForEdit": {
+						"name": "uni-data-select",
+						"props": {
+							"placeholder": "请选择计量单位"
+						}
+					}
+				}
+			}
+		},
+		"delivery": {
+			"bsonType": "object",
+			"description": "配送信息",
+			"label": "配送信息",
+			"properties": {
+				"timer_unit": {
+					"bsonType": "int",
+					"description": "请选择配送频率",
+					"label": "配送频率",
+					"defaultValue": 0,
+					"enum": [{
+							"text": "次/月",
+							"value": 0
+						},
+						{
+							"text": "次/周",
+							"value": 1
+						},
+						{
+							"text": "次/天",
+							"value": 2
+						},
+						{
+							"text": "其他",
+							"value": 3
+						}
+					],
+					"componentForEdit": {
+						"name": "uni-data-select",
+						"props": {
+							"placeholder": "请选择计量单位"
+						}
+					}
 				}
 			}
 		},
@@ -118,12 +194,22 @@
 			"maximum": 1000000,
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
+		"reserve_begin": {
+			"bsonType": "date",
+			"description": "预定开始时间",
+			"label": "预定开始时间"
+		},
+		"reserve_end": {
+			"bsonType": "date",
+			"description": "预定结束时间",
+			"label": "预定结束时间"
+		},
 		"description": {
 			"bsonType": "string",
 			"description": "请填写产品描述",
 			"label": "产品描述",
 			"maxLength": 200,
 			"trim": "both"
-		},
+		}
 	}
 }
