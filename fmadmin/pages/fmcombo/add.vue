@@ -38,7 +38,7 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="goods_id" label="商品名称" :label-width="labelWidth" label-align="right">
 							<uni-data-select collection="fm-goods" field="_id as value, name as text"
-								v-model="sku.goods_id" :clear="true" @change="onChangeGoods(index)" ref="dataSelect"
+								v-model="sku.goods_id" :clear="true" @change="onChangeGoods" ref="dataSelect"
 								placeholder="请选择商品" />
 						</uni-forms-item>
 					</uni-col>
@@ -198,8 +198,9 @@
 			onDeleteSku(index) {
 				this.formData.sku.splice(index, 1)
 			},
-			onChangeGoods(index) {
-				this.formData.sku[index].goods_name = this.$refs.dataSelect.current
+			onChangeGoods(value) {
+				console.log(value)
+				// this.formData.sku[index].goods_name = this.$refs.dataSelect.current
 			},
 			submit() {
 				console.log(toRaw(this.formData))
