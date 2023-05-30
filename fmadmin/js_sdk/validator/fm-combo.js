@@ -2,23 +2,6 @@
 
 
 const validator = {
-  "is_delete": {
-    "rules": [
-      {
-        "format": "bool"
-      }
-    ],
-    "label": "是否删除",
-    "defaultValue": false
-  },
-  "image": {
-    "rules": [
-      {
-        "format": "file"
-      }
-    ],
-    "label": "套餐主图"
-  },
   "name": {
     "rules": [
       {
@@ -28,7 +11,7 @@ const validator = {
         "maxLength": 10
       }
     ],
-    "label": "套餐"
+    "label": "套餐名称"
   },
   "unit": {
     "rules": [
@@ -42,15 +25,15 @@ const validator = {
             "value": 0
           },
           {
-            "text": "斤",
+            "text": "千斤",
             "value": 1
           },
           {
-            "text": "箱",
+            "text": "克",
             "value": 2
           },
           {
-            "text": "袋",
+            "text": "只",
             "value": 3
           }
         ]
@@ -59,33 +42,35 @@ const validator = {
     "label": "计量单位",
     "defaultValue": 0
   },
-  "price_cost": {
+  "image": {
     "rules": [
       {
-        "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-      },
-      {
-        "minimum": 0,
-        "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "format": "file"
       }
     ],
-    "label": "成本价"
+    "label": "套餐主图"
   },
-  "price_original": {
+  "image_content": {
     "rules": [
       {
-        "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "format": "array"
       },
       {
-        "minimum": 0,
-        "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "arrayType": "file"
       }
     ],
-    "label": "原价"
+    "label": "展示图片"
+  },
+  "sku": {
+    "rules": [
+      {
+        "format": "array"
+      },
+      {
+        "arrayType": "object"
+      }
+    ],
+    "label": "套餐规格"
   },
   "price_sell": {
     "rules": [
@@ -101,52 +86,6 @@ const validator = {
     ],
     "label": "售价"
   },
-  "source_type": {
-    "rules": [
-      {
-        "format": "int"
-      },
-      {
-        "range": [
-          {
-            "text": "库存现货",
-            "value": 0
-          },
-          {
-            "text": "预售采购",
-            "value": 1
-          }
-        ]
-      }
-    ],
-    "label": "商品来源",
-    "defaultValue": 0
-  },
-  "stock": {
-    "rules": [
-      {
-        "format": "int",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-      },
-      {
-        "minimum": 0,
-        "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-      }
-    ],
-    "label": "库存"
-  },
-  "storage": {
-    "rules": [
-      {
-        "format": "string"
-      },
-      {
-        "maxLength": 200
-      }
-    ],
-    "label": "存储条件"
-  },
   "expiry": {
     "rules": [
       {
@@ -161,33 +100,29 @@ const validator = {
     ],
     "label": "保质期"
   },
-  "buy_min": {
+  "reserve_begin": {
     "rules": [
       {
-        "format": "int",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-      },
-      {
-        "minimum": 0,
-        "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "format": "date"
       }
     ],
-    "label": "最小起购"
+    "label": "预定开始时间"
   },
-  "buy_max": {
+  "reserve_end": {
     "rules": [
       {
-        "format": "int",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-      },
-      {
-        "minimum": 0,
-        "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "format": "date"
       }
     ],
-    "label": "最大起购"
+    "label": "预定结束时间"
+  },
+  "delivery": {
+    "rules": [
+      {
+        "format": "object"
+      }
+    ],
+    "label": "配送信息"
   },
   "description": {
     "rules": [
@@ -199,70 +134,15 @@ const validator = {
       }
     ],
     "label": "产品描述"
-  },
-  "image_content": {
-    "rules": [
-      {
-        "format": "array"
-      },
-      {
-        "arrayType": "file"
-      }
-    ],
-    "label": "展示图片"
-  },
-  "create_uid": {
-    "rules": [
-      {
-        "format": "string"
-      }
-    ],
-    "label": "创建人用户id"
-  },
-  "create_time": {
-    "rules": [
-      {
-        "format": "timestamp"
-      }
-    ],
-    "title": "创建时间",
-    "defaultValue": {
-      "$env": "now"
-    },
-    "label": "创建时间"
-  },
-  "update_time": {
-    "rules": [
-      {
-        "format": "timestamp"
-      }
-    ],
-    "title": "更新时间",
-    "label": "更新时间"
-  },
-  "sku": {
-    "rules": [
-      {
-        "format": "array"
-      },
-      {
-        "arrayType": "object"
-      }
-    ],
-    "label": "套餐规格"
   }
 }
 
 const enumConverter = {
   "unit_valuetotext": {
     "0": "份",
-    "1": "斤",
-    "2": "箱",
-    "3": "袋"
-  },
-  "source_type_valuetotext": {
-    "0": "库存现货",
-    "1": "预售采购"
+    "1": "千斤",
+    "2": "克",
+    "3": "只"
   }
 }
 
