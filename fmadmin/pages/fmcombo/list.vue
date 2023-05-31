@@ -19,8 +19,8 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit,image,image_content,sku,price_sell,expiry,reserve_begin,reserve_end,delivery,description"
-				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
+				field="name,unit,image,sku,price_sell,expiry,reserve_begin,reserve_end,delivery" :where="where"
+				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
@@ -31,7 +31,6 @@
 						<uni-th align="center" filter-type="select" :filter-data="options.filterData.unit_localdata"
 							@filter-change="filterChange($event, 'unit')">计量单位</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">展示图片</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
 							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th>
@@ -42,8 +41,6 @@
 						<uni-th align="center" filter-type="date" @filter-change="filterChange($event, 'reserve_end')"
 							sortable @sort-change="sortChange($event, 'reserve_end')">预定结束时间</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'delivery')">配送信息</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'description')"
-							sortable @sort-change="sortChange($event, 'description')">产品描述</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -56,21 +53,12 @@
 							<uni-link v-else :href="item.image && item.image.url"
 								:text="item.image && item.image.url"></uni-link>
 						</uni-td>
-						<uni-td align="center">
-							<template v-for="(file, j) in item.image_content">
-								<uni-file-picker v-if="file.fileType == 'image'" :value="file"
-									:file-mediatype="file.fileType" :imageStyles="imageStyles"
-									readonly></uni-file-picker>
-								<uni-link v-else :href="file.url" :text="file.url"></uni-link>
-							</template>
-						</uni-td>
 						<uni-td align="center">{{item.sku}}</uni-td>
 						<uni-td align="center">{{item.price_sell}}</uni-td>
 						<uni-td align="center">{{item.expiry}}</uni-td>
 						<uni-td align="center">{{item.reserve_begin}}</uni-td>
 						<uni-td align="center">{{item.reserve_end}}</uni-td>
 						<uni-td align="center">{{item.delivery}}</uni-td>
-						<uni-td align="center">{{item.description}}</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -153,14 +141,12 @@
 						"套餐名称": "name",
 						"计量单位": "unit",
 						"套餐主图": "image",
-						"展示图片": "image_content",
 						"套餐规格": "sku",
 						"售价": "price_sell",
 						"保质期": "expiry",
 						"预定开始时间": "reserve_begin",
 						"预定结束时间": "reserve_end",
 						"配送信息": "delivery",
-						"产品描述": "description"
 					}
 				},
 				exportExcelData: []
