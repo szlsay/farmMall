@@ -38,7 +38,7 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="goods_id" label="商品名称" :label-width="labelWidth" label-align="right">
 							<uni-data-select collection="fm-goods" field="_id as value, name as text"
-								v-model="sku.goods_id" :clear="true" @change="onChangeGoods" ref="dataSelect"
+								v-model="sku.goods_id" @change="onChangeGoods(index)" ref="dataSelect"
 								placeholder="请选择商品" />
 						</uni-forms-item>
 					</uni-col>
@@ -76,7 +76,8 @@
 			<view class="fm-box">
 				<view class="fm-card-header">产品信息</view>
 				<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
-					<uni-easyinput placeholder="请填写产品描述" v-model="formData.description" trim="both"></uni-easyinput>
+					<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
+						maxlength="500"></uni-easyinput>
 				</uni-forms-item>
 			</view>
 
@@ -198,13 +199,12 @@
 			onDeleteSku(index) {
 				this.formData.sku.splice(index, 1)
 			},
-			onChangeGoods(value) {
-				console.log(value)
-				// this.formData.sku[index].goods_name = this.$refs.dataSelect.current
+			onChangeGoods(index) {
+				setTimeout(() => {
+					this.formData.sku[index].goods_name = this.$refs.dataSelect[index].current
+				}, 100)
 			},
 			submit() {
-				console.log(toRaw(this.formData))
-				return
 				uni.showLoading({
 					mask: true
 				})
