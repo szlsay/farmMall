@@ -1,0 +1,59 @@
+{
+	"bsonType": "object",
+	"required": ["image"],
+	"permission": {
+		"read": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "请填写名称",
+			"maxLength": 20,
+			"label": "名称",
+			"trim": "both"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "请填写英文标识",
+			"maxLength": 20,
+			"label": "英文标识",
+			"trim": "both"
+		},
+		"enum": {
+			"bsonType": "object",
+			"description": "请填写枚举",
+			"label": "枚举",
+			"properties": {
+				"text": {
+					"bsonType": "string",
+					"description": "枚举名称",
+					"maxLength": 20,
+					"label": "枚举名称",
+					"trim": "both"
+				},
+				"value": {
+					"bsonType": "string",
+					"description": "枚举值",
+					"maxLength": 20,
+					"label": "枚举值",
+					"trim": "both"
+				}
+			}
+		},
+		"status": {
+			"bsonType": "bool",
+			"defaultValue": true,
+			"label": "生效状态"
+		},
+		"description": {
+			"bsonType": "string",
+			"description": "请填写备注",
+			"maxLength": 100,
+			"label": "备注",
+			"trim": "both"
+		}
+	}
+}
