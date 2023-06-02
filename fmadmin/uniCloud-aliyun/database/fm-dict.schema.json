@@ -3,9 +3,9 @@
 	"required": ["title", "type"],
 	"permission": {
 		"read": true,
-		"create": "doc.uid == auth.uid",
-		"update": "doc.uid == auth.uid",
-		"delete": "doc.uid == auth.uid"
+		"create": true,
+		"update": true,
+		"delete": true
 	},
 	"properties": {
 		"_id": {
