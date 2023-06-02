@@ -99,6 +99,7 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.onAdd()
 		},
 		methods: {
 			onAdd() {
