@@ -26,7 +26,7 @@
 			"trim": "both"
 		},
 		"enum": {
-			"bsonType": "object",
+			"bsonType": "array",
 			"description": "请填写枚举",
 			"label": "枚举",
 			"properties": {
