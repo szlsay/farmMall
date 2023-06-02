@@ -1,8 +1,11 @@
 {
 	"bsonType": "object",
-	"required": ["image"],
+	"required": ["title", "type"],
 	"permission": {
-		"read": true
+		"read": true,
+		"create": "doc.uid == auth.uid",
+		"update": "doc.uid == auth.uid",
+		"delete": "doc.uid == auth.uid"
 	},
 	"properties": {
 		"_id": {
@@ -42,11 +45,6 @@
 					"trim": "both"
 				}
 			}
-		},
-		"status": {
-			"bsonType": "bool",
-			"defaultValue": true,
-			"label": "生效状态"
 		},
 		"description": {
 			"bsonType": "string",

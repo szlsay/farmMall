@@ -233,6 +233,25 @@
 		}
 	],
 	"subPackages": [{
+			"root": "pages/fmset",
+			"pages": [{
+				"path": "dict/add",
+				"style": {
+					"navigationBarTitleText": "新增字典"
+				}
+			}, {
+				"path": "dict/edit",
+				"style": {
+					"navigationBarTitleText": "编辑字典"
+				}
+			}, {
+				"path": "dict/list",
+				"style": {
+					"navigationBarTitleText": "字典列表"
+				}
+			}]
+		},
+		{
 			"root": "pages/fmorder",
 			"pages": [{
 				"path": "list/detail",
