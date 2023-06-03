@@ -1,16 +1,17 @@
 <template>
 	<view class="uni-container">
+		{{formData}}
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
 			<view class="fm-box">
 				<view class="fm-card-header">基本信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="name" label="套餐名称" :label-width="labelWidth" label-align="right">
+						<uni-forms-item required name="name" label="套餐名称" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写套餐名称" v-model="formData.name" trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
+						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
 								:localdata="measure_unit"></uni-data-select>
 						</uni-forms-item>
@@ -34,26 +35,29 @@
 			</view>
 			<view class="fm-box">
 				<view class="fm-card-header">套餐规格 (最大数量为{{skuMax}}个商品)</view>
-				<uni-row v-for="(sku, index) in formData.sku" :key="index">
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="goods_id" label="商品名称" :label-width="labelWidth" label-align="right">
+				<uni-row v-for="(item, index) in formData.sku" :key="index">
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'goods_id']" label="商品名称" :label-width="labelWidth"
+							label-align="right">
 							<uni-data-select collection="fm-goods" field="_id as value, name as text"
-								v-model="sku.goods_id" @change="onChangeGoods(index)" ref="dataSelect"
+								v-model="item.goods_id" @change="onChangeGoods(index)" ref="dataSelect"
 								placeholder="请选择商品" />
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="4">
-						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="sku.unit"
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择计量单位" v-model="item.unit"
 								:localdata="measure_unit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="qty" label="数量" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写数量" type="number" v-model="sku.qty"></uni-easyinput>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="4">
+					<uni-col :xs="24" :sm="6">
 						<button @click="onDeleteSku(index)" class="uni-button" size="mini" type="warn"
 							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
 					</uni-col>
@@ -140,42 +144,6 @@
 				formData,
 				measure_unit: [],
 				delivery_rate: [],
-				formOptions: {
-					"unit_localdata": [{
-							"text": "份",
-							"value": 0
-						},
-						{
-							"text": "千斤",
-							"value": 1
-						},
-						{
-							"text": "克",
-							"value": 2
-						},
-						{
-							"text": "只",
-							"value": 3
-						}
-					],
-					"timer_unit_localdata": [{
-							"text": "次/月",
-							"value": 0
-						},
-						{
-							"text": "次/周",
-							"value": 1
-						},
-						{
-							"text": "次/天",
-							"value": 2
-						},
-						{
-							"text": "其他",
-							"value": 3
-						}
-					]
-				},
 				rules: {
 					...getValidator(Object.keys(formData))
 				}
@@ -228,6 +196,8 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				console.log(value);
+				return
 				// 使用 clientDB 提交数据
 				return db.collection(dbCollectionName).add(value).then((res) => {
 					uni.showToast({

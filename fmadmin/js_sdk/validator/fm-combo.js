@@ -5,6 +5,9 @@ const validator = {
   "name": {
     "rules": [
       {
+        "required": true
+      },
+      {
         "format": "string"
       },
       {
@@ -16,31 +19,13 @@ const validator = {
   "unit": {
     "rules": [
       {
-        "format": "int"
+        "required": true
       },
       {
-        "range": [
-          {
-            "text": "份",
-            "value": 0
-          },
-          {
-            "text": "千斤",
-            "value": 1
-          },
-          {
-            "text": "克",
-            "value": 2
-          },
-          {
-            "text": "只",
-            "value": 3
-          }
-        ]
+        "format": "string"
       }
     ],
-    "label": "计量单位",
-    "defaultValue": 0
+    "label": "计量单位"
   },
   "image": {
     "rules": [
@@ -116,14 +101,6 @@ const validator = {
     ],
     "label": "预定结束时间"
   },
-  "delivery": {
-    "rules": [
-      {
-        "format": "object"
-      }
-    ],
-    "label": "配送信息"
-  },
   "description": {
     "rules": [
       {
@@ -134,17 +111,18 @@ const validator = {
       }
     ],
     "label": "产品描述"
+  },
+  "delivery": {
+    "rules": [
+      {
+        "format": "object"
+      }
+    ],
+    "label": "配送信息"
   }
 }
 
-const enumConverter = {
-  "unit_valuetotext": {
-    "0": "份",
-    "1": "千斤",
-    "2": "克",
-    "3": "只"
-  }
-}
+const enumConverter = {}
 
 function filterToWhere(filter, command) {
   let where = {}
