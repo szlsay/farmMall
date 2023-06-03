@@ -6,19 +6,21 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="title" label="名称" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写名称" maxlength="20" v-model="formData.title" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写名称" maxlength="20" v-model="formData.title"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="type" label="英文标识" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写英文标识" maxlength="20" v-model="formData.type" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写英文标识" maxlength="20" v-model="formData.type"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-forms-item name="description" label="备注" :label-width="labelWidth" label-align="right">
-						<uni-easyinput type="textarea" placeholder="请填写备注" maxlength="100" v-model="formData.description"
-							trim="both"></uni-easyinput>
+						<uni-easyinput type="textarea" placeholder="请填写备注" maxlength="100"
+							v-model="formData.description" trim="both"></uni-easyinput>
 					</uni-forms-item>
 				</uni-row>
 			</view>
@@ -27,15 +29,17 @@
 				<view class="fm-card-header">字典内容</view>
 				<uni-row v-for="(item, index) in formData.enum" :key="index">
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item required label="名称" :name="['enum',index,'name']" :label-width="labelWidth"
+						<uni-forms-item required label="名称" :name="['enum',index,'text']" :label-width="labelWidth"
 							label-align="right" :rules="[{'required': true,errorMessage: '名称必填'}]" :key="index">
-							<uni-easyinput placeholder="请填写名称" maxlength="20" v-model="item.name" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写名称" maxlength="20" v-model="item.text"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item required label="值" :name="['enum',index,'value']" :label-width="labelWidth"
 							label-align="right" :rules="[{'required': true,errorMessage: '值必填'}]" :key="index">
-							<uni-easyinput placeholder="请填写值" maxlength="20" v-model="item.value" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写值" maxlength="20" v-model="item.value"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">

@@ -12,7 +12,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="formOptions.unit_localdata"></uni-data-select>
+								:localdata="measure_unit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -45,7 +45,7 @@
 					<uni-col :xs="24" :sm="4">
 						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="sku.unit"
-								:localdata="formOptions.unit_localdata"></uni-data-select>
+								:localdata="measure_unit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -68,7 +68,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="timer_unit" label="配送频率" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery.timer_unit"
-								:localdata="formOptions.timer_unit_localdata"></uni-data-select>
+								:localdata="delivery_rate"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -138,6 +138,8 @@
 				},
 				labelWidth: 80,
 				formData,
+				measure_unit: [],
+				delivery_rate: [],
 				formOptions: {
 					"unit_localdata": [{
 							"text": "份",
@@ -182,10 +184,17 @@
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 			this.onAddSku()
+			this.loadDict()
 		},
 		methods: {
-			checkSku() {
-				return this.formData.sku.filter(item => item.title && item.title.length > 0)
+			async loadDict() {
+				const fmdict = uniCloud.importObject("fm-dict")
+				const result = await fmdict.getList()
+				if (result.data.length > 0) {
+					this.measure_unit = result.data.filter(item => item.type === "measure_unit")[0]["enum"]
+					this.delivery_rate = result.data.filter(item => item.type === "delivery_rate")[0]["enum"]
+				}
+				console.log(result);
 			},
 			onAddSku() {
 				const sku = {
