@@ -7,6 +7,9 @@
       <uni-forms-item name="unit" label="计量单位" required>
         <uni-data-select placeholder="请填写计量单位" v-model="formData.unit"></uni-data-select>
       </uni-forms-item>
+      <uni-forms-item name="unit_title" label="计量单位">
+        <uni-easyinput placeholder="请填写计量单位" v-model="formData.unit_title"></uni-easyinput>
+      </uni-forms-item>
       <uni-forms-item name="image" label="套餐主图">
         <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object" v-model="formData.image"></uni-file-picker>
       </uni-forms-item>
@@ -16,8 +19,11 @@
       <uni-forms-item name="sku" label="套餐规格">
         <uni-data-checkbox :multiple="true" v-model="formData.sku"></uni-data-checkbox>
       </uni-forms-item>
-      <uni-forms-item name="delivery" label="配送信息">
-        <undefined v-model="formData.delivery"></undefined>
+      <uni-forms-item name="delivery_rate" label="配送频率">
+        <uni-data-select placeholder="配送频率" v-model="formData.delivery_rate"></uni-data-select>
+      </uni-forms-item>
+      <uni-forms-item name="delivery_rate_title" label="配送频率">
+        <uni-easyinput placeholder="配送频率" v-model="formData.delivery_rate_title"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="price_sell" label="售价">
         <uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
@@ -68,10 +74,12 @@
       let formData = {
         "name": "",
         "unit": "",
+        "unit_title": "",
         "image": null,
         "image_content": [],
         "sku": [],
-        "delivery": null,
+        "delivery_rate": "",
+        "delivery_rate_title": "",
         "price_sell": null,
         "expiry": null,
         "reserve_begin": null,
@@ -140,7 +148,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("name,unit,image,image_content,sku,delivery,price_sell,expiry,reserve_begin,reserve_end,description").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("name,unit,unit_title,image,image_content,sku,delivery_rate,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,description").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

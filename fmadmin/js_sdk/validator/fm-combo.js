@@ -27,6 +27,14 @@ const validator = {
     ],
     "label": "计量单位"
   },
+  "unit_title": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "计量单位"
+  },
   "image": {
     "rules": [
       {
@@ -57,13 +65,21 @@ const validator = {
     ],
     "label": "套餐规格"
   },
-  "delivery": {
+  "delivery_rate": {
     "rules": [
       {
-        "format": "object"
+        "format": "string"
       }
     ],
-    "label": "配送信息"
+    "label": "配送频率"
+  },
+  "delivery_rate_title": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "配送频率"
   },
   "price_sell": {
     "rules": [

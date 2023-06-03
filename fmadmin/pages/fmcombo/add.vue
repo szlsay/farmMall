@@ -11,8 +11,8 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="measure_unit"></uni-data-select>
+							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit" :localdata="measure_unit"
+								@change="onChangeUnit" ref="dataSelectUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -39,15 +39,15 @@
 						<uni-forms-item required :name="['sku',index,'goods_id']" label="商品名称" :label-width="labelWidth"
 							label-align="right">
 							<uni-data-select collection="fm-goods" field="_id as value, name as text"
-								v-model="item.goods_id" @change="onChangeGoods(index)" ref="dataSelect"
-								placeholder="请选择商品" />
+								v-model="item.goods_id" @change="onChangeGoods(index)" ref="dataSelectGoods"
+								placeholder="请选择商品" :key="'goods' + index" />
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
 							label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="item.unit"
-								:localdata="measure_unit"></uni-data-select>
+							<uni-data-select placeholder="请选择计量单位" v-model="item.unit" :localdata="measure_unit"
+								@change="onChangeSkuUnit(index)" ref="dataSelectSkuUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -69,11 +69,12 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<!-- <uni-forms-item :name="['delivery',index,'timer_unit']" label="配送频率" :label-width="labelWidth"
+						<uni-forms-item :name="delivery_rate" label="配送频率" :label-width="labelWidth"
 							label-align="right">
-							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery.timer_unit"
-								:localdata="delivery_rate"></uni-data-select>
-						</uni-forms-item> -->
+							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
+								:localdata="delivery_rate" @change="onChangeDelivery"
+								ref="dataSelectDelivery"></uni-data-select>
+						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 			</view>
@@ -149,17 +150,17 @@
 		data() {
 			let formData = {
 				"name": "",
-				"unit": null,
+				"unit": "",
+				"unit_title": "",
 				"image": null,
 				"image_content": [],
 				"sku": [],
+				"delivery_rate": "",
+				"delivery_rate_title": "",
 				"price_sell": null,
 				"expiry": null,
 				"reserve_begin": null,
 				"reserve_end": null,
-				"delivery": {
-					"timer_unit": null
-				},
 				"description": ""
 			}
 			return {
@@ -192,6 +193,26 @@
 				}
 				console.log(result);
 			},
+			onChangeUnit() {
+				setTimeout(() => {
+					this.formData.unit_title = this.$refs.dataSelectUnit.current
+				}, 100)
+			},
+			onChangeSkuUnit(index) {
+				setTimeout(() => {
+					this.formData.sku[index].unit_title = this.$refs.dataSelectSkuUnit[index].current
+				}, 100)
+			},
+			onChangeDelivery() {
+				setTimeout(() => {
+					this.formData.delivery_rate_title = this.$refs.dataSelectDelivery.current
+				}, 100)
+			},
+			onChangeGoods(index) {
+				setTimeout(() => {
+					this.formData.sku[index].goods_name = this.$refs.dataSelectGoods[index].current
+				}, 100)
+			},
 			onAddSku() {
 				const sku = {
 					"goods_id": null,
@@ -204,11 +225,7 @@
 			onDeleteSku(index) {
 				this.formData.sku.splice(index, 1)
 			},
-			onChangeGoods(index) {
-				setTimeout(() => {
-					this.formData.sku[index].goods_name = this.$refs.dataSelect[index].current
-				}, 100)
-			},
+
 			submit() {
 				uni.showLoading({
 					mask: true
@@ -220,6 +237,10 @@
 				})
 			},
 			submitForm(value) {
+				if (this.formData.sku.length) value.sku = this.formData.sku
+				value.unit_title = this.formData.unit_title
+				value.delivery_rate_title = this.formData.delivery_rate_title
+
 				const fmcombo = uniCloud.importObject("fm-combo")
 				fmcombo.add(value).then((res) => {
 					uni.showToast({
