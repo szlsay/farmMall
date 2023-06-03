@@ -18,8 +18,9 @@
 			</view>
 		</view>
 		<view class="uni-container">
+			<!-- name,unit,image,sku,delivery,price_sell,expiry,reserve_begin,reserve_end -->
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit,image,sku,price_sell,expiry,reserve_begin,reserve_end,delivery" :where="where"
+				field="name,unit,image,sku,delivery,price_sell,expiry,reserve_begin,reserve_end" :where="where"
 				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -28,37 +29,43 @@
 					<uni-tr>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')"
 							sortable @sort-change="sortChange($event, 'name')">套餐名称</uni-th>
-						<uni-th align="center" filter-type="select" :filter-data="options.filterData.unit_localdata"
-							@filter-change="filterChange($event, 'unit')">计量单位</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
-							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')"
-							sortable @sort-change="sortChange($event, 'expiry')">保质期</uni-th>
-						<uni-th align="center" filter-type="date" @filter-change="filterChange($event, 'reserve_begin')"
-							sortable @sort-change="sortChange($event, 'reserve_begin')">预定开始时间</uni-th>
-						<uni-th align="center" filter-type="date" @filter-change="filterChange($event, 'reserve_end')"
-							sortable @sort-change="sortChange($event, 'reserve_end')">预定结束时间</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'delivery')">配送信息</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit')"
+							sortable @sort-change="sortChange($event, 'unit')">计量单位</uni-th>
+						<!-- <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th> -->
+						<!-- <uni-th align="center" sortable @sort-change="sortChange($event, 'sku')">套餐规格</uni-th> -->
+						<!-- <uni-th align="center" sortable @sort-change="sortChange($event, 'delivery')">配送信息</uni-th> -->
+						<!-- <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
+							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th> -->
+						<!-- <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')"
+							sortable @sort-change="sortChange($event, 'expiry')">保质期</uni-th> -->
+						<!-- <uni-th align="center" filter-type="timestamp"
+							@filter-change="filterChange($event, 'reserve_begin')" sortable
+							@sort-change="sortChange($event, 'reserve_begin')">预定开始时间</uni-th> -->
+						<!-- 	<uni-th align="center" filter-type="timestamp"
+							@filter-change="filterChange($event, 'reserve_end')" sortable
+							@sort-change="sortChange($event, 'reserve_end')">预定结束时间</uni-th> -->
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.name}}</uni-td>
-						<uni-td align="center">{{options.unit_valuetotext[item.unit]}}</uni-td>
-						<uni-td align="center">
+						<uni-td align="center">{{item.unit}}</uni-td>
+						<!-- <uni-td align="center">
 							<uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image"
 								:file-mediatype="item.image && item.image.fileType" return-type="object"
 								:imageStyles="imageStyles" readonly></uni-file-picker>
 							<uni-link v-else :href="item.image && item.image.url"
 								:text="item.image && item.image.url"></uni-link>
-						</uni-td>
-						<uni-td align="center">{{item.sku}}</uni-td>
-						<uni-td align="center">{{item.price_sell}}</uni-td>
-						<uni-td align="center">{{item.expiry}}</uni-td>
-						<uni-td align="center">{{item.reserve_begin}}</uni-td>
-						<uni-td align="center">{{item.reserve_end}}</uni-td>
-						<uni-td align="center">{{item.delivery}}</uni-td>
+						</uni-td> -->
+						<!-- <uni-td align="center">{{item.sku}}</uni-td> -->
+						<!-- <uni-td align="center">{{item.delivery}}</uni-td> -->
+						<!-- <uni-td align="center">{{item.price_sell}}</uni-td> -->
+						<!-- <uni-td align="center">{{item.expiry}}</uni-td> -->
+						<!-- <uni-td align="center">
+							<uni-dateformat :threshold="[0, 0]" :date="item.reserve_begin"></uni-dateformat>
+						</uni-td> -->
+						<!-- <uni-td align="center">
+							<uni-dateformat :threshold="[0, 0]" :date="item.reserve_end"></uni-dateformat>
+						</uni-td> -->
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -109,25 +116,7 @@
 				options: {
 					pageSize,
 					pageCurrent,
-					filterData: {
-						"unit_localdata": [{
-								"text": "份",
-								"value": 0
-							},
-							{
-								"text": "千斤",
-								"value": 1
-							},
-							{
-								"text": "克",
-								"value": 2
-							},
-							{
-								"text": "只",
-								"value": 3
-							}
-						]
-					},
+					filterData: {},
 					...enumConverter
 				},
 				imageStyles: {
@@ -140,13 +129,12 @@
 					"fields": {
 						"套餐名称": "name",
 						"计量单位": "unit",
-						"套餐主图": "image",
 						"套餐规格": "sku",
+						"配送信息": "delivery",
 						"售价": "price_sell",
 						"保质期": "expiry",
 						"预定开始时间": "reserve_begin",
-						"预定结束时间": "reserve_end",
-						"配送信息": "delivery",
+						"预定结束时间": "reserve_end"
 					}
 				},
 				exportExcelData: []

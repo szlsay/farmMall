@@ -1,6 +1,5 @@
 <template>
 	<view class="uni-container">
-		{{formData}}
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
 			<view class="fm-box">
 				<view class="fm-card-header">基本信息</view>
@@ -70,21 +69,50 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="timer_unit" label="配送频率" :label-width="labelWidth" label-align="right">
+						<!-- <uni-forms-item :name="['delivery',index,'timer_unit']" label="配送频率" :label-width="labelWidth"
+							label-align="right">
 							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery.timer_unit"
 								:localdata="delivery_rate"></uni-data-select>
-						</uni-forms-item>
+						</uni-forms-item> -->
 					</uni-col>
 				</uni-row>
 			</view>
 			<view class="fm-box">
 				<view class="fm-card-header">产品信息</view>
-				<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
-					<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
-						maxlength="500"></uni-easyinput>
-				</uni-forms-item>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="price_sell" label="售价" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写售价" type="number"
+								v-model="formData.price_sell"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="expiry" label="保质期(天)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="reserve_begin" label="预定开始" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" type="date"
+								v-model="formData.reserve_begin"></uni-datetime-picker>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="reserve_end" label="预定结束" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" type="date"
+								v-model="formData.reserve_end"></uni-datetime-picker>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
+						<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
+							maxlength="500"></uni-easyinput>
+					</uni-forms-item>
+				</uni-row>
 			</view>
-
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -101,7 +129,7 @@
 	} from "vue";
 	import {
 		validator
-	} from '../../js_sdk/validator/fm-combo.js';
+	} from '@/js_sdk/validator/fm-combo.js';
 
 	const db = uniCloud.database();
 	const dbCmd = db.command;
@@ -191,15 +219,9 @@
 					uni.hideLoading()
 				})
 			},
-
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
-				console.log(value);
-				return
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				const fmcombo = uniCloud.importObject("fm-combo")
+				fmcombo.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})

@@ -57,6 +57,14 @@ const validator = {
     ],
     "label": "套餐规格"
   },
+  "delivery": {
+    "rules": [
+      {
+        "format": "object"
+      }
+    ],
+    "label": "配送信息"
+  },
   "price_sell": {
     "rules": [
       {
@@ -88,7 +96,7 @@ const validator = {
   "reserve_begin": {
     "rules": [
       {
-        "format": "date"
+        "format": "timestamp"
       }
     ],
     "label": "预定开始时间"
@@ -96,7 +104,7 @@ const validator = {
   "reserve_end": {
     "rules": [
       {
-        "format": "date"
+        "format": "timestamp"
       }
     ],
     "label": "预定结束时间"
@@ -111,14 +119,6 @@ const validator = {
       }
     ],
     "label": "产品描述"
-  },
-  "delivery": {
-    "rules": [
-      {
-        "format": "object"
-      }
-    ],
-    "label": "配送信息"
   }
 }
 

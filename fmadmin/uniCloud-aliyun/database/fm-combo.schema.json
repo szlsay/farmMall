@@ -141,12 +141,12 @@
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"reserve_begin": {
-			"bsonType": "date",
+			"bsonType": "timestamp",
 			"description": "预定开始时间",
 			"label": "预定开始时间"
 		},
 		"reserve_end": {
-			"bsonType": "date",
+			"bsonType": "timestamp",
 			"description": "预定结束时间",
 			"label": "预定结束时间"
 		},
