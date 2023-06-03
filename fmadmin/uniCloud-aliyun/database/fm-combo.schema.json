@@ -56,6 +56,11 @@
 				}
 			}
 		},
+		"unit_title": {
+			"bsonType": "string",
+			"description": "请填写计量单位",
+			"label": "计量单位"
+		},
 		"image": {
 			"bsonType": "file",
 			"fileMediaType": "image",
@@ -95,7 +100,7 @@
 				},
 				"unit": {
 					"bsonType": "string",
-					"description": "请填写计量单位",
+					"description": "请选择计量单位",
 					"label": "计量单位",
 					"componentForEdit": {
 						"name": "uni-data-select",
@@ -103,26 +108,29 @@
 							"placeholder": "请选择计量单位"
 						}
 					}
+				},
+				"unit_title": {
+					"bsonType": "string",
+					"description": "请填写计量单位",
+					"label": "计量单位"
 				}
 			}
 		},
-		"delivery": {
-			"bsonType": "object",
-			"description": "配送信息",
-			"label": "配送信息",
-			"properties": {
-				"timer_unit": {
-					"bsonType": "string",
-					"description": "请选择配送频率",
-					"label": "配送频率",
-					"componentForEdit": {
-						"name": "uni-data-select",
-						"props": {
-							"placeholder": "请选择计量单位"
-						}
-					}
+		"delivery_rate": {
+			"bsonType": "string",
+			"description": "配送频率",
+			"label": "配送频率",
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择配送频率"
 				}
 			}
+		},
+		"delivery_rate_title": {
+			"bsonType": "string",
+			"description": "配送频率",
+			"label": "配送频率"
 		},
 		"price_sell": {
 			"bsonType": "double",
