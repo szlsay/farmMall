@@ -69,8 +69,7 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item :name="delivery_rate" label="配送频率" :label-width="labelWidth"
-							label-align="right">
+						<uni-forms-item name="delivery_rate" label="配送频率" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
 								:localdata="delivery_rate" @change="onChangeDelivery"
 								ref="dataSelectDelivery"></uni-data-select>
@@ -129,10 +128,6 @@
 		validator
 	} from '@/js_sdk/validator/fm-combo.js';
 
-	const db = uniCloud.database();
-	const dbCmd = db.command;
-	const dbCollectionName = 'fm-combo';
-
 	function getValidator(fields) {
 		let result = {}
 		for (let key in validator) {
@@ -188,7 +183,6 @@
 					this.measure_unit = result.data.filter(item => item.type === "measure_unit")[0]["enum"]
 					this.delivery_rate = result.data.filter(item => item.type === "delivery_rate")[0]["enum"]
 				}
-				console.log(result);
 			},
 			onChangeUnit() {
 				setTimeout(() => {

@@ -69,8 +69,7 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item :name="delivery_rate" label="配送频率" :label-width="labelWidth"
-							label-align="right">
+						<uni-forms-item name="delivery_rate" label="配送频率" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
 								:localdata="delivery_rate" @change="onChangeDelivery"
 								ref="dataSelectDelivery"></uni-data-select>
@@ -185,12 +184,11 @@
 			}
 		},
 		onReady() {
+			this.loadDict()
 			this.$refs.form.setRules(this.rules)
 			this.onAddSku()
-			this.loadDict()
 		},
 		methods: {
-
 			async loadDict() {
 				const fmdict = uniCloud.importObject("fm-dict")
 				const result = await fmdict.getList()
@@ -232,7 +230,6 @@
 			onDeleteSku(index) {
 				this.formData.sku.splice(index, 1)
 			},
-
 			submit() {
 				uni.showLoading({
 					mask: true
@@ -243,12 +240,10 @@
 					uni.hideLoading()
 				})
 			},
-
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
-				// 使用 clientDB 提交数据
+				if (this.formData.sku.length) value.sku = this.formData.sku
+				value.unit_title = this.formData.unit_title
+				value.delivery_rate_title = this.formData.delivery_rate_title
 				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
 					uni.showToast({
 						title: '修改成功'

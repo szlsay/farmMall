@@ -28,6 +28,7 @@
 					<uni-tr>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')"
 							sortable @sort-change="sortChange($event, 'name')">套餐名称</uni-th>
+						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
 							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
@@ -48,6 +49,10 @@
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.name}}</uni-td>
+						<uni-td align="center">
+							<image style="width: 60px; height: 60px;"
+								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
+						</uni-td>
 						<uni-td align="center">{{item.unit_title}}</uni-td>
 						<uni-td align="center">{{item.sku}}</uni-td>
 						<uni-td align="center">{{item.delivery_rate_title}}</uni-td>
