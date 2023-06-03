@@ -150,13 +150,13 @@
 		},
 		"reserve_begin": {
 			"bsonType": "timestamp",
-			"description": "预定开始时间",
-			"label": "预定开始时间"
+			"description": "预订开始时间",
+			"label": "预订开始时间"
 		},
 		"reserve_end": {
 			"bsonType": "timestamp",
-			"description": "预定结束时间",
-			"label": "预定结束时间"
+			"description": "预订结束时间",
+			"label": "预订结束时间"
 		},
 		"description": {
 			"bsonType": "string",
