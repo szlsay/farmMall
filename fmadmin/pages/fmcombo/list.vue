@@ -17,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit_title,image,sku,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end"
+				field="name,unit_title,image,sku,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -101,7 +101,7 @@
 	const db = uniCloud.database()
 	// 表查询配置
 	const dbOrderBy = '' // 排序字段
-	const dbSearchFields = [] // 模糊搜索字段，支持模糊搜索的字段列表。联表查询格式: 主表字段名.副表字段名，例如用户表关联角色表 role.role_name
+	const dbSearchFields = ["name"] // 模糊搜索字段，支持模糊搜索的字段列表。联表查询格式: 主表字段名.副表字段名，例如用户表关联角色表 role.role_name
 	// 分页配置
 	const pageSize = 20
 	const pageCurrent = 1
@@ -116,7 +116,7 @@
 			return {
 				collectionList: "fm-combo",
 				query: '',
-				where: '',
+				where: 'is_delete == false',
 				orderby: dbOrderBy,
 				orderByFieldName: "",
 				selectedIndexs: [],
@@ -161,8 +161,8 @@
 					item.sku = item.sku.map(item => {
 						return item.goods_name + item.qty + item.unit_title
 					})
-					item.reserve_begin = formatDate(item.reserve_begin, 'yyyy/MM/dd')
-					item.reserve_end = formatDate(item.reserve_end, 'yyyy/MM/dd')
+					item.reserve_begin = item.reserve_begin ? formatDate(item.reserve_begin, 'yyyy/MM/dd') : ''
+					item.reserve_end = item.reserve_end ? formatDate(item.reserve_end, 'yyyy/MM/dd') : ''
 					return item
 				})
 				this.exportExcelData = tempData
@@ -170,13 +170,13 @@
 			getWhere() {
 				const query = this.query.trim()
 				if (!query) {
-					return ''
+					return 'is_delete == false'
 				}
 				const queryRe = new RegExp(query, 'i')
 				return dbSearchFields.map(name => queryRe + '.test(' + name + ')').join(' || ')
 			},
 			search() {
-				const newWhere = this.getWhere()
+				const newWhere = this.getWhere() + ' && is_delete == false'
 				this.where = newWhere
 				this.$nextTick(() => {
 					this.loadData()
@@ -214,11 +214,35 @@
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
+			// confirmDelete(id) {
+			// 	this.$refs.udb.remove(id, {
+			// 		success: (res) => {
+			// 			this.$refs.table.clearSelection()
+			// 		}
+			// 	})
+			// },
 			confirmDelete(id) {
-				this.$refs.udb.remove(id, {
-					success: (res) => {
-						this.$refs.table.clearSelection()
+				const that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除此套餐？',
+					success: function(res) {
+						if (res.confirm) {
+							that.onDelete(id)
+						}
 					}
+				});
+			},
+			onDelete(id) {
+				const fmgoods = uniCloud.importObject("fm-combo")
+				fmgoods.delete(id).then((res) => {
+					this.$refs.table.clearSelection()
+					this.$refs.udb.refresh()
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					})
 				})
 			},
 			sortChange(e, name) {
@@ -241,8 +265,9 @@
 				let newWhere = filterToWhere(this._filter, db.command)
 				if (Object.keys(newWhere).length) {
 					this.where = newWhere
+					this.where.is_delete = false
 				} else {
-					this.where = ''
+					this.where = 'is_delete == false'
 				}
 				this.$nextTick(() => {
 					this.$refs.udb.loadData()
