@@ -9,8 +9,6 @@
 				<input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
 				<button class="uni-button" type="default" size="mini" @click="search">搜索</button>
 				<button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-				<button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
-					@click="delTable">批量删除</button>
 				<download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData"
 					:type="exportExcel.type" :name="exportExcel.filename">
 					<button class="uni-button" type="primary" size="mini">导出 Excel</button>
@@ -96,7 +94,10 @@
 		enumConverter,
 		filterToWhere
 	} from '@/js_sdk/validator/fm-combo.js';
-
+	import {
+		formatDate,
+		cloneObject
+	} from "@/utils/util.js"
 	const db = uniCloud.database()
 	// 表查询配置
 	const dbOrderBy = '' // 排序字段
@@ -130,12 +131,11 @@
 					height: 64
 				},
 				exportExcel: {
-					"filename": "fm-combo.xls",
+					"filename": "套餐列表.xls",
 					"type": "xls",
 					"fields": {
 						"套餐名称": "name",
 						"计量单位": "unit_title",
-						"套餐主图": "image",
 						"套餐规格": "sku",
 						"配送频率": "delivery_rate_title",
 						"售价": "price_sell",
@@ -155,7 +155,17 @@
 		},
 		methods: {
 			onqueryload(data) {
-				this.exportExcelData = data
+				const dataCopy = cloneObject(data)
+				const that = this
+				let tempData = dataCopy.map(item => {
+					item.sku = item.sku.map(item => {
+						return item.goods_name + item.qty + item.unit_title
+					})
+					item.reserve_begin = formatDate(item.reserve_begin, 'yyyy/MM/dd')
+					item.reserve_end = formatDate(item.reserve_end, 'yyyy/MM/dd')
+					return item
+				})
+				this.exportExcelData = tempData
 			},
 			getWhere() {
 				const query = this.query.trim()
@@ -199,14 +209,6 @@
 			selectedItems() {
 				var dataList = this.$refs.udb.dataList
 				return this.selectedIndexs.map(i => dataList[i]._id)
-			},
-			// 批量删除
-			delTable() {
-				this.$refs.udb.remove(this.selectedItems(), {
-					success: (res) => {
-						this.$refs.table.clearSelection()
-					}
-				})
 			},
 			// 多选
 			selectionChange(e) {
