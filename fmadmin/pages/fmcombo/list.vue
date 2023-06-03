@@ -26,7 +26,7 @@
 					<uni-tr>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')"
 							sortable @sort-change="sortChange($event, 'name')">套餐名称</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th>
+						<uni-th align="center">套餐主图</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
 							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
 						<uni-th width="200" align="center" sortable
