@@ -11,8 +11,9 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit" :localdata="measure_unit"
-								@change="onChangeUnit" ref="dataSelectUnit"></uni-data-select>
+							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
+								:localdata="$store.state.sys.measure_units" @change="onChangeUnit"
+								ref="dataSelectUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -46,8 +47,9 @@
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
 							label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="item.unit" :localdata="measure_unit"
-								@change="onChangeSkuUnit(index)" ref="dataSelectSkuUnit"></uni-data-select>
+							<uni-data-select placeholder="请选择计量单位" v-model="item.unit"
+								:localdata="$store.state.sys.measure_units" @change="onChangeSkuUnit(index)"
+								ref="dataSelectSkuUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -71,7 +73,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="delivery_rate" label="配送频率" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
-								:localdata="delivery_rate" @change="onChangeDelivery"
+								:localdata="$store.state.sys.delivery_rates" @change="onChangeDelivery"
 								ref="dataSelectDelivery"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
@@ -163,8 +165,6 @@
 				},
 				labelWidth: 80,
 				formData,
-				measure_unit: [],
-				delivery_rate: [],
 				rules: {
 					...getValidator(Object.keys(formData))
 				}
@@ -173,17 +173,8 @@
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 			this.onAddSku()
-			this.loadDict()
 		},
 		methods: {
-			async loadDict() {
-				const fmdict = uniCloud.importObject("fm-dict")
-				const result = await fmdict.getList()
-				if (result.data.length > 0) {
-					this.measure_unit = result.data.filter(item => item.type === "measure_unit")[0]["enum"]
-					this.delivery_rate = result.data.filter(item => item.type === "delivery_rate")[0]["enum"]
-				}
-			},
 			onChangeUnit() {
 				setTimeout(() => {
 					this.formData.unit_title = this.$refs.dataSelectUnit.current
