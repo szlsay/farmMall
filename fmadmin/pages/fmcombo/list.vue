@@ -31,7 +31,8 @@
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">套餐主图</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
 							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
+						<uni-th width="200" align="center" sortable
+							@sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
 						<uni-th align="center" filter-type="search"
 							@filter-change="filterChange($event, 'delivery_rate_title')" sortable
 							@sort-change="sortChange($event, 'delivery_rate_title')">配送频率</uni-th>
@@ -54,7 +55,12 @@
 								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">{{item.unit_title}}</uni-td>
-						<uni-td align="center">{{item.sku}}</uni-td>
+						<uni-td align="center">
+							<view class="goods-list" v-for="(item, index) in item.sku" :key="index">
+								{{item.goods_name}}{{item.qty}}{{item.unit_title}}
+							</view>
+						</uni-td>
+
 						<uni-td align="center">{{item.delivery_rate_title}}</uni-td>
 						<uni-td align="center">{{item.price_sell}}</uni-td>
 						<uni-td align="center">{{item.expiry}}</uni-td>
@@ -89,7 +95,7 @@
 	import {
 		enumConverter,
 		filterToWhere
-	} from '../../js_sdk/validator/fm-combo.js';
+	} from '@/js_sdk/validator/fm-combo.js';
 
 	const db = uniCloud.database()
 	// 表查询配置
