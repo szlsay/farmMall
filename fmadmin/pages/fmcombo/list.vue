@@ -214,13 +214,6 @@
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
-			// confirmDelete(id) {
-			// 	this.$refs.udb.remove(id, {
-			// 		success: (res) => {
-			// 			this.$refs.table.clearSelection()
-			// 		}
-			// 	})
-			// },
 			confirmDelete(id) {
 				const that = this
 				uni.showModal({

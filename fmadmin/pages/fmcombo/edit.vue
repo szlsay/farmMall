@@ -144,8 +144,6 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
@@ -233,7 +231,8 @@
 				if (this.formData.sku.length) value.sku = this.formData.sku
 				value.unit_title = this.formData.unit_title
 				value.delivery_rate_title = this.formData.delivery_rate_title
-				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
+				const fmcombo = uniCloud.importObject("fm-combo")
+				fmcombo.update(this.formDataId, value).then((res) => {
 					uni.showToast({
 						title: '修改成功'
 					})
