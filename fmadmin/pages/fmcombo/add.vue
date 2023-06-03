@@ -126,9 +126,6 @@
 
 <script>
 	import {
-		toRaw
-	} from "vue";
-	import {
 		validator
 	} from '@/js_sdk/validator/fm-combo.js';
 

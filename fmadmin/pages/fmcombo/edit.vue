@@ -1,41 +1,119 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-forms-item name="name" label="套餐名称" required>
-				<uni-easyinput placeholder="请填写套餐名称" v-model="formData.name" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="unit" label="计量单位" required>
-				<uni-data-select placeholder="请填写计量单位" v-model="formData.unit"></uni-data-select>
-			</uni-forms-item>
-			<uni-forms-item name="image" label="套餐主图">
-				<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
-					v-model="formData.image"></uni-file-picker>
-			</uni-forms-item>
-			<uni-forms-item name="image_content" label="展示图片">
-				<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
-					v-model="formData.image_content"></uni-file-picker>
-			</uni-forms-item>
-			<uni-forms-item name="sku" label="套餐规格">
-				<uni-data-checkbox :multiple="true" v-model="formData.sku"></uni-data-checkbox>
-			</uni-forms-item>
-			<uni-forms-item name="delivery" label="配送信息">
-				<undefined v-model="formData.delivery"></undefined>
-			</uni-forms-item>
-			<uni-forms-item name="price_sell" label="售价">
-				<uni-easyinput placeholder="请填写售价" type="number" v-model="formData.price_sell"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="expiry" label="保质期">
-				<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="reserve_begin" label="预定开始时间">
-				<uni-datetime-picker return-type="timestamp" v-model="formData.reserve_begin"></uni-datetime-picker>
-			</uni-forms-item>
-			<uni-forms-item name="reserve_end" label="预定结束时间">
-				<uni-datetime-picker return-type="timestamp" v-model="formData.reserve_end"></uni-datetime-picker>
-			</uni-forms-item>
-			<uni-forms-item name="description" label="产品描述">
-				<uni-easyinput placeholder="请填写产品描述" v-model="formData.description" trim="both"></uni-easyinput>
-			</uni-forms-item>
+			<view class="fm-box">
+				<view class="fm-card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item required name="name" label="套餐名称" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写套餐名称" v-model="formData.name" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit" :localdata="measure_unit"
+								@change="onChangeUnit" ref="dataSelectUnit"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="image" label="套餐主图" :label-width="labelWidth" label-align="right">
+						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
+							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
+						<text style="color: red; font-size: 14px;">用于套餐的封面展示。格式：jpg,png,webp，建议400*400px的图片</text>
+					</uni-forms-item>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
+						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
+							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
+						<text style="color: red; font-size: 14px;"
+							class="title-alert">用于套餐的详情展示，最多六张。格式：jpg,png,webp</text>
+					</uni-forms-item>
+				</uni-row>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">套餐规格 (最大数量为{{skuMax}}个商品)</view>
+				<uni-row v-for="(item, index) in formData.sku" :key="index">
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'goods_id']" label="商品名称" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select collection="fm-goods" field="_id as value, name as text"
+								v-model="item.goods_id" @change="onChangeGoods(index)" ref="dataSelectGoods"
+								placeholder="请选择商品" :key="'goods' + index" />
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择计量单位" v-model="item.unit" :localdata="measure_unit"
+								@change="onChangeSkuUnit(index)" ref="dataSelectSkuUnit"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<button @click="onDeleteSku(index)" class="uni-button" size="mini" type="warn"
+							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
+					</uni-col>
+				</uni-row>
+				<view class="uni-button-group" style="margin-top: 0;" v-if="formData.sku && formData.sku.length < 6">
+					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddSku">新增规格</button>
+				</view>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">配送信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item :name="delivery_rate" label="配送频率" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
+								:localdata="delivery_rate" @change="onChangeDelivery"
+								ref="dataSelectDelivery"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">产品信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="price_sell" label="售价" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写售价" type="number"
+								v-model="formData.price_sell"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="expiry" label="保质期(天)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="reserve_begin" label="预定开始" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" type="date"
+								v-model="formData.reserve_begin"></uni-datetime-picker>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="reserve_end" label="预定结束" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" type="date"
+								v-model="formData.reserve_end"></uni-datetime-picker>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
+						<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
+							maxlength="500"></uni-easyinput>
+					</uni-forms-item>
+				</uni-row>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -72,10 +150,12 @@
 			let formData = {
 				"name": "",
 				"unit": "",
+				"unit_title": "",
 				"image": null,
 				"image_content": [],
 				"sku": [],
-				"delivery": null,
+				"delivery_rate": "",
+				"delivery_rate_title": "",
 				"price_sell": null,
 				"expiry": null,
 				"reserve_begin": null,
@@ -83,8 +163,15 @@
 				"description": ""
 			}
 			return {
+				skuMax: 6,
+				imageStyles: {
+					width: 140,
+					height: 140,
+				},
+				labelWidth: 80,
 				formData,
-				formOptions: {},
+				measure_unit: [],
+				delivery_rate: [],
 				rules: {
 					...getValidator(Object.keys(formData))
 				}
@@ -99,12 +186,53 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.onAddSku()
+			this.loadDict()
 		},
 		methods: {
 
-			/**
-			 * 验证表单并提交
-			 */
+			async loadDict() {
+				const fmdict = uniCloud.importObject("fm-dict")
+				const result = await fmdict.getList()
+				if (result.data.length > 0) {
+					this.measure_unit = result.data.filter(item => item.type === "measure_unit")[0]["enum"]
+					this.delivery_rate = result.data.filter(item => item.type === "delivery_rate")[0]["enum"]
+				}
+				console.log(result);
+			},
+			onChangeUnit() {
+				setTimeout(() => {
+					this.formData.unit_title = this.$refs.dataSelectUnit.current
+				}, 100)
+			},
+			onChangeSkuUnit(index) {
+				setTimeout(() => {
+					this.formData.sku[index].unit_title = this.$refs.dataSelectSkuUnit[index].current
+				}, 100)
+			},
+			onChangeDelivery() {
+				setTimeout(() => {
+					this.formData.delivery_rate_title = this.$refs.dataSelectDelivery.current
+				}, 100)
+			},
+			onChangeGoods(index) {
+				setTimeout(() => {
+					this.formData.sku[index].goods_name = this.$refs.dataSelectGoods[index].current
+				}, 100)
+			},
+			onAddSku() {
+				const sku = {
+					"goods_id": null,
+					"goods_name": null,
+					"qty": null,
+					"unit": null,
+				}
+				this.formData.sku.push(sku)
+			},
+			onDeleteSku(index) {
+				this.formData.sku.splice(index, 1)
+			},
+
 			submit() {
 				uni.showLoading({
 					mask: true
@@ -144,7 +272,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,unit,image,image_content,sku,delivery,price_sell,expiry,reserve_begin,reserve_end,description"
+					"name,unit,unit_title,image,image_content,sku,delivery_rate,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,description"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
