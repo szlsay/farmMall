@@ -40,10 +40,10 @@
 							sortable @sort-change="sortChange($event, 'expiry')">保质期</uni-th>
 						<uni-th align="center" filter-type="timestamp"
 							@filter-change="filterChange($event, 'reserve_begin')" sortable
-							@sort-change="sortChange($event, 'reserve_begin')">预定开始时间</uni-th>
+							@sort-change="sortChange($event, 'reserve_begin')">预订开始时间</uni-th>
 						<uni-th align="center" filter-type="timestamp"
 							@filter-change="filterChange($event, 'reserve_end')" sortable
-							@sort-change="sortChange($event, 'reserve_end')">预定结束时间</uni-th>
+							@sort-change="sortChange($event, 'reserve_end')">预订结束时间</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -140,8 +140,8 @@
 						"配送频率": "delivery_rate_title",
 						"售价": "price_sell",
 						"保质期": "expiry",
-						"预定开始时间": "reserve_begin",
-						"预定结束时间": "reserve_end"
+						"预订开始时间": "reserve_begin",
+						"预订结束时间": "reserve_end"
 					}
 				},
 				exportExcelData: []

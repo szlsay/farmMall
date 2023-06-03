@@ -96,13 +96,13 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="reserve_begin" label="预定开始" :label-width="labelWidth" label-align="right">
+						<uni-forms-item name="reserve_begin" label="预订开始" :label-width="labelWidth" label-align="right">
 							<uni-datetime-picker return-type="timestamp" type="date"
 								v-model="formData.reserve_begin"></uni-datetime-picker>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="reserve_end" label="预定结束" :label-width="labelWidth" label-align="right">
+						<uni-forms-item name="reserve_end" label="预订结束" :label-width="labelWidth" label-align="right">
 							<uni-datetime-picker return-type="timestamp" type="date"
 								v-model="formData.reserve_end"></uni-datetime-picker>
 						</uni-forms-item>
