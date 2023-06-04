@@ -51,7 +51,7 @@
 						@click="onChangeChart">生成曲线图</button>
 				</view>
 			</view>
-			<view class="fm-box">
+			<view class="fm-box" v-if="chartData.categories && chartData.categories.length > 0">
 				<view class="fm-card-header">规则曲线图</view>
 				<view class="charts-box">
 					<qiun-data-charts type="line" :opts="opts" :chartData="chartData" />
