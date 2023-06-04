@@ -1,0 +1,57 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["title", "type"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "请输入标题",
+			"label": "标题",
+			"maxLength": 20,
+			"trim": "both"
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "请填写英文标识",
+			"label": "英文标识",
+			"maxLength": 20,
+			"trim": "both"
+		},
+		"rules": {
+			"bsonType": "array",
+			"description": "请填写规则",
+			"label": "规则",
+			"properties": {
+				"index": {
+					"bsonType": "int",
+					"description": "请填写档次",
+					"label": "档次"
+				},
+				"start_value": {
+					"bsonType": "double",
+					"description": "请输入起始值",
+					"label": "起始值"
+				},
+				"end_value": {
+					"bsonType": "double",
+					"description": "请输入结束值",
+					"label": "结束值"
+				},
+				"ratio": {
+					"bsonType": "double",
+					"description": "请输入比例",
+					"label": "比例"
+				}
+			}
+		}
+	}
+}

@@ -216,23 +216,41 @@
 				"navigationBarTitleText": "列表"
 			}
 		}, {
-			"path": "pages/fmcombo/add",
+			"path": "pages/fm-price-rule/add",
 			"style": {
 				"navigationBarTitleText": "新增"
 			}
 		}, {
-			"path": "pages/fmcombo/edit",
+			"path": "pages/fm-price-rule/edit",
 			"style": {
 				"navigationBarTitleText": "编辑"
 			}
 		}, {
-			"path": "pages/fmcombo/list",
+			"path": "pages/fm-price-rule/list",
 			"style": {
 				"navigationBarTitleText": "列表"
 			}
 		}
 	],
 	"subPackages": [{
+			"root": "pages/product",
+			"pages": [{
+				"path": "combo/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "combo/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "combo/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
+			}]
+		}, {
 			"root": "pages/fmset",
 			"pages": [{
 				"path": "dict/add",
