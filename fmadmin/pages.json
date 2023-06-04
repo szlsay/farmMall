@@ -215,26 +215,26 @@
 			"style": {
 				"navigationBarTitleText": "列表"
 			}
-		}, {
-			"path": "pages/fm-price-rule/add",
-			"style": {
-				"navigationBarTitleText": "新增"
-			}
-		}, {
-			"path": "pages/fm-price-rule/edit",
-			"style": {
-				"navigationBarTitleText": "编辑"
-			}
-		}, {
-			"path": "pages/fm-price-rule/list",
-			"style": {
-				"navigationBarTitleText": "列表"
-			}
 		}
 	],
 	"subPackages": [{
 			"root": "pages/product",
 			"pages": [{
+				"path": "pricerule/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "pricerule/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "pricerule/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
+			}, {
 				"path": "combo/add",
 				"style": {
 					"navigationBarTitleText": "新增"
