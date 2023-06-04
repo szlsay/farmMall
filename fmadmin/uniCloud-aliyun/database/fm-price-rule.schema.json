@@ -31,11 +31,6 @@
 			"description": "请填写规则",
 			"label": "规则",
 			"properties": {
-				"index": {
-					"bsonType": "int",
-					"description": "请填写档次",
-					"label": "档次"
-				},
 				"start_value": {
 					"bsonType": "double",
 					"description": "请输入起始值",

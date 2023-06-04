@@ -1,15 +1,55 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-forms-item name="title" label="标题" required>
-				<uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="type" label="英文标识" required>
-				<uni-easyinput placeholder="请填写英文标识" v-model="formData.type" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="rules" label="规则">
-				<uni-data-checkbox :multiple="true" v-model="formData.rules"></uni-data-checkbox>
-			</uni-forms-item>
+			<view class="fm-box">
+				<view class="fm-card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="title" label="标题" required :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请输入标题" v-model="formData.title" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="type" label="英文标识" required :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写英文标识" v-model="formData.type" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+
+
+			<view class="fm-box">
+				<view class="fm-card-header">规则信息</view>
+				<uni-row v-for="(item, index) in formData.rules" :key="index" :gutter="10">
+					<uni-col :xs="24" :sm="2">
+						<uni-forms-item :label="'档次：' + index" label-align="center">
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item :name="['rules',index,'start_value']" label-align="right">
+							<uni-easyinput placeholder="请输入起始值" type="number"
+								v-model="item.start_value"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item :name="['rules',index,'end_value']" label-align="right">
+							<uni-easyinput placeholder="请输入结束值" type="number" v-model="item.end_value"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item :name="['rules',index,'ratio']" label-align="right">
+							<uni-easyinput placeholder="请输入比例" type="number" v-model="item.ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="4">
+						<button @click="onDeleteRule(index)" class="uni-button" size="mini" type="warn"
+							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
+					</uni-col>
+				</uni-row>
+				<view class="uni-button-group" style="margin-top: 0;">
+					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddRule">新增规格</button>
+				</view>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -49,6 +89,7 @@
 				"rules": []
 			}
 			return {
+				labelWidth: 80,
 				formData,
 				formOptions: {},
 				rules: {
@@ -58,12 +99,20 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.onAddRule()
 		},
 		methods: {
-
-			/**
-			 * 验证表单并提交
-			 */
+			onAddRule() {
+				const rule = {
+					"start_value": null,
+					"end_value": null,
+					"ratio": null,
+				}
+				this.formData.rules.push(rule)
+			},
+			onDeleteRule(index) {
+				this.formData.rules.splice(index, 1)
+			},
 			submit() {
 				uni.showLoading({
 					mask: true
