@@ -79,8 +79,6 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
