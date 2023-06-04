@@ -17,12 +17,11 @@
 				</uni-row>
 			</view>
 
-
 			<view class="fm-box">
 				<view class="fm-card-header">规则信息</view>
 				<uni-row v-for="(item, index) in formData.rules" :key="index" :gutter="10">
 					<uni-col :xs="24" :sm="2">
-						<uni-forms-item :label="'档次：' + index" label-align="center">
+						<uni-forms-item :label="'档次：' + (index+1)" label-align="center">
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -48,6 +47,12 @@
 				</uni-row>
 				<view class="uni-button-group" style="margin-top: 0;">
 					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddRule">新增规格</button>
+				</view>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">曲线图</view>
+				<view class="charts-box">
+					<qiun-data-charts type="line" :opts="opts" :chartData="chartData" />
 				</view>
 			</view>
 			<view class="uni-button-group">
@@ -87,6 +92,30 @@
 				"rules": []
 			}
 			return {
+				chartData: {},
+				//您可以通过修改 config-ucharts.js 文件中下标为 ['line'] 的节点来配置全局默认参数，如都是默认参数，此处可以不传 opts 。实际应用过程中 opts 只需传入与全局默认参数中不一致的【某一个属性】即可实现同类型的图表显示不同的样式，达到页面简洁的需求。
+				opts: {
+					color: ["#1890FF", "#91CB74", "#FAC858", "#EE6666", "#73C0DE", "#3CA272", "#FC8452", "#9A60B4",
+						"#ea7ccc"
+					],
+					padding: [15, 10, 0, 15],
+					enableScroll: false,
+					legend: {},
+					xAxis: {
+						disableGrid: true
+					},
+					yAxis: {
+						gridType: "dash",
+						dashLength: 2
+					},
+					extra: {
+						line: {
+							type: "curve",
+							width: 2,
+							activeType: "hollow"
+						}
+					}
+				},
 				labelWidth: 80,
 				formData,
 				formOptions: {},
@@ -159,7 +188,20 @@
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
-
+						const categories = data.rules.map(item => {
+							return item.start_value
+						})
+						const series_data = data.rules.map(item => {
+							return item.ratio
+						})
+						let res = {
+							categories: categories,
+							series: [{
+								name: data.title,
+								data: series_data
+							}]
+						};
+						this.chartData = JSON.parse(JSON.stringify(res));
 					}
 				}).catch((err) => {
 					uni.showModal({
