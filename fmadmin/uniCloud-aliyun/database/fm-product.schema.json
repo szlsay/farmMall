@@ -1,0 +1,88 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": [],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"is_delete": {
+			"bsonType": "bool",
+			"label": "是否删除",
+			"defaultValue": false
+		},
+		"create_uid": {
+			"bsonType": "string",
+			"description": "创建人用户的唯一id",
+			"label": "创建人用户id",
+			"forceDefaultValue": {
+				"$env": "uid"
+			},
+			"foreignKey": "uni-id-users._id"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"title": "创建时间",
+			"defaultValue": {
+				"$env": "now"
+			}
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"title": "更新时间"
+		},
+		"name": {
+			"bsonType": "string",
+			"description": "请填写产品名称",
+			"label": "产品名称",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"raw_name": {
+			"bsonType": "string",
+			"description": "请填写原材料名称",
+			"label": "原材料名称",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"unit": {
+			"bsonType": "string",
+			"description": "请填写计量单位",
+			"label": "计量单位",
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择计量单位"
+				}
+			}
+		},
+		"unit_title": {
+			"bsonType": "string",
+			"description": "请填写计量单位",
+			"label": "计量单位"
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择产品主图",
+			"label": "产品主图"
+		},
+		"image_content": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择展示图片",
+			"label": "展示图片"
+		},
+	}
+}
