@@ -40,6 +40,35 @@
 					</uni-forms-item>
 				</uni-row>
 			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">生产环节</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="raw_cost" label="原料成本" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写原料成本" type="number"
+								v-model="formData.raw_cost"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="yield" label="出成率">
+							<uni-easyinput placeholder="请填写出成率" type="number" v-model="formData.yield"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="processing_cost" label="加工成本" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写加工成本" type="number"
+								v-model="formData.processing_cost"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="finish_cost" label="成品成本" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -70,6 +99,9 @@
 	}
 
 
+	function numberRange(start, end) {
+		return Array.from(new Array(end + 1).keys()).slice(start);
+	}
 
 	export default {
 		data() {
@@ -79,7 +111,11 @@
 				"unit": "",
 				"unit_title": "",
 				"image": null,
-				"image_content": []
+				"image_content": [],
+				"raw_cost": null,
+				"yield": null,
+				"processing_cost": null,
+				"finish_cost": null
 			}
 			return {
 				imageStyles: {
@@ -94,11 +130,19 @@
 				}
 			}
 		},
+		computed: {
+			"formData.finish_cost": function() {
+				if (this.formData.yield) {
+					return this.formData.raw_cost / this.formData.yield + this.formData.processing_cost
+				} else {
+					return ''
+				}
+			}
+		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
-
 			/**
 			 * 验证表单并提交
 			 */

@@ -100,6 +100,20 @@ const validator = {
       }
     ],
     "label": "加工成本"
+  },
+  "finish_cost": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "成品成本"
   }
 }
 

@@ -107,6 +107,14 @@
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"finish_cost": {
+			"bsonType": "double",
+			"description": "请填写成品成本",
+			"label": "成品成本",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		}
 
 	}

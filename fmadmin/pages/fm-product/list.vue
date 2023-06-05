@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield,processing_cost" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield,processing_cost,finish_cost" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -30,6 +30,7 @@
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'raw_cost')" sortable @sort-change="sortChange($event, 'raw_cost')">原材料成本</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield')" sortable @sort-change="sortChange($event, 'yield')">出成率</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'processing_cost')" sortable @sort-change="sortChange($event, 'processing_cost')">加工成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'finish_cost')" sortable @sort-change="sortChange($event, 'finish_cost')">成品成本</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
@@ -50,6 +51,7 @@
             <uni-td align="center">{{item.raw_cost}}</uni-td>
             <uni-td align="center">{{item.yield}}</uni-td>
             <uni-td align="center">{{item.processing_cost}}</uni-td>
+            <uni-td align="center">{{item.finish_cost}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
@@ -115,7 +117,8 @@
             "展示图片": "image_content",
             "原材料成本": "raw_cost",
             "出成率": "yield",
-            "加工成本": "processing_cost"
+            "加工成本": "processing_cost",
+            "成品成本": "finish_cost"
           }
         },
         exportExcelData: []

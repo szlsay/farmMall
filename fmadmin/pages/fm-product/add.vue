@@ -30,6 +30,9 @@
       <uni-forms-item name="processing_cost" label="加工成本">
         <uni-easyinput placeholder="请填写加工成本" type="number" v-model="formData.processing_cost"></uni-easyinput>
       </uni-forms-item>
+      <uni-forms-item name="finish_cost" label="成品成本">
+        <uni-easyinput placeholder="请填写成品成本" type="number" v-model="formData.finish_cost"></uni-easyinput>
+      </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
         <navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -72,7 +75,8 @@
         "image_content": [],
         "raw_cost": null,
         "yield": null,
-        "processing_cost": null
+        "processing_cost": null,
+        "finish_cost": null
       }
       return {
         formData,
