@@ -220,6 +220,21 @@
 	"subPackages": [{
 			"root": "pages/product",
 			"pages": [{
+				"path": "product/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "product/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "product/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
+			}, {
 				"path": "pricerule/add",
 				"style": {
 					"navigationBarTitleText": "新增"
