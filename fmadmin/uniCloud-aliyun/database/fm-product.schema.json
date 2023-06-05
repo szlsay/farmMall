@@ -84,5 +84,30 @@
 			"description": "请选择展示图片",
 			"label": "展示图片"
 		},
+		"raw_cost": {
+			"bsonType": "double",
+			"description": "请填写原材料成本",
+			"label": "原材料成本",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"yield": {
+			"bsonType": "double",
+			"description": "请填写出成率",
+			"label": "出成率",
+			"minimum": 0,
+			"maximum": 1,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"processing_cost": {
+			"bsonType": "double",
+			"description": "请填写加工成本",
+			"label": "加工成本",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		}
+
 	}
 }

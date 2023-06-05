@@ -58,6 +58,48 @@ const validator = {
       }
     ],
     "label": "展示图片"
+  },
+  "raw_cost": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "原材料成本"
+  },
+  "yield": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "出成率"
+  },
+  "processing_cost": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+      }
+    ],
+    "label": "加工成本"
   }
 }
 
