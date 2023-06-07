@@ -19,8 +19,7 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="$store.state.sys.measure_units" @change="onChangeUnit"
-								ref="dataSelectUnit"></uni-data-select>
+								:localdata="$store.state.sys.measure_units" ref="dataSelectUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -43,28 +42,32 @@
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="raw_cost" label="原料成本" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写原料成本" type="number"
 								v-model="formData.raw_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
-						<uni-forms-item name="yield" label="出成率">
-							<uni-easyinput placeholder="请填写出成率" type="number" v-model="formData.yield"></uni-easyinput>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="yield" label="出成率" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" style="color: red;" type="number"
+								v-model="formData.yield"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="processing_cost" label="加工成本" :label-width="labelWidth"
 							label-align="right">
 							<uni-easyinput placeholder="请填写加工成本" type="number"
 								v-model="formData.processing_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
-						<uni-forms-item name="finish_cost" label="成品成本" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost"
-								disabled></uni-easyinput>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost" disabled
+								:styles="stylesDisabled"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -98,11 +101,6 @@
 		return result
 	}
 
-
-	function numberRange(start, end) {
-		return Array.from(new Array(end + 1).keys()).slice(start);
-	}
-
 	export default {
 		data() {
 			let formData = {
@@ -122,7 +120,11 @@
 					width: 140,
 					height: 140,
 				},
+				stylesDisabled: {
+					color: '#ffe',
+				},
 				labelWidth: 80,
+				labelWidthMax: 200,
 				formData,
 				formOptions: {},
 				rules: {
@@ -130,22 +132,33 @@
 				}
 			}
 		},
-		computed: {
-			"formData.finish_cost": function() {
-				if (this.formData.yield) {
-					return this.formData.raw_cost / this.formData.yield + this.formData.processing_cost
-				} else {
-					return ''
-				}
-			}
-		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
+		watch: {
+			"formData.raw_cost": {
+				handler(newV) {
+					this.getFinishCost()
+				}
+			},
+			"formData.yield": {
+				handler(newV) {
+					this.getFinishCost()
+				}
+			},
+		},
 		methods: {
-			/**
-			 * 验证表单并提交
-			 */
+			getFinishCost() {
+				const raw_cost = this.formData.raw_cost * 100
+				const yieldNumber = this.formData.yield * 100
+				let finish_cost = 0
+				if (yieldNumber > 0) {
+					finish_cost = Math.ceil(raw_cost / yieldNumber * 100) / 100
+				} else {
+					finish_cost = this.formData.raw_cost
+				}
+				this.formData.finish_cost = finish_cost
+			},
 			submit() {
 				uni.showLoading({
 					mask: true
