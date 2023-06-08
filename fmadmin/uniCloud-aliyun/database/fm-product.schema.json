@@ -88,8 +88,7 @@
 			"bsonType": "double",
 			"description": "请填写原材料成本",
 			"label": "原材料成本",
-			"defaultValue"
-			0,
+			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -98,8 +97,7 @@
 			"bsonType": "double",
 			"description": "请填写出成率",
 			"label": "出成率",
-			"defaultValue"
-			0,
+			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"

@@ -63,57 +63,136 @@ const validator = {
     "rules": [
       {
         "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       },
       {
         "minimum": 0,
         "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "原材料成本"
+    "label": "原材料成本",
+    "defaultValue": 0
   },
-  "yield": {
+  "yield_cost": {
     "rules": [
       {
         "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       },
       {
         "minimum": 0,
         "maximum": 1,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "出成率"
+    "label": "出成率",
+    "defaultValue": 0
   },
   "processing_cost": {
     "rules": [
       {
         "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       },
       {
         "minimum": 0,
         "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "加工成本"
+    "label": "加工成本",
+    "defaultValue": 0
   },
   "finish_cost": {
     "rules": [
       {
         "format": "double",
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       },
       {
         "minimum": 0,
         "maximum": 1000000,
-        "errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "成品成本"
+    "label": "成品成本",
+    "defaultValue": 0
+  },
+  "transport_cose": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "运储成本",
+    "defaultValue": 0
+  },
+  "reproduct_cose": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "再生产成本",
+    "defaultValue": 0
+  },
+  "sideline_income": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "副产品收入",
+    "defaultValue": 0
+  },
+  "quality_fund": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "质信金",
+    "defaultValue": 0
+  },
+  "sum_cose": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "成本小计",
+    "defaultValue": 0
   }
 }
 

@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield,processing_cost,finish_cost" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_cost,processing_cost,finish_cost,transport_cose,reproduct_cose,sideline_income,quality_fund,sum_cose" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -28,9 +28,14 @@
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">产品主图</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">展示图片</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'raw_cost')" sortable @sort-change="sortChange($event, 'raw_cost')">原材料成本</uni-th>
-            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield')" sortable @sort-change="sortChange($event, 'yield')">出成率</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield_cost')" sortable @sort-change="sortChange($event, 'yield_cost')">出成率</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'processing_cost')" sortable @sort-change="sortChange($event, 'processing_cost')">加工成本</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'finish_cost')" sortable @sort-change="sortChange($event, 'finish_cost')">成品成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'transport_cose')" sortable @sort-change="sortChange($event, 'transport_cose')">运储成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'reproduct_cose')" sortable @sort-change="sortChange($event, 'reproduct_cose')">再生产成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sideline_income')" sortable @sort-change="sortChange($event, 'sideline_income')">副产品收入</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'quality_fund')" sortable @sort-change="sortChange($event, 'quality_fund')">质信金</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sum_cose')" sortable @sort-change="sortChange($event, 'sum_cose')">成本小计</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
@@ -49,9 +54,14 @@
               </template>
             </uni-td>
             <uni-td align="center">{{item.raw_cost}}</uni-td>
-            <uni-td align="center">{{item.yield}}</uni-td>
+            <uni-td align="center">{{item.yield_cost}}</uni-td>
             <uni-td align="center">{{item.processing_cost}}</uni-td>
             <uni-td align="center">{{item.finish_cost}}</uni-td>
+            <uni-td align="center">{{item.transport_cose}}</uni-td>
+            <uni-td align="center">{{item.reproduct_cose}}</uni-td>
+            <uni-td align="center">{{item.sideline_income}}</uni-td>
+            <uni-td align="center">{{item.quality_fund}}</uni-td>
+            <uni-td align="center">{{item.sum_cose}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
@@ -97,8 +107,10 @@
           pageSize,
           pageCurrent,
           filterData: {
-            "yield_data": numberRange(0, 1),
-            "yield_index": null
+            "yield_cost_data": numberRange(0, 1),
+            "yield_cost_index": null,
+            "quality_fund_data": numberRange(0, 1),
+            "quality_fund_index": null
           },
           ...enumConverter
         },
@@ -116,9 +128,14 @@
             "产品主图": "image",
             "展示图片": "image_content",
             "原材料成本": "raw_cost",
-            "出成率": "yield",
+            "出成率": "yield_cost",
             "加工成本": "processing_cost",
-            "成品成本": "finish_cost"
+            "成品成本": "finish_cost",
+            "运储成本": "transport_cose",
+            "再生产成本": "reproduct_cose",
+            "副产品收入": "sideline_income",
+            "质信金": "quality_fund",
+            "成本小计": "sum_cose"
           }
         },
         exportExcelData: []

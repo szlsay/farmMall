@@ -22,9 +22,9 @@
       <uni-forms-item name="raw_cost" label="原材料成本">
         <uni-easyinput placeholder="请填写原材料成本" type="number" v-model="formData.raw_cost"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="yield" label="出成率">
-        <picker @change="pickerChange($event, 'yield')" :range="formOptions.yield_data" :value="formOptions.yield_index">
-          <view>{{formOptions.yield_data[formOptions.yield_index] || "请选择..."}}</view>
+      <uni-forms-item name="yield_cost" label="出成率">
+        <picker @change="pickerChange($event, 'yield_cost')" :range="formOptions.yield_cost_data" :value="formOptions.yield_cost_index">
+          <view>{{formOptions.yield_cost_data[formOptions.yield_cost_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
       <uni-forms-item name="processing_cost" label="加工成本">
@@ -32,6 +32,23 @@
       </uni-forms-item>
       <uni-forms-item name="finish_cost" label="成品成本">
         <uni-easyinput placeholder="请填写成品成本" type="number" v-model="formData.finish_cost"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="transport_cose" label="运储成本">
+        <uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cose"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="reproduct_cose" label="再生产成本">
+        <uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cose"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="sideline_income" label="副产品收入">
+        <uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="quality_fund" label="质信金">
+        <picker @change="pickerChange($event, 'quality_fund')" :range="formOptions.quality_fund_data" :value="formOptions.quality_fund_index">
+          <view>{{formOptions.quality_fund_data[formOptions.quality_fund_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="sum_cose" label="成本小计">
+        <uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cose"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -73,16 +90,23 @@
         "unit_title": "",
         "image": null,
         "image_content": [],
-        "raw_cost": null,
-        "yield": null,
-        "processing_cost": null,
-        "finish_cost": null
+        "raw_cost": 0,
+        "yield_cost": 0,
+        "processing_cost": 0,
+        "finish_cost": 0,
+        "transport_cose": 0,
+        "reproduct_cose": 0,
+        "sideline_income": 0,
+        "quality_fund": 0,
+        "sum_cose": 0
       }
       return {
         formData,
         formOptions: {
-          "yield_data": numberRange(0, 1),
-          "yield_index": null
+          "yield_cost_data": numberRange(0, 1),
+          "yield_cost_index": null,
+          "quality_fund_data": numberRange(0, 1),
+          "quality_fund_index": null
         },
         rules: {
           ...getValidator(Object.keys(formData))
