@@ -22,9 +22,9 @@
       <uni-forms-item name="raw_cost" label="原材料成本">
         <uni-easyinput placeholder="请填写原材料成本" type="number" v-model="formData.raw_cost"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="yield_cost" label="出成率">
-        <picker @change="pickerChange($event, 'yield_cost')" :range="formOptions.yield_cost_data" :value="formOptions.yield_cost_index">
-          <view>{{formOptions.yield_cost_data[formOptions.yield_cost_index] || "请选择..."}}</view>
+      <uni-forms-item name="yield_ratio" label="出成率">
+        <picker @change="pickerChange($event, 'yield_ratio')" :range="formOptions.yield_ratio_data" :value="formOptions.yield_ratio_index">
+          <view>{{formOptions.yield_ratio_data[formOptions.yield_ratio_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
       <uni-forms-item name="processing_cost" label="加工成本">
@@ -42,13 +42,63 @@
       <uni-forms-item name="sideline_income" label="副产品收入">
         <uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="quality_fund" label="质信金">
-        <picker @change="pickerChange($event, 'quality_fund')" :range="formOptions.quality_fund_data" :value="formOptions.quality_fund_index">
-          <view>{{formOptions.quality_fund_data[formOptions.quality_fund_index] || "请选择..."}}</view>
+      <uni-forms-item name="quality_ratio" label="质信金">
+        <picker @change="pickerChange($event, 'quality_ratio')" :range="formOptions.quality_ratio_data" :value="formOptions.quality_ratio_index">
+          <view>{{formOptions.quality_ratio_data[formOptions.quality_ratio_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
       <uni-forms-item name="sum_cose" label="成本小计">
         <uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cose"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="fixed_ratio" label="定倍率">
+        <picker @change="pickerChange($event, 'fixed_ratio')" :range="formOptions.fixed_ratio_data" :value="formOptions.fixed_ratio_index">
+          <view>{{formOptions.fixed_ratio_data[formOptions.fixed_ratio_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="market_price" label="营销价格">
+        <uni-easyinput placeholder="请填写营销价格" type="number" v-model="formData.market_price"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="pack_fee" label="包装费">
+        <uni-easyinput placeholder="请填写包装费" type="number" v-model="formData.pack_fee"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="delivery_fee" label="配送费">
+        <uni-easyinput placeholder="请填写配送费" type="number" v-model="formData.delivery_fee"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="branch_fee" label="网点提成">
+        <uni-easyinput placeholder="请填写网点提成" type="number" v-model="formData.branch_fee"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="market_fee" label="营销费">
+        <uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
+      </uni-forms-item>
+      <uni-forms-item name="platform_fee" label="平台佣金">
+        <picker @change="pickerChange($event, 'platform_fee')" :range="formOptions.platform_fee_data" :value="formOptions.platform_fee_index">
+          <view>{{formOptions.platform_fee_data[formOptions.platform_fee_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="gp_ratio" label="毛利润">
+        <picker @change="pickerChange($event, 'gp_ratio')" :range="formOptions.gp_ratio_data" :value="formOptions.gp_ratio_index">
+          <view>{{formOptions.gp_ratio_data[formOptions.gp_ratio_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="product_ratio" label="生产奖励">
+        <picker @change="pickerChange($event, 'product_ratio')" :range="formOptions.product_ratio_data" :value="formOptions.product_ratio_index">
+          <view>{{formOptions.product_ratio_data[formOptions.product_ratio_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="market_ratio" label="营销奖励">
+        <picker @change="pickerChange($event, 'market_ratio')" :range="formOptions.market_ratio_data" :value="formOptions.market_ratio_index">
+          <view>{{formOptions.market_ratio_data[formOptions.market_ratio_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="develop_ratio" label="发展基金">
+        <picker @change="pickerChange($event, 'develop_ratio')" :range="formOptions.develop_ratio_data" :value="formOptions.develop_ratio_index">
+          <view>{{formOptions.develop_ratio_data[formOptions.develop_ratio_index] || "请选择..."}}</view>
+        </picker>
+      </uni-forms-item>
+      <uni-forms-item name="ni_ratio" label="净利润">
+        <picker @change="pickerChange($event, 'ni_ratio')" :range="formOptions.ni_ratio_data" :value="formOptions.ni_ratio_index">
+          <view>{{formOptions.ni_ratio_data[formOptions.ni_ratio_index] || "请选择..."}}</view>
+        </picker>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -91,22 +141,48 @@
         "image": null,
         "image_content": [],
         "raw_cost": 0,
-        "yield_cost": 0,
+        "yield_ratio": 0,
         "processing_cost": 0,
         "finish_cost": 0,
         "transport_cose": 0,
         "reproduct_cose": 0,
         "sideline_income": 0,
-        "quality_fund": 0,
-        "sum_cose": 0
+        "quality_ratio": 0,
+        "sum_cose": 0,
+        "fixed_ratio": 0,
+        "market_price": 0,
+        "pack_fee": 0,
+        "delivery_fee": 0,
+        "branch_fee": 0,
+        "market_fee": 0,
+        "platform_fee": 0.05,
+        "gp_ratio": null,
+        "product_ratio": 0,
+        "market_ratio": 0,
+        "develop_ratio": 0,
+        "ni_ratio": null
       }
       return {
         formData,
         formOptions: {
-          "yield_cost_data": numberRange(0, 1),
-          "yield_cost_index": null,
-          "quality_fund_data": numberRange(0, 1),
-          "quality_fund_index": null
+          "yield_ratio_data": numberRange(0, 1),
+          "yield_ratio_index": null,
+          "quality_ratio_data": numberRange(0, 1),
+          "quality_ratio_index": null,
+          "fixed_ratio_data": numberRange(0, 1),
+          "fixed_ratio_index": null,
+          "platform_fee_data": numberRange(0, 1),
+          "platform_fee_index": 0.05,
+          "gp_ratio_data": numberRange(0, 1),
+          "gp_ratio_index": null,
+          "product_ratio_data": numberRange(0, 1),
+          "product_ratio_index": null,
+          "market_ratio_data": numberRange(0, 1),
+          "market_ratio_index": null,
+          "develop_ratio_data": numberRange(0, 1),
+          "develop_ratio_index": null,
+          "ni_ratio_data": numberRange(0, 1),
+          "ni_ratio_index": null
         },
         rules: {
           ...getValidator(Object.keys(formData))
@@ -171,7 +247,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_cost,processing_cost,finish_cost,transport_cose,reproduct_cose,sideline_income,quality_fund,sum_cose").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cose,reproduct_cose,sideline_income,quality_ratio,sum_cose,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

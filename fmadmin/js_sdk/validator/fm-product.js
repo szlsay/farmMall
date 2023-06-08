@@ -74,7 +74,7 @@ const validator = {
     "label": "原材料成本",
     "defaultValue": 0
   },
-  "yield_cost": {
+  "yield_ratio": {
     "rules": [
       {
         "format": "double",
@@ -164,7 +164,7 @@ const validator = {
     "label": "副产品收入",
     "defaultValue": 0
   },
-  "quality_fund": {
+  "quality_ratio": {
     "rules": [
       {
         "format": "double",
@@ -193,6 +193,184 @@ const validator = {
     ],
     "label": "成本小计",
     "defaultValue": 0
+  },
+  "fixed_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "定倍率",
+    "defaultValue": 0
+  },
+  "market_price": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "营销价格",
+    "defaultValue": 0
+  },
+  "pack_fee": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "包装费",
+    "defaultValue": 0
+  },
+  "delivery_fee": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "配送费",
+    "defaultValue": 0
+  },
+  "branch_fee": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "网点提成",
+    "defaultValue": 0
+  },
+  "market_fee": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1000000,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "营销费",
+    "defaultValue": 0
+  },
+  "platform_fee": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "平台佣金",
+    "defaultValue": 0.05
+  },
+  "gp_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "毛利润"
+  },
+  "product_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "生产奖励",
+    "defaultValue": 0
+  },
+  "market_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "营销奖励",
+    "defaultValue": 0
+  },
+  "develop_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "发展基金",
+    "defaultValue": 0
+  },
+  "ni_ratio": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      },
+      {
+        "minimum": 0,
+        "maximum": 1,
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "净利润"
   }
 }
 
