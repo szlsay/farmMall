@@ -1,7 +1,7 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-
+			<!-- 基本信息 -->
 			<view class="fm-box">
 				<view class="fm-card-header">基本信息</view>
 				<uni-row>
@@ -39,6 +39,7 @@
 					</uni-forms-item>
 				</uni-row>
 			</view>
+			<!-- 生产环节 -->
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
 				<uni-row>
@@ -71,63 +72,139 @@
 								v-model="formData.processing_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="transport_cose" label="运储成本" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写运储成本" type="number"
+								v-model="formData.transport_cose"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="reproduct_cose" label="再生产成本" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写再生产成本" type="number"
+								v-model="formData.reproduct_cose"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="sideline_income" label="副产品收入" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写副产品收入" type="number"
+								v-model="formData.sideline_income"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="quality_ratio" label="质信金" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.quality_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="sum_cose" label="成本小计" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写成本小计" type="number"
+								v-model="formData.sum_cose"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="fixed_ratio" label="定倍率" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.fixed_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8"></uni-col>
+					<uni-col :xs="24" :sm="8"></uni-col>
+				</uni-row>
+
+			</view>
+
+			<!-- 营销环节 -->
+			<view class="fm-box">
+				<view class="fm-card-header">营销环节</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="market_price" label="营销价格" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写营销价格" type="number"
+								v-model="formData.market_price"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="pack_fee" label="包装费" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写包装费" type="number"
+								v-model="formData.pack_fee"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="delivery_fee" label="配送费" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写配送费" type="number"
+								v-model="formData.delivery_fee"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="branch_fee" label="网点提成" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写网点提成" type="number"
+								v-model="formData.branch_fee"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="market_fee" label="营销费" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写营销费" type="number"
+								v-model="formData.market_fee"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="platform_fee" label="平台佣金" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.platform_fee"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
 				</uni-row>
 			</view>
 
-
-
-
-			<uni-forms-item name="transport_cose" label="运储成本">
-				<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cose"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="reproduct_cose" label="再生产成本">
-				<uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cose"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="sideline_income" label="副产品收入">
-				<uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="quality_ratio" label="质信金">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.quality_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="sum_cose" label="成本小计">
-				<uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cose"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="fixed_ratio" label="定倍率">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.fixed_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="market_price" label="营销价格">
-				<uni-easyinput placeholder="请填写营销价格" type="number" v-model="formData.market_price"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="pack_fee" label="包装费">
-				<uni-easyinput placeholder="请填写包装费" type="number" v-model="formData.pack_fee"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="delivery_fee" label="配送费">
-				<uni-easyinput placeholder="请填写配送费" type="number" v-model="formData.delivery_fee"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="branch_fee" label="网点提成">
-				<uni-easyinput placeholder="请填写网点提成" type="number" v-model="formData.branch_fee"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="market_fee" label="营销费">
-				<uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="platform_fee" label="平台佣金">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.platform_fee"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="gp_ratio" label="毛利润">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.gp_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="product_ratio" label="生产奖励">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.product_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="market_ratio" label="营销奖励">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.market_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="develop_ratio" label="发展基金">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.develop_ratio"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="ni_ratio" label="净利润">
-				<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.ni_ratio"></uni-easyinput>
-			</uni-forms-item>
+			<!-- 结算环节 -->
+			<view class="fm-box">
+				<view class="fm-card-header">结算环节</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="gp_ratio" label="毛利润" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.gp_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="product_ratio" label="生产奖励" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.product_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="market_ratio" label="营销奖励" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.market_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="develop_ratio" label="发展基金" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.develop_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="ni_ratio" label="净利润" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.ni_ratio"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8"></uni-col>
+				</uni-row>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
