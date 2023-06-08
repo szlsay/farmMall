@@ -42,32 +42,33 @@
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="raw_cost" label="原料成本" :label-width="labelWidth" label-align="right">
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="raw_cost" label="原料成本(元)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写原料成本" type="number"
 								v-model="formData.raw_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="yield" label="出成率" :label-width="labelWidth" label-align="right">
+					<uni-col :xs="24" :sm="6">
+						<uni-forms-item name="yield" label="出成率(%)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写两位小数" style="color: red;" type="number"
 								v-model="formData.yield"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="processing_cost" label="加工成本" :label-width="labelWidth"
-							label-align="right">
-							<uni-easyinput placeholder="请填写加工成本" type="number"
-								v-model="formData.processing_cost"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-				</uni-row>
-				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax"
 							label-align="right">
 							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost" disabled
 								:styles="stylesDisabled"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="processing_cost" label="加工成本(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写加工成本" type="number"
+								v-model="formData.processing_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -123,7 +124,7 @@
 				stylesDisabled: {
 					color: '#ffe',
 				},
-				labelWidth: 80,
+				labelWidth: 100,
 				labelWidthMax: 200,
 				formData,
 				formOptions: {},
