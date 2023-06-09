@@ -100,7 +100,7 @@
 			"description": "请填写加工成本",
 			"label": "加工成本",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"finish_cost": {
@@ -108,7 +108,7 @@
 			"description": "请填写成品成本",
 			"label": "成品成本",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"transport_cost": {
@@ -116,7 +116,7 @@
 			"description": "请填写运储成本",
 			"label": "运储成本",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"reproduct_cost": {
@@ -124,7 +124,7 @@
 			"description": "请填写再生产成本",
 			"label": "再生产成本",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"sideline_income": {
@@ -132,15 +132,7 @@
 			"description": "请填写副产品收入",
 			"label": "副产品收入",
 			"minimum": 0,
-			"maximum": 1000000,
-			"errorMessage": "{label}在{minimum}与{maximum}之间"
-		},
-		"sideline_income": {
-			"bsonType": "double",
-			"description": "请填写副产品收入",
-			"label": "副产品收入",
-			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"quality_ratio": {
@@ -156,7 +148,7 @@
 			"description": "请填写成本小计",
 			"label": "成本小计",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"fixed_ratio": {
@@ -164,7 +156,7 @@
 			"description": "请填写定倍率",
 			"label": "定倍率",
 			"minimum": 0,
-			"maximum": 10,
+			"maximum": 100,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"market_price": {
@@ -172,7 +164,7 @@
 			"description": "请填写营销价格",
 			"label": "营销价格",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"pack_fee": {
@@ -180,7 +172,7 @@
 			"description": "请填写包装费",
 			"label": "包装费",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"delivery_fee": {
@@ -188,7 +180,7 @@
 			"description": "请填写配送费",
 			"label": "配送费",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"branch_fee": {
@@ -196,7 +188,7 @@
 			"description": "请填写网点提成",
 			"label": "网点提成",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"market_fee": {
@@ -204,7 +196,7 @@
 			"description": "请填写营销费",
 			"label": "营销费",
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"platform_fee": {
@@ -212,7 +204,7 @@
 			"description": "请填写平台佣金",
 			"label": "平台佣金",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"gp_price": {

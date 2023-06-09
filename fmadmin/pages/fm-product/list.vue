@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -24,7 +24,6 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')" sortable @sort-change="sortChange($event, 'name')">产品名称</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'raw_name')" sortable @sort-change="sortChange($event, 'raw_name')">原材料名称</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit')" sortable @sort-change="sortChange($event, 'unit')">计量单位</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')" sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">产品主图</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">展示图片</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'raw_cost')" sortable @sort-change="sortChange($event, 'raw_cost')">原材料成本</uni-th>
@@ -54,7 +53,6 @@
             <uni-td align="center">{{item.name}}</uni-td>
             <uni-td align="center">{{item.raw_name}}</uni-td>
             <uni-td align="center">{{item.unit}}</uni-td>
-            <uni-td align="center">{{item.unit_title}}</uni-td>
             <uni-td align="center">
               <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
               <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link>
@@ -135,10 +133,8 @@
             "yield_ratio_index": null,
             "quality_ratio_data": numberRange(0, 1),
             "quality_ratio_index": null,
-            "fixed_ratio_data": numberRange(0, 10),
-            "fixed_ratio_index": null,
-            "platform_fee_data": numberRange(0, 1),
-            "platform_fee_index": null
+            "fixed_ratio_data": numberRange(0, 100),
+            "fixed_ratio_index": null
           },
           ...enumConverter
         },
@@ -152,7 +148,7 @@
           "fields": {
             "产品名称": "name",
             "原材料名称": "raw_name",
-            "计量单位": "unit_title",
+            "计量单位": "unit",
             "产品主图": "image",
             "展示图片": "image_content",
             "原材料成本": "raw_cost",

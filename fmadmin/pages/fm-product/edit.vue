@@ -10,9 +10,6 @@
       <uni-forms-item name="unit" label="计量单位">
         <uni-data-select placeholder="请填写计量单位" v-model="formData.unit"></uni-data-select>
       </uni-forms-item>
-      <uni-forms-item name="unit_title" label="计量单位">
-        <uni-easyinput placeholder="请填写计量单位" v-model="formData.unit_title"></uni-easyinput>
-      </uni-forms-item>
       <uni-forms-item name="image" label="产品主图">
         <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object" v-model="formData.image"></uni-file-picker>
       </uni-forms-item>
@@ -71,9 +68,7 @@
         <uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="platform_fee" label="平台佣金">
-        <picker @change="pickerChange($event, 'platform_fee')" :range="formOptions.platform_fee_data" :value="formOptions.platform_fee_index">
-          <view>{{formOptions.platform_fee_data[formOptions.platform_fee_index] || "请选择..."}}</view>
-        </picker>
+        <uni-easyinput placeholder="请填写平台佣金" type="number" v-model="formData.platform_fee"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="gp_price" label="毛利润">
         <uni-easyinput placeholder="毛利润" type="number" v-model="formData.gp_price"></uni-easyinput>
@@ -127,7 +122,6 @@
         "name": "",
         "raw_name": "",
         "unit": "",
-        "unit_title": "",
         "image": null,
         "image_content": [],
         "raw_cost": null,
@@ -159,10 +153,8 @@
           "yield_ratio_index": null,
           "quality_ratio_data": numberRange(0, 1),
           "quality_ratio_index": null,
-          "fixed_ratio_data": numberRange(0, 10),
-          "fixed_ratio_index": null,
-          "platform_fee_data": numberRange(0, 1),
-          "platform_fee_index": null
+          "fixed_ratio_data": numberRange(0, 100),
+          "fixed_ratio_index": null
         },
         rules: {
           ...getValidator(Object.keys(formData))
@@ -227,7 +219,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

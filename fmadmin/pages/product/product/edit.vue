@@ -406,8 +406,8 @@
 				})
 			},
 			submitForm(value) {
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
+				const fmproduct = uniCloud.importObject("fm-product")
+				fmproduct.update(this.formDataId, value).then((res) => {
 					uni.showToast({
 						title: '修改成功'
 					})
