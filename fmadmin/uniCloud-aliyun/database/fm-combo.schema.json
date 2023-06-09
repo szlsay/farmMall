@@ -47,12 +47,12 @@
 		},
 		"unit": {
 			"bsonType": "string",
-			"description": "请填写计量单位",
-			"label": "计量单位",
+			"description": "请填写产品单位",
+			"label": "产品单位",
 			"componentForEdit": {
 				"name": "uni-data-select",
 				"props": {
-					"placeholder": "请选择计量单位"
+					"placeholder": "请选择产品单位"
 				}
 			}
 		},
@@ -77,15 +77,15 @@
 			"description": "套餐规格",
 			"label": "套餐规格",
 			"properties": {
-				"goods_id": {
+				"product_id": {
 					"bsonType": "string",
-					"description": "商品id",
-					"label": "商品id"
+					"description": "产品id",
+					"label": "产品id"
 				},
-				"goods_name": {
+				"product_name": {
 					"bsonType": "string",
-					"description": "请选择商品名称",
-					"label": "商品名称"
+					"description": "请选择产品名称",
+					"label": "产品名称"
 				},
 				"qty": {
 					"bsonType": "int",
@@ -103,8 +103,24 @@
 							"placeholder": "请选择计量单位"
 						}
 					}
+				},
+				"market_price": {
+					"bsonType": "double",
+					"description": "请填写营销价格",
+					"label": "营销价格",
+					"minimum": 0,
+					"maximum": 10000,
+					"errorMessage": "{label}在{minimum}与{maximum}之间"
 				}
 			}
+		},
+		"sell_price": {
+			"bsonType": "double",
+			"description": "请填写售价",
+			"label": "售价",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
 		"delivery_rate": {
 			"bsonType": "string",
@@ -117,26 +133,10 @@
 				}
 			}
 		},
-		"delivery_rate_title": {
-			"bsonType": "string",
-			"description": "配送频率",
-			"label": "配送频率"
-		},
-		"price_sell": {
-			"bsonType": "double",
-			"description": "请填写售价",
-			"label": "售价",
-			"minimum": 0,
-			"maximum": 1000000,
-			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
-		},
-		"expiry": {
-			"bsonType": "int",
-			"description": "请填写保质期",
-			"label": "保质期",
-			"minimum": 0,
-			"maximum": 1000000,
-			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		"delivery_timer": {
+			"bsonType": "number",
+			"description": "配送次数",
+			"label": "配送次数"
 		},
 		"reserve_begin": {
 			"bsonType": "timestamp",
