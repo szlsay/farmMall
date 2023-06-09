@@ -10,9 +10,8 @@
 			</view>
 		</view>
 		<view class="uni-container">
-			<unicloud-db ref="udb" :collection="collectionList" field="title,type,rules" page-data="replace"
-				:getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
-				v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual">
+			<unicloud-db ref="udb" collection="fm-price-rule" field="title,type"
+				v-slot:default="{data,pagination,loading,error,options}" loadtime="manual">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
 					<uni-tr>
 						<uni-th align="center">标题</uni-th>
@@ -26,8 +25,6 @@
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
 									type="primary">修改</button>
-								<button @click="confirmDelete(item._id)" class="uni-button" size="mini"
-									type="warn">删除</button>
 							</view>
 						</uni-td>
 					</uni-tr>
@@ -39,13 +36,7 @@
 <script>
 	export default {
 		data() {
-			return {
-				collectionList: "fm-price-rule",
-				options: {
-					pageSize: 20,
-					pageCurrent: 1
-				}
-			}
+			return {}
 		},
 		onReady() {
 			this.$refs.udb.loadData()
@@ -63,13 +54,6 @@
 						refreshData: () => {
 							this.loadData(clear)
 						}
-					}
-				})
-			},
-			confirmDelete(id) {
-				this.$refs.udb.remove(id, {
-					success: (res) => {
-						this.$refs.table.clearSelection()
 					}
 				})
 			}
