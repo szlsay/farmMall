@@ -53,7 +53,8 @@
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput>
+							<uni-number-box v-model="item.qty" placeholder="请填写数量"></uni-number-box>
+							<!-- <uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput> -->
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -160,6 +161,17 @@
 					...getValidator(Object.keys(formData))
 				},
 				productList: []
+			}
+		},
+		watch: {
+			"formData.sku": {
+				handler(newV) {
+					newV.map(item => {
+						console.log(item.market_price, item.qty)
+					})
+
+				},
+				deep: true
 			}
 		},
 		onReady() {
