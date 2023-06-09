@@ -3,7 +3,8 @@ export default {
 	state: {
 		dicts: [],
 		measure_units: [],
-		delivery_rates: [],
+		delivery_ratios: [],
+		product_units: [],
 		priceRules: [],
 		multiple_rules: [],
 		credit_rules: []
@@ -12,7 +13,8 @@ export default {
 		SET_DICTS: (state, dicts) => {
 			state.dicts = dicts
 			state.measure_units = dicts.filter(item => item.type === "measure_unit")[0]["enum"]
-			state.delivery_rates = dicts.filter(item => item.type === "delivery_rate")[0]["enum"]
+			state.delivery_ratios = dicts.filter(item => item.type === "delivery_ratio")[0]["enum"]
+			state.product_units = dicts.filter(item => item.type === "product_unit")[0]["enum"]
 		},
 		SET_PriceRules: (state, priceRules) => {
 			console.log(priceRules)
@@ -37,7 +39,9 @@ export default {
 			const db = uniCloud.database();
 			const dbCmd = db.command;
 			const dbCollectionName = 'fm-price-rule';
-			const {result} = await db.collection(dbCollectionName).get()
+			const {
+				result
+			} = await db.collection(dbCollectionName).get()
 			if (result.data && result.data.length > 1) {
 				commit("SET_PriceRules", result.data)
 			}

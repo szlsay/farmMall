@@ -267,17 +267,17 @@
 			}, {
 				"path": "dict/add",
 				"style": {
-					"navigationBarTitleText": "新增字典"
+					"navigationBarTitleText": "新增数据"
 				}
 			}, {
 				"path": "dict/edit",
 				"style": {
-					"navigationBarTitleText": "编辑字典"
+					"navigationBarTitleText": "编辑数据"
 				}
 			}, {
 				"path": "dict/list",
 				"style": {
-					"navigationBarTitleText": "字典列表"
+					"navigationBarTitleText": "数据列表"
 				}
 			}]
 		}, {
