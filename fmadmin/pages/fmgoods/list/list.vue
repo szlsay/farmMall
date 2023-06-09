@@ -21,42 +21,44 @@
 			<unicloud-db ref="udb" :collection="collectionList"
 				field="image,name,producer,unit,price_cost,price_original,price_sell,source_type,stock,storage,expiry,buy_min,buy_max,description,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
-				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
-				loadtime="manual" @load="onqueryload">
-				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection"
-					@selection-change="selectionChange">
+				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
+				:options="options" loadtime="manual" @load="onqueryload">
+				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
+					type="selection" @selection-change="selectionChange">
 					<uni-tr>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">商品主图</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')" sortable
-							@sort-change="sortChange($event, 'name')">商品名称</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'producer')" sortable
-							@sort-change="sortChange($event, 'producer')">商品产地</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'name')"
+							sortable @sort-change="sortChange($event, 'name')">商品名称</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'producer')"
+							sortable @sort-change="sortChange($event, 'producer')">商品产地</uni-th>
 						<uni-th align="center" filter-type="select" :filter-data="options.filterData.unit_localdata"
 							@filter-change="filterChange($event, 'unit')">计量单位</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_cost')" sortable
-							@sort-change="sortChange($event, 'price_cost')">成本价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_original')" sortable
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_cost')"
+							sortable @sort-change="sortChange($event, 'price_cost')">成本价</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'price_original')" sortable
 							@sort-change="sortChange($event, 'price_original')">原价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')" sortable
-							@sort-change="sortChange($event, 'price_sell')">售价</uni-th>
-						<uni-th align="center" filter-type="select" :filter-data="options.filterData.source_type_localdata"
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
+							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th>
+						<uni-th align="center" filter-type="select"
+							:filter-data="options.filterData.source_type_localdata"
 							@filter-change="filterChange($event, 'source_type')">商品来源</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'stock')" sortable
-							@sort-change="sortChange($event, 'stock')">库存</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'storage')" sortable
-							@sort-change="sortChange($event, 'storage')" width="200">存储条件</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')" sortable
-							@sort-change="sortChange($event, 'expiry')">保质期</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_min')" sortable
-							@sort-change="sortChange($event, 'buy_min')">最小起购</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_max')" sortable
-							@sort-change="sortChange($event, 'buy_max')">最大起购</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'stock')"
+							sortable @sort-change="sortChange($event, 'stock')">库存</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'storage')"
+							sortable @sort-change="sortChange($event, 'storage')" width="200">存储条件</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')"
+							sortable @sort-change="sortChange($event, 'expiry')">保质期</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_min')"
+							sortable @sort-change="sortChange($event, 'buy_min')">最小起购</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'buy_max')"
+							sortable @sort-change="sortChange($event, 'buy_max')">最大起购</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">
-							<image style="width: 60px; height: 60px;" v-if="item.image && item.image.fileType == 'image'"
-								:src="item.image.url"></image>
+							<image style="width: 60px; height: 60px;"
+								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">{{item.name}}</uni-td>
 						<uni-td align="center">{{item.producer}}</uni-td>
@@ -78,14 +80,15 @@
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
 									type="primary">修改</button>
-								<button @click="confirmDelete(item._id)" class="uni-button" size="mini" type="warn">删除</button>
+								<button @click="confirmDelete(item._id)" class="uni-button" size="mini"
+									type="warn">删除</button>
 							</view>
 						</uni-td>
 					</uni-tr>
 				</uni-table>
 				<view class="uni-pagination-box">
-					<uni-pagination show-icon :page-size="pagination.size" v-model="pagination.current" :total="pagination.count"
-						@change="onPageChanged" />
+					<uni-pagination show-icon :page-size="pagination.size" v-model="pagination.current"
+						:total="pagination.count" @change="onPageChanged" />
 				</view>
 			</unicloud-db>
 		</view>
@@ -261,23 +264,6 @@
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
-			// confirmDelete(id) {
-			// 	const fmgoods = uniCloud.importObject("fm-goods")
-			// 	fmgoods.delete(id).then((res) => {
-			// 		this.$refs.table.clearSelection()
-			// 		this.$refs.udb.refresh()
-			// 	}).catch((err) => {
-			// 		uni.showModal({
-			// 			content: err.message || '请求服务失败',
-			// 			showCancel: false
-			// 		})
-			// 	})
-			// 	// this.$refs.udb.remove(id, {
-			// 	// 	success: (res) => {
-			// 	// 		this.$refs.table.clearSelection()
-			// 	// 	}
-			// 	// })
-			// },
 			confirmDelete(id) {
 				const that = this
 				uni.showModal({

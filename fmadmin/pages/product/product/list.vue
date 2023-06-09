@@ -9,8 +9,6 @@
 				<input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
 				<button class="uni-button" type="default" size="mini" @click="search">搜索</button>
 				<button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-				<button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
-					@click="delTable">批量删除</button>
 				<download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData"
 					:type="exportExcel.type" :name="exportExcel.filename">
 					<button class="uni-button" type="primary" size="mini">导出 Excel</button>
@@ -19,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,raw_name,unit,image,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
+				field="is_delete,name,raw_name,unit,image,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -122,7 +120,7 @@
 			return {
 				collectionList: "fm-product",
 				query: '',
-				where: '',
+				where: 'is_delete == false',
 				orderby: dbOrderBy,
 				orderByFieldName: "",
 				selectedIndexs: [],
@@ -189,13 +187,13 @@
 			getWhere() {
 				const query = this.query.trim()
 				if (!query) {
-					return ''
+					return 'is_delete == false'
 				}
 				const queryRe = new RegExp(query, 'i')
 				return dbSearchFields.map(name => queryRe + '.test(' + name + ')').join(' || ')
 			},
 			search() {
-				const newWhere = this.getWhere()
+				const newWhere = this.getWhere() + ' && is_delete == false'
 				this.where = newWhere
 				this.$nextTick(() => {
 					this.loadData()
@@ -229,23 +227,32 @@
 				var dataList = this.$refs.udb.dataList
 				return this.selectedIndexs.map(i => dataList[i]._id)
 			},
-			// 批量删除
-			delTable() {
-				this.$refs.udb.remove(this.selectedItems(), {
-					success: (res) => {
-						this.$refs.table.clearSelection()
-					}
-				})
-			},
 			// 多选
 			selectionChange(e) {
 				this.selectedIndexs = e.detail.index
 			},
 			confirmDelete(id) {
-				this.$refs.udb.remove(id, {
-					success: (res) => {
-						this.$refs.table.clearSelection()
+				const that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除此产品？',
+					success: function(res) {
+						if (res.confirm) {
+							that.onDelete(id)
+						}
 					}
+				});
+			},
+			onDelete(id) {
+				const fmproduct = uniCloud.importObject("fm-product")
+				fmproduct.delete(id).then((res) => {
+					this.$refs.table.clearSelection()
+					this.$refs.udb.refresh()
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					})
 				})
 			},
 			sortChange(e, name) {
@@ -268,8 +275,9 @@
 				let newWhere = filterToWhere(this._filter, db.command)
 				if (Object.keys(newWhere).length) {
 					this.where = newWhere
+					this.where.is_delete = false
 				} else {
-					this.where = ''
+					this.where = 'is_delete == false'
 				}
 				this.$nextTick(() => {
 					this.$refs.udb.loadData()
