@@ -269,18 +269,40 @@
 				}
 			},
 			"formData.processing_cost": {
-				handler(newV) {}
+				handler(newV) {
+					this.getSumCost()
+				}
+			},
+			"formData.transport_cost": {
+				handler(newV) {
+					this.getSumCost()
+				}
 			},
 			"formData.reproduct_cost": {
-				handler(newV) {}
+				handler(newV) {
+					this.getSumCost()
+				}
 			},
 			"formData.sideline_income": {
-				handler(newV) {}
+				handler(newV) {
+					this.getSumCost()
+				}
 			},
 		},
 		methods: {
 			getSumCost() {
-				
+				const quality_cost = Number(this.formData.finish_cost * this.formData.quality_ratio) 
+				this.testData = quality_cost
+				this.formData.sum_cost = Number(this.formData.finish_cost) + Number(this.formData.processing_cost) +
+					Number(this
+						.formData.transport_cost) + Number(this.formData.reproduct_cost) - Number(this.formData
+						.sideline_income) +
+					Number(quality_cost)
+					
+				// const quality_cost = (this.formData.finish_cost * 100) * (this.formData.quality_ratio * 100) / 10000
+				// this.formData.sum_cost = Number(this.formData.finish_cost) + Number(this.formData.processing_cost) + Number(this
+				// 		.formData.transport_cost) + Number(this.formData.reproduct_cost) - Number(this.formData.sideline_income) +
+				// 	Number(quality_cost)
 			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
@@ -294,7 +316,6 @@
 				this.formData.finish_cost = finish_cost
 				const ratios = this.$store.state.sys.credit_rules.filter(item => Number(item.start_value) <= this.formData
 					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
-				this.testData = ratios
 				if (ratios && ratios.length > 0) {
 					this.formData.quality_ratio = ratios[0].ratio * 100 / 10000
 				} else {
@@ -308,6 +329,7 @@
 				} else {
 					this.formData.fixed_ratio = 0
 				}
+				this.getSumCost()
 			},
 			submit() {
 				uni.showLoading({
