@@ -53,8 +53,7 @@
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
 							label-align="right">
-							<uni-number-box v-model="item.qty" placeholder="请填写数量"></uni-number-box>
-							<!-- <uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput> -->
+							<uni-number-box :min="0" :max="100" v-model="item.qty" />
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -82,9 +81,9 @@
 				<view class="fm-card-header">产品信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="price_sell" label="售价" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写售价" type="number"
-								v-model="formData.price_sell"></uni-easyinput>
+						<uni-forms-item name="sell_price" label="售价" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算售价" type="number" v-model="formData.sell_price"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -166,9 +165,18 @@
 		watch: {
 			"formData.sku": {
 				handler(newV) {
+					console.log(11)
+					let sell_price = 0
 					newV.map(item => {
-						console.log(item.market_price, item.qty)
+						if (item.market_price && item.qty) {
+							sell_price += (item.market_price * 100) * item.qty
+						}
 					})
+					if (sell_price > 0) {
+						this.formData.sell_price = sell_price / 100
+					} else {
+						this.formData.sell_price = null
+					}
 
 				},
 				deep: true
@@ -257,3 +265,8 @@
 		}
 	}
 </script>
+<style lang="scss" scoped>
+	::v-deep .is-disabled {
+		color: black !important;
+	}
+</style>
