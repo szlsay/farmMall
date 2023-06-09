@@ -47,31 +47,37 @@
 								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">
-							<text>原料成本:{{item.raw_cost}}元</text>
-							<text>出成率:{{item.yield_ratio}}</text>
-							<text>成品成本:{{item.finish_cost}}元</text>
-							<text>加工成本:{{item.processing_cost}}元</text>
-							<text>运储成本:{{item.transport_cost}}元</text>
-							<text>再生产成本:{{item.reproduct_cost}}元</text>
-							<text>副产品收入:{{item.sideline_income}}元</text>
-							<text>质信金率:{{item.quality_ratio}}</text>
-							<text>成本小计:{{item.sum_cost}}元</text>
+							<view class="item-fee">
+								<text>原料成本: <text class="text-green">{{item.raw_cost}}</text>元</text>
+								<text>出成率:<text class="text-red">{{item.yield_ratio}}</text></text>
+								<text>成品成本:<text class="text-green">{{item.finish_cost}}</text>元</text>
+								<text>加工成本:<text class="text-green">{{item.processing_cost}}</text>元</text>
+								<text>运储成本:<text class="text-green">{{item.transport_cost}}</text>元</text>
+								<text>再生产成本:<text class="text-green">{{item.reproduct_cost}}</text>元</text>
+								<text>副产品收入:<text class="text-green">{{item.sideline_income}}</text>元</text>
+								<text>质信金率:<text class="text-red">{{item.quality_ratio}}</text></text>
+								<text>成本小计:<text class="text-green">{{item.sum_cost}}</text>元</text>
+							</view>
 						</uni-td>
 						<uni-td align="center">
-							<text>定倍率:{{item.fixed_ratio}}</text>
-							<text>营销价格:{{item.market_price}}元</text>
-							<text>包装费:{{item.pack_fee}}元</text>
-							<text>配送费:{{item.delivery_fee}}元</text>
-							<text>网点提成:{{item.branch_fee}}元</text>
-							<text>营销费:{{item.market_fee}}元</text>
-							<text>平台佣金:{{item.platform_fee}}元</text>
+							<view class="item-fee">
+								<text>定倍率:<text class="text-red">{{item.fixed_ratio}}</text></text>
+								<text>营销价格:<text class="text-green">{{item.market_price}}</text>元</text>
+								<text>包装费:<text class="text-green">{{item.pack_fee}}</text>元</text>
+								<text>配送费:<text class="text-green">{{item.delivery_fee}}</text>元</text>
+								<text>网点提成:<text class="text-green">{{item.branch_fee}}</text>元</text>
+								<text>营销费:<text class="text-green">{{item.market_fee}}</text>元</text>
+								<text>平台佣金:<text class="text-green">{{item.platform_fee}}</text>元</text>
+							</view>
 						</uni-td>
 						<uni-td align="center">
-							<text>毛利润:{{item.gp_price}}元</text>
-							<text>生产奖励:{{item.product_bonus}}元</text>
-							<text>营销奖励:{{item.market_bonus}}元</text>
-							<text>发展基金:{{item.develop_bonus}}元</text>
-							<text>净利润:{{item.ni_price}}元</text>
+							<view class="item-fee">
+								<text>毛利润:<text class="text-green">{{item.gp_price}}</text>元</text>
+								<text>生产奖励:<text class="text-green">{{item.product_bonus}}</text>元</text>
+								<text>营销奖励:<text class="text-green">{{item.market_bonus}}</text>元</text>
+								<text>发展基金:<text class="text-green">{{item.develop_bonus}}</text>元</text>
+								<text>净利润:<text class="text-green">{{item.ni_price}}</text>元</text>
+							</view>
 						</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
@@ -273,5 +279,18 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.item-fee {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+
+		.text-red {
+			color: #ff442f;
+		}
+
+		.text-green {
+			color: #00CC99;
+		}
+	}
 </style>
