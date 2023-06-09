@@ -163,8 +163,8 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item label="利润金额(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算利润金额" type="number" v-model="ni_price"
+						<uni-forms-item name="ni_price" label="利润金额" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
@@ -264,6 +264,7 @@
 				"branch_fee": null,
 				"market_fee": null,
 				"platform_fee": null,
+				"ni_price": null,
 				"gp_ratio": null,
 				"product_ratio": null,
 				"market_ratio": null,
@@ -271,7 +272,6 @@
 				"ni_ratio": null
 			}
 			return {
-				ni_price: null,
 				imageStyles: {
 					width: 140,
 					height: 140,
@@ -377,9 +377,9 @@
 				const market_fee = this.formData.market_fee * 100
 				const platform_fee = this.formData.platform_fee * 100
 				const sum_cost = this.formData.sum_cost * 100
-				this.ni_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
+				this.formData.ni_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
 					platform_fee - sum_cost) / 100
-				this.formData.gp_ratio = Math.floor(this.ni_price * 10000 / market_price) / 100
+				this.formData.gp_ratio = Math.floor(this.formData.ni_price * 10000 / market_price) / 100
 				this.getNiRatio()
 			},
 			getSumCost() {

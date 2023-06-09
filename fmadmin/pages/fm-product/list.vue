@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,ni_price,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -43,6 +43,7 @@
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'branch_fee')" sortable @sort-change="sortChange($event, 'branch_fee')">网点提成</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_fee')" sortable @sort-change="sortChange($event, 'market_fee')">营销费</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'platform_fee')" sortable @sort-change="sortChange($event, 'platform_fee')">平台佣金</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'ni_price')" sortable @sort-change="sortChange($event, 'ni_price')">利润金额</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'gp_ratio')" sortable @sort-change="sortChange($event, 'gp_ratio')">毛利润</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'product_ratio')" sortable @sort-change="sortChange($event, 'product_ratio')">生产奖励</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_ratio')" sortable @sort-change="sortChange($event, 'market_ratio')">营销奖励</uni-th>
@@ -81,6 +82,7 @@
             <uni-td align="center">{{item.branch_fee}}</uni-td>
             <uni-td align="center">{{item.market_fee}}</uni-td>
             <uni-td align="center">{{item.platform_fee}}</uni-td>
+            <uni-td align="center">{{item.ni_price}}</uni-td>
             <uni-td align="center">{{item.gp_ratio}}</uni-td>
             <uni-td align="center">{{item.product_ratio}}</uni-td>
             <uni-td align="center">{{item.market_ratio}}</uni-td>
@@ -135,10 +137,10 @@
             "yield_ratio_index": null,
             "quality_ratio_data": numberRange(0, 1),
             "quality_ratio_index": null,
-            "fixed_ratio_data": numberRange(0, 1),
+            "fixed_ratio_data": numberRange(0, 10),
             "fixed_ratio_index": null,
             "platform_fee_data": numberRange(0, 1),
-            "platform_fee_index": 0.05,
+            "platform_fee_index": null,
             "gp_ratio_data": numberRange(0, 1),
             "gp_ratio_index": null,
             "product_ratio_data": numberRange(0, 1),
@@ -181,6 +183,7 @@
             "网点提成": "branch_fee",
             "营销费": "market_fee",
             "平台佣金": "platform_fee",
+            "利润金额": "ni_price",
             "毛利润": "gp_ratio",
             "生产奖励": "product_ratio",
             "营销奖励": "market_ratio",

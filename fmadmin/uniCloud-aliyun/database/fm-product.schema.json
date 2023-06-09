@@ -88,7 +88,6 @@
 			"bsonType": "double",
 			"description": "请填写原材料成本",
 			"label": "原材料成本",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -97,16 +96,14 @@
 			"bsonType": "double",
 			"description": "请填写出成率",
 			"label": "出成率",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"processing_cost": {
 			"bsonType": "double",
 			"description": "请填写加工成本",
 			"label": "加工成本",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -115,7 +112,6 @@
 			"bsonType": "double",
 			"description": "请填写成品成本",
 			"label": "成品成本",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -124,7 +120,6 @@
 			"bsonType": "double",
 			"description": "请填写运储成本",
 			"label": "运储成本",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -133,7 +128,6 @@
 			"bsonType": "double",
 			"description": "请填写再生产成本",
 			"label": "再生产成本",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -142,7 +136,6 @@
 			"bsonType": "double",
 			"description": "请填写副产品收入",
 			"label": "副产品收入",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -151,7 +144,6 @@
 			"bsonType": "double",
 			"description": "请填写副产品收入",
 			"label": "副产品收入",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -160,16 +152,14 @@
 			"bsonType": "double",
 			"description": "请填写质信金",
 			"label": "质信金",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"sum_cost": {
 			"bsonType": "double",
 			"description": "请填写成本小计",
 			"label": "成本小计",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -178,16 +168,14 @@
 			"bsonType": "double",
 			"description": "请填写定倍率",
 			"label": "定倍率",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 10.00,
+			"minimum": 0,
+			"maximum": 10,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"market_price": {
 			"bsonType": "double",
 			"description": "请填写营销价格",
 			"label": "营销价格",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -196,7 +184,6 @@
 			"bsonType": "double",
 			"description": "请填写包装费",
 			"label": "包装费",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -205,7 +192,6 @@
 			"bsonType": "double",
 			"description": "请填写配送费",
 			"label": "配送费",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -214,7 +200,6 @@
 			"bsonType": "double",
 			"description": "请填写网点提成",
 			"label": "网点提成",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -223,7 +208,6 @@
 			"bsonType": "double",
 			"description": "请填写营销费",
 			"label": "营销费",
-			"defaultValue": 0,
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
@@ -232,52 +216,54 @@
 			"bsonType": "double",
 			"description": "请填写平台佣金",
 			"label": "平台佣金",
-			"defaultValue": 0.05,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
+			"errorMessage": "{label}在{minimum}与{maximum}之间"
+		},
+		"ni_price": {
+			"bsonType": "double",
+			"description": "请填写利润金额",
+			"label": "利润金额",
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"gp_ratio": {
 			"bsonType": "double",
 			"description": "毛利润",
 			"label": "毛利润",
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"product_ratio": {
 			"bsonType": "double",
 			"description": "请填写生产奖励",
 			"label": "生产奖励",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"market_ratio": {
 			"bsonType": "double",
 			"description": "请填写营销奖励",
 			"label": "营销奖励",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"develop_ratio": {
 			"bsonType": "double",
 			"description": "请填写发展基金",
 			"label": "发展基金",
-			"defaultValue": 0.00,
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"ni_ratio": {
 			"bsonType": "double",
 			"description": "净利润",
 			"label": "净利润",
-			"minimum": 0.00,
-			"maximum": 1.00,
+			"minimum": 0,
+			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		}
 	}

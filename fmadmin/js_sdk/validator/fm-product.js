@@ -67,12 +67,11 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1000,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "原材料成本",
-    "defaultValue": 0
+    "label": "原材料成本"
   },
   "yield_ratio": {
     "rules": [
@@ -86,8 +85,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "出成率",
-    "defaultValue": 0
+    "label": "出成率"
   },
   "processing_cost": {
     "rules": [
@@ -101,8 +99,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "加工成本",
-    "defaultValue": 0
+    "label": "加工成本"
   },
   "finish_cost": {
     "rules": [
@@ -116,8 +113,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "成品成本",
-    "defaultValue": 0
+    "label": "成品成本"
   },
   "transport_cost": {
     "rules": [
@@ -131,8 +127,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "运储成本",
-    "defaultValue": 0
+    "label": "运储成本"
   },
   "reproduct_cost": {
     "rules": [
@@ -146,8 +141,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "再生产成本",
-    "defaultValue": 0
+    "label": "再生产成本"
   },
   "sideline_income": {
     "rules": [
@@ -161,8 +155,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "副产品收入",
-    "defaultValue": 0
+    "label": "副产品收入"
   },
   "quality_ratio": {
     "rules": [
@@ -176,8 +169,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "质信金",
-    "defaultValue": 0
+    "label": "质信金"
   },
   "sum_cost": {
     "rules": [
@@ -191,8 +183,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "成本小计",
-    "defaultValue": 0
+    "label": "成本小计"
   },
   "fixed_ratio": {
     "rules": [
@@ -206,8 +197,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "定倍率",
-    "defaultValue": 0
+    "label": "定倍率"
   },
   "market_price": {
     "rules": [
@@ -221,8 +211,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "营销价格",
-    "defaultValue": 0
+    "label": "营销价格"
   },
   "pack_fee": {
     "rules": [
@@ -236,8 +225,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "包装费",
-    "defaultValue": 0
+    "label": "包装费"
   },
   "delivery_fee": {
     "rules": [
@@ -251,8 +239,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "配送费",
-    "defaultValue": 0
+    "label": "配送费"
   },
   "branch_fee": {
     "rules": [
@@ -266,8 +253,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "网点提成",
-    "defaultValue": 0
+    "label": "网点提成"
   },
   "market_fee": {
     "rules": [
@@ -281,8 +267,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "营销费",
-    "defaultValue": 0
+    "label": "营销费"
   },
   "platform_fee": {
     "rules": [
@@ -292,12 +277,20 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 10000,
+        "maximum": 1,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "平台佣金",
-    "defaultValue": 0
+    "label": "平台佣金"
+  },
+  "ni_price": {
+    "rules": [
+      {
+        "format": "double",
+        "errorMessage": "{label}在{minimum}与{maximum}之间"
+      }
+    ],
+    "label": "利润金额"
   },
   "gp_ratio": {
     "rules": [
@@ -325,8 +318,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "生产奖励",
-    "defaultValue": 0
+    "label": "生产奖励"
   },
   "market_ratio": {
     "rules": [
@@ -340,8 +332,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "营销奖励",
-    "defaultValue": 0
+    "label": "营销奖励"
   },
   "develop_ratio": {
     "rules": [
@@ -355,8 +346,7 @@ const validator = {
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
-    "label": "发展基金",
-    "defaultValue": 0
+    "label": "发展基金"
   },
   "ni_ratio": {
     "rules": [

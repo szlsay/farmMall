@@ -75,6 +75,9 @@
           <view>{{formOptions.platform_fee_data[formOptions.platform_fee_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
+      <uni-forms-item name="ni_price" label="利润金额">
+        <uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"></uni-easyinput>
+      </uni-forms-item>
       <uni-forms-item name="gp_ratio" label="毛利润">
         <picker @change="pickerChange($event, 'gp_ratio')" :range="formOptions.gp_ratio_data" :value="formOptions.gp_ratio_index">
           <view>{{formOptions.gp_ratio_data[formOptions.gp_ratio_index] || "请选择..."}}</view>
@@ -140,26 +143,27 @@
         "unit_title": "",
         "image": null,
         "image_content": [],
-        "raw_cost": 0,
-        "yield_ratio": 0,
-        "processing_cost": 0,
-        "finish_cost": 0,
-        "transport_cost": 0,
-        "reproduct_cost": 0,
-        "sideline_income": 0,
-        "quality_ratio": 0,
-        "sum_cost": 0,
-        "fixed_ratio": 0,
-        "market_price": 0,
-        "pack_fee": 0,
-        "delivery_fee": 0,
-        "branch_fee": 0,
-        "market_fee": 0,
-        "platform_fee": 0.05,
+        "raw_cost": null,
+        "yield_ratio": null,
+        "processing_cost": null,
+        "finish_cost": null,
+        "transport_cost": null,
+        "reproduct_cost": null,
+        "sideline_income": null,
+        "quality_ratio": null,
+        "sum_cost": null,
+        "fixed_ratio": null,
+        "market_price": null,
+        "pack_fee": null,
+        "delivery_fee": null,
+        "branch_fee": null,
+        "market_fee": null,
+        "platform_fee": null,
+        "ni_price": null,
         "gp_ratio": null,
-        "product_ratio": 0,
-        "market_ratio": 0,
-        "develop_ratio": 0,
+        "product_ratio": null,
+        "market_ratio": null,
+        "develop_ratio": null,
         "ni_ratio": null
       }
       return {
@@ -169,10 +173,10 @@
           "yield_ratio_index": null,
           "quality_ratio_data": numberRange(0, 1),
           "quality_ratio_index": null,
-          "fixed_ratio_data": numberRange(0, 1),
+          "fixed_ratio_data": numberRange(0, 10),
           "fixed_ratio_index": null,
           "platform_fee_data": numberRange(0, 1),
-          "platform_fee_index": 0.05,
+          "platform_fee_index": null,
           "gp_ratio_data": numberRange(0, 1),
           "gp_ratio_index": null,
           "product_ratio_data": numberRange(0, 1),
