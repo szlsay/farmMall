@@ -107,26 +107,26 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
+
+			</view>
+			<!-- 营销环节 -->
+			<view class="fm-box">
+				<view class="fm-card-header">营销环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
+					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="fixed_ratio" label="定倍率" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="自动计算定倍率" type="number" v-model="formData.fixed_ratio"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
+					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidth"
 							label-align="right">
 							<uni-easyinput placeholder="自动计算营销价格" type="number" v-model="formData.market_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8"></uni-col>
 				</uni-row>
-			</view>
-			<!-- 营销环节 -->
-			<view class="fm-box">
-				<view class="fm-card-header">营销环节</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="pack_fee" label="包装费(营销价格2%)" :label-width="labelWidthMax"
@@ -168,7 +168,8 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="ni_price" label="利润金额" :label-width="labelWidthMax" label-align="right">
+						<uni-forms-item name="ni_price" label="利润金额(元)" :label-width="labelWidthMax"
+							label-align="right">
 							<uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
