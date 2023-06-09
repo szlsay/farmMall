@@ -19,10 +19,10 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,raw_name,unit,unit_title,image,image_content" :where="where" page-data="replace"
-				:orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
-				v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual"
-				@load="onqueryload">
+				field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
+				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
+				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
+				:options="options" loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
 					type="selection" @selection-change="selectionChange">
 					<uni-tr>
@@ -36,6 +36,55 @@
 							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">产品主图</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">展示图片</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'raw_cost')"
+							sortable @sort-change="sortChange($event, 'raw_cost')">原材料成本</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield_ratio')"
+							sortable @sort-change="sortChange($event, 'yield_ratio')">出成率</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'processing_cost')" sortable
+							@sort-change="sortChange($event, 'processing_cost')">加工成本</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'finish_cost')"
+							sortable @sort-change="sortChange($event, 'finish_cost')">成品成本</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'transport_cost')" sortable
+							@sort-change="sortChange($event, 'transport_cost')">运储成本</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'reproduct_cost')" sortable
+							@sort-change="sortChange($event, 'reproduct_cost')">再生产成本</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'sideline_income')" sortable
+							@sort-change="sortChange($event, 'sideline_income')">副产品收入</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'quality_ratio')" sortable
+							@sort-change="sortChange($event, 'quality_ratio')">质信金</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sum_cost')"
+							sortable @sort-change="sortChange($event, 'sum_cost')">成本小计</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'fixed_ratio')"
+							sortable @sort-change="sortChange($event, 'fixed_ratio')">定倍率</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_price')"
+							sortable @sort-change="sortChange($event, 'market_price')">营销价格</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'pack_fee')"
+							sortable @sort-change="sortChange($event, 'pack_fee')">包装费</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'delivery_fee')"
+							sortable @sort-change="sortChange($event, 'delivery_fee')">配送费</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'branch_fee')"
+							sortable @sort-change="sortChange($event, 'branch_fee')">网点提成</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_fee')"
+							sortable @sort-change="sortChange($event, 'market_fee')">营销费</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'platform_fee')"
+							sortable @sort-change="sortChange($event, 'platform_fee')">平台佣金</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'gp_price')"
+							sortable @sort-change="sortChange($event, 'gp_price')">毛利润</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'product_bonus')" sortable
+							@sort-change="sortChange($event, 'product_bonus')">生产奖励</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_bonus')"
+							sortable @sort-change="sortChange($event, 'market_bonus')">营销奖励</uni-th>
+						<uni-th align="center" filter-type="range"
+							@filter-change="filterChange($event, 'develop_bonus')" sortable
+							@sort-change="sortChange($event, 'develop_bonus')">发展基金</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'ni_price')"
+							sortable @sort-change="sortChange($event, 'ni_price')">净利润</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -58,6 +107,27 @@
 								<uni-link v-else :href="file.url" :text="file.url"></uni-link>
 							</template>
 						</uni-td>
+						<uni-td align="center">{{item.raw_cost}}</uni-td>
+						<uni-td align="center">{{item.yield_ratio}}</uni-td>
+						<uni-td align="center">{{item.processing_cost}}</uni-td>
+						<uni-td align="center">{{item.finish_cost}}</uni-td>
+						<uni-td align="center">{{item.transport_cost}}</uni-td>
+						<uni-td align="center">{{item.reproduct_cost}}</uni-td>
+						<uni-td align="center">{{item.sideline_income}}</uni-td>
+						<uni-td align="center">{{item.quality_ratio}}</uni-td>
+						<uni-td align="center">{{item.sum_cost}}</uni-td>
+						<uni-td align="center">{{item.fixed_ratio}}</uni-td>
+						<uni-td align="center">{{item.market_price}}</uni-td>
+						<uni-td align="center">{{item.pack_fee}}</uni-td>
+						<uni-td align="center">{{item.delivery_fee}}</uni-td>
+						<uni-td align="center">{{item.branch_fee}}</uni-td>
+						<uni-td align="center">{{item.market_fee}}</uni-td>
+						<uni-td align="center">{{item.platform_fee}}</uni-td>
+						<uni-td align="center">{{item.gp_price}}</uni-td>
+						<uni-td align="center">{{item.product_bonus}}</uni-td>
+						<uni-td align="center">{{item.market_bonus}}</uni-td>
+						<uni-td align="center">{{item.develop_bonus}}</uni-td>
+						<uni-td align="center">{{item.ni_price}}</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -81,7 +151,7 @@
 	import {
 		enumConverter,
 		filterToWhere
-	} from '@/js_sdk/validator/fm-product.js';
+	} from '../../js_sdk/validator/fm-product.js';
 
 	const db = uniCloud.database()
 	// 表查询配置
@@ -108,7 +178,16 @@
 				options: {
 					pageSize,
 					pageCurrent,
-					filterData: {},
+					filterData: {
+						"yield_ratio_data": numberRange(0, 1),
+						"yield_ratio_index": null,
+						"quality_ratio_data": numberRange(0, 1),
+						"quality_ratio_index": null,
+						"fixed_ratio_data": numberRange(0, 10),
+						"fixed_ratio_index": null,
+						"platform_fee_data": numberRange(0, 1),
+						"platform_fee_index": null
+					},
 					...enumConverter
 				},
 				imageStyles: {
@@ -123,7 +202,28 @@
 						"原材料名称": "raw_name",
 						"计量单位": "unit_title",
 						"产品主图": "image",
-						"展示图片": "image_content"
+						"展示图片": "image_content",
+						"原材料成本": "raw_cost",
+						"出成率": "yield_ratio",
+						"加工成本": "processing_cost",
+						"成品成本": "finish_cost",
+						"运储成本": "transport_cost",
+						"再生产成本": "reproduct_cost",
+						"副产品收入": "sideline_income",
+						"质信金": "quality_ratio",
+						"成本小计": "sum_cost",
+						"定倍率": "fixed_ratio",
+						"营销价格": "market_price",
+						"包装费": "pack_fee",
+						"配送费": "delivery_fee",
+						"网点提成": "branch_fee",
+						"营销费": "market_fee",
+						"平台佣金": "platform_fee",
+						"毛利润": "gp_price",
+						"生产奖励": "product_bonus",
+						"营销奖励": "market_bonus",
+						"发展基金": "develop_bonus",
+						"净利润": "ni_price"
 					}
 				},
 				exportExcelData: []
