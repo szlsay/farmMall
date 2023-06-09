@@ -128,42 +128,47 @@
 			<view class="fm-box">
 				<view class="fm-card-header">营销环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="pack_fee" label="包装费(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写包装费" type="number"
-								v-model="formData.pack_fee"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="delivery_fee" label="配送费(元)" :label-width="labelWidth"
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="pack_fee" label="包装费(营销价格2%)" :label-width="labelWidthMax"
 							label-align="right">
-							<uni-easyinput placeholder="请填写配送费" type="number"
-								v-model="formData.delivery_fee"></uni-easyinput>
+							<uni-easyinput placeholder="自动计算包装费" type="number" v-model="formData.pack_fee"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="branch_fee" label="网点提成(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写网点提成" type="number"
-								v-model="formData.branch_fee"></uni-easyinput>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="delivery_fee" label="配送费(营销价格2%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算配送费" type="number" v-model="formData.delivery_fee"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="market_fee" label="营销费(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写营销费" type="number"
-								v-model="formData.market_fee"></uni-easyinput>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="branch_fee" label="网点提成(营销价格2%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算网点提成" type="number" v-model="formData.branch_fee"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="platform_fee" label="平台佣金(营销价格*0.05)" :label-width="labelWidthMax"
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="market_fee" label="营销费(营销价格5%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算营销费" type="number" v-model="formData.market_fee"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="platform_fee" label="平台佣金(营销价格5%)" :label-width="labelWidthMax"
 							label-align="right">
 							<uni-easyinput placeholder="自动计算平台佣金" type="number" v-model="formData.platform_fee"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="ni_price" label="利润金额" :label-width="labelWidth" label-align="right">
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="ni_price" label="利润金额" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -320,31 +325,31 @@
 					this.getSumCost()
 				}
 			},
-			"formData.pack_fee": {
-				handler(newV) {
-					this.getNI()
-				}
-			},
-			"formData.delivery_fee": {
-				handler(newV) {
-					this.getNI()
-				}
-			},
-			"formData.branch_fee": {
-				handler(newV) {
-					this.getNI()
-				}
-			},
-			"formData.market_fee": {
-				handler(newV) {
-					this.getNI()
-				}
-			},
-			"formData.platform_fee": {
-				handler(newV) {
-					this.getNI()
-				}
-			},
+			// "formData.pack_fee": {
+			// 	handler(newV) {
+			// 		this.getNI()
+			// 	}
+			// },
+			// "formData.delivery_fee": {
+			// 	handler(newV) {
+			// 		this.getNI()
+			// 	}
+			// },
+			// "formData.branch_fee": {
+			// 	handler(newV) {
+			// 		this.getNI()
+			// 	}
+			// },
+			// "formData.market_fee": {
+			// 	handler(newV) {
+			// 		this.getNI()
+			// 	}
+			// },
+			// "formData.platform_fee": {
+			// 	handler(newV) {
+			// 		this.getNI()
+			// 	}
+			// },
 			"formData.product_ratio": {
 				handler(newV) {
 					this.getNiRatio()
@@ -394,8 +399,11 @@
 				this.formData.market_price = Math.ceil((this.formData.sum_cost * 100) * (this.formData.fixed_ratio * 100) /
 					100) / 100
 
-				this.formData.platform_fee = Math.ceil(this.formData.market_price * 5) / 100
-
+				this.formData.platform_fee = Math.round(this.formData.market_price * 5) / 100
+				this.formData.market_fee = Math.round(this.formData.market_price * 5) / 100
+				this.formData.pack_fee = Math.round(this.formData.market_price * 2) / 100
+				this.formData.delivery_fee = Math.round(this.formData.market_price * 2) / 100
+				this.formData.branch_fee = Math.round(this.formData.market_price * 2) / 100
 				this.getNI()
 			},
 			getFinishCost() {
