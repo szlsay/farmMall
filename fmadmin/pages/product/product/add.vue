@@ -291,18 +291,14 @@
 		},
 		methods: {
 			getSumCost() {
-				const quality_cost = Number(this.formData.finish_cost * this.formData.quality_ratio) 
-				this.testData = quality_cost
-				this.formData.sum_cost = Number(this.formData.finish_cost) + Number(this.formData.processing_cost) +
-					Number(this
-						.formData.transport_cost) + Number(this.formData.reproduct_cost) - Number(this.formData
-						.sideline_income) +
-					Number(quality_cost)
-					
-				// const quality_cost = (this.formData.finish_cost * 100) * (this.formData.quality_ratio * 100) / 10000
-				// this.formData.sum_cost = Number(this.formData.finish_cost) + Number(this.formData.processing_cost) + Number(this
-				// 		.formData.transport_cost) + Number(this.formData.reproduct_cost) - Number(this.formData.sideline_income) +
-				// 	Number(quality_cost)
+				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
+				const finish_cost = Math.floor(this.formData.finish_cost * 10000)
+				const processing_cost = Math.floor(this.formData.processing_cost * 10000)
+				const transport_cost = Math.floor(this.formData.transport_cost * 10000)
+				const reproduct_cost = Math.floor(this.formData.reproduct_cost * 10000)
+				const sideline_income = Math.floor(this.formData.sideline_income * 10000)
+				this.formData.sum_cost = (finish_cost + processing_cost + transport_cost + reproduct_cost - sideline_income +
+					quality_cost) / 10000
 			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
