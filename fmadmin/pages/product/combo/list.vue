@@ -17,8 +17,8 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit_title,image,sku,delivery_ratio,sell_price,reserve_begin,reserve_end,is_delete"
-				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
+				field="name,unit,image,sku,delivery_ratio,sell_price,reserve_begin,reserve_end,is_delete" :where="where"
+				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
@@ -52,8 +52,8 @@
 						</uni-td>
 						<uni-td align="center">{{getUnitText(item.unit)}}</uni-td>
 						<uni-td align="center">
-							<view class="goods-list" v-for="(item, index) in item.sku" :key="index">
-								{{item.product_name}}{{item.qty}}{{getMeasureUnitText(item.unit)}}
+							<view class="goods-list" v-for="(sku, index) in item.sku" :key="index">
+								{{sku.product_name}}{{sku.qty}}{{getMeasureUnitText(sku.unit)}}
 							</view>
 						</uni-td>
 						<uni-td align="center">{{getDeliveryRatioText(item.delivery_ratio)}}</uni-td>
@@ -150,6 +150,7 @@
 		},
 		methods: {
 			getUnitText(value) {
+				console.log('getUnitText--', value);
 				const result = this.$store.state.sys.product_units.filter(item => item.value === value)
 				if (result && result.length > 0) {
 					return result[0].text
