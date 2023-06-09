@@ -135,9 +135,9 @@
 							<uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="platform_fee" label="平台佣金" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.platform_fee"></uni-easyinput>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="platform_fee" label="平台佣金(营销价格*0.05)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="请填写平台佣金" type="number" v-model="formData.platform_fee" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -299,6 +299,8 @@
 					sideline_income + quality_cost) / 100) / 100
 				this.formData.market_price = Math.ceil((this.formData.sum_cost * 100) * (this.formData.fixed_ratio * 100) /
 					100) / 100
+					
+				this.formData.platform_fee = Math.ceil(this.formData.market_price * 5) / 100
 			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
