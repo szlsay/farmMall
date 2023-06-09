@@ -12,13 +12,14 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="raw_name" label="原料名称" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写原材料名称" v-model="formData.raw_name" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写原材料名称" v-model="formData.raw_name"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit" :localdata="$store.state.sys.measure_units"
-								ref="dataSelectUnit"></uni-data-select>
+							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
+								:localdata="$store.state.sys.measure_units" ref="dataSelectUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -33,7 +34,8 @@
 					<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
 							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
-						<text style="color: red; font-size: 14px;" class="title-alert">用于套餐的详情展示，最多六张。格式：jpg,png,webp</text>
+						<text style="color: red; font-size: 14px;"
+							class="title-alert">用于套餐的详情展示，最多六张。格式：jpg,png,webp</text>
 					</uni-forms-item>
 				</uni-row>
 			</view>
@@ -43,16 +45,19 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="raw_cost" label="原料成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写原料成本" type="number" v-model="formData.raw_cost"></uni-easyinput>
+							<uni-easyinput placeholder="请填写原料成本" type="number"
+								v-model="formData.raw_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="yield_ratio" label="出成率" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.yield_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.yield_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax" label-align="right">
+						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax"
+							label-align="right">
 							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -60,25 +65,33 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="processing_cost" label="加工成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写加工成本" type="number" v-model="formData.processing_cost"></uni-easyinput>
+						<uni-forms-item name="processing_cost" label="加工成本(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写加工成本" type="number"
+								v-model="formData.processing_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="transport_cost" label="运储成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cost"></uni-easyinput>
+						<uni-forms-item name="transport_cost" label="运储成本(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写运储成本" type="number"
+								v-model="formData.transport_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="reproduct_cost" label="再生成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cost"></uni-easyinput>
+						<uni-forms-item name="reproduct_cost" label="再生成本(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写再生产成本" type="number"
+								v-model="formData.reproduct_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="sideline_income" label="副产收入(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
+						<uni-forms-item name="sideline_income" label="副产收入(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写副产品收入" type="number"
+								v-model="formData.sideline_income"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -89,7 +102,8 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost" disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -101,7 +115,8 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidth" label-align="right">
+						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidth"
+							label-align="right">
 							<uni-easyinput placeholder="自动计算营销价格" type="number" v-model="formData.market_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -115,29 +130,42 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="pack_fee" label="包装费(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写包装费" type="number" v-model="formData.pack_fee"></uni-easyinput>
+							<uni-easyinput placeholder="请填写包装费" type="number"
+								v-model="formData.pack_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="delivery_fee" label="配送费(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写配送费" type="number" v-model="formData.delivery_fee"></uni-easyinput>
+						<uni-forms-item name="delivery_fee" label="配送费(元)" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写配送费" type="number"
+								v-model="formData.delivery_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="branch_fee" label="网点提成(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写网点提成" type="number" v-model="formData.branch_fee"></uni-easyinput>
+							<uni-easyinput placeholder="请填写网点提成" type="number"
+								v-model="formData.branch_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="market_fee" label="营销费(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
+							<uni-easyinput placeholder="请填写营销费" type="number"
+								v-model="formData.market_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="platform_fee" label="平台佣金(营销价格*0.05)" :label-width="labelWidthMax" label-align="right">
-							<uni-easyinput placeholder="请填写平台佣金" type="number" v-model="formData.platform_fee" disabled></uni-easyinput>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="platform_fee" label="平台佣金(营销价格*0.05)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算平台佣金" type="number" v-model="formData.platform_fee"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item label="利润金额" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算利润金额" type="number" v-model="ni_price"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -149,29 +177,34 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="gp_ratio" label="毛利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.gp_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.gp_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="product_ratio" label="生产奖励" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.product_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.product_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="market_ratio" label="营销奖励" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.market_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.market_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="develop_ratio" label="发展基金" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.develop_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.develop_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="ni_ratio" label="净利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.ni_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number"
+								v-model="formData.ni_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8"></uni-col>
@@ -238,6 +271,7 @@
 				"ni_ratio": null
 			}
 			return {
+				ni_price: null,
 				imageStyles: {
 					width: 140,
 					height: 140,
@@ -286,8 +320,45 @@
 					this.getSumCost()
 				}
 			},
+			"formData.pack_fee": {
+				handler(newV) {
+					this.getNI()
+				}
+			},
+			"formData.delivery_fee": {
+				handler(newV) {
+					this.getNI()
+				}
+			},
+			"formData.branch_fee": {
+				handler(newV) {
+					this.getNI()
+				}
+			},
+			"formData.market_fee": {
+				handler(newV) {
+					this.getNI()
+				}
+			},
+			"formData.platform_fee": {
+				handler(newV) {
+					this.getNI()
+				}
+			},
 		},
 		methods: {
+			getNI() {
+				const market_price = this.formData.market_price * 100
+				const pack_fee = this.formData.pack_fee * 100
+				const delivery_fee = this.formData.delivery_fee * 100
+				const branch_fee = this.formData.branch_fee * 100
+				const market_fee = this.formData.market_fee * 100
+				const platform_fee = this.formData.platform_fee * 100
+				const sum_cost = this.formData.sum_cost * 100
+				this.ni_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
+						platform_fee - sum_cost) /
+					100
+			},
 			getSumCost() {
 				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
 				const finish_cost = Math.floor(this.formData.finish_cost * 10000)
@@ -299,8 +370,10 @@
 					sideline_income + quality_cost) / 100) / 100
 				this.formData.market_price = Math.ceil((this.formData.sum_cost * 100) * (this.formData.fixed_ratio * 100) /
 					100) / 100
-					
+
 				this.formData.platform_fee = Math.ceil(this.formData.market_price * 5) / 100
+
+				this.getNI()
 			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
@@ -319,7 +392,8 @@
 				} else {
 					this.formData.quality_ratio = 0
 				}
-				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <= this
+				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <=
+					this
 					.formData
 					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
 				if (ratios_multiple && ratios_multiple.length > 0) {
