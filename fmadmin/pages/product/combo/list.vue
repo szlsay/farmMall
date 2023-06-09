@@ -131,9 +131,10 @@
 					"type": "xls",
 					"fields": {
 						"套餐名称": "name",
-						"计量单位": "unit_title",
+						"计量单位": "unit",
 						"套餐规格": "sku",
 						"配送频率": "delivery_ratio",
+						"配送次数": "delivery_timer",
 						"售价": "sell_price",
 						"预订开始时间": "reserve_begin",
 						"预订结束时间": "reserve_end"
@@ -178,8 +179,10 @@
 				const dataCopy = cloneObject(data)
 				const that = this
 				let tempData = dataCopy.map(item => {
+					item.unit = this.getUnitText(item.unit)
+					item.delivery_ratio = this.getDeliveryRatioText(item.delivery_ratio)
 					item.sku = item.sku.map(item => {
-						return item.goods_name + item.qty + item.unit_title
+						return item.product_name + item.qty + this.getMeasureUnitText(item.unit)
 					})
 					item.reserve_begin = item.reserve_begin ? formatDate(item.reserve_begin, 'yyyy/MM/dd') : ''
 					item.reserve_end = item.reserve_end ? formatDate(item.reserve_end, 'yyyy/MM/dd') : ''
