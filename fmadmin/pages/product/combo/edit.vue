@@ -315,3 +315,8 @@
 		}
 	}
 </script>
+<style lang="scss" scoped>
+	::v-deep .is-disabled {
+		color: black !important;
+	}
+</style>

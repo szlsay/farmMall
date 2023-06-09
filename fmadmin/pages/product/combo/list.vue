@@ -17,8 +17,8 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit,image,sku,delivery_ratio,sell_price,reserve_begin,reserve_end,is_delete" :where="where"
-				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
+				field="name,unit,image,sku,delivery_ratio,delivery_timer,sell_price,reserve_begin,reserve_end,is_delete"
+				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
@@ -34,6 +34,9 @@
 						<uni-th align="center" filter-type="search"
 							@filter-change="filterChange($event, 'delivery_ratio')" sortable
 							@sort-change="sortChange($event, 'delivery_ratio')">配送频率</uni-th>
+						<uni-th align="center" filter-type="search"
+							@filter-change="filterChange($event, 'delivery_timer')" sortable
+							@sort-change="sortChange($event, 'delivery_timer')">配送次数</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sell_price')"
 							sortable @sort-change="sortChange($event, 'sell_price')">售价(元)</uni-th>
 						<uni-th align="center" filter-type="timestamp"
@@ -57,6 +60,7 @@
 							</view>
 						</uni-td>
 						<uni-td align="center">{{getDeliveryRatioText(item.delivery_ratio)}}</uni-td>
+						<uni-td align="center">{{item.delivery_timer}}</uni-td>
 						<uni-td align="center">{{item.sell_price}}</uni-td>
 						<uni-td align="center">
 							<uni-dateformat format="yyyy/MM/dd" :threshold="[0, 0]"
