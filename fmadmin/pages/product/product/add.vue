@@ -74,7 +74,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="transport_cost" label="运储成本(成品成本1%)" :label-width="labelWidthMax"
 							label-align="right">
-							<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cost"
+							<uni-easyinput placeholder="自动计算运储成本" type="number" v-model="formData.transport_cost"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
@@ -172,53 +172,49 @@
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="ni_price" label="利润金额(元)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"
-								disabled></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
 				</uni-row>
 			</view>
-
 			<!-- 结算环节 -->
 			<view class="fm-box">
 				<view class="fm-card-header">结算环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="gp_ratio" label="毛利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_ratio"
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="gp_price" label="毛利润" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="product_ratio" label="生产奖励" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.product_ratio"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="market_ratio" label="营销奖励" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.market_ratio"></uni-easyinput>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="product_bonus" label="生产奖励(毛利润10%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="请自动计算生产奖励" type="number" v-model="formData.product_bonus"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="develop_ratio" label="发展基金" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.develop_ratio"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="ni_ratio" label="净利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_ratio"
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="market_bonus" label="营销奖励(毛利润10%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算营销奖励" type="number" v-model="formData.market_bonus"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8"></uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="develop_bonus" label="发展基金(毛利润2%)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算发展基金" type="number" v-model="formData.develop_bonus"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="ni_price" label="净利润" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_price"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
 				</uni-row>
 			</view>
 			<view class="uni-button-group">
@@ -275,12 +271,11 @@
 				"branch_fee": null,
 				"market_fee": null,
 				"platform_fee": null,
-				"ni_price": null,
-				"gp_ratio": null,
-				"product_ratio": null,
-				"market_ratio": null,
-				"develop_ratio": null,
-				"ni_ratio": null
+				"gp_price": null,
+				"product_bonus": null,
+				"market_bonus": null,
+				"develop_bonus": null,
+				"ni_price": null
 			}
 			return {
 				imageStyles: {
@@ -330,56 +325,9 @@
 				handler(newV) {
 					this.getSumCost()
 				}
-			},
-			// "formData.pack_fee": {
-			// 	handler(newV) {
-			// 		this.getNI()
-			// 	}
-			// },
-			// "formData.delivery_fee": {
-			// 	handler(newV) {
-			// 		this.getNI()
-			// 	}
-			// },
-			// "formData.branch_fee": {
-			// 	handler(newV) {
-			// 		this.getNI()
-			// 	}
-			// },
-			// "formData.market_fee": {
-			// 	handler(newV) {
-			// 		this.getNI()
-			// 	}
-			// },
-			// "formData.platform_fee": {
-			// 	handler(newV) {
-			// 		this.getNI()
-			// 	}
-			// },
-			"formData.product_ratio": {
-				handler(newV) {
-					this.getNiRatio()
-				}
-			},
-			"formData.market_ratio": {
-				handler(newV) {
-					this.getNiRatio()
-				}
-			},
-			"formData.develop_ratio": {
-				handler(newV) {
-					this.getNiRatio()
-				}
 			}
 		},
 		methods: {
-			getNiRatio() {
-				const gp_ratio = this.formData.gp_ratio * 100
-				const product_ratio = this.formData.product_ratio * 100
-				const market_ratio = this.formData.market_ratio * 100
-				const develop_ratio = this.formData.develop_ratio * 100
-				this.formData.ni_ratio = Math.floor(gp_ratio - product_ratio - market_ratio - develop_ratio) / 100
-			},
 			getNI() {
 				const market_price = this.formData.market_price * 100
 				const pack_fee = this.formData.pack_fee * 100
@@ -388,10 +336,15 @@
 				const market_fee = this.formData.market_fee * 100
 				const platform_fee = this.formData.platform_fee * 100
 				const sum_cost = this.formData.sum_cost * 100
-				this.formData.ni_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
+				this.formData.gp_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
 					platform_fee - sum_cost) / 100
-				this.formData.gp_ratio = Math.floor(this.formData.ni_price * 10000 / market_price) / 100
-				this.getNiRatio()
+
+				const gpprice10 = Math.round(this.formData.gp_price * 10)
+				const gpprice2 = Math.round(this.formData.gp_price * 2)
+				this.formData.market_bonus = gpprice10 / 100
+				this.formData.product_bonus = gpprice10 / 100
+				this.formData.develop_bonus = gpprice2 / 100
+				this.formData.ni_price = (this.formData.gp_price * 100 - gpprice10 - gpprice10 - gpprice2) / 100
 			},
 			getSumCost() {
 				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
@@ -452,12 +405,9 @@
 				})
 			},
 
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				const fmproduct = uniCloud.importObject("fm-product")
+				fmproduct.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})

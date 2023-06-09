@@ -283,16 +283,7 @@ const validator = {
     ],
     "label": "平台佣金"
   },
-  "ni_price": {
-    "rules": [
-      {
-        "format": "double",
-        "errorMessage": "{label}在{minimum}与{maximum}之间"
-      }
-    ],
-    "label": "利润金额"
-  },
-  "gp_ratio": {
+  "gp_price": {
     "rules": [
       {
         "format": "double",
@@ -300,13 +291,13 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
     "label": "毛利润"
   },
-  "product_ratio": {
+  "product_bonus": {
     "rules": [
       {
         "format": "double",
@@ -314,13 +305,13 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
     "label": "生产奖励"
   },
-  "market_ratio": {
+  "market_bonus": {
     "rules": [
       {
         "format": "double",
@@ -328,13 +319,13 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
     "label": "营销奖励"
   },
-  "develop_ratio": {
+  "develop_bonus": {
     "rules": [
       {
         "format": "double",
@@ -342,13 +333,13 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
     "label": "发展基金"
   },
-  "ni_ratio": {
+  "ni_price": {
     "rules": [
       {
         "format": "double",
@@ -356,7 +347,7 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],

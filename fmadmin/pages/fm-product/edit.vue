@@ -75,33 +75,20 @@
           <view>{{formOptions.platform_fee_data[formOptions.platform_fee_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
-      <uni-forms-item name="ni_price" label="利润金额">
-        <uni-easyinput placeholder="请填写利润金额" type="number" v-model="formData.ni_price"></uni-easyinput>
+      <uni-forms-item name="gp_price" label="毛利润">
+        <uni-easyinput placeholder="毛利润" type="number" v-model="formData.gp_price"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="gp_ratio" label="毛利润">
-        <picker @change="pickerChange($event, 'gp_ratio')" :range="formOptions.gp_ratio_data" :value="formOptions.gp_ratio_index">
-          <view>{{formOptions.gp_ratio_data[formOptions.gp_ratio_index] || "请选择..."}}</view>
-        </picker>
+      <uni-forms-item name="product_bonus" label="生产奖励">
+        <uni-easyinput placeholder="请填写生产奖励" type="number" v-model="formData.product_bonus"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="product_ratio" label="生产奖励">
-        <picker @change="pickerChange($event, 'product_ratio')" :range="formOptions.product_ratio_data" :value="formOptions.product_ratio_index">
-          <view>{{formOptions.product_ratio_data[formOptions.product_ratio_index] || "请选择..."}}</view>
-        </picker>
+      <uni-forms-item name="market_bonus" label="营销奖励">
+        <uni-easyinput placeholder="请填写营销奖励" type="number" v-model="formData.market_bonus"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="market_ratio" label="营销奖励">
-        <picker @change="pickerChange($event, 'market_ratio')" :range="formOptions.market_ratio_data" :value="formOptions.market_ratio_index">
-          <view>{{formOptions.market_ratio_data[formOptions.market_ratio_index] || "请选择..."}}</view>
-        </picker>
+      <uni-forms-item name="develop_bonus" label="发展基金">
+        <uni-easyinput placeholder="请填写发展基金" type="number" v-model="formData.develop_bonus"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="develop_ratio" label="发展基金">
-        <picker @change="pickerChange($event, 'develop_ratio')" :range="formOptions.develop_ratio_data" :value="formOptions.develop_ratio_index">
-          <view>{{formOptions.develop_ratio_data[formOptions.develop_ratio_index] || "请选择..."}}</view>
-        </picker>
-      </uni-forms-item>
-      <uni-forms-item name="ni_ratio" label="净利润">
-        <picker @change="pickerChange($event, 'ni_ratio')" :range="formOptions.ni_ratio_data" :value="formOptions.ni_ratio_index">
-          <view>{{formOptions.ni_ratio_data[formOptions.ni_ratio_index] || "请选择..."}}</view>
-        </picker>
+      <uni-forms-item name="ni_price" label="净利润">
+        <uni-easyinput placeholder="净利润" type="number" v-model="formData.ni_price"></uni-easyinput>
       </uni-forms-item>
       <view class="uni-button-group">
         <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -159,12 +146,11 @@
         "branch_fee": null,
         "market_fee": null,
         "platform_fee": null,
-        "ni_price": null,
-        "gp_ratio": null,
-        "product_ratio": null,
-        "market_ratio": null,
-        "develop_ratio": null,
-        "ni_ratio": null
+        "gp_price": null,
+        "product_bonus": null,
+        "market_bonus": null,
+        "develop_bonus": null,
+        "ni_price": null
       }
       return {
         formData,
@@ -176,17 +162,7 @@
           "fixed_ratio_data": numberRange(0, 10),
           "fixed_ratio_index": null,
           "platform_fee_data": numberRange(0, 1),
-          "platform_fee_index": null,
-          "gp_ratio_data": numberRange(0, 1),
-          "gp_ratio_index": null,
-          "product_ratio_data": numberRange(0, 1),
-          "product_ratio_index": null,
-          "market_ratio_data": numberRange(0, 1),
-          "market_ratio_index": null,
-          "develop_ratio_data": numberRange(0, 1),
-          "develop_ratio_index": null,
-          "ni_ratio_data": numberRange(0, 1),
-          "ni_ratio_index": null
+          "platform_fee_index": null
         },
         rules: {
           ...getValidator(Object.keys(formData))
@@ -251,7 +227,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,ni_price,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

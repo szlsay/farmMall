@@ -220,50 +220,44 @@
 			"maximum": 1,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"ni_price": {
-			"bsonType": "double",
-			"description": "请填写利润金额",
-			"label": "利润金额",
-			"errorMessage": "{label}在{minimum}与{maximum}之间"
-		},
-		"gp_ratio": {
+		"gp_price": {
 			"bsonType": "double",
 			"description": "毛利润",
 			"label": "毛利润",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"product_ratio": {
+		"product_bonus": {
 			"bsonType": "double",
 			"description": "请填写生产奖励",
 			"label": "生产奖励",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"market_ratio": {
+		"market_bonus": {
 			"bsonType": "double",
 			"description": "请填写营销奖励",
 			"label": "营销奖励",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"develop_ratio": {
+		"develop_bonus": {
 			"bsonType": "double",
 			"description": "请填写发展基金",
 			"label": "发展基金",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"ni_ratio": {
+		"ni_price": {
 			"bsonType": "double",
 			"description": "净利润",
 			"label": "净利润",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		}
 	}
