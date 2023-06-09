@@ -24,10 +24,10 @@
 					</uni-col>
 				</uni-row>
 				<uni-row>
-					<uni-forms-item name="image" label="套餐主图" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="image" label="产品主图" :label-width="labelWidth" label-align="right">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
 							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
-						<text style="color: red; font-size: 14px;">用于套餐的封面展示。格式：jpg,png,webp，建议400*400px的图片</text>
+						<text style="color: red; font-size: 14px;">用于产品的封面展示。格式：jpg,png,webp，建议400*400px的图片</text>
 					</uni-forms-item>
 				</uni-row>
 				<uni-row>
@@ -35,7 +35,7 @@
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
 							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
 						<text style="color: red; font-size: 14px;"
-							class="title-alert">用于套餐的详情展示，最多六张。格式：jpg,png,webp</text>
+							class="title-alert">用于产品的详情展示，最多六张。格式：jpg,png,webp</text>
 					</uni-forms-item>
 				</uni-row>
 			</view>
@@ -74,8 +74,8 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="transport_cost" label="运储成本(元)" :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请填写运储成本" type="number"
-								v-model="formData.transport_cost"></uni-easyinput>
+							<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cost"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -305,11 +305,11 @@
 					this.getSumCost()
 				}
 			},
-			"formData.transport_cost": {
-				handler(newV) {
-					this.getSumCost()
-				}
-			},
+			// "formData.transport_cost": {
+			// 	handler(newV) {
+			// 		this.getSumCost()
+			// 	}
+			// },
 			"formData.reproduct_cost": {
 				handler(newV) {
 					this.getSumCost()
@@ -424,6 +424,7 @@
 				} else {
 					this.formData.fixed_ratio = 0
 				}
+				this.formData.transport_cost = Math.ceil(this.formData.finish_cost) / 100
 				this.getSumCost()
 			},
 			submit() {
