@@ -17,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit_title,image,sku,delivery_ratio_title,price_sell,expiry,reserve_begin,reserve_end,is_delete"
+				field="name,unit_title,image,sku,delivery_ratio,sell_price,reserve_begin,reserve_end,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -28,16 +28,14 @@
 							sortable @sort-change="sortChange($event, 'name')">套餐名称</uni-th>
 						<uni-th align="center">套餐主图</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
-							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
+							sortable @sort-change="sortChange($event, 'unit')">产品单位</uni-th>
 						<uni-th width="200" align="center" sortable
 							@sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
 						<uni-th align="center" filter-type="search"
-							@filter-change="filterChange($event, 'delivery_ratio_title')" sortable
-							@sort-change="sortChange($event, 'delivery_ratio_title')">配送频率</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
-							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th>
-						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')"
-							sortable @sort-change="sortChange($event, 'expiry')">保质期</uni-th>
+							@filter-change="filterChange($event, 'delivery_ratio')" sortable
+							@sort-change="sortChange($event, 'delivery_ratio')">配送频率</uni-th>
+						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sell_price')"
+							sortable @sort-change="sortChange($event, 'sell_price')">售价(元)</uni-th>
 						<uni-th align="center" filter-type="timestamp"
 							@filter-change="filterChange($event, 'reserve_begin')" sortable
 							@sort-change="sortChange($event, 'reserve_begin')">预订开始时间</uni-th>
@@ -52,16 +50,14 @@
 							<image style="width: 60px; height: 60px;"
 								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
-						<uni-td align="center">{{item.unit_title}}</uni-td>
+						<uni-td align="center">{{getUnitText(item.unit)}}</uni-td>
 						<uni-td align="center">
 							<view class="goods-list" v-for="(item, index) in item.sku" :key="index">
-								{{item.goods_name}}{{item.qty}}{{item.unit_title}}
+								{{item.product_name}}{{item.qty}}{{getMeasureUnitText(item.unit)}}
 							</view>
 						</uni-td>
-
-						<uni-td align="center">{{item.delivery_ratio_title}}</uni-td>
-						<uni-td align="center">{{item.price_sell}}</uni-td>
-						<uni-td align="center">{{item.expiry}}</uni-td>
+						<uni-td align="center">{{getDeliveryRatioText(item.delivery_ratio)}}</uni-td>
+						<uni-td align="center">{{item.sell_price}}</uni-td>
 						<uni-td align="center">
 							<uni-dateformat format="yyyy/MM/dd" :threshold="[0, 0]"
 								:date="item.reserve_begin"></uni-dateformat>
@@ -137,9 +133,8 @@
 						"套餐名称": "name",
 						"计量单位": "unit_title",
 						"套餐规格": "sku",
-						"配送频率": "delivery_ratio_title",
-						"售价": "price_sell",
-						"保质期": "expiry",
+						"配送频率": "delivery_ratio",
+						"售价": "sell_price",
 						"预订开始时间": "reserve_begin",
 						"预订结束时间": "reserve_end"
 					}
@@ -154,6 +149,30 @@
 			this.$refs.udb.loadData()
 		},
 		methods: {
+			getUnitText(value) {
+				const result = this.$store.state.sys.product_units.filter(item => item.value === value)
+				if (result && result.length > 0) {
+					return result[0].text
+				} else {
+					return ''
+				}
+			},
+			getMeasureUnitText(value) {
+				const result = this.$store.state.sys.measure_units.filter(item => item.value === value)
+				if (result && result.length > 0) {
+					return result[0].text
+				} else {
+					return ''
+				}
+			},
+			getDeliveryRatioText(value) {
+				const result = this.$store.state.sys.delivery_ratios.filter(item => item.value === value)
+				if (result && result.length > 0) {
+					return result[0].text
+				} else {
+					return ''
+				}
+			},
 			onqueryload(data) {
 				const dataCopy = cloneObject(data)
 				const that = this
