@@ -264,10 +264,7 @@
 				"style": {
 					"navigationBarTitleText": "列表"
 				}
-			}]
-		}, {
-			"root": "pages/fmset",
-			"pages": [{
+			}, {
 				"path": "dict/add",
 				"style": {
 					"navigationBarTitleText": "新增字典"
@@ -283,6 +280,9 @@
 					"navigationBarTitleText": "字典列表"
 				}
 			}]
+		}, {
+			"root": "pages/fmset",
+			"pages": []
 		},
 		{
 			"root": "pages/fmorder",

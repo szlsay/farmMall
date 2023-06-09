@@ -17,12 +17,6 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
-				<uni-row>
-					<uni-forms-item name="description" label="备注" :label-width="labelWidth" label-align="right">
-						<uni-easyinput type="textarea" placeholder="请填写备注" maxlength="100"
-							v-model="formData.description" trim="both"></uni-easyinput>
-					</uni-forms-item>
-				</uni-row>
 			</view>
 
 			<view class="fm-box">
@@ -85,7 +79,6 @@
 			let formData = {
 				"title": "",
 				"type": "",
-				"description": "",
 				"enum": []
 			}
 			return {
