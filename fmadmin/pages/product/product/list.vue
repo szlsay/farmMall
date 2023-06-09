@@ -151,7 +151,7 @@
 	import {
 		enumConverter,
 		filterToWhere
-	} from '../../js_sdk/validator/fm-product.js';
+	} from '@/js_sdk/validator/fm-product.js';
 
 	const db = uniCloud.database()
 	// 表查询配置
@@ -178,16 +178,6 @@
 				options: {
 					pageSize,
 					pageCurrent,
-					filterData: {
-						"yield_ratio_data": numberRange(0, 1),
-						"yield_ratio_index": null,
-						"quality_ratio_data": numberRange(0, 1),
-						"quality_ratio_index": null,
-						"fixed_ratio_data": numberRange(0, 10),
-						"fixed_ratio_index": null,
-						"platform_fee_data": numberRange(0, 1),
-						"platform_fee_index": null
-					},
 					...enumConverter
 				},
 				imageStyles: {

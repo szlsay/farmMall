@@ -109,7 +109,7 @@
 <script>
 	import {
 		validator
-	} from '../../js_sdk/validator/fm-product.js';
+	} from '@/js_sdk/validator/fm-product.js';
 
 	const db = uniCloud.database();
 	const dbCmd = db.command;
@@ -236,7 +236,7 @@
 				})
 				db.collection(dbCollectionName).doc(id).field(
 					"name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
-					).get().then((res) => {
+				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
