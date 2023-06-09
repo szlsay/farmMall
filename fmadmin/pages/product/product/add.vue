@@ -203,8 +203,8 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="ni_ratio" label="净利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.ni_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_ratio"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8"></uni-col>
