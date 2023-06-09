@@ -17,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit_title,image,sku,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,is_delete"
+				field="name,unit_title,image,sku,delivery_ratio_title,price_sell,expiry,reserve_begin,reserve_end,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -32,8 +32,8 @@
 						<uni-th width="200" align="center" sortable
 							@sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
 						<uni-th align="center" filter-type="search"
-							@filter-change="filterChange($event, 'delivery_rate_title')" sortable
-							@sort-change="sortChange($event, 'delivery_rate_title')">配送频率</uni-th>
+							@filter-change="filterChange($event, 'delivery_ratio_title')" sortable
+							@sort-change="sortChange($event, 'delivery_ratio_title')">配送频率</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'price_sell')"
 							sortable @sort-change="sortChange($event, 'price_sell')">售价</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'expiry')"
@@ -59,7 +59,7 @@
 							</view>
 						</uni-td>
 
-						<uni-td align="center">{{item.delivery_rate_title}}</uni-td>
+						<uni-td align="center">{{item.delivery_ratio_title}}</uni-td>
 						<uni-td align="center">{{item.price_sell}}</uni-td>
 						<uni-td align="center">{{item.expiry}}</uni-td>
 						<uni-td align="center">
@@ -137,7 +137,7 @@
 						"套餐名称": "name",
 						"计量单位": "unit_title",
 						"套餐规格": "sku",
-						"配送频率": "delivery_rate_title",
+						"配送频率": "delivery_ratio_title",
 						"售价": "price_sell",
 						"保质期": "expiry",
 						"预订开始时间": "reserve_begin",

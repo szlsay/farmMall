@@ -69,10 +69,18 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="delivery_rate" label="配送频率" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
-								:localdata="$store.state.sys.delivery_rates" @change="onChangeDelivery"
+						<uni-forms-item name="delivery_ratio" label="配送频率" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_ratio"
+								:localdata="$store.state.sys.delivery_ratios" @change="onChangeDelivery"
 								ref="dataSelectDelivery"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="delivery_timer" label="配送次数" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算配送次数" type="number" v-model="formData.delivery_timer"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -142,7 +150,7 @@
 				"image_content": [],
 				"sku": [],
 				"sell_price": null,
-				"delivery_rate": "",
+				"delivery_ratio": "",
 				"delivery_timer": null,
 				"reserve_begin": null,
 				"reserve_end": null,
@@ -193,7 +201,6 @@
 				db.collection("fm-product").where({
 					is_delete: false
 				}).field("_id, name, unit, market_price").get().then(res => {
-
 					const result = res.result.data.map(item => {
 						item.value = item._id
 						item.text = item.name
@@ -204,7 +211,14 @@
 			},
 			onChangeDelivery() {
 				setTimeout(() => {
-					this.formData.delivery_rate_title = this.$refs.dataSelectDelivery.current
+					const text = this.$refs.dataSelectDelivery.current
+					if (text && text === '次/周') {
+						this.formData.delivery_timer = 52
+					} else if (text && text === '次/月') {
+						this.formData.delivery_timer = 12
+					} else {
+						this.formData.delivery_timer = null
+					}
 				}, 100)
 			},
 			onChangeProduct(index) {
@@ -247,7 +261,7 @@
 			},
 			submitForm(value) {
 				if (this.formData.sku.length) value.sku = this.formData.sku
-				value.delivery_rate_title = this.formData.delivery_rate_title
+				value.delivery_ratio_title = this.formData.delivery_ratio_title
 				const fmcombo = uniCloud.importObject("fm-combo")
 				fmcombo.add(value).then((res) => {
 					uni.showToast({

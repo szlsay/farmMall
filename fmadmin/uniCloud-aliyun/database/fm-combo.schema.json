@@ -122,7 +122,7 @@
 			"maximum": 1000000,
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
 		},
-		"delivery_rate": {
+		"delivery_ratio": {
 			"bsonType": "string",
 			"description": "配送频率",
 			"label": "配送频率",

@@ -69,9 +69,10 @@
 				<view class="fm-card-header">配送信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="delivery_rate" label="配送频率" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_rate"
-								:localdata="$store.state.sys.delivery_rates" @change="onChangeDelivery"
+						<uni-forms-item name="delivery_ratio" label="配送频率" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_ratio"
+								:localdata="$store.state.sys.delivery_ratios" @change="onChangeDelivery"
 								ref="dataSelectDelivery"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
@@ -150,8 +151,8 @@
 				"image": null,
 				"image_content": [],
 				"sku": [],
-				"delivery_rate": "",
-				"delivery_rate_title": "",
+				"delivery_ratio": "",
+				"delivery_ratio_title": "",
 				"price_sell": null,
 				"expiry": null,
 				"reserve_begin": null,
@@ -184,7 +185,7 @@
 		methods: {
 			onChangeDelivery() {
 				setTimeout(() => {
-					this.formData.delivery_rate_title = this.$refs.dataSelectDelivery.current
+					this.formData.delivery_ratio_title = this.$refs.dataSelectDelivery.current
 				}, 100)
 			},
 			onChangeGoods(index) {
@@ -216,7 +217,7 @@
 			},
 			submitForm(value) {
 				if (this.formData.sku.length) value.sku = this.formData.sku
-				value.delivery_rate_title = this.formData.delivery_rate_title
+				value.delivery_ratio_title = this.formData.delivery_ratio_title
 				const fmcombo = uniCloud.importObject("fm-combo")
 				fmcombo.update(this.formDataId, value).then((res) => {
 					uni.showToast({
@@ -241,7 +242,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,unit,image,image_content,sku,delivery_rate,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,description"
+					"name,unit,image,image_content,sku,delivery_ratio,delivery_ratio_title,price_sell,expiry,reserve_begin,reserve_end,description"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
