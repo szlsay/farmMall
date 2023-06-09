@@ -15,6 +15,7 @@ export default {
 			state.delivery_rates = dicts.filter(item => item.type === "delivery_rate")[0]["enum"]
 		},
 		SET_PriceRules: (state, priceRules) => {
+			console.log(priceRules)
 			state.priceRules = priceRules
 			state.multiple_rules = priceRules.filter(item => item.type === "multiple_rule")[0]["rules"]
 			state.credit_rules = priceRules.filter(item => item.type === "credit_rule")[0]["rules"]
@@ -36,7 +37,7 @@ export default {
 			const db = uniCloud.database();
 			const dbCmd = db.command;
 			const dbCollectionName = 'fm-price-rule';
-			const result = await db.collection(dbCollectionName).get()
+			const {result} = await db.collection(dbCollectionName).get()
 			if (result.data && result.data.length > 1) {
 				commit("SET_PriceRules", result.data)
 			}

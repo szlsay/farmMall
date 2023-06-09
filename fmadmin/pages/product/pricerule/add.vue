@@ -36,7 +36,7 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
-						<uni-forms-item label="比例" :name="['rules',index,'ratio']" label-align="right">
+						<uni-forms-item label="百分之" :name="['rules',index,'ratio']" label-align="right">
 							<uni-easyinput placeholder="请输入比例" type="number" v-model="item.ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
