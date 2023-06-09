@@ -19,7 +19,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
+				field="name,raw_name,unit,image,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -32,10 +32,7 @@
 							sortable @sort-change="sortChange($event, 'raw_name')">原材料名称</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit')"
 							sortable @sort-change="sortChange($event, 'unit')">计量单位</uni-th>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
-							sortable @sort-change="sortChange($event, 'unit_title')">计量单位</uni-th>
 						<uni-th align="center" sortable @sort-change="sortChange($event, 'image')">产品主图</uni-th>
-						<uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">展示图片</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'raw_cost')"
 							sortable @sort-change="sortChange($event, 'raw_cost')">原材料成本</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield_ratio')"
@@ -90,22 +87,10 @@
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.name}}</uni-td>
 						<uni-td align="center">{{item.raw_name}}</uni-td>
-						<uni-td align="center">{{item.unit}}</uni-td>
-						<uni-td align="center">{{item.unit_title}}</uni-td>
+						<uni-td align="center">{{getUnitText(item.unit)}}</uni-td>
 						<uni-td align="center">
-							<uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image"
-								:file-mediatype="item.image && item.image.fileType" return-type="object"
-								:imageStyles="imageStyles" readonly></uni-file-picker>
-							<uni-link v-else :href="item.image && item.image.url"
-								:text="item.image && item.image.url"></uni-link>
-						</uni-td>
-						<uni-td align="center">
-							<template v-for="(file, j) in item.image_content">
-								<uni-file-picker v-if="file.fileType == 'image'" :value="file"
-									:file-mediatype="file.fileType" :imageStyles="imageStyles"
-									readonly></uni-file-picker>
-								<uni-link v-else :href="file.url" :text="file.url"></uni-link>
-							</template>
+							<image style="width: 60px; height: 60px;"
+								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">{{item.raw_cost}}</uni-td>
 						<uni-td align="center">{{item.yield_ratio}}</uni-td>
@@ -190,9 +175,7 @@
 					"fields": {
 						"产品名称": "name",
 						"原材料名称": "raw_name",
-						"计量单位": "unit_title",
-						"产品主图": "image",
-						"展示图片": "image_content",
+						"计量单位": "unit",
 						"原材料成本": "raw_cost",
 						"出成率": "yield_ratio",
 						"加工成本": "processing_cost",
@@ -226,6 +209,14 @@
 			this.$refs.udb.loadData()
 		},
 		methods: {
+			getUnitText(value) {
+				const result = this.$store.state.sys.measure_units.filter(item => item.value === value)
+				if (result && result.length > 0) {
+					return result[0].text
+				} else {
+					return ''
+				}
+			},
 			onqueryload(data) {
 				this.exportExcelData = data
 			},

@@ -252,7 +252,6 @@
 				"name": "",
 				"raw_name": "",
 				"unit": "",
-				"unit_title": "",
 				"image": null,
 				"image_content": [],
 				"raw_cost": null,
@@ -311,11 +310,6 @@
 					this.getSumCost()
 				}
 			},
-			// "formData.transport_cost": {
-			// 	handler(newV) {
-			// 		this.getSumCost()
-			// 	}
-			// },
 			"formData.reproduct_cost": {
 				handler(newV) {
 					this.getSumCost()

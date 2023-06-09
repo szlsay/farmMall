@@ -64,11 +64,6 @@
 				}
 			}
 		},
-		"unit_title": {
-			"bsonType": "string",
-			"description": "请填写计量单位",
-			"label": "计量单位"
-		},
 		"image": {
 			"bsonType": "file",
 			"fileMediaType": "image",
