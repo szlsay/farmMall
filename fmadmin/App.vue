@@ -65,9 +65,11 @@
 		onShow: function() {
 			console.log('App Show')
 			this.clear = setInterval(() => this.clearPlatform(), 15 * 60 * 1000)
-			console.log(store.state.sys.dicts.length);
 			if (store.state.sys.dicts.length === 0) {
 				store.dispatch("sys/getDics")
+			}
+			if (store.state.sys.priceRules.length === 0) {
+				store.dispatch("sys/getPriceRule")
 			}
 		},
 		onHide: function() {
