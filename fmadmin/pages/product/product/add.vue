@@ -40,6 +40,7 @@
 			<!-- 生产环节 -->
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
+				{{testData}}
 				<uni-row>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="raw_cost" label="原料成本(元)" :label-width="labelWidth" label-align="right">
@@ -293,8 +294,9 @@
 				this.formData.finish_cost = finish_cost
 				const ratios = this.$store.state.sys.credit_rules.filter(item => Number(item.start_value) <= this.formData
 					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
+				this.testData = ratios
 				if (ratios && ratios.length > 0) {
-					this.formData.quality_ratio = ratios[0].ratio / 100
+					this.formData.quality_ratio = ratios[0].ratio * 100 / 10000
 				} else {
 					this.formData.quality_ratio = 0
 				}

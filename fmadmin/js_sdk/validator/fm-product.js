@@ -67,7 +67,7 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1000000,
+        "maximum": 10000,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],
@@ -202,7 +202,7 @@ const validator = {
       },
       {
         "minimum": 0,
-        "maximum": 1,
+        "maximum": 10,
         "errorMessage": "{label}在{minimum}与{maximum}之间"
       }
     ],

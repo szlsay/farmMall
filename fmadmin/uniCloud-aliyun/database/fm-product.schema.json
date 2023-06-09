@@ -90,7 +90,7 @@
 			"label": "原材料成本",
 			"defaultValue": 0,
 			"minimum": 0,
-			"maximum": 1000000,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"yield_ratio": {
@@ -180,7 +180,7 @@
 			"label": "定倍率",
 			"defaultValue": 0.00,
 			"minimum": 0.00,
-			"maximum": 1.00,
+			"maximum": 10.00,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"market_price": {
