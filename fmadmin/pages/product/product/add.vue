@@ -53,7 +53,8 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax" label-align="right">
-							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost" disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 
@@ -65,13 +66,13 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="transport_cose" label="运储成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cose"></uni-easyinput>
+						<uni-forms-item name="transport_cost" label="运储成本(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="reproduct_cose" label="再生成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cose"></uni-easyinput>
+						<uni-forms-item name="reproduct_cost" label="再生成本(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -83,19 +84,21 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="quality_ratio" label="质信金率" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算质信金率" type="number" v-model="formData.quality_ratio" disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算质信金率" type="number" v-model="formData.quality_ratio"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="sum_cose" label="成本小计(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cose"></uni-easyinput>
+						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="fixed_ratio" label="定倍率" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算定倍率" type="number" v-model="formData.fixed_ratio" disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算定倍率" type="number" v-model="formData.fixed_ratio"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8"></uni-col>
@@ -217,11 +220,11 @@
 				"yield_ratio": null,
 				"processing_cost": null,
 				"finish_cost": null,
-				"transport_cose": null,
-				"reproduct_cose": null,
+				"transport_cost": null,
+				"reproduct_cost": null,
 				"sideline_income": null,
 				"quality_ratio": null,
-				"sum_cose": null,
+				"sum_cost": null,
 				"fixed_ratio": null,
 				"market_price": 0,
 				"pack_fee": 0,
@@ -264,8 +267,20 @@
 					this.getFinishCost()
 				}
 			},
+			"formData.processing_cost": {
+				handler(newV) {}
+			},
+			"formData.reproduct_cost": {
+				handler(newV) {}
+			},
+			"formData.sideline_income": {
+				handler(newV) {}
+			},
 		},
 		methods: {
+			getSumCost() {
+				
+			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
 				const yieldNumber = this.formData.yield_ratio * 100
@@ -283,7 +298,8 @@
 				} else {
 					this.formData.quality_ratio = 0
 				}
-				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <= this.formData
+				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <= this
+					.formData
 					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
 				if (ratios_multiple && ratios_multiple.length > 0) {
 					this.formData.fixed_ratio = ratios_multiple[0].ratio / 100
