@@ -101,11 +101,13 @@
 		enumConverter,
 		filterToWhere
 	} from '@/js_sdk/validator/fm-product.js';
-
+	import {
+		cloneObject
+	} from '@/utils/util.js'
 	const db = uniCloud.database()
 	// 表查询配置
 	const dbOrderBy = '' // 排序字段
-	const dbSearchFields = [] // 模糊搜索字段，支持模糊搜索的字段列表。联表查询格式: 主表字段名.副表字段名，例如用户表关联角色表 role.role_name
+	const dbSearchFields = ['name'] // 模糊搜索字段，支持模糊搜索的字段列表。联表查询格式: 主表字段名.副表字段名，例如用户表关联角色表 role.role_name
 	// 分页配置
 	const pageSize = 20
 	const pageCurrent = 1
@@ -134,33 +136,33 @@
 					height: 64
 				},
 				exportExcel: {
-					"filename": "fm-product.xls",
+					"filename": "产品列表.xls",
 					"type": "xls",
 					"fields": {
 						"产品名称": "name",
 						"原材料名称": "raw_name",
 						"计量单位": "unit",
-						"原材料成本": "raw_cost",
-						"出成率": "yield_ratio",
-						"加工成本": "processing_cost",
-						"成品成本": "finish_cost",
-						"运储成本": "transport_cost",
-						"再生产成本": "reproduct_cost",
-						"副产品收入": "sideline_income",
-						"质信金": "quality_ratio",
-						"成本小计": "sum_cost",
-						"定倍率": "fixed_ratio",
-						"营销价格": "market_price",
-						"包装费": "pack_fee",
-						"配送费": "delivery_fee",
-						"网点提成": "branch_fee",
-						"营销费": "market_fee",
-						"平台佣金": "platform_fee",
-						"毛利润": "gp_price",
-						"生产奖励": "product_bonus",
-						"营销奖励": "market_bonus",
-						"发展基金": "develop_bonus",
-						"净利润": "ni_price"
+						"原材料成本(元)": "raw_cost",
+						"出成率(%)": "yield_ratio",
+						"加工成本(元)": "processing_cost",
+						"成品成本(元)": "finish_cost",
+						"运储成本(元)": "transport_cost",
+						"再生产成本(元)": "reproduct_cost",
+						"副产品收入(元)": "sideline_income",
+						"质信金(%)": "quality_ratio",
+						"成本小计(元)": "sum_cost",
+						"定倍率(%)": "fixed_ratio",
+						"营销价格(元)": "market_price",
+						"包装费(元)": "pack_fee",
+						"配送费(元)": "delivery_fee",
+						"网点提成(元)": "branch_fee",
+						"营销费(元)": "market_fee",
+						"平台佣金(元)": "platform_fee",
+						"毛利润(元)": "gp_price",
+						"生产奖励(元)": "product_bonus",
+						"营销奖励(元)": "market_bonus",
+						"发展基金(元)": "develop_bonus",
+						"净利润(元)": "ni_price"
 					}
 				},
 				exportExcelData: []
@@ -182,7 +184,13 @@
 				}
 			},
 			onqueryload(data) {
-				this.exportExcelData = data
+				const dataCopy = cloneObject(data)
+				const that = this
+				let tempData = dataCopy.map(item => {
+					item.unit = that.getUnitText(item.unit)
+					return item
+				})
+				this.exportExcelData = tempData
 			},
 			getWhere() {
 				const query = this.query.trim()
@@ -193,7 +201,7 @@
 				return dbSearchFields.map(name => queryRe + '.test(' + name + ')').join(' || ')
 			},
 			search() {
-				const newWhere = this.getWhere() + ' && is_delete == false'
+				const newWhere = this.getWhere() + '&& is_delete == false'
 				this.where = newWhere
 				this.$nextTick(() => {
 					this.loadData()
