@@ -163,7 +163,7 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item label="利润金额" :label-width="labelWidth" label-align="right">
+						<uni-forms-item label="利润金额(元)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="自动计算利润金额" type="number" v-model="ni_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -177,8 +177,8 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="gp_ratio" label="毛利润" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.gp_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_ratio"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -345,8 +345,30 @@
 					this.getNI()
 				}
 			},
+			"formData.product_ratio": {
+				handler(newV) {
+					this.getNiRatio()
+				}
+			},
+			"formData.market_ratio": {
+				handler(newV) {
+					this.getNiRatio()
+				}
+			},
+			"formData.develop_ratio": {
+				handler(newV) {
+					this.getNiRatio()
+				}
+			}
 		},
 		methods: {
+			getNiRatio() {
+				const gp_ratio = this.formData.gp_ratio * 100
+				const product_ratio = this.formData.product_ratio * 100
+				const market_ratio = this.formData.market_ratio * 100
+				const develop_ratio = this.formData.develop_ratio * 100
+				this.formData.ni_ratio = Math.floor(gp_ratio - product_ratio - market_ratio - develop_ratio) / 100
+			},
 			getNI() {
 				const market_price = this.formData.market_price * 100
 				const pack_fee = this.formData.pack_fee * 100
@@ -356,8 +378,9 @@
 				const platform_fee = this.formData.platform_fee * 100
 				const sum_cost = this.formData.sum_cost * 100
 				this.ni_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
-						platform_fee - sum_cost) /
-					100
+					platform_fee - sum_cost) / 100
+				this.formData.gp_ratio = Math.floor(this.ni_price * 10000 / market_price) / 100
+				this.getNiRatio()
 			},
 			getSumCost() {
 				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
