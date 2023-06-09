@@ -119,7 +119,7 @@ const validator = {
     "label": "成品成本",
     "defaultValue": 0
   },
-  "transport_cose": {
+  "transport_cost": {
     "rules": [
       {
         "format": "double",
@@ -134,7 +134,7 @@ const validator = {
     "label": "运储成本",
     "defaultValue": 0
   },
-  "reproduct_cose": {
+  "reproduct_cost": {
     "rules": [
       {
         "format": "double",
@@ -179,7 +179,7 @@ const validator = {
     "label": "质信金",
     "defaultValue": 0
   },
-  "sum_cose": {
+  "sum_cost": {
     "rules": [
       {
         "format": "double",

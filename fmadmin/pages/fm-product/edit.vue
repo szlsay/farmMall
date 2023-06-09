@@ -33,11 +33,11 @@
       <uni-forms-item name="finish_cost" label="成品成本">
         <uni-easyinput placeholder="请填写成品成本" type="number" v-model="formData.finish_cost"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="transport_cose" label="运储成本">
-        <uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cose"></uni-easyinput>
+      <uni-forms-item name="transport_cost" label="运储成本">
+        <uni-easyinput placeholder="请填写运储成本" type="number" v-model="formData.transport_cost"></uni-easyinput>
       </uni-forms-item>
-      <uni-forms-item name="reproduct_cose" label="再生产成本">
-        <uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cose"></uni-easyinput>
+      <uni-forms-item name="reproduct_cost" label="再生产成本">
+        <uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cost"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="sideline_income" label="副产品收入">
         <uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
@@ -47,8 +47,8 @@
           <view>{{formOptions.quality_ratio_data[formOptions.quality_ratio_index] || "请选择..."}}</view>
         </picker>
       </uni-forms-item>
-      <uni-forms-item name="sum_cose" label="成本小计">
-        <uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cose"></uni-easyinput>
+      <uni-forms-item name="sum_cost" label="成本小计">
+        <uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cost"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="fixed_ratio" label="定倍率">
         <picker @change="pickerChange($event, 'fixed_ratio')" :range="formOptions.fixed_ratio_data" :value="formOptions.fixed_ratio_index">
@@ -144,11 +144,11 @@
         "yield_ratio": 0,
         "processing_cost": 0,
         "finish_cost": 0,
-        "transport_cose": 0,
-        "reproduct_cose": 0,
+        "transport_cost": 0,
+        "reproduct_cost": 0,
         "sideline_income": 0,
         "quality_ratio": 0,
-        "sum_cose": 0,
+        "sum_cost": 0,
         "fixed_ratio": 0,
         "market_price": 0,
         "pack_fee": 0,
@@ -247,7 +247,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cose,reproduct_cose,sideline_income,quality_ratio,sum_cose,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data

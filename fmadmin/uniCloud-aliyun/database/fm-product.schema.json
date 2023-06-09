@@ -120,7 +120,7 @@
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"transport_cose": {
+		"transport_cost": {
 			"bsonType": "double",
 			"description": "请填写运储成本",
 			"label": "运储成本",
@@ -129,7 +129,7 @@
 			"maximum": 1000000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"reproduct_cose": {
+		"reproduct_cost": {
 			"bsonType": "double",
 			"description": "请填写再生产成本",
 			"label": "再生产成本",
@@ -165,7 +165,7 @@
 			"maximum": 1.00,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
-		"sum_cose": {
+		"sum_cost": {
 			"bsonType": "double",
 			"description": "请填写成本小计",
 			"label": "成本小计",

@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cose,reproduct_cose,sideline_income,quality_ratio,sum_cose,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_ratio,product_ratio,market_ratio,develop_ratio,ni_ratio" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -31,11 +31,11 @@
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'yield_ratio')" sortable @sort-change="sortChange($event, 'yield_ratio')">出成率</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'processing_cost')" sortable @sort-change="sortChange($event, 'processing_cost')">加工成本</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'finish_cost')" sortable @sort-change="sortChange($event, 'finish_cost')">成品成本</uni-th>
-            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'transport_cose')" sortable @sort-change="sortChange($event, 'transport_cose')">运储成本</uni-th>
-            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'reproduct_cose')" sortable @sort-change="sortChange($event, 'reproduct_cose')">再生产成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'transport_cost')" sortable @sort-change="sortChange($event, 'transport_cost')">运储成本</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'reproduct_cost')" sortable @sort-change="sortChange($event, 'reproduct_cost')">再生产成本</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sideline_income')" sortable @sort-change="sortChange($event, 'sideline_income')">副产品收入</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'quality_ratio')" sortable @sort-change="sortChange($event, 'quality_ratio')">质信金</uni-th>
-            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sum_cose')" sortable @sort-change="sortChange($event, 'sum_cose')">成本小计</uni-th>
+            <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sum_cost')" sortable @sort-change="sortChange($event, 'sum_cost')">成本小计</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'fixed_ratio')" sortable @sort-change="sortChange($event, 'fixed_ratio')">定倍率</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'market_price')" sortable @sort-change="sortChange($event, 'market_price')">营销价格</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'pack_fee')" sortable @sort-change="sortChange($event, 'pack_fee')">包装费</uni-th>
@@ -69,11 +69,11 @@
             <uni-td align="center">{{item.yield_ratio}}</uni-td>
             <uni-td align="center">{{item.processing_cost}}</uni-td>
             <uni-td align="center">{{item.finish_cost}}</uni-td>
-            <uni-td align="center">{{item.transport_cose}}</uni-td>
-            <uni-td align="center">{{item.reproduct_cose}}</uni-td>
+            <uni-td align="center">{{item.transport_cost}}</uni-td>
+            <uni-td align="center">{{item.reproduct_cost}}</uni-td>
             <uni-td align="center">{{item.sideline_income}}</uni-td>
             <uni-td align="center">{{item.quality_ratio}}</uni-td>
-            <uni-td align="center">{{item.sum_cose}}</uni-td>
+            <uni-td align="center">{{item.sum_cost}}</uni-td>
             <uni-td align="center">{{item.fixed_ratio}}</uni-td>
             <uni-td align="center">{{item.market_price}}</uni-td>
             <uni-td align="center">{{item.pack_fee}}</uni-td>
@@ -169,11 +169,11 @@
             "出成率": "yield_ratio",
             "加工成本": "processing_cost",
             "成品成本": "finish_cost",
-            "运储成本": "transport_cose",
-            "再生产成本": "reproduct_cose",
+            "运储成本": "transport_cost",
+            "再生产成本": "reproduct_cost",
             "副产品收入": "sideline_income",
             "质信金": "quality_ratio",
-            "成本小计": "sum_cose",
+            "成本小计": "sum_cost",
             "定倍率": "fixed_ratio",
             "营销价格": "market_price",
             "包装费": "pack_fee",
