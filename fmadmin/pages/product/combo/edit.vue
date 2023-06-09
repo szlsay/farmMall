@@ -10,9 +10,9 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="$store.state.sys.measure_units"></uni-data-select>
+						<uni-forms-item required name="unit" label="产品单位" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择产品单位" v-model="formData.unit"
+								:localdata="$store.state.sys.product_units" ref="dataSelectUnit"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -36,24 +36,24 @@
 				<view class="fm-card-header">套餐规格 (最大数量为{{skuMax}}个商品)</view>
 				<uni-row v-for="(item, index) in formData.sku" :key="index">
 					<uni-col :xs="24" :sm="6">
-						<uni-forms-item required :name="['sku',index,'goods_id']" label="商品名称" :label-width="labelWidth"
-							label-align="right">
-							<uni-data-select collection="fm-goods" field="_id as value, name as text"
-								v-model="item.goods_id" @change="onChangeGoods(index)" ref="dataSelectGoods"
-								placeholder="请选择商品" :key="'goods' + index" />
+						<uni-forms-item required :name="['sku',index,'product_id']" label="商品名称"
+							:label-width="labelWidth" label-align="right">
+							<uni-data-select :localdata="productList" v-model="item.product_id"
+								@change="onChangeProduct(index)" ref="dataSelectProduct" placeholder="请选择商品"
+								:key="'product' + index" />
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
-						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
+						<uni-forms-item :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
 							label-align="right">
-							<uni-data-select placeholder="请选择计量单位" v-model="item.unit"
-								:localdata="$store.state.sys.measure_units"></uni-data-select>
+							<uni-data-select placeholder="自动匹配计量单位" v-model="item.unit"
+								:localdata="$store.state.sys.measure_units" disabled></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请填写数量" type="number" v-model="item.qty"></uni-easyinput>
+							<uni-number-box :min="0" :max="100" v-model="item.qty" />
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -76,20 +76,22 @@
 								ref="dataSelectDelivery"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="delivery_timer" label="配送次数" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算配送次数" type="number" v-model="formData.delivery_timer"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
 				</uni-row>
 			</view>
 			<view class="fm-box">
 				<view class="fm-card-header">产品信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="price_sell" label="售价" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写售价" type="number"
-								v-model="formData.price_sell"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="expiry" label="保质期(天)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写保质期" type="number" v-model="formData.expiry"></uni-easyinput>
+						<uni-forms-item name="sell_price" label="售价" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算售价" type="number" v-model="formData.sell_price"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -145,16 +147,16 @@
 
 	export default {
 		data() {
+
 			let formData = {
 				"name": "",
 				"unit": "",
 				"image": null,
 				"image_content": [],
 				"sku": [],
+				"sell_price": null,
 				"delivery_ratio": "",
-				"delivery_ratio_title": "",
-				"price_sell": null,
-				"expiry": null,
+				"delivery_timer": null,
 				"reserve_begin": null,
 				"reserve_end": null,
 				"description": ""
@@ -169,7 +171,28 @@
 				formData,
 				rules: {
 					...getValidator(Object.keys(formData))
-				}
+				},
+				productList: []
+			}
+		},
+		watch: {
+			"formData.sku": {
+				handler(newV) {
+					console.log(11)
+					let sell_price = 0
+					newV.map(item => {
+						if (item.market_price && item.qty) {
+							sell_price += (item.market_price * 100) * item.qty
+						}
+					})
+					if (sell_price > 0) {
+						this.formData.sell_price = sell_price / 100
+					} else {
+						this.formData.sell_price = null
+					}
+
+				},
+				deep: true
 			}
 		},
 		onLoad(e) {
@@ -181,22 +204,54 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.getProducts()
 		},
 		methods: {
+			getProducts() {
+				const db = uniCloud.database()
+				db.collection("fm-product").where({
+					is_delete: false
+				}).field("_id, name, unit, market_price").get().then(res => {
+					const result = res.result.data.map(item => {
+						item.value = item._id
+						item.text = item.name
+						return item
+					})
+					this.productList = result
+				})
+			},
 			onChangeDelivery() {
 				setTimeout(() => {
-					this.formData.delivery_ratio_title = this.$refs.dataSelectDelivery.current
+					const text = this.$refs.dataSelectDelivery.current
+					if (text && text === '次/周') {
+						this.formData.delivery_timer = 52
+					} else if (text && text === '次/月') {
+						this.formData.delivery_timer = 12
+					} else {
+						this.formData.delivery_timer = null
+					}
 				}, 100)
 			},
-			onChangeGoods(index) {
+			onChangeProduct(index) {
 				setTimeout(() => {
-					this.formData.sku[index].goods_name = this.$refs.dataSelectGoods[index].current
+					const name = this.$refs.dataSelectProduct[index].current
+					if (name && name != '') {
+						const product = this.productList.filter(item => item.name === name)[0]
+						this.formData.sku[index].unit = product.unit
+						this.formData.sku[index].product_name = product.name
+						this.formData.sku[index].market_price = product.market_price
+					} else {
+						this.formData.sku[index].product_id = null
+						this.formData.sku[index].unit = null
+						this.formData.sku[index].product_name = null
+						this.formData.sku[index].market_price = null
+					}
 				}, 100)
 			},
 			onAddSku() {
 				const sku = {
-					"goods_id": null,
-					"goods_name": null,
+					"product_id": null,
+					"product_name": null,
 					"qty": null,
 					"unit": null,
 				}
@@ -217,7 +272,6 @@
 			},
 			submitForm(value) {
 				if (this.formData.sku.length) value.sku = this.formData.sku
-				value.delivery_ratio_title = this.formData.delivery_ratio_title
 				const fmcombo = uniCloud.importObject("fm-combo")
 				fmcombo.update(this.formDataId, value).then((res) => {
 					uni.showToast({
@@ -242,7 +296,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,unit,image,image_content,sku,delivery_ratio,delivery_ratio_title,price_sell,expiry,reserve_begin,reserve_end,description"
+					"name,unit,image,image_content,sku,delivery_ratio,delivery_timer,sell_price,reserve_begin,reserve_end,description"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
