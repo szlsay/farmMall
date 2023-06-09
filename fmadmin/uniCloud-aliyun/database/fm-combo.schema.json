@@ -56,11 +56,6 @@
 				}
 			}
 		},
-		"unit_title": {
-			"bsonType": "string",
-			"description": "请填写计量单位",
-			"label": "计量单位"
-		},
 		"image": {
 			"bsonType": "file",
 			"fileMediaType": "image",
@@ -108,11 +103,6 @@
 							"placeholder": "请选择计量单位"
 						}
 					}
-				},
-				"unit_title": {
-					"bsonType": "string",
-					"description": "请填写计量单位",
-					"label": "计量单位"
 				}
 			}
 		},

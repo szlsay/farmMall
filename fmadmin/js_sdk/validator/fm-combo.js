@@ -25,12 +25,6 @@ const validator = {
 		],
 		"label": "计量单位"
 	},
-	"unit_title": {
-		"rules": [{
-			"format": "string"
-		}],
-		"label": "计量单位"
-	},
 	"image": {
 		"rules": [{
 			"format": "file"

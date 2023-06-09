@@ -12,8 +12,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item required name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="$store.state.sys.measure_units" @change="onChangeUnit"
-								ref="dataSelectUnit"></uni-data-select>
+								:localdata="$store.state.sys.measure_units"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -48,8 +47,7 @@
 						<uni-forms-item required :name="['sku',index,'unit']" label="计量单位" :label-width="labelWidth"
 							label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="item.unit"
-								:localdata="$store.state.sys.measure_units" @change="onChangeSkuUnit(index)"
-								ref="dataSelectSkuUnit"></uni-data-select>
+								:localdata="$store.state.sys.measure_units"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -149,7 +147,6 @@
 			let formData = {
 				"name": "",
 				"unit": "",
-				"unit_title": "",
 				"image": null,
 				"image_content": [],
 				"sku": [],
@@ -185,16 +182,6 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
-			onChangeUnit() {
-				setTimeout(() => {
-					this.formData.unit_title = this.$refs.dataSelectUnit.current
-				}, 100)
-			},
-			onChangeSkuUnit(index) {
-				setTimeout(() => {
-					this.formData.sku[index].unit_title = this.$refs.dataSelectSkuUnit[index].current
-				}, 100)
-			},
 			onChangeDelivery() {
 				setTimeout(() => {
 					this.formData.delivery_rate_title = this.$refs.dataSelectDelivery.current
@@ -229,7 +216,6 @@
 			},
 			submitForm(value) {
 				if (this.formData.sku.length) value.sku = this.formData.sku
-				value.unit_title = this.formData.unit_title
 				value.delivery_rate_title = this.formData.delivery_rate_title
 				const fmcombo = uniCloud.importObject("fm-combo")
 				fmcombo.update(this.formDataId, value).then((res) => {
@@ -255,7 +241,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,unit,unit_title,image,image_content,sku,delivery_rate,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,description"
+					"name,unit,image,image_content,sku,delivery_rate,delivery_rate_title,price_sell,expiry,reserve_begin,reserve_end,description"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
