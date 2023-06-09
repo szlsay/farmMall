@@ -82,14 +82,14 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="reproduct_cost" label="再生成本(元)" :label-width="labelWidthMax"
+						<uni-forms-item name="reproduct_cost" label="再生产成本(元)" :label-width="labelWidthMax"
 							label-align="right">
 							<uni-easyinput placeholder="请填写再生产成本" type="number"
 								v-model="formData.reproduct_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="sideline_income" label="副产收入(元)" :label-width="labelWidthMax"
+						<uni-forms-item name="sideline_income" label="副产品收入(元)" :label-width="labelWidthMax"
 							label-align="right">
 							<uni-easyinput placeholder="请填写副产品收入" type="number"
 								v-model="formData.sideline_income"></uni-easyinput>
@@ -179,7 +179,7 @@
 				<view class="fm-card-header">结算环节</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="gp_price" label="毛利润" :label-width="labelWidthMax" label-align="right">
+						<uni-forms-item name="gp_price" label="毛利润(元)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -187,7 +187,7 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="product_bonus" label="生产奖励(毛利润10%)" :label-width="labelWidthMax"
 							label-align="right">
-							<uni-easyinput placeholder="请自动计算生产奖励" type="number" v-model="formData.product_bonus"
+							<uni-easyinput placeholder="自动计算生产奖励" type="number" v-model="formData.product_bonus"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
@@ -210,7 +210,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="ni_price" label="净利润" :label-width="labelWidthMax" label-align="right">
+						<uni-forms-item name="ni_price" label="净利润(元)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
