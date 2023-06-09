@@ -40,7 +40,6 @@
 			<!-- 生产环节 -->
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
-				{{testData}}
 				<uni-row>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="raw_cost" label="原料成本(元)" :label-width="labelWidth" label-align="right">
@@ -58,7 +57,6 @@
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
@@ -91,7 +89,7 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写成本小计" type="number" v-model="formData.sum_cost"></uni-easyinput>
+							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -102,7 +100,12 @@
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="8"></uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算营销价格" type="number" v-model="formData.market_price"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
 					<uni-col :xs="24" :sm="8"></uni-col>
 				</uni-row>
 			</view>
@@ -110,11 +113,6 @@
 			<view class="fm-box">
 				<view class="fm-card-header">营销环节</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写营销价格" type="number" v-model="formData.market_price"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="pack_fee" label="包装费(元)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写包装费" type="number" v-model="formData.pack_fee"></uni-easyinput>
@@ -125,20 +123,20 @@
 							<uni-easyinput placeholder="请填写配送费" type="number" v-model="formData.delivery_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-				</uni-row>
-				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="branch_fee" label="网点提成(元)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写网点提成" type="number" v-model="formData.branch_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
+				</uni-row>
+				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="market_fee" label="营销费(元)" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写营销费" type="number" v-model="formData.market_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="platform_fee" label="平台佣金(元)" :label-width="labelWidth" label-align="right">
+						<uni-forms-item name="platform_fee" label="平台佣金" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.platform_fee"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
@@ -227,16 +225,16 @@
 				"quality_ratio": null,
 				"sum_cost": null,
 				"fixed_ratio": null,
-				"market_price": 0,
-				"pack_fee": 0,
-				"delivery_fee": 0,
-				"branch_fee": 0,
-				"market_fee": 0,
-				"platform_fee": 0.05,
+				"market_price": null,
+				"pack_fee": null,
+				"delivery_fee": null,
+				"branch_fee": null,
+				"market_fee": null,
+				"platform_fee": null,
 				"gp_ratio": null,
-				"product_ratio": 0,
-				"market_ratio": 0,
-				"develop_ratio": 0,
+				"product_ratio": null,
+				"market_ratio": null,
+				"develop_ratio": null,
 				"ni_ratio": null
 			}
 			return {
@@ -297,8 +295,10 @@
 				const transport_cost = Math.floor(this.formData.transport_cost * 10000)
 				const reproduct_cost = Math.floor(this.formData.reproduct_cost * 10000)
 				const sideline_income = Math.floor(this.formData.sideline_income * 10000)
-				this.formData.sum_cost = (finish_cost + processing_cost + transport_cost + reproduct_cost - sideline_income +
-					quality_cost) / 10000
+				this.formData.sum_cost = Math.ceil((finish_cost + processing_cost + transport_cost + reproduct_cost -
+					sideline_income + quality_cost) / 100) / 100
+				this.formData.market_price = Math.ceil((this.formData.sum_cost * 100) * (this.formData.fixed_ratio * 100) /
+					100) / 100
 			},
 			getFinishCost() {
 				const raw_cost = this.formData.raw_cost * 100
