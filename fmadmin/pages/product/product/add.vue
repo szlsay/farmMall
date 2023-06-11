@@ -333,8 +333,8 @@
 				this.formData.gp_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
 					platform_fee - sum_cost) / 100
 
-				const gpprice10 = Math.ceil(this.formData.gp_price * 10)
-				const gpprice2 = Math.ceil(this.formData.gp_price * 2)
+				const gpprice10 = Math.round(this.formData.gp_price * 10)
+				const gpprice2 = Math.round(this.formData.gp_price * 2)
 				this.formData.market_bonus = gpprice10 / 100
 				this.formData.product_bonus = gpprice10 / 100
 				this.formData.develop_bonus = gpprice2 / 100
