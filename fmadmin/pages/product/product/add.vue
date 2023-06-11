@@ -105,6 +105,15 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="quality_cost" label="质信金(元)" :label-width="labelWidthMax"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算质信金" type="number" v-model="formData.quality_cost"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidthMax"
 							label-align="right">
 							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost"
@@ -112,7 +121,6 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
-
 			</view>
 			<!-- 营销环节 -->
 			<view class="fm-box">
@@ -262,6 +270,7 @@
 				"reproduct_cost": null,
 				"sideline_income": null,
 				"quality_ratio": null,
+				"quality_cost": null,
 				"sum_cost": null,
 				"fixed_ratio": null,
 				"market_price": null,
@@ -348,9 +357,9 @@
 				const transport_cost = Math.floor(this.formData.transport_cost * 10000)
 				const reproduct_cost = Math.floor(this.formData.reproduct_cost * 10000)
 				const sideline_income = Math.floor(this.formData.sideline_income * 10000)
+				this.formData.quality_cost = Math.ceil(quality_cost / 100) / 100
 				this.formData.sum_cost = Math.ceil((finish_cost + processing_cost + transport_cost + reproduct_cost -
 					sideline_income + quality_cost) / 100) / 100
-
 				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <=
 					this
 					.formData

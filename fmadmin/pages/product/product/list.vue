@@ -17,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="is_delete,name,raw_name,unit,image,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
+				field="is_delete,name,raw_name,unit,image,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,quality_cost,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -54,6 +54,7 @@
 								<text>再生产成本:<text class="text-green">{{item.reproduct_cost}}</text>元</text>
 								<text>副产品收入:<text class="text-green">{{item.sideline_income}}</text>元</text>
 								<text>质信金率:<text class="text-red">{{item.quality_ratio}}</text></text>
+								<text>质信金:<text class="text-green">{{item.quality_cost}}</text>元</text>
 								<text>成本小计:<text class="text-green">{{item.sum_cost}}</text>元</text>
 							</view>
 						</uni-td>
@@ -149,7 +150,8 @@
 						"运储成本(元)": "transport_cost",
 						"再生产成本(元)": "reproduct_cost",
 						"副产品收入(元)": "sideline_income",
-						"质信金(%)": "quality_ratio",
+						"质信金率(%)": "quality_ratio",
+						"质信金(元)": "quality_cost",
 						"成本小计(元)": "sum_cost",
 						"定倍率(%)": "fixed_ratio",
 						"营销价格(元)": "market_price",

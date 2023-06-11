@@ -137,10 +137,18 @@
 		},
 		"quality_ratio": {
 			"bsonType": "double",
+			"description": "请填写质信金率",
+			"label": "质信金率",
+			"minimum": 0,
+			"maximum": 1,
+			"errorMessage": "{label}在{minimum}与{maximum}之间"
+		},
+		"quality_cost": {
+			"bsonType": "double",
 			"description": "请填写质信金",
 			"label": "质信金",
 			"minimum": 0,
-			"maximum": 1,
+			"maximum": 10000,
 			"errorMessage": "{label}在{minimum}与{maximum}之间"
 		},
 		"sum_cost": {
