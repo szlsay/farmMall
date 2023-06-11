@@ -341,7 +341,7 @@
 				this.formData.ni_price = (this.formData.gp_price * 100 - gpprice10 - gpprice10 - gpprice2) / 100
 			},
 			getSumCost() {
-				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
+				const quality_cost = Math.floor(this.formData.raw_cost * 100 * (this.formData.quality_ratio * 100))
 				const finish_cost = Math.floor(this.formData.finish_cost * 10000)
 				const processing_cost = Math.floor(this.formData.processing_cost * 10000)
 				const transport_cost = Math.floor(this.formData.transport_cost * 10000)
@@ -370,7 +370,7 @@
 				}
 				this.formData.finish_cost = finish_cost
 				const ratios = this.$store.state.sys.credit_rules.filter(item => Number(item.start_value) <= this.formData
-					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
+					.raw_cost && this.formData.raw_cost <= Number(item.end_value))
 				if (ratios && ratios.length > 0) {
 					this.formData.quality_ratio = ratios[0].ratio * 100 / 10000
 				} else {
