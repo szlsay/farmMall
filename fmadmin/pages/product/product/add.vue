@@ -388,15 +388,6 @@
 				} else {
 					this.formData.quality_ratio = 0
 				}
-				// const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <=
-				// 	this
-				// 	.formData
-				// 	.finish_cost && this.formData.finish_cost <= Number(item.end_value))
-				// if (ratios_multiple && ratios_multiple.length > 0) {
-				// 	this.formData.fixed_ratio = ratios_multiple[0].ratio / 100
-				// } else {
-				// 	this.formData.fixed_ratio = 0
-				// }
 				this.formData.transport_cost = Math.ceil(this.formData.finish_cost) / 100
 				this.getSumCost()
 			},

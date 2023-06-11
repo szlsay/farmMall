@@ -340,30 +340,42 @@
 				this.formData.gp_price = Math.round(market_price - pack_fee - delivery_fee - branch_fee - market_fee -
 					platform_fee - sum_cost) / 100
 
-				const gpprice10 = Math.round(this.formData.gp_price * 10)
-				const gpprice2 = Math.round(this.formData.gp_price * 2)
+				const gpprice10 = Math.ceil(this.formData.gp_price * 10)
+				const gpprice2 = Math.ceil(this.formData.gp_price * 2)
 				this.formData.market_bonus = gpprice10 / 100
 				this.formData.product_bonus = gpprice10 / 100
 				this.formData.develop_bonus = gpprice2 / 100
-				this.formData.ni_price = (this.formData.gp_price * 100 - gpprice10 - gpprice10 - gpprice2) / 100
+				this.formData.ni_price = Math.floor(this.formData.gp_price * 100 - this.formData.market_bonus * 100 - this
+					.formData.product_bonus * 100 - this.formData.develop_bonus * 100) / 100
 			},
 			getSumCost() {
-				const quality_cost = Math.floor(this.formData.finish_cost * 100 * (this.formData.quality_ratio * 100))
+				const quality_cost = Math.floor(this.formData.raw_cost * 100 * (this.formData.quality_ratio * 100))
 				const finish_cost = Math.floor(this.formData.finish_cost * 10000)
 				const processing_cost = Math.floor(this.formData.processing_cost * 10000)
 				const transport_cost = Math.floor(this.formData.transport_cost * 10000)
 				const reproduct_cost = Math.floor(this.formData.reproduct_cost * 10000)
 				const sideline_income = Math.floor(this.formData.sideline_income * 10000)
-				this.formData.sum_cost = Math.round((finish_cost + processing_cost + transport_cost + reproduct_cost -
+				this.formData.sum_cost = Math.ceil((finish_cost + processing_cost + transport_cost + reproduct_cost -
 					sideline_income + quality_cost) / 100) / 100
+
+				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <=
+					this
+					.formData
+					.sum_cost && this.formData.sum_cost <= Number(item.end_value))
+				if (ratios_multiple && ratios_multiple.length > 0) {
+					this.formData.fixed_ratio = ratios_multiple[0].ratio / 100
+				} else {
+					this.formData.fixed_ratio = 0
+				}
+
 				this.formData.market_price = Math.ceil((this.formData.sum_cost * 100) * (this.formData.fixed_ratio * 100) /
 					100) / 100
 
-				this.formData.platform_fee = Math.round(this.formData.market_price * 5) / 100
-				this.formData.market_fee = Math.round(this.formData.market_price * 5) / 100
-				this.formData.pack_fee = Math.round(this.formData.market_price * 2) / 100
-				this.formData.delivery_fee = Math.round(this.formData.market_price * 2) / 100
-				this.formData.branch_fee = Math.round(this.formData.market_price * 2) / 100
+				this.formData.platform_fee = Math.ceil(this.formData.market_price * 5) / 100
+				this.formData.market_fee = Math.ceil(this.formData.market_price * 5) / 100
+				this.formData.pack_fee = Math.ceil(this.formData.market_price * 2) / 100
+				this.formData.delivery_fee = Math.ceil(this.formData.market_price * 2) / 100
+				this.formData.branch_fee = Math.ceil(this.formData.market_price * 2) / 100
 				this.getNI()
 			},
 			getFinishCost() {
@@ -377,20 +389,11 @@
 				}
 				this.formData.finish_cost = finish_cost
 				const ratios = this.$store.state.sys.credit_rules.filter(item => Number(item.start_value) <= this.formData
-					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
+					.raw_cost && this.formData.raw_cost <= Number(item.end_value))
 				if (ratios && ratios.length > 0) {
 					this.formData.quality_ratio = ratios[0].ratio * 100 / 10000
 				} else {
 					this.formData.quality_ratio = 0
-				}
-				const ratios_multiple = this.$store.state.sys.multiple_rules.filter(item => Number(item.start_value) <=
-					this
-					.formData
-					.finish_cost && this.formData.finish_cost <= Number(item.end_value))
-				if (ratios_multiple && ratios_multiple.length > 0) {
-					this.formData.fixed_ratio = ratios_multiple[0].ratio / 100
-				} else {
-					this.formData.fixed_ratio = 0
 				}
 				this.formData.transport_cost = Math.ceil(this.formData.finish_cost) / 100
 				this.getSumCost()
