@@ -40,7 +40,7 @@
 						<uni-forms-item :name="['enum',index,'icon']" label="图标" :label-width="labelWidth"
 							label-align="right">
 							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
-								v-model="item.image" :image-styles="imageStyles"></uni-file-picker>
+								v-model="item.icon" :image-styles="imageStyles"></uni-file-picker>
 							<text
 								style="color: red; font-size: 14px; position: absolute; left: 50px; top: 10px;">(建议40*40px)</text>
 						</uni-forms-item>
