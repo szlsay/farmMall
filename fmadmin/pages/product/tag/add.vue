@@ -111,7 +111,8 @@
 			onAdd() {
 				const item = {
 					"text": null,
-					"value": null
+					"value": null,
+					"icon": null
 				}
 				this.formData.enum.push(item)
 			},

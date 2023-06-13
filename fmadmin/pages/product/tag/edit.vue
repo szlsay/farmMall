@@ -115,7 +115,17 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
-
+			onAdd() {
+				const item = {
+					"text": null,
+					"value": null,
+					"icon": null
+				}
+				this.formData.enum.push(item)
+			},
+			onDelete(index) {
+				this.formData.enum.splice(index, 1)
+			},
 			submit() {
 				uni.showLoading({
 					mask: true
