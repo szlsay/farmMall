@@ -104,6 +104,14 @@
 			}
 		}
 		// #endif
+		, {
+			"path": "pages/home/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}
 	],
 	"subPackages": [{
 			"root": "uni_modules/uni-feedback",
