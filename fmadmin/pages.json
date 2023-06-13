@@ -279,6 +279,21 @@
 				"style": {
 					"navigationBarTitleText": "数据列表"
 				}
+			}, {
+				"path": "tag/add",
+				"style": {
+					"navigationBarTitleText": "新增标签"
+				}
+			}, {
+				"path": "tag/edit",
+				"style": {
+					"navigationBarTitleText": "编辑标签"
+				}
+			}, {
+				"path": "tag/list",
+				"style": {
+					"navigationBarTitleText": "列表标签"
+				}
 			}]
 		}, {
 			"root": "pages/fmset",
