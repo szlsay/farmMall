@@ -182,19 +182,6 @@
 						"navigationBarTitleText": "设置密码"
 					}
 				}
-				// #ifdef H5
-				,
-				{
-					"path": "userinfo/cropImage/cropImage"
-				},
-				{
-					"path": "register/register-admin",
-					"style": {
-						"enablePullDownRefresh": false,
-						"navigationBarTitleText": "注册管理员账号"
-					}
-				}
-				// #endif
 			]
 		}
 	],
