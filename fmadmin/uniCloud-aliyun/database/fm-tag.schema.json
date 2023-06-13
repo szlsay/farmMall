@@ -1,0 +1,69 @@
+{
+	"bsonType": "object",
+	"required": ["title", "type"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"title": {
+			"bsonType": "string",
+			"description": "请填写名称",
+			"maxLength": 20,
+			"label": "名称",
+			"trim": "both",
+			"componentForEdit": {
+				"name": "uni-easyinput"
+			}
+		},
+		"type": {
+			"bsonType": "string",
+			"description": "请填写英文标识",
+			"maxLength": 20,
+			"label": "英文标识",
+			"trim": "both",
+			"componentForEdit": {
+				"name": "uni-easyinput"
+			}
+		},
+		"enum": {
+			"bsonType": "array",
+			"description": "请填写枚举",
+			"label": "枚举",
+			"properties": {
+				"text": {
+					"bsonType": "string",
+					"description": "枚举名称",
+					"maxLength": 20,
+					"label": "枚举名称",
+					"trim": "both",
+					"componentForEdit": {
+						"name": "uni-easyinput"
+					}
+				},
+				"value": {
+					"bsonType": "string",
+					"description": "枚举值",
+					"maxLength": 20,
+					"label": "枚举值",
+					"trim": "both",
+					"componentForEdit": {
+						"name": "uni-easyinput"
+					}
+				},
+				"icon": {
+					"bsonType": "file",
+					"fileMediaType": "image",
+					"fileExtName": "jpg,png,webp",
+					"description": "请上传图标",
+					"label": "图标"
+				}
+			}
+		}
+	}
+}
