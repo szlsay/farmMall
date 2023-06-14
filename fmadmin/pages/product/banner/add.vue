@@ -106,7 +106,7 @@
 					width: 300,
 					height: 150,
 				},
-				comboList: {},
+				comboList: [],
 				formData,
 				formOptions: {},
 				rules: {
@@ -122,7 +122,6 @@
 			onChangeType(value) {
 				this.formData.value = ''
 				if (value === 'combo' && this.comboList.length === 0) {
-					console.log("111111")
 					this.getCombos()
 				}
 			},
