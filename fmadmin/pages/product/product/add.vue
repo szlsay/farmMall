@@ -19,7 +19,7 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="unit" label="计量单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择计量单位" v-model="formData.unit"
-								:localdata="$store.state.sys.measure_units" ref="dataSelectUnit"></uni-data-select>
+								:localdata="$store.state.sys.measure_units"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>

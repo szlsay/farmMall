@@ -7,7 +7,8 @@ export default {
 		product_units: [],
 		priceRules: [],
 		multiple_rules: [],
-		credit_rules: []
+		credit_rules: [],
+		ad_types: []
 	},
 	mutations: {
 		SET_DICTS: (state, dicts) => {
@@ -15,6 +16,7 @@ export default {
 			state.measure_units = dicts.filter(item => item.type === "measure_unit")[0]["enum"]
 			state.delivery_ratios = dicts.filter(item => item.type === "delivery_ratio")[0]["enum"]
 			state.product_units = dicts.filter(item => item.type === "product_unit")[0]["enum"]
+			state.ad_types = dicts.filter(item => item.type === "ad_type")[0]["enum"]
 		},
 		SET_PriceRules: (state, priceRules) => {
 			console.log(priceRules)

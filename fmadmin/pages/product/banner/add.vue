@@ -35,6 +35,31 @@
 			<!-- 跳转信息 -->
 			<view class="fm-box">
 				<view class="fm-card-header">跳转信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="type" label="类型" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择类型" v-model="formData.type"
+								:localdata="$store.state.sys.ad_types" @change='onChangeType'></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="16" v-if="formData.type === 'combo'">
+						<uni-forms-item name="value" label="套餐名称" :label-width="labelWidth" label-align="right">
+							<uni-data-select :localdata="comboList" v-model="formData.value" placeholder="请选择套餐" />
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="16" v-if="formData.type === 'url'">
+						<uni-forms-item name="value" label="链接地址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写链接地址" v-model="formData.value" trim="both"
+								maxlength="100"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="16" v-if="formData.type === 'page'">
+						<uni-forms-item name="value" label="页面路径" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请填写页面路径" v-model="formData.value" trim="both"
+								maxlength="100"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
 			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -65,15 +90,15 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
 				"image": null,
 				"title": "",
 				"sort": null,
-				"status": false,
+				"status": true,
+				"type": "",
+				"value": ""
 			}
 			return {
 				labelWidth: 80,
@@ -81,6 +106,7 @@
 					width: 300,
 					height: 150,
 				},
+				comboList: {},
 				formData,
 				formOptions: {},
 				rules: {
@@ -90,8 +116,30 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
+			this.getCombos()
 		},
 		methods: {
+			onChangeType(value) {
+				this.formData.value = ''
+				if (value === 'combo' && this.comboList.length === 0) {
+					console.log("111111")
+					this.getCombos()
+				}
+			},
+			getCombos() {
+				console.log("getCombos")
+				const db = uniCloud.database()
+				db.collection("fm-combo").where({
+					is_delete: false
+				}).field("_id, name").get().then(res => {
+					const result = res.result.data.map(item => {
+						item.value = item._id
+						item.text = item.name
+						return item
+					})
+					this.comboList = result
+				})
+			},
 			submit() {
 				uni.showLoading({
 					mask: true
