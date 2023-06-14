@@ -53,7 +53,7 @@
 					url,
 					events: {
 						refreshData: () => {
-							this.loadData(clear)
+							this.loadData()
 						}
 					}
 				})

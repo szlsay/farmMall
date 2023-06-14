@@ -46,16 +46,6 @@
 						"name": "uni-easyinput"
 					}
 				},
-				"value": {
-					"bsonType": "string",
-					"description": "枚举值",
-					"maxLength": 20,
-					"label": "枚举值",
-					"trim": "both",
-					"componentForEdit": {
-						"name": "uni-easyinput"
-					}
-				},
 				"icon": {
 					"bsonType": "file",
 					"fileMediaType": "image",

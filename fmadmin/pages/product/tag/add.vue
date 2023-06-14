@@ -22,21 +22,14 @@
 			<view class="fm-box">
 				<view class="fm-card-header">标签内容</view>
 				<uni-row v-for="(item, index) in formData.enum" :key="index">
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item required label="名称" :name="['enum',index,'text']" :label-width="labelWidth"
 							label-align="right" :rules="[{'required': true,errorMessage: '名称必填'}]" :key="index">
 							<uni-easyinput placeholder="请填写名称" maxlength="20" v-model="item.text"
 								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
-						<uni-forms-item required label="值" :name="['enum',index,'value']" :label-width="labelWidth"
-							label-align="right" :rules="[{'required': true,errorMessage: '值必填'}]" :key="index">
-							<uni-easyinput placeholder="请填写值" maxlength="20" v-model="item.value"
-								trim="both"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item :name="['enum',index,'icon']" label="图标" :label-width="labelWidth"
 							label-align="right">
 							<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
@@ -45,7 +38,7 @@
 								style="color: red; font-size: 14px; position: absolute; left: 50px; top: 10px;">(建议40*40px)</text>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="6">
+					<uni-col :xs="24" :sm="8">
 						<button @click="onDelete(index)" class="uni-button" size="mini" type="warn"
 							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
 					</uni-col>
@@ -111,7 +104,6 @@
 			onAdd() {
 				const item = {
 					"text": null,
-					"value": null,
 					"icon": null
 				}
 				this.formData.enum.push(item)
