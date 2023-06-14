@@ -15,14 +15,6 @@
 			"description": "请选择广告图片",
 			"label": "广告图片"
 		},
-		"open_url": {
-			"bsonType": "string",
-			"description": "点击跳转目标地址。如果是web地址则使用内置web-view打开；如果是本地页面则跳转本地页面；如果是schema地址则打开本地的app",
-			"title": "点击目标地址",
-			"format": "url",
-			"pattern": "^(http:\/\/|https:\/\/|\/|.\/|@\/)\\S",
-			"trim": "both"
-		},
 		"title": {
 			"bsonType": "string",
 			"description": "请填写标题",
@@ -40,12 +32,15 @@
 			"defaultValue": true,
 			"label": "生效状态"
 		},
-		"description": {
+		"type": {
 			"bsonType": "string",
-			"description": "请填写备注",
-			"maxLength": 100,
-			"label": "备注",
-			"trim": "both"
+			"description": "请选择类型",
+			"label": "类型"
+		},
+		"value": {
+			"bsonType": "string",
+			"description": "请填写目标值",
+			"label": "目标值"
 		}
 	}
 }

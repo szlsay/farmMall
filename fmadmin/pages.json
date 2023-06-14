@@ -186,21 +186,6 @@
 				"navigationBarTitleText": "列表"
 			}
 		}, {
-			"path": "pages/fmset/banner/add",
-			"style": {
-				"navigationBarTitleText": "新增"
-			}
-		}, {
-			"path": "pages/fmset/banner/edit",
-			"style": {
-				"navigationBarTitleText": "编辑"
-			}
-		}, {
-			"path": "pages/fmset/banner/list",
-			"style": {
-				"navigationBarTitleText": "列表"
-			}
-		}, {
 			"path": "pages/fmset/ro/add",
 			"style": {
 				"navigationBarTitleText": "新增"
@@ -293,6 +278,21 @@
 				"path": "tag/list",
 				"style": {
 					"navigationBarTitleText": "列表标签"
+				}
+			}, {
+				"path": "banner/add",
+				"style": {
+					"navigationBarTitleText": "新增广告"
+				}
+			}, {
+				"path": "banner/edit",
+				"style": {
+					"navigationBarTitleText": "编辑广告"
+				}
+			}, {
+				"path": "banner/list",
+				"style": {
+					"navigationBarTitleText": "列表广告"
 				}
 			}]
 		}, {

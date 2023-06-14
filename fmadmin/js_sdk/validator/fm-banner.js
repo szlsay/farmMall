@@ -13,21 +13,6 @@ const validator = {
     ],
     "label": "广告图片"
   },
-  "open_url": {
-    "rules": [
-      {
-        "format": "string"
-      },
-      {
-        "format": "url"
-      },
-      {
-        "pattern": "^(http://|https://|/|./|@/)\\S"
-      }
-    ],
-    "title": "点击目标地址",
-    "label": "点击目标地址"
-  },
   "title": {
     "rules": [
       {
@@ -56,16 +41,21 @@ const validator = {
     "label": "生效状态",
     "defaultValue": true
   },
-  "description": {
+  "type": {
     "rules": [
       {
         "format": "string"
-      },
-      {
-        "maxLength": 100
       }
     ],
-    "label": "备注"
+    "label": "类型"
+  },
+  "value": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "目标值"
   }
 }
 
