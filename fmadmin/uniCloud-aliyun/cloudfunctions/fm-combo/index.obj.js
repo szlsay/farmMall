@@ -50,5 +50,10 @@ module.exports = {
 			item.text = item.name
 			return item
 		})
-	}
+	},
+	getList() {
+		return dbJql.collection(dbCollectionName).where({
+			is_delete: false
+		}).get()
+	},
 }
