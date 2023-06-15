@@ -66,7 +66,7 @@
 			console.log('App Show')
 			this.clear = setInterval(() => this.clearPlatform(), 15 * 60 * 1000)
 			if (store.state.sys.dicts.length === 0) {
-				store.dispatch("sys/getDics")
+				store.dispatch("sys/getDicts")
 			}
 			if (store.state.sys.priceRules.length === 0) {
 				store.dispatch("sys/getPriceRule")

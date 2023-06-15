@@ -2,26 +2,25 @@
 	<view class="container">
 		<view class="top">
 			<view class="menu-contant">
-				<view class="item-menu" v-for="(item, index) in menus" :key="index">
-					<i class="iconfont" :class="item.icon"></i>
-					<text>{{item.title}}</text>
+				<view class="item-menu" v-for="(item, index) in $store.state.sys.home_headers" :key="index">
+					<image v-if="item.icon && item.icon.fileType == 'image'" :src="item.icon.url"></image>
+					<text>{{item.text}}</text>
 				</view>
 			</view>
-			<view class="search-contant">
+			<!-- <view class="search-contant">
 				<button class="btn-search">
 					<i class="iconfont fm-search"></i>
 					<text>买好货 上农福</text>
 				</button>
-			</view>
+			</view> -->
 		</view>
 		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}"
-			:collection="collectionListBanner" field="image,open_url,title,sort,status,description"
-			where="status == true">
+			:collection="collectionListBanner" field="image,open_url,title,sort,status,description" where="status == true">
 			<view class="banner">
 				<swiper circular indicator-dots>
 					<swiper-item v-for="(item, index) in data" :key="index">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"
-							class="fm_image" mode="aspectFill"></image>
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
+							mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -51,20 +50,7 @@
 					contentdown: '',
 					contentrefresh: '',
 					contentnomore: ''
-				},
-				menus: [{
-						"title": "农货批发",
-						"icon": "fm-jinpaigongyings"
-					},
-					{
-						"title": "产地资源",
-						"icon": "fm-suyuan"
-					},
-					{
-						"title": "买家保障",
-						"icon": "fm-maijiabz"
-					}
-				]
+				}
 			}
 		},
 		onPullDownRefresh() {
@@ -136,6 +122,12 @@
 			.item-menu {
 				display: flex;
 				align-items: center;
+
+				image {
+					width: 40rpx;
+					height: 40rpx;
+					margin-right: 2rpx;
+				}
 
 				text {
 					color: white;

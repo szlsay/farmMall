@@ -2,10 +2,11 @@
 	import initApp from '@/common/appInit.js';
 	import openApp from '@/common/openApp.js';
 	// #ifdef H5
-		openApp() //创建在h5端全局悬浮引导用户下载app的功能
+	openApp() //创建在h5端全局悬浮引导用户下载app的功能
 	// #endif
 	import checkIsAgree from '@/pages/uni-agree/utils/uni-agree.js';
 	import uniIdPageInit from '@/uni_modules/uni-id-pages/init.js';
+	import store from '@/store'
 	export default {
 		globalData: {
 			searchText: '',
@@ -20,7 +21,7 @@
 			this.globalData.$t = str => this.$t(str)
 			initApp();
 			uniIdPageInit()
-			
+
 			// #ifdef APP-PLUS
 			//checkIsAgree(); APP端暂时先用原生默认生成的。目前，自定义方式启动vue界面时，原生层已经请求了部分权限这并不符合国家的法规
 			// #endif
@@ -44,6 +45,12 @@
 		},
 		onShow: function() {
 			console.log('App Show')
+			if (store.state.sys.dicts.length === 0) {
+				store.dispatch("sys/getDicts")
+			}
+			if (store.state.sys.tags.length === 0) {
+				store.dispatch("sys/getTags")
+			}
 		},
 		onHide: function() {
 			console.log('App Hide')

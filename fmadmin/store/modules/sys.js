@@ -26,7 +26,7 @@ export default {
 		},
 	},
 	actions: {
-		async getDics({
+		async getDicts({
 			commit
 		}) {
 			const fmdict = uniCloud.importObject("fm-dict")

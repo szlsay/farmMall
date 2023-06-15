@@ -88,17 +88,17 @@
 			"root": "pages/home",
 			"pages": [
 
-			],
+			]
 		}, {
 			"root": "pages/social",
 			"pages": [
 
-			],
+			]
 		}, {
 			"root": "pages/my",
 			"pages": [
 
-			],
+			]
 		}, {
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
