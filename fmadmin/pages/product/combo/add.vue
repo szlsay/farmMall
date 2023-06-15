@@ -4,15 +4,21 @@
 			<view class="fm-box">
 				<view class="fm-card-header">基本信息</view>
 				<uni-row>
-					<uni-col :xs="24" :sm="12">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item required name="name" label="套餐名称" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请填写套餐名称" v-model="formData.name" trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
-					<uni-col :xs="24" :sm="12">
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item required name="unit" label="产品单位" :label-width="labelWidth" label-align="right">
 							<uni-data-select placeholder="请选择产品单位" v-model="formData.unit"
-								:localdata="$store.state.sys.product_units" ref="dataSelectUnit"></uni-data-select>
+								:localdata="$store.state.sys.product_units"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="sort" label="套餐分类" :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择套餐分类" v-model="formData.sort"
+								:localdata="$store.state.sys.combo_sorts"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -153,6 +159,7 @@
 			let formData = {
 				"name": "",
 				"unit": "",
+				"sort": "",
 				"image": null,
 				"image_content": [],
 				"sku": [],

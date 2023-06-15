@@ -25,6 +25,12 @@ const validator = {
 		],
 		"label": "产品单位"
 	},
+	"sort": {
+		"rules": [{
+			"format": "string"
+		}],
+		"label": "套餐分类"
+	},
 	"image": {
 		"rules": [{
 			"format": "file"

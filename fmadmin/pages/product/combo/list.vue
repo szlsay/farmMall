@@ -17,7 +17,7 @@
 		</view>
 		<view class="uni-container">
 			<unicloud-db ref="udb" :collection="collectionList"
-				field="name,unit,image,sku,delivery_ratio,delivery_timer,sell_price,reserve_begin,reserve_end,is_delete"
+				field="name,unit,sort,image,sku,delivery_ratio,delivery_timer,sell_price,reserve_begin,reserve_end,is_delete"
 				:where="where" page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
@@ -29,6 +29,8 @@
 						<uni-th align="center">套餐主图</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'unit_title')"
 							sortable @sort-change="sortChange($event, 'unit')">产品单位</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'sort_title')"
+							sortable @sort-change="sortChange($event, 'sort')">套餐分类</uni-th>
 						<uni-th width="200" align="center" sortable
 							@sort-change="sortChange($event, 'sku')">套餐规格</uni-th>
 						<uni-th align="center" filter-type="search"
@@ -54,6 +56,7 @@
 								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">{{getUnitText(item.unit)}}</uni-td>
+						<uni-td align="center">{{getSortText(item.sort)}}</uni-td>
 						<uni-td align="center">
 							<view class="goods-list" v-for="(sku, index) in item.sku" :key="index">
 								{{sku.product_name}}{{sku.qty}}{{getMeasureUnitText(sku.unit)}}
@@ -136,6 +139,7 @@
 					"fields": {
 						"套餐名称": "name",
 						"计量单位": "unit",
+						"套餐分类": "sort",
 						"套餐规格": "sku",
 						"配送频率": "delivery_ratio",
 						"配送次数": "delivery_timer",
@@ -154,8 +158,15 @@
 			this.$refs.udb.loadData()
 		},
 		methods: {
+			getSortText(value) {
+				const result = this.$store.state.sys.combo_sorts.filter(item => item.value === value)
+				if (result && result.length > 0) {
+					return result[0].text
+				} else {
+					return ''
+				}
+			},
 			getUnitText(value) {
-				console.log('getUnitText--', value);
 				const result = this.$store.state.sys.product_units.filter(item => item.value === value)
 				if (result && result.length > 0) {
 					return result[0].text

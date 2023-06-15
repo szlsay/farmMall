@@ -47,12 +47,23 @@
 		},
 		"unit": {
 			"bsonType": "string",
-			"description": "请填写产品单位",
+			"description": "请选择产品单位",
 			"label": "产品单位",
 			"componentForEdit": {
 				"name": "uni-data-select",
 				"props": {
 					"placeholder": "请选择产品单位"
+				}
+			}
+		},
+		"sort": {
+			"bsonType": "string",
+			"description": "请选择套餐分类",
+			"label": "套餐分类",
+			"componentForEdit": {
+				"name": "uni-data-select",
+				"props": {
+					"placeholder": "请选择套餐分类"
 				}
 			}
 		},
