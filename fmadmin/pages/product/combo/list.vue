@@ -38,7 +38,7 @@
 							@filter-change="filterChange($event, 'delivery_timer')" sortable
 							@sort-change="sortChange($event, 'delivery_timer')">配送次数</uni-th>
 						<uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'sell_price')"
-							sortable @sort-change="sortChange($event, 'sell_price')">售价(元)</uni-th>
+							sortable @sort-change="sortChange($event, 'sell_price')">实际售价(元)</uni-th>
 						<uni-th align="center" filter-type="timestamp"
 							@filter-change="filterChange($event, 'reserve_begin')" sortable
 							@sort-change="sortChange($event, 'reserve_begin')">预订开始时间</uni-th>
@@ -139,7 +139,7 @@
 						"套餐规格": "sku",
 						"配送频率": "delivery_ratio",
 						"配送次数": "delivery_timer",
-						"售价": "sell_price",
+						"实际售价": "sell_price",
 						"预订开始时间": "reserve_begin",
 						"预订结束时间": "reserve_end"
 					}
