@@ -53,7 +53,8 @@
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
 							label-align="right">
-							<uni-number-box :min="0" :max="100" v-model="item.qty" />
+							<uni-easyinput placeholder="请参考规格价格填写" type="number" v-model="item.qty"></uni-easyinput>
+							<!-- <uni-number-box :min="0" :max="100" v-model="item.qty" /> -->
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
@@ -66,32 +67,18 @@
 				</view>
 			</view>
 			<view class="fm-box">
-				<view class="fm-card-header">配送信息</view>
-				<uni-row>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="delivery_ratio" label="配送频率" :label-width="labelWidth"
-							label-align="right">
-							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_ratio"
-								:localdata="$store.state.sys.delivery_ratios" @change="onChangeDelivery"
-								ref="dataSelectDelivery"></uni-data-select>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="delivery_timer" label="配送次数" :label-width="labelWidth"
-							label-align="right">
-							<uni-easyinput placeholder="自动计算配送次数" type="number" v-model="formData.delivery_timer"
-								disabled></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-				</uni-row>
-			</view>
-			<view class="fm-box">
 				<view class="fm-card-header">产品信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="sell_price" label="售价" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="自动计算售价" type="number" v-model="formData.sell_price"
+						<uni-forms-item name="product_price" label="规格价格" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="自动计算规格价格" type="number" v-model="formData.product_price"
 								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="sell_price" label="实际售价" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请参考规格价格填写" type="number"
+								v-model="formData.sell_price"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -114,6 +101,26 @@
 						<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
 							maxlength="500"></uni-easyinput>
 					</uni-forms-item>
+				</uni-row>
+			</view>
+			<view class="fm-box">
+				<view class="fm-card-header">配送信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="delivery_ratio" label="配送频率" :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择配送频率" v-model="formData.delivery_ratio"
+								:localdata="$store.state.sys.delivery_ratios" @change="onChangeDelivery"
+								ref="dataSelectDelivery"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="delivery_timer" label="配送次数" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="自动计算配送次数" type="number" v-model="formData.delivery_timer"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
 				</uni-row>
 			</view>
 			<view class="uni-button-group">
@@ -154,6 +161,7 @@
 				"image": null,
 				"image_content": [],
 				"sku": [],
+				"product_price": null,
 				"sell_price": null,
 				"delivery_ratio": "",
 				"delivery_timer": null,
@@ -178,17 +186,16 @@
 		watch: {
 			"formData.sku": {
 				handler(newV) {
-					console.log(11)
-					let sell_price = 0
+					let product_price = 0
 					newV.map(item => {
 						if (item.market_price && item.qty) {
-							sell_price += (item.market_price * 100) * item.qty
+							product_price += (item.market_price * 100) * (item.qty * 100)
 						}
 					})
-					if (sell_price > 0) {
-						this.formData.sell_price = sell_price / 100
+					if (product_price > 0) {
+						this.formData.product_price = Math.ceil(product_price) / 10000
 					} else {
-						this.formData.sell_price = null
+						this.formData.product_price = null
 					}
 
 				},
@@ -296,7 +303,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,unit,image,image_content,sku,delivery_ratio,delivery_timer,sell_price,reserve_begin,reserve_end,description"
+					"name,unit,image,image_content,sku,delivery_ratio,delivery_timer,product_price, sell_price,reserve_begin,reserve_end,description"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {

@@ -181,7 +181,6 @@
 		watch: {
 			"formData.sku": {
 				handler(newV) {
-					console.log(11)
 					let product_price = 0
 					newV.map(item => {
 						if (item.market_price && item.qty) {
