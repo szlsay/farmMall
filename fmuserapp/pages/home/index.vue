@@ -7,20 +7,15 @@
 					<text>{{item.text}}</text>
 				</view>
 			</view>
-			<!-- <view class="search-contant">
-				<button class="btn-search">
-					<i class="iconfont fm-search"></i>
-					<text>买好货 上农福</text>
-				</button>
-			</view> -->
 		</view>
 		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}"
-			:collection="collectionListBanner" field="image,open_url,title,sort,status,description" where="status == true">
+			:collection="collectionListBanner" field="image,open_url,title,sort,status,description"
+			where="status == true">
 			<view class="banner">
 				<swiper circular indicator-dots>
 					<swiper-item v-for="(item, index) in data" :key="index">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
-							mode="aspectFill"></image>
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"
+							class="fm_image" mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -98,7 +93,6 @@
 		height: 300rpx;
 		background-color: #00cc99;
 
-		// background: linear-gradient(to bottom, #36A54B 50%, #86f59B 100%);
 		uni-swiper {
 			height: 100%;
 
@@ -113,12 +107,11 @@
 	.top {
 		background-color: #00cc99;
 
-		// background-color: #36A54B;
 		.menu-contant {
 			display: flex;
 			justify-content: space-evenly;
 			color: white;
-			padding-top: 32rpx;
+			padding-top: 20rpx;
 			padding-bottom: 20rpx;
 
 			.item-menu {
@@ -133,26 +126,6 @@
 
 				text {
 					color: white;
-					margin-left: 8rpx;
-				}
-			}
-		}
-
-		.search-contant {
-			padding-left: 32rpx;
-			padding-right: 32rpx;
-			padding-bottom: 20rpx;
-
-			.btn-search {
-				width: 100%;
-				height: 80rpx;
-				background-color: white;
-				border-radius: 40rpx;
-				color: #333333;
-				text-align: center;
-				line-height: 80rpx;
-
-				text {
 					margin-left: 8rpx;
 				}
 			}
