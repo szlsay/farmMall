@@ -8,7 +8,7 @@
 		}, {
 			"path": "pages/social/index",
 			"style": {
-				"navigationBarTitleText": "社交",
+				"navigationBarTitleText": "社区",
 				"enablePullDownRefresh": false
 			}
 		}, {

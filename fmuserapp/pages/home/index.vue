@@ -96,8 +96,9 @@
 		margin-top: -2rpx;
 		padding: 16rpx 32rpx 16rpx;
 		height: 300rpx;
-		background: linear-gradient(to bottom, #36A54B 50%, #86f59B 100%);
+		background-color: #00cc99;
 
+		// background: linear-gradient(to bottom, #36A54B 50%, #86f59B 100%);
 		uni-swiper {
 			height: 100%;
 
@@ -110,8 +111,9 @@
 	}
 
 	.top {
-		background-color: #36A54B;
+		background-color: #00cc99;
 
+		// background-color: #36A54B;
 		.menu-contant {
 			display: flex;
 			justify-content: space-evenly;
