@@ -88,7 +88,7 @@
 					"label": "产品名称"
 				},
 				"qty": {
-					"bsonType": "int",
+					"bsonType": "number",
 					"description": "数量",
 					"title": "数量",
 					"defaultValue": 0
@@ -118,6 +118,14 @@
 			"bsonType": "double",
 			"description": "请填写售价",
 			"label": "售价",
+			"minimum": 0,
+			"maximum": 1000000,
+			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
+		},
+		"product_price": {
+			"bsonType": "double",
+			"description": "请填写规格价格",
+			"label": "规格价格",
 			"minimum": 0,
 			"maximum": 1000000,
 			"errorMessage": "{label}应该大于 {minimum} ，小于 {maximum} "
