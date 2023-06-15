@@ -125,19 +125,10 @@
 					this.getCombos()
 				}
 			},
-			getCombos() {
-				console.log("getCombos")
-				const db = uniCloud.database()
-				db.collection("fm-combo").where({
-					is_delete: false
-				}).field("_id, name").get().then(res => {
-					const result = res.result.data.map(item => {
-						item.value = item._id
-						item.text = item.name
-						return item
-					})
-					this.comboList = result
-				})
+			async getCombos() {
+				const fmcombo = uniCloud.importObject('fm-combo')
+				const result = await fmcombo.getDicts()
+				this.comboList = result
 			},
 			submit() {
 				uni.showLoading({

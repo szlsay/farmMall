@@ -41,4 +41,14 @@ module.exports = {
 			is_delete: true
 		})
 	},
+	async getDicts() {
+		const result = await dbJql.collection(dbCollectionName).where({
+			is_delete: false
+		}).field("_id, name").get()
+		return result.data.map(item => {
+			item.value = item._id
+			item.text = item.name
+			return item
+		})
+	}
 }
