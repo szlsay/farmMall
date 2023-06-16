@@ -51,6 +51,9 @@ module.exports = {
 			return item
 		})
 	},
+	get(_id) {
+		return dbJql.collection(dbCollectionName).doc(_id).get()
+	},
 	getList() {
 		return dbJql.collection(dbCollectionName).where({
 			is_delete: false
