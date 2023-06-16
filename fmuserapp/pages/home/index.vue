@@ -23,7 +23,14 @@
 					<text>{{item.text}}</text>
 				</view>
 			</view>
-			{{comboMap[currentSortValue]}}
+			<view class="home-combo">
+				<view class="combo-item" v-for="(item, index) in comboMap[currentSortValue]" :key="index">
+					<view class="item-left">
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" mode="aspectFill"></image>
+					</view>
+					<view class="item-right"></view>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -78,6 +85,24 @@
 	@import "@/static/css/iconfont.css";
 
 	.down-home {
+		.home-combo {
+			padding: 0 40rpx;
+			.combo-item {
+				background: #fff;
+				box-shadow: 0px 3px 6px 0px rgba(173,174,179,0.09), 0px -3px 6px 0px rgba(173,174,179,0.09);
+				border-radius: 20rpx;
+				padding: 40rpx;
+				margin-bottom: 40rpx;
+				.item-left{
+					image{
+						width: 200rpx;
+						height: 200rpx;
+						border-radius: 16rpx;
+					}
+				}
+			}
+		}
+
 		.home-sort {
 			display: flex;
 			margin-top: 20rpx;
