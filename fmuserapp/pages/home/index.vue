@@ -18,7 +18,8 @@
 		</view>
 		<view class="down-home">
 			<view class="home-sort">
-				<view class="sort-item" v-for="(item, index) in $store.state.sys.combo_sorts" :key="index" @click="onClickSort(index)" :class="{'select-item': index === currentSort}">
+				<view class="sort-item" v-for="(item, index) in $store.state.sys.combo_sorts" :key="index"
+					@click="onClickSort(index)" :class="{'select-item': index === currentSort}">
 					<text>{{item.text}}</text>
 				</view>
 			</view>
@@ -65,31 +66,46 @@
 
 	.down-home {
 		.home-sort {
-			padding: 20rpx 0 40rpx;
 			display: flex;
-			justify-content: space-evenly;
+			margin-top: 20rpx;
+			margin-left: 40rpx;
+			padding-bottom: 40rpx;
+			overflow-x: scroll;
 
 			.sort-item {
+				margin-right: 40rpx;
 				height: 64rpx;
 				padding-left: 30rpx;
 				padding-right: 30rpx;
 				border-radius: 32rpx;
 				font-size: 28rpx;
 				font-weight: 500;
-
 				display: flex;
 				justify-content: center;
 				align-items: center;
 
 				background: #F1F3F5;
 				color: #333333;
-			}
 
+				text {
+					white-space: nowrap;
+				}
+			}
+			
 			.select-item {
 				background: #00CC99;
 				box-shadow: 0px 4px 10px 0px #00CC9966;
 				color: #FFFFFF;
 			}
+		}
+		
+		::-webkit-scrollbar {
+			display: none;
+			width: 0;
+			height: 0;
+			-webkit-appearance: none;
+			background: transparent;
+			color: transparent;
 		}
 	}
 
