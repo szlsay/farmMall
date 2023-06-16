@@ -1,14 +1,14 @@
 <template>
 	<view class="container">
 		<view class="top-home">
-			<view class="menu-contant">
-				<view class="item-menu" v-for="(item, index) in $store.state.sys.home_headers" :key="index">
+			<view class="home-header">
+				<view class="header-item" v-for="(item, index) in $store.state.sys.home_headers" :key="index">
 					<image v-if="item.icon && item.icon.fileType == 'image'" :src="item.icon.url"></image>
 					<text>{{item.text}}</text>
 				</view>
 			</view>
-			<view class="banner" v-if="bannerList && bannerList.length > 0">
-				<swiper circular indicator-dots>
+			<view class="home-banner" v-if="bannerList && bannerList.length > 0">
+				<swiper circular :indicator-dots="bannerList.length > 1" indicator-active-color="#00CC99">
 					<swiper-item v-for="(item, index) in bannerList" :key="index">
 						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
 							mode="aspectFill"></image>
@@ -17,6 +17,11 @@
 			</view>
 		</view>
 		<view class="down-home">
+			<view class="home-sort">
+				<view class="sort-item" v-for="(item, index) in $store.state.sys.combo_sorts" :key="index" @click="onClickSort(index)" :class="{'select-item': index === currentSort}">
+					<text>{{item.text}}</text>
+				</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -29,13 +34,17 @@
 	export default {
 		data() {
 			return {
-				bannerList: []
+				bannerList: [],
+				currentSort: 0
 			}
 		},
 		onLoad() {
-			// this.getBannerData()
+			this.getBannerData()
 		},
 		methods: {
+			onClickSort(index) {
+				this.currentSort = index
+			},
 			async getBannerData() {
 				const fmbanner = uniCloud.importObject("fm-banner")
 				const result = await fmbanner.getList()
@@ -55,16 +64,38 @@
 	@import "@/static/css/iconfont.css";
 
 	.down-home {
-		height: 100%;
-		background: repeating-linear-gradient(to bottom, #00cc99, #fff);
+		.home-sort {
+			padding: 20rpx 0 40rpx;
+			display: flex;
+			justify-content: space-evenly;
+
+			.sort-item {
+				height: 64rpx;
+				padding-left: 30rpx;
+				padding-right: 30rpx;
+				border-radius: 32rpx;
+				font-size: 28rpx;
+				font-weight: 500;
+
+				display: flex;
+				justify-content: center;
+				align-items: center;
+
+				background: #F1F3F5;
+				color: #333333;
+			}
+
+			.select-item {
+				background: #00CC99;
+				box-shadow: 0px 4px 10px 0px #00CC9966;
+				color: #FFFFFF;
+			}
+		}
 	}
 
 	.top-home {
-		background-color: #00cc99;
-
-		.banner {
-			margin-top: -2rpx;
-			padding: 16rpx 32rpx 16rpx;
+		.home-banner {
+			padding: 16rpx 40rpx 16rpx;
 			height: 300rpx;
 
 			uni-swiper {
@@ -78,14 +109,14 @@
 			}
 		}
 
-		.menu-contant {
+		.home-header {
 			display: flex;
 			justify-content: space-evenly;
 			color: white;
-			padding-top: 20rpx;
-			padding-bottom: 20rpx;
+			padding-top: 40rpx;
+			padding-bottom: 30rpx;
 
-			.item-menu {
+			.header-item {
 				display: flex;
 				align-items: center;
 
@@ -96,7 +127,7 @@
 				}
 
 				text {
-					color: white;
+					color: #00CC99;
 					margin-left: 8rpx;
 				}
 			}

@@ -7,7 +7,8 @@ export default {
 		product_units: [],
 		ad_types: [],
 		tags: [],
-		home_headers: []
+		home_headers: [],
+		combo_sorts: [],
 	},
 	mutations: {
 		SET_DICTS: (state, dicts) => {
@@ -16,6 +17,8 @@ export default {
 			state.delivery_ratios = dicts.filter(item => item.type === "delivery_ratio")[0]["enum"]
 			state.product_units = dicts.filter(item => item.type === "product_unit")[0]["enum"]
 			state.ad_types = dicts.filter(item => item.type === "ad_type")[0]["enum"]
+			const combo_sorts = dicts.filter(item => item.type === "combo_sort")[0]["enum"]
+			state.combo_sorts = [{text: "全部", value: 'all'}, ...combo_sorts]
 		},
 		SET_TAGS: (state, tags) => {
 			state.tags = tags
