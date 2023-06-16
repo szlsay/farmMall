@@ -4,7 +4,8 @@ const dbCollectionName = 'fm-combo';
 
 const uniID = require('uni-id-common')
 module.exports = {
-	_before: async function() { // 通用预处理器
+	_before: async function() {
+		// 通用预处理器
 		this.token = this.getUniIdToken()
 		if (this.token) {
 			const clientInfo = this.getClientInfo()
@@ -12,9 +13,10 @@ module.exports = {
 				clientInfo
 			})
 			this.userInfo = await this.uniID.checkToken(this.token);
-		} else {
-			throw new Error('token凭证不存在，请重新登录')
 		}
+		// else {
+		// 	throw new Error('token凭证不存在，请重新登录')
+		// }
 	},
 	add(value) {
 		if (this.userInfo.errCode) {

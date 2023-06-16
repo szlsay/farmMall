@@ -12,7 +12,7 @@
 		<view class="combo-detail">
 
 		</view>
-		{{data}}
+		<!-- {{data}} -->
 	</view>
 </template>
 
@@ -47,6 +47,17 @@
 	}
 </script>
 
-<style>
+<style lang="scss" scoped>
+	.combo-info {
+		image {
+			width: 100%;
+			height: 400rpx;
+		}
+	}
 
+	.combo-sku {}
+
+	.combo-comment {}
+
+	.combo-detail {}
 </style>
