@@ -23,28 +23,41 @@
 					<text>{{item.text}}</text>
 				</view>
 			</view>
+			{{comboMap[currentSortValue]}}
 		</view>
 	</view>
 </template>
 
 <script>
 	import {
-		cloneObject
+		cloneObject,
+		arryGroupMatchWithAll
 	} from "@/utils"
 	const db = uniCloud.database()
 	export default {
 		data() {
 			return {
 				bannerList: [],
-				currentSort: 0
+				comboList: [],
+				comboMap: {},
+				currentSort: 0,
+				currentSortValue: 'all',
 			}
 		},
 		onLoad() {
 			this.getBannerData()
+			this.getComboData()
 		},
 		methods: {
+			async getComboData() {
+				const fmcombo = uniCloud.importObject("fm-combo")
+				const result = await fmcombo.getList()
+				this.comboList = result.data
+				this.comboMap = arryGroupMatchWithAll(this.comboList, 'sort')
+			},
 			onClickSort(index) {
 				this.currentSort = index
+				this.currentSortValue = this.$store.state.sys.combo_sorts[index].value
 			},
 			async getBannerData() {
 				const fmbanner = uniCloud.importObject("fm-banner")
@@ -73,13 +86,11 @@
 			overflow-x: scroll;
 
 			.sort-item {
-				margin-right: 40rpx;
+				margin-right: 20rpx;
 				height: 64rpx;
 				padding-left: 30rpx;
 				padding-right: 30rpx;
 				border-radius: 32rpx;
-				font-size: 28rpx;
-				font-weight: 500;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -88,17 +99,19 @@
 				color: #333333;
 
 				text {
+					font-size: 28rpx;
+					font-weight: 500;
 					white-space: nowrap;
 				}
 			}
-			
+
 			.select-item {
 				background: #00CC99;
 				box-shadow: 0px 4px 10px 0px #00CC9966;
 				color: #FFFFFF;
 			}
 		}
-		
+
 		::-webkit-scrollbar {
 			display: none;
 			width: 0;
@@ -143,6 +156,7 @@
 				}
 
 				text {
+					font-size: 28rpx;
 					color: #00CC99;
 					margin-left: 8rpx;
 				}

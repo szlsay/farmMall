@@ -1,3 +1,30 @@
+export function arryGroupMatch(arry, key) {
+	const map = {}
+	for (let i = 0; i < arry.length; i++) {
+		const item = arry[i]
+		const value = item[key]
+		if (!map[value]) {
+			map[value] = []
+		}
+		map[value].push(item)
+	}
+	return map
+}
+
+export function arryGroupMatchWithAll(arry, key) {
+	const map = {
+		'all': arry
+	}
+	for (let i = 0; i < arry.length; i++) {
+		const item = arry[i]
+		const value = item[key]
+		if (!map[value]) {
+			map[value] = []
+		}
+		map[value].push(item)
+	}
+	return map
+}
 /**
  * 是否登录
  */
