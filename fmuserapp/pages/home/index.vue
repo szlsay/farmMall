@@ -28,7 +28,11 @@
 					<view class="item-left">
 						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" mode="aspectFill"></image>
 					</view>
-					<view class="item-right"></view>
+					<view class="item-right">
+						<text class="name">{{item.name}}</text>
+						<text class="description">{{item.description}}</text>
+						<text class="price">￥{{item.sell_price}}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -87,17 +91,50 @@
 	.down-home {
 		.home-combo {
 			padding: 0 40rpx;
+
 			.combo-item {
 				background: #fff;
-				box-shadow: 0px 3px 6px 0px rgba(173,174,179,0.09), 0px -3px 6px 0px rgba(173,174,179,0.09);
+				box-shadow: 0px 3px 6px 0px rgba(173, 174, 179, 0.09), 0px -3px 6px 0px rgba(173, 174, 179, 0.09);
 				border-radius: 20rpx;
-				padding: 40rpx;
+				padding: 32rpx;
 				margin-bottom: 40rpx;
-				.item-left{
-					image{
+				display: flex;
+
+				.item-left {
+					image {
 						width: 200rpx;
 						height: 200rpx;
 						border-radius: 16rpx;
+					}
+				}
+
+				.item-right {
+					margin-left: 32rpx;
+					display: flex;
+					flex-direction: column;
+
+					.name {
+						font-size: 28rpx;
+						font-weight: 700;
+						color: #333333;
+					}
+
+					.description {
+						font-size: 24rpx;
+						color: #333333;
+						
+						overflow: hidden;
+						text-overflow: ellipsis;
+						display: -webkit-box;
+						-webkit-line-clamp: 3;
+						-webkit-box-orient: vertical
+					}
+
+					.price {
+						font-size: 30rpx;
+						font-weight: 500;
+						color: #ff442f;
+						line-height: 20px;
 					}
 				}
 			}
