@@ -1,0 +1,7 @@
+{
+  "name": "fm-banner",
+  "dependencies": {},
+  "extensions": {
+    "uni-cloud-jql": {}
+  }
+}

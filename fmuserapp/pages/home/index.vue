@@ -7,18 +7,15 @@
 					<text>{{item.text}}</text>
 				</view>
 			</view>
-		</view>
-		<unicloud-db ref="udbBanner" v-slot:default="{data, pagination, loading, hasMore, error}" collection="fm-banner"
-			field="image,open_url,title,sort,status,description" where="status == true">
-			<view class="banner">
+			<view class="banner" v-if="bannerList && bannerList.length > 0">
 				<swiper circular indicator-dots>
-					<swiper-item v-for="(item, index) in data" :key="index">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"
-							class="fm_image" mode="aspectFill"></image>
+					<swiper-item v-for="(item, index) in bannerList" :key="index">
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
+							mode="aspectFill"></image>
 					</swiper-item>
 				</swiper>
 			</view>
-		</unicloud-db>
+		</view>
 	</view>
 </template>
 
@@ -30,10 +27,19 @@
 	export default {
 		data() {
 			return {
-
+				bannerList: []
 			}
 		},
+		onLoad() {
+			this.getBannerData()
+		},
 		methods: {
+			async getBannerData() {
+				const fmbanner = uniCloud.importObject("fm-banner")
+				const result = await fmbanner.getList()
+				this.bannerList = result.data
+				console.log(result)
+			},
 			handleItemClick(item) {
 				uni.navigateTo({
 					url: './detail?id=' + item._id
@@ -46,25 +52,25 @@
 <style lang="scss">
 	@import "@/static/css/iconfont.css";
 
-	.banner {
-		margin-top: -2rpx;
-		padding: 16rpx 32rpx 16rpx;
-		height: 300rpx;
-		background-color: #00cc99;
-
-		uni-swiper {
-			height: 100%;
-
-			.fm_image {
-				width: 100%;
-				height: 100%;
-				border-radius: 16rpx;
-			}
-		}
-	}
 
 	.top {
 		background-color: #00cc99;
+
+		.banner {
+			margin-top: -2rpx;
+			padding: 16rpx 32rpx 16rpx;
+			height: 300rpx;
+
+			uni-swiper {
+				height: 100%;
+
+				.fm_image {
+					width: 100%;
+					height: 100%;
+					border-radius: 16rpx;
+				}
+			}
+		}
 
 		.menu-contant {
 			display: flex;
