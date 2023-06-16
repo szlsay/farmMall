@@ -1,6 +1,6 @@
 <template>
 	<view class="container">
-		<view class="top">
+		<view class="top-home">
 			<view class="menu-contant">
 				<view class="item-menu" v-for="(item, index) in $store.state.sys.home_headers" :key="index">
 					<image v-if="item.icon && item.icon.fileType == 'image'" :src="item.icon.url"></image>
@@ -15,6 +15,8 @@
 					</swiper-item>
 				</swiper>
 			</view>
+		</view>
+		<view class="down-home">
 		</view>
 	</view>
 </template>
@@ -31,7 +33,7 @@
 			}
 		},
 		onLoad() {
-			this.getBannerData()
+			// this.getBannerData()
 		},
 		methods: {
 			async getBannerData() {
@@ -52,8 +54,12 @@
 <style lang="scss">
 	@import "@/static/css/iconfont.css";
 
+	.down-home {
+		height: 100%;
+		background: repeating-linear-gradient(to bottom, #00cc99, #fff);
+	}
 
-	.top {
+	.top-home {
 		background-color: #00cc99;
 
 		.banner {
