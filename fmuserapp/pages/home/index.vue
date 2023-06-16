@@ -11,7 +11,7 @@
 				<swiper circular :indicator-dots="bannerList.length > 1" indicator-active-color="#00CC99">
 					<swiper-item v-for="(item, index) in bannerList" :key="index">
 						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
-							mode="aspectFill"></image>
+							mode="aspectFill" @click="onClickBanner(item)"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -24,7 +24,8 @@
 				</view>
 			</view>
 			<view class="home-combo">
-				<view class="combo-item" v-for="(item, index) in comboMap[currentSortValue]" :key="index">
+				<view class="combo-item" v-for="(item, index) in comboMap[currentSortValue]" :key="index"
+					@click="onClickItem(item)">
 					<view class="item-left">
 						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" mode="aspectFill"></image>
 					</view>
@@ -66,21 +67,28 @@
 				this.comboList = result.data
 				this.comboMap = arryGroupMatchWithAll(this.comboList, 'sort')
 			},
-			onClickSort(index) {
-				this.currentSort = index
-				this.currentSortValue = this.$store.state.sys.combo_sorts[index].value
-			},
 			async getBannerData() {
 				const fmbanner = uniCloud.importObject("fm-banner")
 				const result = await fmbanner.getList()
 				this.bannerList = result.data
-				console.log(result)
 			},
-			handleItemClick(item) {
+			onClickSort(index) {
+				this.currentSort = index
+				this.currentSortValue = this.$store.state.sys.combo_sorts[index].value
+			},
+			onClickItem(item) {
 				uni.navigateTo({
 					url: './detail?id=' + item._id
 				})
 			},
+			onClickBanner(item) {
+				console.log(item)
+				if (item.type === "combo") {
+					uni.navigateTo({
+						url: './detail?id=' + item.value
+					})
+				}
+			}
 		}
 	}
 </script>
@@ -122,7 +130,7 @@
 					.description {
 						font-size: 24rpx;
 						color: #333333;
-						
+
 						overflow: hidden;
 						text-overflow: ellipsis;
 						display: -webkit-box;

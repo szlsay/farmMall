@@ -87,7 +87,13 @@
 	"subPackages": [{
 			"root": "pages/home",
 			"pages": [
-
+				{
+					"path": "detail",
+					"style": {
+						"navigationBarTitleText": "套餐详情",
+						"enablePullDownRefresh": false
+					}
+				}
 			]
 		}, {
 			"root": "pages/social",
