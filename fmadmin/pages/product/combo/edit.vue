@@ -59,8 +59,7 @@
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item required :name="['sku',index,'qty']" label="数量" :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请参考规格价格填写" type="number" v-model="item.qty"></uni-easyinput>
-							<!-- <uni-number-box :min="0" :max="100" v-model="item.qty" /> -->
+							<uni-easyinput placeholder="请输入产品数量" type="number" v-model="item.qty"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
