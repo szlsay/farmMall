@@ -5,6 +5,23 @@
 			<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
 			<view class="login-btn">登录</view>
 		</view>
+		<view class="my-order">
+			<view class="order-up">
+				<text class="title-order">我的订单</text>
+				<view class="all-order">
+					<text>全部订单</text>
+					<uni-icons type="right" size="16" color="#333333"></uni-icons>
+				</view>
+			</view>
+			<view class="order-down">
+				<view v-for="(item,index) in orderList" @click.native="onClickOrder(item.value)" :key="index"
+					class="item-order">
+					<uni-icons color="#00CC99" :type="item.icon" size="26"></uni-icons>
+					<text>{{item.text}}</text>
+				</view>
+			</view>
+
+		</view>
 		<view class="my-menu">
 			<view class="menu-item" v-for="(item, index) in menus" :key="index">
 				<text>{{item}}</text>
@@ -17,6 +34,22 @@
 	export default {
 		data() {
 			return {
+				orderList: [{
+						"text": "待支付",
+						"icon": "email-filled",
+						"value": 1
+					},
+					{
+						"text": "待发货",
+						"icon": "navigate-filled",
+						"value": 2
+					},
+					{
+						"text": "待收货",
+						"icon": "cart-filled",
+						"value": 3
+					}
+				],
 				menus: ["收货地址", "我的收藏", "设置"]
 			}
 		},
@@ -29,6 +62,48 @@
 <style lang="scss" scoped>
 	.my-page {
 		position: relative;
+	}
+
+	.my-order {
+		background: #fff;
+		box-shadow: 0px 3px 6px 0px rgba(173, 174, 179, 0.09), 0px -3px 6px 0px rgba(173, 174, 179, 0.09);
+		border-radius: 20rpx;
+		margin: 40rpx;
+		padding: 32rpx;
+
+		display: flex;
+		flex-direction: column;
+
+		.order-down {
+			display: flex;
+			justify-content: space-between;
+			padding: 32rpx 8rpx 0;
+
+			.item-order {
+				display: flex;
+				flex-direction: column;
+
+				text {
+					font-size: 28rpx;
+				}
+			}
+		}
+
+		.order-up {
+			display: flex;
+			justify-content: space-between;
+
+			.title-order {
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.all-order {
+				display: flex;
+				align-items: center;
+				font-size: 28rpx;
+			}
+		}
 	}
 
 	.my-menu {
