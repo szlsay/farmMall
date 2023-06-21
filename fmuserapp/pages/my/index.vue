@@ -1,7 +1,10 @@
 <template>
 	<view class="my-page">
 		<view class="my-bg"></view>
-		<view class="my-info">未登录</view>
+		<view class="my-info">
+			<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
+			<view class="login-btn">登录</view>
+		</view>
 		<view class="my-menu"></view>
 	</view>
 </template>
@@ -38,10 +41,25 @@
 		margin-left: 40rpx;
 		margin-right: 40rpx;
 		background: #fff;
-		box-shadow: 0px 3px 6px 0px rgba(173, 174, 179, 0.09), 0px -3px 6px 0px rgba(173, 174, 179, 0.09);
 		border-radius: 20rpx;
 		padding: 32rpx;
 		margin-bottom: 40rpx;
 		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		.nologin-icon {
+			width: 100rpx;
+			height: 100rpx;
+		}
+		.login-btn{
+			width: 160rpx;
+			color: #999;
+			font-size: 28rpx;
+			text-align: center;
+			height: 60rpx;
+			line-height: 60rpx;
+			border-radius: 30rpx;
+			border: 1rpx solid #999;
+		}
 	}
 </style>
