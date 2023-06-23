@@ -1,9 +1,13 @@
 <!-- 账号密码登录页 -->
 <template>
 	<view class="uni-content">
-		<view class="login-logo">
-			<image :src="logo"></image>
+		<!-- 2023年06月23日 添加背景图 -->
+		<view class="login-bg">
+			<image src="@/static/login/bg.jpg"></image>
 		</view>
+		<!-- 	<view class="login-logo">
+			<image :src="logo"></image>
+		</view> -->
 		<!-- 顶部文字 -->
 		<text class="title title-box">账号密码登录</text>
 		<uni-forms>
@@ -18,7 +22,7 @@
 		</uni-forms>
 		<uni-captcha v-if="needCaptcha" focus ref="captcha" scene="login-by-pwd" v-model="captcha" />
 		<!-- 带选择框的隐私政策协议组件 -->
-		<uni-id-pages-agreements scope="login" ref="agreements"></uni-id-pages-agreements>
+		<!-- <uni-id-pages-agreements scope="login" ref="agreements"></uni-id-pages-agreements> -->
 		<button class="uni-btn" type="primary" @click="pwdLogin">登录</button>
 		<!-- 忘记密码 -->
 		<view class="link-box">
@@ -30,7 +34,7 @@
 			<!-- <text class="link" @click="toRegister" v-if="!config.isAdmin">注册账号</text> -->
 		</view>
 		<!-- 悬浮登录方式组件 -->
-		<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login>
+		<!-- <uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login> -->
 	</view>
 </template>
 
@@ -149,6 +153,17 @@
 
 <style lang="scss" scoped>
 	@import "@/uni_modules/uni-id-pages/common/login-page.scss";
+
+	.login-bg {
+		position: fixed;
+		inset: 0;
+		z-index: -1;
+
+		image {
+			width: 100%;
+			height: 100%;
+		}
+	}
 
 	@media screen and (min-width: 690px) {
 		.uni-content {
