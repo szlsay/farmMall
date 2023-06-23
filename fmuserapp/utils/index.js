@@ -29,8 +29,9 @@ export function arryGroupMatchWithAll(arry, key) {
  * 是否登录
  */
 export function isLogin() {
-	const value = uni.getStorageSync('uni_id_token')
-	if (value && value != '') {
+	const userInfo = uniCloud.getCurrentUserInfo()
+	const time = Date.parse(new Date())
+	if (userInfo.uid && userInfo.tokenExpired > time) {
 		return true
 	} else {
 		return false
@@ -70,7 +71,8 @@ export function formatDate(value, fmt = 'yyyy/MM/dd hh:mm:ss') {
 		}
 		for (let k in o) {
 			if (new RegExp('(' + k + ')').test(fmt)) {
-				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+				fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k])
+					.length)))
 			}
 		}
 		return fmt;
