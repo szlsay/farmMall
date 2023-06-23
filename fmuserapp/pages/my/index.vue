@@ -64,7 +64,7 @@
 		methods: {
 			onClickAddress() {
 				uni.navigateTo({
-					url: '/pages/my/protocol?title=111'
+					url: '/pages/my/protocol?title=用户服务协议'
 				})
 				console.log('onClickAddress');
 			},
