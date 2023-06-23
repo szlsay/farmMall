@@ -18,6 +18,20 @@
 	display: none;
 }
 
+@media screen and (min-width: 190px) {
+	.uni-content {
+		padding: 20px;
+		max-width: 300px;
+		margin-left: calc(50% - 200px);
+		margin: 0 auto;
+		position: relative;
+		top: 100px;
+		border-radius: 10px;
+		box-shadow: 0 0 20px #efefef;
+		background-color: #FFF;
+	}
+}
+
 /* #ifndef APP-NVUE */
 @media screen and (min-width: 690px) {
   .uni-content {
