@@ -25,8 +25,14 @@
 
 		</view>
 		<view class="my-menu">
-			<view class="menu-item" v-for="(item, index) in menus" :key="index">
-				<text>{{item}}</text>
+			<view class="menu-item" @click="onClickAddress">
+				<text>收货地址</text>
+			</view>
+			<view class="menu-item" @click="onClickAddress">
+				<text>我的收藏</text>
+			</view>
+			<view class="menu-item" @click="onClickAddress">
+				<text>设置</text>
 			</view>
 		</view>
 	</view>
@@ -51,12 +57,17 @@
 						"icon": "cart-filled",
 						"value": 3
 					}
-				],
-				menus: ["收货地址", "我的收藏", "设置"]
+				]
 			}
 		},
 		mounted() {},
 		methods: {
+			onClickAddress() {
+				uni.navigateTo({
+					url: '/pages/my/protocol?title=111'
+				})
+				console.log('onClickAddress');
+			},
 			onClickOrder(value) {
 				console.log(value);
 			},

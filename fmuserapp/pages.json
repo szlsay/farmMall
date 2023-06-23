@@ -83,38 +83,34 @@
 			}
 		}
 		// #endif
-	,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
-    "style": {
-        "navigationBarTitleText": ""
-    }
-}
-,{
-    "path": "uni_modules/uni-id-pages/pages/register/register-admin",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "注册管理员账号"
-    }
-}
-,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "实名认证"
-    }
-}
-],
+		, {
+			"path": "uni_modules/uni-id-pages/pages/userinfo/cropImage/cropImage",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/register/register-admin",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "注册管理员账号"
+			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "实名认证"
+			}
+		}
+	],
 	"subPackages": [{
 			"root": "pages/home",
-			"pages": [
-				{
-					"path": "detail",
-					"style": {
-						"navigationBarTitleText": "套餐详情",
-						"enablePullDownRefresh": false
-					}
+			"pages": [{
+				"path": "detail",
+				"style": {
+					"navigationBarTitleText": "套餐详情",
+					"enablePullDownRefresh": false
 				}
-			]
+			}]
 		}, {
 			"root": "pages/social",
 			"pages": [
@@ -122,9 +118,13 @@
 			]
 		}, {
 			"root": "pages/my",
-			"pages": [
-
-			]
+			"pages": [{
+				"path": "protocol",
+				"style": {
+					"navigationBarTitleText": "",
+					"enablePullDownRefresh": false
+				}
+			}]
 		}, {
 			"root": "uni_modules/uni-feedback",
 			"pages": [{
