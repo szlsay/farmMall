@@ -171,21 +171,6 @@
 				"navigationBarTitleText": "回收列表"
 			}
 		}, {
-			"path": "pages/fmset/protocol/add",
-			"style": {
-				"navigationBarTitleText": "新增"
-			}
-		}, {
-			"path": "pages/fmset/protocol/edit",
-			"style": {
-				"navigationBarTitleText": "编辑"
-			}
-		}, {
-			"path": "pages/fmset/protocol/list",
-			"style": {
-				"navigationBarTitleText": "列表"
-			}
-		}, {
 			"path": "pages/fmset/ro/add",
 			"style": {
 				"navigationBarTitleText": "新增"
@@ -205,6 +190,21 @@
 	"subPackages": [{
 			"root": "pages/product",
 			"pages": [{
+				"path": "protocol/add",
+				"style": {
+					"navigationBarTitleText": "新增协议"
+				}
+			}, {
+				"path": "protocol/edit",
+				"style": {
+					"navigationBarTitleText": "编辑协议"
+				}
+			}, {
+				"path": "protocol/list",
+				"style": {
+					"navigationBarTitleText": "协议列表"
+				}
+			}, {
 				"path": "product/add",
 				"style": {
 					"navigationBarTitleText": "新增"

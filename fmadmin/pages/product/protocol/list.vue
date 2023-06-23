@@ -41,10 +41,6 @@
 						</uni-td>
 					</uni-tr>
 				</uni-table>
-				<view class="uni-pagination-box">
-					<uni-pagination show-icon :page-size="pagination.size" v-model="pagination.current"
-						:total="pagination.count" @change="onPageChanged" />
-				</view>
 			</unicloud-db>
 		</view>
 	</view>
@@ -76,7 +72,6 @@
 				query: '',
 				where: '',
 				orderby: dbOrderBy,
-				orderByFieldName: "",
 				selectedIndexs: [],
 				options: {
 					pageSize,
