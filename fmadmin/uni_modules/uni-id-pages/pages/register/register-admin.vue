@@ -1,13 +1,10 @@
 <!-- 创建超级管理员 -->
 <template>
 	<view class="uni-content">
-		<view class="login-bg">
-			<image src="@/static/login/bg.jpg"></image>
-		</view>
 		<match-media :min-width="690">
-<!-- 			<view class="login-logo">
+			<view class="login-logo">
 				<image :src="logo"></image>
-			</view> -->
+			</view>
 			<!-- 顶部文字 -->
 			<text class="title title-box">创建超级管理员</text>
 		</match-media>
@@ -142,15 +139,7 @@
 
 <style lang="scss">
 	@import "@/uni_modules/uni-id-pages/common/login-page.scss";
-	.login-bg{
-		position: fixed;
-		inset: 0;
-		z-index: -1;
-		image{
-			width: 100%;
-			height: 100%;
-		}
-	}
+	
 	@media screen and (max-width: 690px) {
 		.uni-content{
 			margin-top: 15px;

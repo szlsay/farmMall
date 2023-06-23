@@ -1,5 +1,6 @@
 <template>
 	<view class="my-page">
+		{{userInfo}} {{hasLogin}}
 		<view class="my-bg"></view>
 		<view class="my-info">
 			<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
@@ -39,6 +40,9 @@
 </template>
 
 <script>
+	import {
+		store
+	} from '@/uni_modules/uni-id-pages/common/store.js'
 	export default {
 		data() {
 			return {
@@ -61,6 +65,14 @@
 			}
 		},
 		mounted() {},
+		computed: {
+			userInfo() {
+				return store.userInfo
+			},
+			hasLogin() {
+				return store.hasLogin
+			}
+		},
 		methods: {
 			onClickAddress() {
 				uni.navigateTo({
