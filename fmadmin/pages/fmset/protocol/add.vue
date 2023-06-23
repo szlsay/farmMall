@@ -1,17 +1,32 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-			<uni-forms-item name="title" label="协议标题" required :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="请填写协议标题" v-model="formData.title" trim="both"></uni-easyinput>
-			</uni-forms-item>
-			<uni-forms-item name="type" label="协议类型" required :label-width="labelWidth" label-align="right">
-				<uni-data-checkbox v-model="formData.type" :localdata="formOptions.type_localdata"></uni-data-checkbox>
-			</uni-forms-item>
-			<uni-forms-item name="content" label="协议内容" required :label-width="labelWidth" label-align="right">
-				<!-- <uni-easyinput placeholder="请填写协议内容" v-model="formData.content"></uni-easyinput> -->
-				<view id="wangeditor">
-				</view>
-			</uni-forms-item>
+			<!-- 基本信息 -->
+			<view class="fm-box">
+				<view class="fm-card-header">基本信息</view>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="title" label="协议标题" required :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写协议标题" v-model="formData.title" trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="type" label="协议类型" required :label-width="labelWidth" label-align="right">
+							<uni-data-select placeholder="请选择类型" v-model="formData.type"
+								:localdata="formOptions.type_localdata"></uni-data-select>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+			<!-- 协议信息 -->
+			<view class="fm-box">
+				<view class="fm-card-header">协议信息</view>
+				<uni-forms-item name="content">
+					<view id="wangeditor">
+					</view>
+				</uni-forms-item>
+			</view>
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -47,7 +62,7 @@
 		data() {
 			let formData = {
 				"title": "",
-				"type": 0,
+				"type": null,
 				"content": ""
 			}
 			return {
@@ -63,7 +78,7 @@
 							"value": 1
 						},
 						{
-							"text": "隐私政策",
+							"text": "隐私政策条款",
 							"value": 2
 						}
 					]

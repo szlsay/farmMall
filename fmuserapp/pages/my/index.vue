@@ -61,11 +61,9 @@
 				console.log(value);
 			},
 			onClickLogin() {
-				console.log(1);
-				// console.log(111);
-				// uni.navigateTo({
-				// 	url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
-				// })
+				uni.navigateTo({
+					url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
+				})
 			}
 		}
 	}
