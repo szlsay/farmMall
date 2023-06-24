@@ -3,7 +3,11 @@
 		{{userInfo}} {{hasLogin}}
 		<view class="my-bg"></view>
 		<view class="my-info">
-			<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
+			<view class="">
+				<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
+				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
+			</view>
+
 			<view>
 				<button class="login-btn" @click="onClickLogin()">登录</button>
 			</view>
@@ -46,6 +50,28 @@
 	export default {
 		data() {
 			return {
+				menuList: [{
+						"title": "收货地址",
+						"event": 'onClickAddress',
+					},
+					{
+						"title": "我的商品",
+						"event": 'onClickAddress',
+					},
+					{
+						"title": "收货地址",
+						"to": '/pages/my/address/list',
+					},
+					{
+						"title": "我的积分",
+						"event": 'getScore',
+					},
+					{
+						"title": "分销推广",
+						"event": 'share',
+						"icon": "redo"
+					}
+				],
 				orderList: [{
 						"text": "待支付",
 						"icon": "email-filled",
