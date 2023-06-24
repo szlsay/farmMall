@@ -27,28 +27,10 @@
 		},
 		"title": {
 			"bsonType": "string",
-			"description": "请填写协议标题",
-			"label": "协议标题",
+			"description": "请选择协议类型",
+			"label": "协议类型",
 			"maxLength": 50,
 			"trim": "both"
-		},
-		"type": {
-			"bsonType": "int",
-			"label": "协议类型",
-			"defaultValue": 0,
-			"enum": [{
-					"text": "用户服务协议",
-					"value": 0
-				},
-				{
-					"text": "用户授权协议",
-					"value": 1
-				},
-				{
-					"text": "隐私政策条款",
-					"value": 2
-				}
-			]
 		},
 		"content": {
 			"bsonType": "string",

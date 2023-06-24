@@ -9,7 +9,8 @@ export default {
 		multiple_rules: [],
 		credit_rules: [],
 		ad_types: [],
-		combo_sorts: []
+		combo_sorts: [],
+		protocol_types: []
 	},
 	mutations: {
 		SET_DICTS: (state, dicts) => {
@@ -19,6 +20,7 @@ export default {
 			state.product_units = dicts.filter(item => item.type === "product_unit")[0]["enum"]
 			state.ad_types = dicts.filter(item => item.type === "ad_type")[0]["enum"]
 			state.combo_sorts = dicts.filter(item => item.type === "combo_sort")[0]["enum"]
+			state.protocol_types = dicts.filter(item => item.type === "protocol_type")[0]["enum"]
 		},
 		SET_PriceRules: (state, priceRules) => {
 			console.log(priceRules)
