@@ -8,13 +8,8 @@
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="title" label="协议标题" required :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请填写协议标题" v-model="formData.title" trim="both"></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="type" label="协议类型" required :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择类型" v-model="formData.type"
-								:localdata="formOptions.type_localdata"></uni-data-select>
+							<uni-data-select placeholder="请选择协议标题" v-model="type"
+								:localdata="$store.state.sys.protocol_types" @change="onChange"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -61,29 +56,13 @@
 	export default {
 		data() {
 			let formData = {
-				"update_time": null,
 				"title": "",
-				"type": null,
 				"content": ""
 			}
 			return {
+				type: '',
 				labelWidth: 80,
 				formData,
-				formOptions: {
-					"type_localdata": [{
-							"text": "用户服务协议",
-							"value": 0
-						},
-						{
-							"text": "用户授权协议",
-							"value": 1
-						},
-						{
-							"text": "隐私政策条款",
-							"value": 2
-						}
-					]
-				},
 				rules: {
 					...getValidator(Object.keys(formData))
 				}
@@ -101,6 +80,19 @@
 			this.initEditor()
 		},
 		methods: {
+			onChange(value) {
+				console.log(value)
+				if (value) {
+					const protocol_types = this.$store.state.sys.protocol_types.filter(item => item.value === value)
+					if (protocol_types.length > 0) {
+						this.formData.title = protocol_types[0].text
+					} else {
+						this.formData.title = ''
+					}
+				} else {
+					this.formData.title = ''
+				}
+			},
 			/**
 			 * 初始化富文本编辑器
 			 */
@@ -174,12 +166,20 @@
 				uni.showLoading({
 					mask: true
 				})
-				db.collection(dbCollectionName).doc(id).field("create_time,update_time,title,type,content").get().then((
+				db.collection(dbCollectionName).doc(id).field("title,content").get().then((
 					res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
 						editor.txt.html(this.formData.content)
+
+						const protocol_types = this.$store.state.sys.protocol_types.filter(item => item.text ===
+							this.formData.title)
+						if (protocol_types.length > 0) {
+							this.type = protocol_types[0].value
+						} else {
+							this.type = ''
+						}
 					}
 				}).catch((err) => {
 					uni.showModal({
