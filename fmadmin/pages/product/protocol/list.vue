@@ -10,12 +10,11 @@
 			</view>
 		</view>
 		<view class="uni-container">
-			<unicloud-db ref="udb" :collection="collectionList" field="create_time,update_time,title" :where="where"
-				page-data="replace" :orderby="orderby" :getcount="true"
-				v-slot:default="{data,pagination,loading,error,options}">
+			<unicloud-db ref="udb" collection="fm-protocol" field="create_time,update_time,title" page-data="replace"
+				:getcount="true" v-slot:default="{data,pagination,loading,error,options}">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
 					<uni-tr>
-						<uni-th align="center">协议类型</uni-th>
+						<uni-th align="center">协议标题</uni-th>
 						<uni-th align="center">创建时间</uni-th>
 						<uni-th align="center">更新时间</uni-th>
 						<uni-th align="center">操作</uni-th>
@@ -44,37 +43,7 @@
 </template>
 
 <script>
-	import {
-		enumConverter,
-		filterToWhere
-	} from '@/js_sdk/validator/fm-protocol.js';
-
-	const db = uniCloud.database()
-	// 表查询配置
-	const dbOrderBy = 'type' // 排序字段
-
-	const orderByMapping = {
-		"ascending": "asc",
-		"descending": "desc"
-	}
-
 	export default {
-		data() {
-			return {
-				collectionList: "fm-protocol",
-				query: '',
-				where: '',
-				orderby: dbOrderBy,
-				selectedIndexs: [],
-				imageStyles: {
-					width: 64,
-					height: 64
-				}
-			}
-		},
-		onLoad() {
-			this._filter = {}
-		},
 		onReady() {
 			this.$refs.udb.loadData()
 		},
@@ -84,15 +53,7 @@
 					clear
 				})
 			},
-			onPageChanged(e) {
-				this.selectedIndexs.length = 0
-				this.$refs.table.clearSelection()
-				this.$refs.udb.loadData({
-					current: e.current
-				})
-			},
 			navigateTo(url, clear) {
-				// clear 表示刷新列表时是否清除页码，true 表示刷新并回到列表第 1 页，默认为 true
 				uni.navigateTo({
 					url,
 					events: {
