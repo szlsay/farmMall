@@ -10,9 +10,9 @@
 			</view>
 		</view>
 		<view class="uni-container">
-			<unicloud-db ref="udb" collection="fm-protocol" field="create_time,update_time,title" page-data="replace"
-				:getcount="true" v-slot:default="{data,pagination,loading,error,options}">
-				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
+			<unicloud-db ref="udb" collection="fm-protocol" field="create_time,update_time,title"
+				v-slot:default="{data,loading}">
+				<uni-table ref="table" :loading="loading" border stripe>
 					<uni-tr>
 						<uni-th align="center">协议标题</uni-th>
 						<uni-th align="center">创建时间</uni-th>
@@ -29,7 +29,7 @@
 						</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
-								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
+								<button @click="navigateTo('./edit?id='+item._id, true)" class="uni-button" size="mini"
 									type="primary">修改</button>
 								<button @click="confirmDelete(item._id)" class="uni-button" size="mini"
 									type="warn">删除</button>
