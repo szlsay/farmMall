@@ -30,14 +30,8 @@
 
 		</view>
 		<view class="my-menu">
-			<view class="menu-item" @click="onClickAddress">
-				<text>收货地址</text>
-			</view>
-			<view class="menu-item" @click="onClickAddress">
-				<text>我的收藏</text>
-			</view>
-			<view class="menu-item" @click="onClickAddress">
-				<text>设置</text>
+			<view class="menu-item" v-for="(item, index) in menuList" :key="index" @click="onClickMenu(item)">
+				<text>{{item.title}}</text>
 			</view>
 		</view>
 	</view>
@@ -55,21 +49,12 @@
 						"event": 'onClickAddress',
 					},
 					{
-						"title": "我的商品",
+						"title": "我的收藏",
 						"event": 'onClickAddress',
 					},
 					{
-						"title": "收货地址",
-						"to": '/pages/my/address/list',
-					},
-					{
-						"title": "我的积分",
-						"event": 'getScore',
-					},
-					{
-						"title": "分销推广",
-						"event": 'share',
-						"icon": "redo"
+						"title": "设置",
+						"event": 'onClickAddress',
 					}
 				],
 				orderList: [{
@@ -100,6 +85,12 @@
 			}
 		},
 		methods: {
+			onClickMenu(item) {
+				console.log(item)
+				if (item.event) {
+					this[item.event]();
+				}
+			},
 			onClickAddress() {
 				uni.navigateTo({
 					url: '/pages/my/protocol?title=用户服务协议'
