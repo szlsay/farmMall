@@ -1,14 +1,13 @@
 <template>
 	<view class="my-page">
-		{{userInfo}} {{hasLogin}}
 		<view class="my-bg"></view>
 		<view class="my-info">
-			<view class="">
+			<view class="info-user">
 				<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
-				<text class="uer-name" v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
+				<text style="margin-left: 16rpx;"
+					v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 			</view>
-
-			<view>
+			<view v-if="!hasLogin">
 				<button class="login-btn" @click="onClickLogin()">登录</button>
 			</view>
 		</view>
@@ -207,6 +206,11 @@
 		justify-content: space-between;
 		align-items: center;
 
+		.info-user {
+			display: flex;
+			align-items: center;
+		}
+
 		.nologin-icon {
 			width: 100rpx;
 			height: 100rpx;
@@ -216,8 +220,6 @@
 			width: 160rpx;
 			color: #999;
 			font-size: 28rpx;
-			// // text-align: center;
-			// // height: 60rpx;
 			line-height: 60rpx;
 			border-radius: 30rpx;
 			border: 1rpx solid #999;
