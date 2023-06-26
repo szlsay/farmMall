@@ -124,6 +124,26 @@
 					"navigationBarTitleText": "",
 					"enablePullDownRefresh": false
 				}
+			}, {
+				"path": "address/add",
+				"style": {
+					"navigationBarTitleText": "地址新增"
+				}
+			}, {
+				"path": "address/edit",
+				"style": {
+					"navigationBarTitleText": "地址编辑"
+				}
+			}, {
+				"path": "address/list",
+				"style": {
+					"navigationBarTitleText": "地址列表"
+				}
+			}, {
+				"path": "address/select",
+				"style": {
+					"navigationBarTitleText": "地址选择"
+				}
 			}]
 		}, {
 			"root": "uni_modules/uni-feedback",

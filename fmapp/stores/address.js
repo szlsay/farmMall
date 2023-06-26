@@ -20,10 +20,10 @@ export const useAddressStore = defineStore('address', {
 			if (result.data) {
 				this.list = result.data
 				if (this.selectId === '') {
-					 const selectData = this.list.find(item => item.is_default === true)
-					 if (selectData && selectData._id) {
-						 this.selectId = selectData._id
-					 }
+					const selectData = this.list.find(item => item.is_default === true)
+					if (selectData && selectData._id) {
+						this.selectId = selectData._id
+					}
 				}
 			}
 		},

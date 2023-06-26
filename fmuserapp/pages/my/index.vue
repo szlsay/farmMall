@@ -92,7 +92,7 @@
 			},
 			onClickAddress() {
 				uni.navigateTo({
-					url: '/pages/my/protocol?title=用户服务协议'
+					url: '/pages/my/address/list'
 				})
 				console.log('onClickAddress');
 			},
