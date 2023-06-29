@@ -53,8 +53,19 @@ module.exports = {
 			return item
 		})
 	},
-	get(_id) {
-		return dbJql.collection(dbCollectionName).doc(_id).get()
+	async get(_id) {
+		const result = await dbJql.collection(dbCollectionName).doc(_id).get()
+		const product_ids = result.data[0].sku.map(item => item.product_id)
+		const productResult = await dbJql.collection("fm-product").where({
+			_id: db.command.in(product_ids)
+		}).field("image").get()
+		result.data[0].sku.map(item => {
+			const select = productResult.data.filter(product => product._id === item.product_id)
+			if (select.length > 0) {
+				item.image = select[0].image
+			}
+		})
+		return result
 	},
 	getList() {
 		return dbJql.collection(dbCollectionName).where({
