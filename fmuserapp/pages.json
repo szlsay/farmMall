@@ -147,11 +147,6 @@
 				"style": {
 					"navigationBarTitleText": "地址列表"
 				}
-			}, {
-				"path": "address/select",
-				"style": {
-					"navigationBarTitleText": "地址选择"
-				}
 			}]
 		}, {
 			"root": "uni_modules/uni-feedback",
