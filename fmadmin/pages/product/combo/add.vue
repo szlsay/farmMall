@@ -67,7 +67,8 @@
 							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
 					</uni-col>
 				</uni-row>
-				<view class="uni-button-group" style="margin-top: 0;" v-if="formData.sku && formData.sku.length < skuMax">
+				<view class="uni-button-group" style="margin-top: 0;"
+					v-if="formData.sku && formData.sku.length < skuMax">
 					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddSku">新增规格</button>
 				</view>
 			</view>
@@ -103,8 +104,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
-						<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
-							maxlength="500"></uni-easyinput>
+						<st-editor ref="editor" @onEdit="onEdit"></st-editor>
 					</uni-forms-item>
 				</uni-row>
 			</view>
@@ -209,6 +209,9 @@
 			this.getProducts()
 		},
 		methods: {
+			onEdit(description) {
+				this.formData.description = description
+			},
 			getProducts() {
 				const db = uniCloud.database()
 				db.collection("fm-product").where({

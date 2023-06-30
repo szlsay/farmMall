@@ -6,9 +6,10 @@
 				<view class="fm-card-header">基本信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="title" label="协议标题" required :label-width="labelWidth" label-align="right">
-							<uni-data-select placeholder="请选择协议标题" v-model="type" :localdata="$store.state.sys.protocol_types"
-								@change="onChange"></uni-data-select>
+						<uni-forms-item name="title" label="协议标题" required :label-width="labelWidth"
+							label-align="right">
+							<uni-data-select placeholder="请选择协议标题" v-model="type"
+								:localdata="$store.state.sys.protocol_types" @change="onChange"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -31,7 +32,6 @@
 </template>
 
 <script>
-	import E from 'wangeditor'
 	import {
 		validator
 	} from '@/js_sdk/validator/fm-protocol.js';
@@ -49,8 +49,6 @@
 		}
 		return result
 	}
-
-	let editor = null
 	export default {
 		data() {
 			let formData = {
@@ -68,7 +66,6 @@
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
-			this.initEditor()
 		},
 		methods: {
 			onEdit(content) {

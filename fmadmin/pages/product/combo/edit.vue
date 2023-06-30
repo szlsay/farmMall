@@ -103,8 +103,7 @@
 				</uni-row>
 				<uni-row>
 					<uni-forms-item name="description" label="产品描述" :label-width="labelWidth" label-align="right">
-						<uni-easyinput type="textarea" placeholder="请填写产品描述" v-model="formData.description" trim="both"
-							maxlength="500"></uni-easyinput>
+						<st-editor ref="editor" @onEdit="onEdit"></st-editor>
 					</uni-forms-item>
 				</uni-row>
 			</view>
@@ -220,6 +219,9 @@
 			this.getProducts()
 		},
 		methods: {
+			onEdit(content) {
+				this.formData.description = content
+			},
 			getProducts() {
 				const db = uniCloud.database()
 				db.collection("fm-product").where({
@@ -314,7 +316,7 @@
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
-
+						this.$refs.editor.setContent(this.formData.description)
 					}
 				}).catch((err) => {
 					uni.showModal({
