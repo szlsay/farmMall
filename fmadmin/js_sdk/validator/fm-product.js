@@ -2,16 +2,6 @@
 
 
 const validator = {
-	"product_attri": {
-		"rules": [{
-				"format": "array"
-			},
-			{
-				"arrayType": "object"
-			}
-		],
-		"label": "产品属性"
-	},
 	"name": {
 		"rules": [{
 				"format": "string"
@@ -53,6 +43,16 @@ const validator = {
 			}
 		],
 		"label": "展示图片"
+	},
+	"product_attri": {
+		"rules": [{
+				"format": "array"
+			},
+			{
+				"arrayType": "object"
+			}
+		],
+		"label": "产品属性"
 	},
 	"raw_cost": {
 		"rules": [{

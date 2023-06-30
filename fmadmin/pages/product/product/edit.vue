@@ -46,7 +46,7 @@
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item required :name="['attri',index,'text']" label="标题" :label-width="labelWidth"
 							label-align="right">
-							<uni-easyinput placeholder="请填写标题" v-model="attri.title" trim="both" maxlength="8"></uni-easyinput>
+							<uni-easyinput placeholder="请填写标题" v-model="attri.text" trim="both" maxlength="8"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -370,7 +370,7 @@
 			onAddAttri() {
 				const item = {
 					"text": null,
-					"vale": null
+					"value": null
 				}
 				if (!this.formData.product_attri) {
 					this.formData.product_attri = []
@@ -460,6 +460,7 @@
 				})
 			},
 			submitForm(value) {
+				if (this.formData.product_attri.length) value.product_attri = this.formData.product_attri
 				const fmproduct = uniCloud.importObject("fm-product")
 				fmproduct.update(this.formDataId, value).then((res) => {
 					uni.showToast({
