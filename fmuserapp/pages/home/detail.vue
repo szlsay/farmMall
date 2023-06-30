@@ -9,7 +9,7 @@
 		</view>
 		<view class="box combo-sku" v-if="data">
 			<text class="combo-title">产品内容</text>
-			<view class="sku-list" v-for="(item, index) in data.sku" :key="index">
+			<view class="sku-list" v-for="(item, index) in data.sku" :key="index" @click="onClickSku(item)">
 				<view class="left-list">
 					<image :src="item.image.url" mode="aspectFill"></image>
 					<view class="sku-info">
@@ -26,7 +26,8 @@
 			<text class="combo-title">用户评价</text>
 		</view>
 		<view class="box combo-detail" v-if="data">
-			<text>{{data.description}}</text>
+			<text class="combo-title">详情介绍</text>
+			<view>{{data.description}}</view>
 		</view>
 	</view>
 </template>
@@ -44,6 +45,12 @@
 			this.getData()
 		},
 		methods: {
+			onClickSku(item) {
+				console.log(item)
+				uni.navigateTo({
+					url: './product?id=' + item.product_id
+				})
+			},
 			getMeasureUnitText(value) {
 				const result = this.$store.state.sys.measure_units.filter(item => item.value === value)
 				if (result && result.length > 0) {
@@ -61,10 +68,10 @@
 			async getData() {
 				const fmcombo = uniCloud.importObject('fm-combo')
 				const result = await fmcombo.get(this.query.id)
-				console.log(result)
-				if (result.data && result.data.length > 0) {
-					this.data = result.data[0]
-				}
+				this.data = result.data[0]
+				uni.setNavigationBarTitle({
+					title: this.data.name
+				})
 			}
 		}
 	}
@@ -111,15 +118,17 @@
 					height: 150rpx;
 					border-radius: 10rpx;
 				}
-				.sku-info{
+
+				.sku-info {
 					padding-left: 20rpx;
-					
+
 					display: flex;
 					flex-direction: column;
-					justify-content:space-around;
+					justify-content: space-around;
 				}
 			}
-			.right-list{
+
+			.right-list {
 				display: flex;
 				justify-content: center;
 				align-items: center;

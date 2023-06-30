@@ -105,12 +105,20 @@
 	"subPackages": [{
 			"root": "pages/home",
 			"pages": [{
-				"path": "detail",
-				"style": {
-					"navigationBarTitleText": "套餐详情",
-					"enablePullDownRefresh": false
+					"path": "detail",
+					"style": {
+						"navigationBarTitleText": "套餐详情",
+						"enablePullDownRefresh": false
+					}
+				},
+				{
+					"path": "product",
+					"style": {
+						"navigationBarTitleText": "产品详情",
+						"enablePullDownRefresh": false
+					}
 				}
-			}]
+			]
 		}, {
 			"root": "pages/social",
 			"pages": [
