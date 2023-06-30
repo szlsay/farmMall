@@ -9,6 +9,7 @@
 		<view class="box product-detail" v-if="data">
 			<text class="product-title">详情介绍</text>
 			<view>{{data.description}}</view>
+			<image v-for="(item, index) in data.image_content" :key="index" :src="item.url" mode="widthFix"></image>
 		</view>
 	</view>
 </template>
@@ -85,45 +86,11 @@
 		font-weight: bold;
 	}
 
-	.product-sku {
-		.sku-list {
-			display: flex;
-			justify-content: space-between;
-			margin-top: 32rpx;
-
-			.left-list {
-				display: flex;
-
-				image {
-					width: 200rpx;
-					height: 150rpx;
-					border-radius: 10rpx;
-				}
-
-				.sku-info {
-					padding-left: 20rpx;
-
-					display: flex;
-					flex-direction: column;
-					justify-content: space-around;
-				}
-			}
-
-			.right-list {
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-		}
-	}
-
-	.product-comment {
-		padding: 40rpx;
-	}
-
 	.product-detail {
-		padding: 40rpx;
-
 		text {}
+		image{
+			width: 100%;
+			vertical-align: middle;
+		}
 	}
 </style>
