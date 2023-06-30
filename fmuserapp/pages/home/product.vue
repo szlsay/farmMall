@@ -2,9 +2,10 @@
 	<view class="page-product ">
 		<view class="box product-info" v-if="data">
 			<image :src="data.image.url" mode="aspectFill" @click="onPreview(data.image.url)"></image>
-			<view class="info-box">
+			<view class="info-title">{{data.name}}</view>
+			<!-- <view class="info-box">
 				<text>{{data.name}}</text>
-			</view>
+			</view> -->
 		</view>
 		<view class="box product-attri" v-if="data">
 			<text class="product-title">产品属性</text>
@@ -26,7 +27,8 @@
 		<view class="box product-detail" v-if="data">
 			<text class="product-title">详情介绍</text>
 			<view>{{data.description}}</view>
-			<image v-for="(item, index) in data.image_content" :key="index" :src="item.url" mode="widthFix" @click="onPreviewImageList(index)"></image>
+			<image v-for="(item, index) in data.image_content" :key="index" :src="item.url" mode="widthFix"
+				@click="onPreviewImageList(index)"></image>
 		</view>
 	</view>
 </template>
@@ -150,16 +152,9 @@
 			border-radius: 20rpx;
 		}
 
-		.info-box {
-			background-color: #fff;
+		.info-title {
 			padding-top: 16rpx;
-			display: flex;
-			border-radius: 20rpx;
-			flex-direction: column;
-
-			text:nth-last-child(1) {
-				color: red;
-			}
+			font-weight: bold;
 		}
 	}
 
