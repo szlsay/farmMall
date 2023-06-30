@@ -1,22 +1,24 @@
 <template>
 	<view>
-		<view class="combo-info" v-if="data">
+		<view class="box combo-info" v-if="data">
 			<image :src="data.image.url" mode="aspectFill" @click="onPreview(data.image.url)"></image>
 			<view class="info-box">
 				<text>{{data.name}}</text>
 				<text>￥{{data.sell_price}}</text>
 			</view>
 		</view>
-		<view class="divider"></view>
-		<view class="combo-sku" v-if="data">
-			<text>产品内容</text>
+		<view class="box combo-sku" v-if="data">
+			<text class="combo-title">产品内容</text>
 			<view class="sku-list" v-for="(item, index) in data.sku" :key="index">
-				{{item}}
+				<image :src="item.image.url" mode="aspectFill"></image>
+				{{item.product_name}}
+				{{item.unit}}
+				{{item.qty}}
 			</view>
 		</view>
 		<view class="divider"></view>
 		<view class="combo-comment" v-if="data">
-			<text>用户评价</text>
+			<text class="combo-title">用户评价</text>
 		</view>
 		<view class="divider"></view>
 		<view class="combo-detail" v-if="data">
@@ -57,23 +59,20 @@
 </script>
 
 <style lang="scss" scoped>
-	.divider {
-		height: 16rpx;
-		background-color: #f2f2f2;
-	}
+	@import "@/static/css/common.css";
 
 	.combo-info {
 		image {
 			width: 100%;
 			height: 400rpx;
+			border-radius: 20rpx;
 		}
 
 		.info-box {
 			background-color: #fff;
-			padding-left: 40rpx;
 			padding-top: 16rpx;
-			padding-bottom: 16rpx;
 			display: flex;
+			border-radius: 20rpx;
 			flex-direction: column;
 
 			text:nth-last-child(1) {
@@ -81,9 +80,13 @@
 			}
 		}
 	}
+	
+	.combo-title{
+		font-weight: bold;
+	}
 
 	.combo-sku {
-		padding: 40rpx;
+		
 	}
 
 	.combo-comment {
