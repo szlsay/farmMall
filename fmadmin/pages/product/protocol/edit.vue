@@ -17,9 +17,7 @@
 			<view class="fm-box">
 				<view class="fm-card-header">协议信息</view>
 				<uni-forms-item name="content">
-					<!-- <view id="wangeditor"> -->
 					<st-editor ref="editor" @onEdit="onEdit"></st-editor>
-					<!-- </view> -->
 				</uni-forms-item>
 			</view>
 			<view class="uni-button-group">
