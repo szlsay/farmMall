@@ -3,7 +3,9 @@
 		<view class="my-bg"></view>
 		<view class="box my-info">
 			<view class="info-user">
-				<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
+				<image :src="userInfo.avatar_file.url" class="login-icon"
+					v-if="userInfo.avatar_file && userInfo.avatar_file.url"></image>
+				<image src="@/static/imgs/user-circle.png" class="login-icon" v-else></image>
 				<text style="margin-left: 16rpx;"
 					v-if="hasLogin">{{userInfo.nickname||userInfo.username||userInfo.mobile}}</text>
 			</view>
@@ -163,10 +165,11 @@
 			padding-bottom: 32rpx;
 			border-bottom: 1rpx solid #eee;
 		}
+
 		.menu-item:first-child {
 			padding-top: 0;
 		}
-		
+
 		.menu-item:last-child {
 			padding-bottom: 0;
 		}
@@ -205,9 +208,10 @@
 			align-items: center;
 		}
 
-		.nologin-icon {
+		.login-icon {
 			width: 100rpx;
 			height: 100rpx;
+			border-radius: 50%;
 		}
 
 		.login-btn {
