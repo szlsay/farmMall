@@ -39,6 +39,32 @@
 					</uni-forms-item>
 				</uni-row>
 			</view>
+			<!-- 产品属性 -->
+			<view class="fm-box">
+				<view class="fm-card-header">产品属性 (最多{{attriMax}}个)</view>
+				<uni-row v-for="(attri, index) in formData.product_attri" :key="index">
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item required :name="['attri',index,'text']" label="标题" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写标题" v-model="attri.title" trim="both" maxlength="8"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item required :name="['attri',index,'value']" label="属性值" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写属性值" v-model="attri.value" trim="both" maxlength="8"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<button @click="onDeleteAttri(index)" class="uni-button" size="mini" type="warn"
+							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
+					</uni-col>
+				</uni-row>
+				<view class="uni-button-group" style="margin-top: 0;"
+					v-if="!(formData.product_attri && formData.product_attri.length >= attriMax)">
+					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddAttri">新增属性</button>
+				</view>
+			</view>
 			<!-- 生产环节 -->
 			<view class="fm-box">
 				<view class="fm-card-header">生产环节</view>
@@ -285,9 +311,11 @@
 				"product_bonus": null,
 				"market_bonus": null,
 				"develop_bonus": null,
-				"ni_price": null
+				"ni_price": null,
+				"product_attri": null
 			}
 			return {
+				attriMax: 10,
 				imageStyles: {
 					width: 140,
 					height: 140,
@@ -339,6 +367,19 @@
 			}
 		},
 		methods: {
+			onAddAttri() {
+				const item = {
+					"text": null,
+					"vale": null
+				}
+				if (!this.formData.product_attri) {
+					this.formData.product_attri = []
+				}
+				this.formData.product_attri.push(item)
+			},
+			onDeleteAttri(index) {
+				this.formData.product_attri.splice(index, 1)
+			},
 			getNI() {
 				const market_price = this.formData.market_price * 100
 				const pack_fee = this.formData.pack_fee * 100
@@ -438,7 +479,7 @@
 					mask: true
 				})
 				db.collection(dbCollectionName).doc(id).field(
-					"name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price"
+					"name,raw_name,unit,unit_title,image,image_content,raw_cost,yield_ratio,processing_cost,finish_cost,transport_cost,reproduct_cost,sideline_income,quality_ratio,sum_cost,fixed_ratio,market_price,pack_fee,delivery_fee,branch_fee,market_fee,platform_fee,gp_price,product_bonus,market_bonus,develop_bonus,ni_price,product_attri"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {

@@ -59,7 +59,7 @@
 					</uni-col>
 				</uni-row>
 				<view class="uni-button-group" style="margin-top: 0;"
-					v-if="formData.product_attri && formData.product_attri.length < attriMax">
+					v-if="!(formData.product_attri && formData.product_attri.length >= attriMax)">
 					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddAttri">新增属性</button>
 				</view>
 			</view>
@@ -281,7 +281,7 @@
 				"market_bonus": null,
 				"develop_bonus": null,
 				"ni_price": null,
-				"product_attri": []
+				"product_attri": null
 			}
 			return {
 				attriMax: 10,
@@ -334,6 +334,9 @@
 				const item = {
 					"text": null,
 					"vale": null
+				}
+				if (!this.formData.product_attri) {
+					this.formData.product_attri = []
 				}
 				this.formData.product_attri.push(item)
 			},

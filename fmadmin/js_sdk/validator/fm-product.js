@@ -2,6 +2,16 @@
 
 
 const validator = {
+	"product_attri": {
+		"rules": [{
+				"format": "array"
+			},
+			{
+				"arrayType": "object"
+			}
+		],
+		"label": "产品属性"
+	},
 	"name": {
 		"rules": [{
 				"format": "string"
