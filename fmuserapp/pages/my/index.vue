@@ -1,7 +1,7 @@
 <template>
 	<view class="my-page">
 		<view class="my-bg"></view>
-		<view class="my-info">
+		<view class="box my-info">
 			<view class="info-user">
 				<image src="@/static/imgs/user-circle.png" class="nologin-icon"></image>
 				<text style="margin-left: 16rpx;"
@@ -11,7 +11,7 @@
 				<button class="login-btn" @click="onClickLogin()">登录</button>
 			</view>
 		</view>
-		<view class="my-order">
+		<view class="box my-order">
 			<view class="order-up">
 				<text class="title-order">我的订单</text>
 				<view class="all-order">
@@ -28,7 +28,7 @@
 			</view>
 
 		</view>
-		<view class="my-menu">
+		<view class="box my-menu">
 			<view class="menu-item" v-for="(item, index) in menuList" :key="index" @click="onClickMenu(item)">
 				<text>{{item.title}}</text>
 			</view>
@@ -53,7 +53,7 @@
 					},
 					{
 						"title": "设置",
-						"event": 'onClickAddress',
+						"to": '/pages/ucenter/settings/settings',
 					}
 				],
 				orderList: [{
@@ -89,6 +89,12 @@
 				if (item.event) {
 					this[item.event]();
 				}
+
+				if (item.to) {
+					uni.navigateTo({
+						url: item.to
+					})
+				}
 			},
 			onClickAddress() {
 				uni.navigateTo({
@@ -109,17 +115,13 @@
 </script>
 
 <style lang="scss" scoped>
+	@import "@/static/css/common.css";
+
 	.my-page {
 		position: relative;
 	}
 
 	.my-order {
-		background: #fff;
-		box-shadow: 0px 3px 6px 0px rgba(173, 174, 179, 0.09), 0px -3px 6px 0px rgba(173, 174, 179, 0.09);
-		border-radius: 20rpx;
-		margin: 40rpx;
-		padding: 32rpx;
-
 		display: flex;
 		flex-direction: column;
 
@@ -156,17 +158,17 @@
 	}
 
 	.my-menu {
-		background: #fff;
-		box-shadow: 0px 3px 6px 0px rgba(173, 174, 179, 0.09), 0px -3px 6px 0px rgba(173, 174, 179, 0.09);
-		border-radius: 20rpx;
-		margin: 40rpx;
-		padding-left: 32rpx;
-		padding-right: 32rpx;
-
 		.menu-item {
 			padding-top: 32rpx;
 			padding-bottom: 32rpx;
 			border-bottom: 1rpx solid #eee;
+		}
+		.menu-item:first-child {
+			padding-top: 0;
+		}
+		
+		.menu-item:last-child {
+			padding-bottom: 0;
 		}
 
 		.menu-item:nth-last-child(1) {
@@ -194,14 +196,6 @@
 	}
 
 	.my-info {
-		margin-top: 40rpx;
-		margin-left: 40rpx;
-		margin-right: 40rpx;
-		margin-bottom: 40rpx;
-		background: #fff;
-		border-radius: 20rpx;
-		padding: 32rpx;
-
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
