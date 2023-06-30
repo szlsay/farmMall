@@ -79,6 +79,24 @@
 			"description": "请选择展示图片",
 			"label": "展示图片"
 		},
+		"product_attri": {
+			"bsonType": "array",
+			"arrayType": "object",
+			"description": "产品属性",
+			"label": "产品属性",
+			"properties": {
+				"text": {
+					"bsonType": "string",
+					"description": "请输入标题",
+					"label": "标题"
+				},
+				"value": {
+					"bsonType": "string",
+					"description": "请输入属性值",
+					"label": "属性值"
+				}
+			}
+		},
 		"raw_cost": {
 			"bsonType": "double",
 			"description": "请填写原材料成本",

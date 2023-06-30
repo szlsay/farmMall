@@ -12,8 +12,7 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="raw_name" label="原料名称" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写原材料名称" v-model="formData.raw_name"
-								trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请填写原材料名称" v-model="formData.raw_name" trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -34,10 +33,35 @@
 					<uni-forms-item name="image_content" label="展示图片" :label-width="labelWidth" label-align="right">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
 							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
-						<text style="color: red; font-size: 14px;"
-							class="title-alert">用于产品的详情展示，最多六张。格式：jpg,png,webp</text>
+						<text style="color: red; font-size: 14px;" class="title-alert">用于产品的详情展示，最多六张。格式：jpg,png,webp</text>
 					</uni-forms-item>
 				</uni-row>
+			</view>
+			<!-- 产品属性 -->
+			<view class="fm-box">
+				<view class="fm-card-header">产品属性 (最多{{attriMax}}个)</view>
+				<uni-row v-for="(attri, index) in formData.product_attri" :key="index">
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item required :name="['attri',index,'text']" label="标题" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写标题" v-model="attri.title" trim="both" maxlength="8"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item required :name="['attri',index,'value']" label="属性值" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请填写属性值" v-model="attri.value" trim="both" maxlength="8"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<button @click="onDeleteAttri(index)" class="uni-button" size="mini" type="warn"
+							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
+					</uni-col>
+				</uni-row>
+				<view class="uni-button-group" style="margin-top: 0;"
+					v-if="formData.product_attri && formData.product_attri.length < attriMax">
+					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddAttri">新增属性</button>
+				</view>
 			</view>
 			<!-- 生产环节 -->
 			<view class="fm-box">
@@ -45,19 +69,16 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="raw_cost" label="原料成本(元)" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写原料成本" type="number"
-								v-model="formData.raw_cost"></uni-easyinput>
+							<uni-easyinput placeholder="请填写原料成本" type="number" v-model="formData.raw_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="6">
 						<uni-forms-item name="yield_ratio" label="出成率" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写两位小数" type="number"
-								v-model="formData.yield_ratio"></uni-easyinput>
+							<uni-easyinput placeholder="请填写两位小数" type="number" v-model="formData.yield_ratio"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="finish_cost" label="成品成本(原料成本/出成率)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算成品成本" type="number" v-model="formData.finish_cost"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -65,15 +86,12 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="processing_cost" label="加工成本(元)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="请填写加工成本" type="number"
-								v-model="formData.processing_cost"></uni-easyinput>
+						<uni-forms-item name="processing_cost" label="加工成本(元)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="请填写加工成本" type="number" v-model="formData.processing_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="transport_cost" label="运储成本(成品成本1%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="transport_cost" label="运储成本(成品成本1%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算运储成本" type="number" v-model="formData.transport_cost"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -82,31 +100,25 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="reproduct_cost" label="再生产成本(元)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="请填写再生产成本" type="number"
-								v-model="formData.reproduct_cost"></uni-easyinput>
+						<uni-forms-item name="reproduct_cost" label="再生产成本(元)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="请填写再生产成本" type="number" v-model="formData.reproduct_cost"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="sideline_income" label="副产品收入(元)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="请填写副产品收入" type="number"
-								v-model="formData.sideline_income"></uni-easyinput>
+						<uni-forms-item name="sideline_income" label="副产品收入(元)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="请填写副产品收入" type="number" v-model="formData.sideline_income"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="quality_ratio" label="质信金率" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="quality_ratio" label="质信金率" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算质信金率" type="number" v-model="formData.quality_ratio"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="quality_cost" label="质信金(元)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="quality_cost" label="质信金(元)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算质信金" type="number" v-model="formData.quality_cost"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -114,10 +126,8 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost"
-								disabled></uni-easyinput>
+						<uni-forms-item name="sum_cost" label="成本小计(元)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="自动计算成本小计" type="number" v-model="formData.sum_cost" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -133,8 +143,7 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="market_price" label="营销价格(元)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算营销价格" type="number" v-model="formData.market_price"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -142,15 +151,12 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="pack_fee" label="包装费(营销价格2%)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="自动计算包装费" type="number" v-model="formData.pack_fee"
-								disabled></uni-easyinput>
+						<uni-forms-item name="pack_fee" label="包装费(营销价格2%)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="自动计算包装费" type="number" v-model="formData.pack_fee" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="delivery_fee" label="配送费(营销价格2%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="delivery_fee" label="配送费(营销价格2%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算配送费" type="number" v-model="formData.delivery_fee"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -158,24 +164,20 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="branch_fee" label="网点提成(营销价格2%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="branch_fee" label="网点提成(营销价格2%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算网点提成" type="number" v-model="formData.branch_fee"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="market_fee" label="营销费(营销价格5%)" :label-width="labelWidthMax"
-							label-align="right">
-							<uni-easyinput placeholder="自动计算营销费" type="number" v-model="formData.market_fee"
-								disabled></uni-easyinput>
+						<uni-forms-item name="market_fee" label="营销费(营销价格5%)" :label-width="labelWidthMax" label-align="right">
+							<uni-easyinput placeholder="自动计算营销费" type="number" v-model="formData.market_fee" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="platform_fee" label="平台佣金(营销价格5%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="platform_fee" label="平台佣金(营销价格5%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算平台佣金" type="number" v-model="formData.platform_fee"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -188,13 +190,11 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="gp_price" label="毛利润(元)" :label-width="labelWidthMax" label-align="right">
-							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_price"
-								disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算毛利润" type="number" v-model="formData.gp_price" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="product_bonus" label="生产奖励(毛利润10%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="product_bonus" label="生产奖励(毛利润10%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算生产奖励" type="number" v-model="formData.product_bonus"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -202,15 +202,13 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="market_bonus" label="营销奖励(毛利润10%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="market_bonus" label="营销奖励(毛利润10%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算营销奖励" type="number" v-model="formData.market_bonus"
 								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="develop_bonus" label="发展基金(毛利润2%)" :label-width="labelWidthMax"
-							label-align="right">
+						<uni-forms-item name="develop_bonus" label="发展基金(毛利润2%)" :label-width="labelWidthMax" label-align="right">
 							<uni-easyinput placeholder="自动计算发展基金" type="number" v-model="formData.develop_bonus"
 								disabled></uni-easyinput>
 						</uni-forms-item>
@@ -219,8 +217,7 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="ni_price" label="净利润(元)" :label-width="labelWidthMax" label-align="right">
-							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_price"
-								disabled></uni-easyinput>
+							<uni-easyinput placeholder="自动计算净利润" type="number" v-model="formData.ni_price" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -283,9 +280,11 @@
 				"product_bonus": null,
 				"market_bonus": null,
 				"develop_bonus": null,
-				"ni_price": null
+				"ni_price": null,
+				"product_attri": []
 			}
 			return {
+				attriMax: 10,
 				imageStyles: {
 					width: 140,
 					height: 140,
@@ -331,6 +330,16 @@
 			}
 		},
 		methods: {
+			onAddAttri() {
+				const item = {
+					"text": null,
+					"vale": null
+				}
+				this.formData.product_attri.push(item)
+			},
+			onDeleteAttri(index) {
+				this.formData.product_attri.splice(index, 1)
+			},
 			getNI() {
 				const market_price = this.formData.market_price * 100
 				const pack_fee = this.formData.pack_fee * 100

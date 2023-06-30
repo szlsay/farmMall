@@ -67,7 +67,7 @@
 							style="margin-left: 40rpx; margin-top: 4rpx;">删除</button>
 					</uni-col>
 				</uni-row>
-				<view class="uni-button-group" style="margin-top: 0;" v-if="formData.sku && formData.sku.length < 6">
+				<view class="uni-button-group" style="margin-top: 0;" v-if="formData.sku && formData.sku.length < skuMax">
 					<button type="primary" class="uni-button" style="width: 100px;" @click="onAddSku">新增规格</button>
 				</view>
 			</view>
