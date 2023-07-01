@@ -3,9 +3,6 @@
 		<view class="box product-info" v-if="data">
 			<image :src="data.image.url" mode="aspectFill" @click="onPreview(data.image.url)"></image>
 			<view class="info-title">{{data.name}}</view>
-			<!-- <view class="info-box">
-				<text>{{data.name}}</text>
-			</view> -->
 		</view>
 		<view class="box product-attri" v-if="data">
 			<text class="product-title">产品属性</text>

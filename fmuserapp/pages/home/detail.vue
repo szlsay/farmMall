@@ -28,6 +28,8 @@
 		<view class="box combo-detail" v-if="data">
 			<text class="combo-title">详情介绍</text>
 			<view v-html="data.description"></view>
+			<image v-for="(item, index) in data.image_content" :key="index" :src="item.url" mode="widthFix"
+				@click="onPreviewImageList(index)"></image>
 		</view>
 	</view>
 </template>
@@ -45,6 +47,15 @@
 			this.getData()
 		},
 		methods: {
+			onPreviewImageList(index) {
+				const urls = this.data.image_content.map(item => {
+					return item.url
+				})
+				uni.previewImage({
+					urls,
+					current: index
+				})
+			},
 			onClickSku(item) {
 				console.log(item)
 				uni.navigateTo({
@@ -141,8 +152,13 @@
 	}
 
 	.combo-detail {
-		padding: 40rpx;
-
 		text {}
+
+		image {
+			margin-top: 20rpx;
+			width: 100%;
+			vertical-align: middle;
+			border-radius: 20rpx;
+		}
 	}
 </style>
