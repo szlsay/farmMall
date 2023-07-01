@@ -10,8 +10,8 @@
 			<view class="home-banner" v-if="bannerList && bannerList.length > 0">
 				<swiper circular :indicator-dots="bannerList.length > 1" indicator-active-color="#00CC99">
 					<swiper-item v-for="(item, index) in bannerList" :key="index">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" class="fm_image"
-							mode="aspectFill" @click="onClickBanner(item)"></image>
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"
+							class="fm_image" mode="aspectFill" @click="onClickBanner(item)"></image>
 					</swiper-item>
 				</swiper>
 			</view>
@@ -27,11 +27,12 @@
 				<view class="combo-item" v-for="(item, index) in comboMap[currentSortValue]" :key="index"
 					@click="onClickItem(item)">
 					<view class="item-left">
-						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url" mode="aspectFill"></image>
+						<image v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"
+							mode="aspectFill"></image>
 					</view>
 					<view class="item-right">
 						<text class="name">{{item.name}}</text>
-						<text class="description">{{item.description}}</text>
+						<text class="description" v-html="item.description"></text>
 						<text class="price">￥{{item.sell_price}}</text>
 					</view>
 				</view>

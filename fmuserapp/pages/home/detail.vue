@@ -27,7 +27,7 @@
 		</view>
 		<view class="box combo-detail" v-if="data">
 			<text class="combo-title">详情介绍</text>
-			<view>{{data.description}}</view>
+			<view v-html="data.description"></view>
 		</view>
 	</view>
 </template>
