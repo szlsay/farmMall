@@ -11,12 +11,13 @@
 					<view class="cate-item" v-for="item in list" :key="item._id">
 						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
 							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20"></uni-icons>
-							<text>{{item.label}}</text>
+							<text :class="{ 'text-disabled': item.disabled}">{{item.label}}</text>
 						</view>
 						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
 							:key="subItem._id" @click="onClickSubItem(subItem)" v-if="item.isNext">
-							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"></image>
-							<text>{{subItem.label}}</text>
+							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"
+								:class="{ 'image-disabled': subItem.disabled}"></image>
+							<text :class="{ 'text-disabled': subItem.disabled}">{{subItem.label}}</text>
 						</view>
 					</view>
 				</view>
@@ -318,7 +319,7 @@
 				}
 
 				text {
-					margin-left: 4px;
+					margin-left: 8px;
 				}
 			}
 
@@ -333,15 +334,25 @@
 				}
 
 				image {
-					width: 40px;
-					height: 40px;
+					width: 30px;
+					height: 30px;
+					background-color: #00CC9966;
 					border: 1px solid #00CC99;
 					border-radius: 50%;
 				}
 
 				text {
-					margin-left: 4px;
+					margin-left: 8px;
 				}
+
+				.image-disabled {
+					background-color: #ff442f66;
+					border: 1px solid #ff442f;
+				}
+			}
+
+			.text-disabled {
+				color: #ff442f;
 			}
 		}
 
