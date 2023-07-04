@@ -10,8 +10,8 @@
       <uni-forms-item name="disabled" label="是否禁用">
         <switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
       </uni-forms-item>
-      <uni-forms-item name="parent_id" label="">
-        <undefined v-model="formData.parent_id"></undefined>
+      <uni-forms-item name="parent_id" label="父类ID">
+        <uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id"></uni-easyinput>
       </uni-forms-item>
       <uni-forms-item name="level" label="级别">
         <uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level"></uni-easyinput>
@@ -54,7 +54,7 @@
         "label": "",
         "image": null,
         "disabled": "false",
-        "parent_id": null,
+        "parent_id": "",
         "level": null,
         "pinyin": ""
       }

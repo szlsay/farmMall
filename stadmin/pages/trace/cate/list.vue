@@ -24,7 +24,7 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'label')" sortable @sort-change="sortChange($event, 'label')">标题</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">类型图标</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'parent_id')">parent_id</uni-th>
+            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'parent_id')" sortable @sort-change="sortChange($event, 'parent_id')">父类ID</uni-th>
             <uni-th align="center" filter-type="range" @filter-change="filterChange($event, 'level')" sortable @sort-change="sortChange($event, 'level')">级别</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'pinyin')" sortable @sort-change="sortChange($event, 'pinyin')">中文拼音</uni-th>
             <uni-th align="center">操作</uni-th>
@@ -97,7 +97,7 @@
             "标题": "label",
             "类型图标": "image",
             "是否禁用": "disabled",
-            "parent_id": "parent_id",
+            "父类ID": "parent_id",
             "级别": "level",
             "中文拼音": "pinyin"
           }

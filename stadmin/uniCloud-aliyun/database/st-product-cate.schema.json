@@ -41,7 +41,9 @@
 			"defaultValue": "false"
 		},
 		"parent_id": {
-			"description": "父类ID，系统自动生成"
+			"bsonType": "string",
+			"description": "父类ID，系统自动生成",
+			"label": "父类ID"
 		},
 		"level": {
 			"bsonType": "int",

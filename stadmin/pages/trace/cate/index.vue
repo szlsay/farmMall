@@ -10,7 +10,7 @@
 			</view>
 			<view class="st-box" style="margin-left: 10px;">
 				<view class="st-card-header">{{cateTitle}}</view>
-				<uni-forms ref="form" :model="formData" validateTrigger="bind">
+				<uni-forms ref="form" :model="formData" validateTrigger="bind" v-if="formData.level">
 					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
 					</uni-forms-item>
@@ -22,7 +22,7 @@
 						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
 					</uni-forms-item>
 					<uni-forms-item name="parent_id" label="" :label-width="labelWidth" label-align="right">
-						<undefined v-model="formData.parent_id"></undefined>
+						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id"></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level"></uni-easyinput>
@@ -66,7 +66,7 @@
 				"label": "",
 				"image": null,
 				"disabled": "false",
-				"parent_id": null,
+				"parent_id": "",
 				"level": null,
 				"pinyin": ""
 			}

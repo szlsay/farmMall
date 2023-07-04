@@ -28,7 +28,12 @@ const validator = {
     "defaultValue": "false"
   },
   "parent_id": {
-    "rules": []
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "父类ID"
   },
   "level": {
     "rules": [
