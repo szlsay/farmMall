@@ -89,7 +89,7 @@
 		data() {
 			let formData = {
 				"label": "",
-				"image": {},
+				"image": null,
 				"disabled": false,
 				"parent_id": "",
 				"level": null,
@@ -184,7 +184,7 @@
 				this.disabledTwo = true
 				this.formData = {
 					"label": "",
-					"image": {},
+					"image": null,
 					"disabled": false,
 					"parent_id": "",
 					"level": null,
@@ -207,7 +207,7 @@
 				this.isEdit = false
 				this.formData = {
 					"label": "",
-					"image": {},
+					"image": null,
 					"disabled": false,
 					"parent_id": "",
 					"level": 1,
@@ -219,7 +219,7 @@
 				this.isEdit = false
 				this.formData = {
 					"label": "",
-					"image": {},
+					"image": null,
 					"disabled": false,
 					"parent_id": this.selectId,
 					"level": 2,

@@ -11,10 +11,8 @@ const validator = {
 		"label": "标题"
 	},
 	"image": {
-		"rules": [{
-			"format": "file"
-		}],
-		"label": "类型图标"
+		"rules": [],
+		"label": "分类图标"
 	},
 	"disabled": {
 		"rules": [{
