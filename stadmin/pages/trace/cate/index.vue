@@ -10,7 +10,7 @@
 				<view class="cate-list" v-if="list && list.length > 0">
 					<view class="cate-item" v-for="item in list" :key="item._id">
 						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
-							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20"></uni-icons>
+							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20" :color="item.disabled ? '#ff442f' : ''"></uni-icons>
 							<text :class="{ 'text-disabled': item.disabled}">{{item.label}}</text>
 						</view>
 						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
