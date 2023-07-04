@@ -11,6 +11,47 @@
 	"properties": {
 		"_id": {
 			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"label": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"label": "更新时间"
+		},
+		"label": {
+			"bsonType": "string",
+			"description": "请输入标题",
+			"label": "标题"
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择类型图标",
+			"label": "类型图标"
+		},
+		"disabled": {
+			"bsonType": "bool",
+			"description": "禁用后，用户端不会显示",
+			"label": "是否禁用",
+			"defaultValue": "false"
+		},
+		"parent_id": {
+			"description": "父类ID，系统自动生成"
+		},
+		"level": {
+			"bsonType": "int",
+			"description": "级别，系统自动生成",
+			"label": "级别"
+		},
+		"pinyin": {
+			"bsonType": "string",
+			"description": "中文拼音，系统自动生成",
+			"label": "中文拼音"
 		}
 	}
 }

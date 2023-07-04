@@ -135,16 +135,33 @@
 				"enablePullDownRefresh": false,
 				"navigationBarTitleText": "设置密码"
 			}
+		}, {
+			"path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
+			"style": {
+				"enablePullDownRefresh": false,
+				"navigationBarTitleText": "实名认证"
+			}
 		}
-	,{
-    "path": "uni_modules/uni-id-pages/pages/userinfo/realname-verify/realname-verify",
-    "style": {
-        "enablePullDownRefresh": false,
-        "navigationBarTitleText": "实名认证"
-    }
-}
-],
+	],
 	"subPackages": [{
+			"root": "pages/trace",
+			"pages": [{
+				"path": "cate/add",
+				"style": {
+					"navigationBarTitleText": "新增类别"
+				}
+			}, {
+				"path": "cate/edit",
+				"style": {
+					"navigationBarTitleText": "编辑类别"
+				}
+			}, {
+				"path": "cate/list",
+				"style": {
+					"navigationBarTitleText": "列表类别"
+				}
+			}]
+		}, {
 			"root": "pages/system",
 			"pages": [{
 					"path": "menu/list",
