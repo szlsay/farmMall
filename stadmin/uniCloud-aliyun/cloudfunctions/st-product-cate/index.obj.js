@@ -34,8 +34,6 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		return dbJql.collection(dbCollectionName).doc(_id).update({
-			is_delete: true
-		})
+		return dbJql.collection(dbCollectionName).doc(_id).remove()
 	}
 }

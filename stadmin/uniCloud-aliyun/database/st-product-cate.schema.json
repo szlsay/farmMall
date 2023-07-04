@@ -6,7 +6,7 @@
 		"read": false,
 		"create": false,
 		"update": true,
-		"delete": "auth.uid != null"
+		"delete": true
 	},
 	"properties": {
 		"_id": {

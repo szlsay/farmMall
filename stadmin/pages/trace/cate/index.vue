@@ -40,6 +40,8 @@
 					</uni-forms-item>
 					<view class="uni-button-group">
 						<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
+						<button class="uni-button" style="width: 100px;margin-left: 15px;" @click="onClickDelete"
+							v-if="isEdit">删除</button>
 					</view>
 				</uni-forms>
 				<view class="info-nodata" v-else>
@@ -111,12 +113,51 @@
 			this.loadData()
 		},
 		methods: {
+			onClickDelete() {
+				const that = this
+				uni.showModal({
+					title: '提示',
+					content: '确定要删除此分类？',
+					success: function(res) {
+						if (res.confirm) {
+							that.onDelete()
+						}
+					}
+				});
+			},
+			onDelete() {
+				const stproductcate = uniCloud.importObject("st-product-cate")
+				stproductcate.delete(this.tempId).then((res) => {
+					this.refreshData("删除成功")
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					})
+				})
+			},
 			onClickItem(item) {
 				console.log(item)
 				this.isEdit = true
 				this.cateTitle = "分类信息(编辑一级)"
 				this.formData = cloneObject(item)
 				this.tempId = item._id
+			},
+			refreshData(title) {
+				this.isEdit = false
+				this.formData = {
+					"label": "",
+					"image": null,
+					"disabled": false,
+					"parent_id": "",
+					"level": null,
+					"pinyin": ""
+				}
+				this.cateTitle = "分类信息"
+				uni.showToast({
+					title
+				})
+				setTimeout(() => this.loadData(), 500)
 			},
 			loadData() {
 				const stproductcate = uniCloud.importObject("st-product-cate")
@@ -164,10 +205,7 @@
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				if (this.isEdit) {
 					stproductcate.update(this.tempId, value).then((res) => {
-						uni.showToast({
-							title: '编辑成功'
-						})
-						this.loadData()
+						this.refreshData('编辑成功')
 					}).catch((err) => {
 						uni.showModal({
 							content: err.message || '请求服务失败',
@@ -176,10 +214,7 @@
 					})
 				} else {
 					stproductcate.add(value).then((res) => {
-						uni.showToast({
-							title: '新增成功'
-						})
-						this.loadData()
+						this.refreshData('新增成功')
 					}).catch((err) => {
 						uni.showModal({
 							content: err.message || '请求服务失败',
