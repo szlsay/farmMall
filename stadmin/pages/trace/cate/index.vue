@@ -37,7 +37,7 @@
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
 						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
 					</uni-forms-item>
-					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right" v-if="formData.level === 2">
 						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
