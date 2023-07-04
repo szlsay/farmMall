@@ -146,19 +146,24 @@
 	"subPackages": [{
 			"root": "pages/trace",
 			"pages": [{
+				"path": "cate/index",
+				"style": {
+					"navigationBarTitleText": "产品分类"
+				}
+			}, {
 				"path": "cate/add",
 				"style": {
-					"navigationBarTitleText": "新增类别"
+					"navigationBarTitleText": "新增分类"
 				}
 			}, {
 				"path": "cate/edit",
 				"style": {
-					"navigationBarTitleText": "编辑类别"
+					"navigationBarTitleText": "编辑分类"
 				}
 			}, {
 				"path": "cate/list",
 				"style": {
-					"navigationBarTitleText": "列表类别"
+					"navigationBarTitleText": "列表分类"
 				}
 			}]
 		}, {
