@@ -7,11 +7,16 @@
 					<button class="uni-button" type="default" size="mini" @click="onAddOne">新增一级</button>
 					<button class="uni-button" type="default" size="mini" @click="onAddTwo">新增二级</button>
 				</view>
+				<view class="">
+					<view class="" v-for="item in list" :key="item._id">
+						{{item.label}}
+					</view>
+				</view>
 			</view>
 			<view class="st-box" style="margin-left: 10px;">
 				<view class="st-card-header">{{cateTitle}}</view>
 				<uni-forms ref="form" :model="formData" validateTrigger="bind" v-if="formData.level">
-					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right" required>
 						<uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="image" label="类型图标" :label-width="labelWidth" label-align="right">
@@ -32,9 +37,6 @@
 					</uni-forms-item>
 					<view class="uni-button-group">
 						<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
-						<navigator open-type="navigateBack" style="margin-left: 15px;">
-							<button class="uni-button" style="width: 100px;">返回</button>
-						</navigator>
 					</view>
 				</uni-forms>
 				<view class="info-nodata" v-else>
@@ -75,6 +77,7 @@
 				"pinyin": ""
 			}
 			return {
+				list: [],
 				labelWidth: 80,
 				imageStyles: {
 					width: 100,
@@ -95,7 +98,17 @@
 				})
 			}
 		},
+		onReady() {
+			this.loadData()
+		},
 		methods: {
+			loadData() {
+				const stproductcate = uniCloud.importObject("st-product-cate")
+				stproductcate.getList().then((res) => {
+					console.log(res)
+					this.list = res.data
+				})
+			},
 			onAddOne() {
 				this.formData.level = 1
 				this.cateTitle = "分类信息(新增一级)"
@@ -115,13 +128,13 @@
 				})
 			},
 			submitForm(value) {
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				console.log(value)
+				const stproductcate = uniCloud.importObject("st-product-cate")
+				stproductcate.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})
-					this.getOpenerEventChannel().emit('refreshData')
-					setTimeout(() => uni.navigateBack(), 500)
+					this.loadData()
 				}).catch((err) => {
 					uni.showModal({
 						content: err.message || '请求服务失败',
@@ -137,12 +150,14 @@
 	.st-box-tow {
 		display: flex;
 	}
-	.info-nodata{
+
+	.info-nodata {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		image{
+
+		image {
 			width: 200px;
 			height: 200px;
 		}
