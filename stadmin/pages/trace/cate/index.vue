@@ -118,6 +118,13 @@
 		},
 		methods: {
 			onClickDelete() {
+				if (this.formData.children && this.formData.children.length > 0) {
+					uni.showToast({
+						title: "请先删除下级",
+						icon: "error"
+					})
+					return
+				}
 				const that = this
 				uni.showModal({
 					title: '提示',
@@ -278,11 +285,14 @@
 				&:hover {
 					background-color: #ecf5ff;
 				}
+				text{
+					margin-left: 4px;
+				}
 			}
 			
 			.level-2 {
 				padding: 8px;
-				padding-left: 28px;
+				padding-left: 36px;
 				&:hover {
 					background-color: #ecf5ff;
 				}
