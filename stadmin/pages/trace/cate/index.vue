@@ -5,14 +5,17 @@
 				<view class="st-card-header">分类列表</view>
 				<view class="uni-group">
 					<button class="uni-button" type="default" size="mini" @click="onAddOne" :disabled="disabledOne">新增一级</button>
-					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增二级</button>
+					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增下级</button>
 				</view>
 				<view class="cate-list">
-					<view class="cate-item" :class="{ 'select-bg': item._id === selectId}" v-for="item in list" :key="item._id"
-						@click="onClickItem(item)">
-						<uni-icons type="right" size="20"></uni-icons>
-						<view class="level-1">
-							{{item.label}}
+					<view class="cate-item" v-for="item in list" :key="item._id">
+						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
+							<uni-icons type="right" size="20"></uni-icons>
+							<text>{{item.label}}</text>
+						</view>
+						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
+							:key="subItem._id" @click="onClickSubItem(subItem)">
+							{{subItem.label}}
 						</view>
 					</view>
 				</view>
@@ -145,6 +148,14 @@
 				this.formData = cloneObject(item)
 				this.selectId = item._id
 			},
+			onClickSubItem(item) {
+				console.log(item)
+				this.disabledTwo = true
+				this.isEdit = true
+				this.cateTitle = "分类信息(编辑下级)"
+				this.formData = cloneObject(item)
+				this.selectId = item._id
+			},
 			refreshData(title) {
 				this.isEdit = false
 				this.disabledTwo = true
@@ -191,7 +202,7 @@
 					"level": 2,
 					"pinyin": ""
 				}
-				this.cateTitle = "分类信息(新增二级)"
+				this.cateTitle = "分类信息(新增下级)"
 			},
 			submit() {
 				uni.showLoading({
@@ -258,17 +269,30 @@
 		margin: 10px;
 
 		.cate-item {
-			padding: 4px;
+			// padding: 4px;
 			display: flex;
-			align-items: center;
-
-			&:hover {
-				background-color: #ecf5ff;
+			flex-direction: column;
+			.level-1 {
+				padding: 8px;
+				display: flex;
+				align-items: center;
+				&:hover {
+					background-color: #ecf5ff;
+				}
+			}
+			
+			.level-2 {
+				padding: 8px;
+				padding-left: 28px;
+				&:hover {
+					background-color: #ecf5ff;
+				}
 			}
 		}
 
 		.select-bg {
 			background-color: #ecf5ff;
 		}
+
 	}
 </style>
