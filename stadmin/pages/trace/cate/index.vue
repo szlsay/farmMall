@@ -21,14 +21,14 @@
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
 						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
 					</uni-forms-item>
-					<uni-forms-item name="parent_id" label="" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id"></uni-easyinput>
+					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right">
+						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level"></uni-easyinput>
+						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="pinyin" label="中文拼音" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="中文拼音，系统自动生成" v-model="formData.pinyin"></uni-easyinput>
+						<uni-easyinput placeholder="中文拼音，系统自动生成" v-model="formData.pinyin" disabled></uni-easyinput>
 					</uni-forms-item>
 					<view class="uni-button-group">
 						<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
@@ -37,6 +37,10 @@
 						</navigator>
 					</view>
 				</uni-forms>
+				<view class="info-nodata" v-else>
+					<image src="@/static/icon-nodata.png" mode=""></image>
+					<text>暂未选择内容</text>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -84,14 +88,20 @@
 				}
 			}
 		},
-		onReady() {
-			this.$refs.form.setRules(this.rules)
+		watch: {
+			"formData.level": function(value) {
+				this.$nextTick(() => {
+					this.$refs.form.setRules(this.rules)
+				})
+			}
 		},
 		methods: {
 			onAddOne() {
+				this.formData.level = 1
 				this.cateTitle = "分类信息(新增一级)"
 			},
 			onAddTwo() {
+				this.formData.level = 2
 				this.cateTitle = "分类信息(新增二级)"
 			},
 			submit() {
@@ -127,8 +137,14 @@
 	.st-box-tow {
 		display: flex;
 	}
-
-	.st-box {
-		flex: 1;
+	.info-nodata{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		image{
+			width: 200px;
+			height: 200px;
+		}
 	}
 </style>
