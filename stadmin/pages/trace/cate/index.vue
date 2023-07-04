@@ -10,65 +10,117 @@
 				<el-tree :data="data" show-checkbox />
 			</view>
 			<view class="st-box" style="margin-left: 10px;">
-				<view class="st-card-header">分类信息</view>
+				<view class="st-card-header">{{cateTitle}}</view>
+				<uni-forms ref="form" :model="formData" validateTrigger="bind">
+				  <uni-forms-item name="label" label="标题">
+				    <uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
+				  </uni-forms-item>
+				  <uni-forms-item name="image" label="类型图标">
+				    <uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object" v-model="formData.image"></uni-file-picker>
+				  </uni-forms-item>
+				  <uni-forms-item name="disabled" label="是否禁用">
+				    <switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
+				  </uni-forms-item>
+				  <uni-forms-item name="parent_id" label="">
+				    <undefined v-model="formData.parent_id"></undefined>
+				  </uni-forms-item>
+				  <uni-forms-item name="level" label="级别">
+				    <uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level"></uni-easyinput>
+				  </uni-forms-item>
+				  <uni-forms-item name="pinyin" label="中文拼音">
+				    <uni-easyinput placeholder="中文拼音，系统自动生成" v-model="formData.pinyin"></uni-easyinput>
+				  </uni-forms-item>
+				  <view class="uni-button-group">
+				    <button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
+				    <navigator open-type="navigateBack" style="margin-left: 15px;">
+				      <button class="uni-button" style="width: 100px;">返回</button>
+				    </navigator>
+				  </view>
+				</uni-forms>
 			</view>
 		</view>
 	</view>
 </template>
-<script setup>
-	import {
-		ref
-	} from "vue";
-	const content = ref(123)
-	
-	function onAddOne() {
-		console.log("onAddOne")
-	}
-	
-	function onAddTwo() {
-		console.log("onAddTwo")
-	}
-	
-	const data = [
-	  {
-	    id: 1,
-	    label: 'Level one 1',
-	    children: [
-	      {
-	        id: 3,
-	        label: 'Level two 2-1',
-	        children: [
-	          {
-	            id: 4,
-	            label: 'Level three 3-1-1',
-	          },
-	          {
-	            id: 5,
-	            label: 'Level three 3-1-2',
-	            disabled: true,
-	          },
-	        ],
-	      },
-	      {
-	        id: 2,
-	        label: 'Level two 2-2',
-	        disabled: true,
-	        children: [
-	          {
-	            id: 6,
-	            label: 'Level three 3-2-1',
-	          },
-	          {
-	            id: 7,
-	            label: 'Level three 3-2-2',
-	            disabled: true,
-	          },
-	        ],
-	      },
-	    ],
-	  },
-	]
+<script>
+  import { validator } from '@/js_sdk/validator/st-product-cate.js';
+
+  const db = uniCloud.database();
+  const dbCmd = db.command;
+  const dbCollectionName = 'st-product-cate';
+
+  function getValidator(fields) {
+    let result = {}
+    for (let key in validator) {
+      if (fields.includes(key)) {
+        result[key] = validator[key]
+      }
+    }
+    return result
+  }
+
+  export default {
+    data() {
+      let formData = {
+        "label": "",
+        "image": null,
+        "disabled": "false",
+        "parent_id": null,
+        "level": null,
+        "pinyin": ""
+      }
+      return {
+				cateTitle: "分类信息",
+        formData,
+        formOptions: {},
+        rules: {
+          ...getValidator(Object.keys(formData))
+        }
+      }
+    },
+    onReady() {
+      this.$refs.form.setRules(this.rules)
+    },
+    methods: {
+      onAddOne() {
+				this.cateTitle = "分类信息(新增一级)"
+			},
+			onAddTwo() {
+				this.cateTitle = "分类信息(新增二级)"
+			},
+      submit() {
+        uni.showLoading({
+          mask: true
+        })
+        this.$refs.form.validate().then((res) => {
+          return this.submitForm(res)
+        }).catch(() => {
+        }).finally(() => {
+          uni.hideLoading()
+        })
+      },
+
+      /**
+       * 提交表单
+       */
+      submitForm(value) {
+        // 使用 clientDB 提交数据
+        return db.collection(dbCollectionName).add(value).then((res) => {
+          uni.showToast({
+            title: '新增成功'
+          })
+          this.getOpenerEventChannel().emit('refreshData')
+          setTimeout(() => uni.navigateBack(), 500)
+        }).catch((err) => {
+          uni.showModal({
+            content: err.message || '请求服务失败',
+            showCancel: false
+          })
+        })
+      }
+    }
+  }
 </script>
+
 <style lang="scss" scoped>
 	.st-box-tow {
 		display: flex;
