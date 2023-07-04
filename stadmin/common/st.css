@@ -1,0 +1,19 @@
+/* 自定义全局样式 */
+.st-box {
+	border-radius: 4px;
+	box-shadow: -1px -1px 5px 0 rgba(0, 0, 0, 0.1);
+	margin-bottom: 15px;
+	padding: 15px;
+}
+
+.st-card-header {
+	display: flex;
+	justify-content: space-between;
+	color: #555;
+	font-size: 15px;
+	font-weight: 600;
+	margin-top: 4px;
+	margin-bottom: 15px;
+	padding-left: 10px;
+	border-left: 4px solid #00CC99;
+}
