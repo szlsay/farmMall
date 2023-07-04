@@ -31,16 +31,17 @@
 					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right" required>
 						<uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
 					</uni-forms-item>
-					<uni-forms-item name="image" label="分类图标" :label-width="labelWidth" label-align="right" v-if="formData.level === 2">
+					<uni-forms-item name="image" label="分类图标" :label-width="labelWidth" label-align="right"
+						v-if="formData.level === 2">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
 							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
 					</uni-forms-item>
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
 						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
 					</uni-forms-item>
-					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right"
+					<uni-forms-item name="parent_id" :label="parentLabel" :label-width="labelWidth" label-align="right"
 						v-if="formData.level === 2">
-						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
+						<uni-easyinput placeholder="父级id，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level" disabled></uni-easyinput>
@@ -97,12 +98,13 @@
 				"pinyin": ""
 			}
 			return {
+				parentLabel: '',
 				disabledOne: false,
 				disabledTwo: true,
 				isEdit: false,
 				selectId: null,
 				list: [],
-				labelWidth: 80,
+				labelWidth: 100,
 				imageStyles: {
 					width: 100,
 					height: 100,
@@ -116,6 +118,15 @@
 			}
 		},
 		watch: {
+			"formData.parent_id": function(value) {
+				if (value) {
+					const item = this.list.find(item => item._id === value)
+					console.log("00000000000", item)
+					this.parentLabel = `父级id(${item.label})`
+				} else {
+					this.parentLabel = "父级id"
+				}
+			},
 			"formData.level": function(value) {
 				this.$nextTick(() => {
 					this.$refs.form.setRules(this.rules)
@@ -327,7 +338,8 @@
 					border: 1px solid #00CC99;
 					border-radius: 50%;
 				}
-				text{
+
+				text {
 					margin-left: 4px;
 				}
 			}
