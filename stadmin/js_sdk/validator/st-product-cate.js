@@ -3,9 +3,7 @@
 
 const validator = {
 	"label": {
-		"rules": [{
-				"required": true
-			},
+		"rules": [
 			{
 				"format": "string",
 			}

@@ -8,7 +8,8 @@
 					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增二级</button>
 				</view>
 				<view class="cate-list">
-					<view class="cate-item" v-for="item in list" :key="item._id" @click="onClickItem(item)">
+					<view class="cate-item" :class="{ 'select-bg': item._id === selectId}" v-for="item in list" :key="item._id"
+						@click="onClickItem(item)">
 						<uni-icons type="right" size="20"></uni-icons>
 						<view class="level-1">
 							{{item.label}}
@@ -87,7 +88,7 @@
 				disabledOne: false,
 				disabledTwo: true,
 				isEdit: false,
-				tempId: null,
+				selectId: null,
 				list: [],
 				labelWidth: 80,
 				imageStyles: {
@@ -127,7 +128,7 @@
 			},
 			onDelete() {
 				const stproductcate = uniCloud.importObject("st-product-cate")
-				stproductcate.delete(this.tempId).then((res) => {
+				stproductcate.delete(this.selectId).then((res) => {
 					this.refreshData("删除成功")
 				}).catch((err) => {
 					uni.showModal({
@@ -138,13 +139,15 @@
 			},
 			onClickItem(item) {
 				console.log(item)
+				this.disabledTwo = false
 				this.isEdit = true
 				this.cateTitle = "分类信息(编辑一级)"
 				this.formData = cloneObject(item)
-				this.tempId = item._id
+				this.selectId = item._id
 			},
 			refreshData(title) {
 				this.isEdit = false
+				this.disabledTwo = true
 				this.formData = {
 					"label": "",
 					"image": null,
@@ -184,7 +187,7 @@
 					"label": "",
 					"image": null,
 					"disabled": false,
-					"parent_id": "",
+					"parent_id": this.selectId,
 					"level": 2,
 					"pinyin": ""
 				}
@@ -202,9 +205,16 @@
 			},
 			submitForm(value) {
 				console.log(value)
+				if (!value.label) {
+					uni.showToast({
+						title: "请输入标题",
+						icon: "error"
+					})
+					return
+				}
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				if (this.isEdit) {
-					stproductcate.update(this.tempId, value).then((res) => {
+					stproductcate.update(this.selectId, value).then((res) => {
 						this.refreshData('编辑成功')
 					}).catch((err) => {
 						uni.showModal({
@@ -253,8 +263,12 @@
 			align-items: center;
 
 			&:hover {
-				background-color: #eee;
+				background-color: #ecf5ff;
 			}
+		}
+
+		.select-bg {
+			background-color: #ecf5ff;
 		}
 	}
 </style>
