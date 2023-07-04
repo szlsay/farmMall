@@ -37,7 +37,8 @@
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
 						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
 					</uni-forms-item>
-					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right" v-if="formData.level === 2">
+					<uni-forms-item name="parent_id" label="父类ID" :label-width="labelWidth" label-align="right"
+						v-if="formData.level === 2">
 						<uni-easyinput placeholder="父类ID，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
@@ -63,10 +64,13 @@
 <script>
 	import {
 		validator
-	} from '@/js_sdk/validator/st-product-cate.js';
+	} from '@/js_sdk/validator/st-product-cate.js'
 	import {
 		cloneObject
 	} from '@/utils'
+	import {
+		pinyin
+	} from 'pinyin-pro'
 	const db = uniCloud.database();
 	const dbCmd = db.command;
 	const dbCollectionName = 'st-product-cate';
@@ -85,7 +89,7 @@
 		data() {
 			let formData = {
 				"label": "",
-				"image": null,
+				"image": {},
 				"disabled": false,
 				"parent_id": "",
 				"level": null,
@@ -114,6 +118,14 @@
 			"formData.level": function(value) {
 				this.$nextTick(() => {
 					this.$refs.form.setRules(this.rules)
+				})
+			},
+			"formData.label": function(value) {
+				this.$nextTick(() => {
+					this.formData.pinyin = pinyin(value, {
+						toneType: 'none',
+						type: 'array'
+					}).join("")
 				})
 			}
 		},
@@ -172,7 +184,7 @@
 				this.disabledTwo = true
 				this.formData = {
 					"label": "",
-					"image": null,
+					"image": {},
 					"disabled": false,
 					"parent_id": "",
 					"level": null,
@@ -195,7 +207,7 @@
 				this.isEdit = false
 				this.formData = {
 					"label": "",
-					"image": null,
+					"image": {},
 					"disabled": false,
 					"parent_id": "",
 					"level": 1,
@@ -207,7 +219,7 @@
 				this.isEdit = false
 				this.formData = {
 					"label": "",
-					"image": null,
+					"image": {},
 					"disabled": false,
 					"parent_id": this.selectId,
 					"level": 2,
@@ -270,6 +282,7 @@
 		justify-content: center;
 		align-items: center;
 		padding: 40px;
+
 		image {
 			width: 200px;
 			height: 200px;
