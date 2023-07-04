@@ -4,10 +4,10 @@
 			<view class="st-box">
 				<view class="st-card-header">分类列表</view>
 				<view class="uni-group">
-					<button class="uni-button" type="default" size="mini" @click="onAddOne" :disabled="disabledOne">新增一级</button>
+					<button class="uni-button" type="primary" size="mini" @click="onAddOne" :disabled="disabledOne">新增一级</button>
 					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增下级</button>
 				</view>
-				<view class="cate-list">
+				<view class="cate-list" v-if="list && list.length > 0">
 					<view class="cate-item" v-for="item in list" :key="item._id">
 						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
 							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20"></uni-icons>
@@ -19,6 +19,10 @@
 						</view>
 					</view>
 				</view>
+				<view class="info-nodata" v-else>
+					<image src="@/static/icon-nodata.png" mode=""></image>
+					<text>分类列表暂未内容</text>
+				</view>
 			</view>
 			<view class="st-box" style="margin-left: 10px;">
 				<view class="st-card-header">{{cateTitle}}</view>
@@ -26,7 +30,7 @@
 					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right" required>
 						<uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
 					</uni-forms-item>
-					<uni-forms-item name="image" label="类型图标" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="image" label="分类图标" :label-width="labelWidth" label-align="right">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
 							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
 					</uni-forms-item>
@@ -50,7 +54,7 @@
 				</uni-forms>
 				<view class="info-nodata" v-else>
 					<image src="@/static/icon-nodata.png" mode=""></image>
-					<text>暂未选择内容</text>
+					<text>分类信息暂未内容</text>
 				</view>
 			</view>
 		</view>
@@ -265,7 +269,7 @@
 		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-
+		padding: 40px;
 		image {
 			width: 200px;
 			height: 200px;
@@ -278,21 +282,25 @@
 		.cate-item {
 			display: flex;
 			flex-direction: column;
+
 			.level-1 {
 				padding: 8px;
 				display: flex;
 				align-items: center;
+
 				&:hover {
 					background-color: #ecf5ff;
 				}
-				text{
+
+				text {
 					margin-left: 4px;
 				}
 			}
-			
+
 			.level-2 {
 				padding: 8px;
 				padding-left: 36px;
+
 				&:hover {
 					background-color: #ecf5ff;
 				}
