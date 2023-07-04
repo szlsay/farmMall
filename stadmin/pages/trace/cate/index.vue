@@ -15,7 +15,8 @@
 						</view>
 						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
 							:key="subItem._id" @click="onClickSubItem(subItem)" v-if="item.isNext">
-							{{subItem.label}}
+							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"></image>
+							<text>{{subItem.label}}</text>
 						</view>
 					</view>
 				</view>
@@ -30,7 +31,7 @@
 					<uni-forms-item name="label" label="标题" :label-width="labelWidth" label-align="right" required>
 						<uni-easyinput placeholder="请输入标题" v-model="formData.label"></uni-easyinput>
 					</uni-forms-item>
-					<uni-forms-item name="image" label="分类图标" :label-width="labelWidth" label-align="right">
+					<uni-forms-item name="image" label="分类图标" :label-width="labelWidth" label-align="right" v-if="formData.level === 2">
 						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="object"
 							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
 					</uni-forms-item>
@@ -313,9 +314,21 @@
 			.level-2 {
 				padding: 8px;
 				padding-left: 36px;
+				display: flex;
+				align-items: center;
 
 				&:hover {
 					background-color: #ecf5ff;
+				}
+
+				image {
+					width: 40px;
+					height: 40px;
+					border: 1px solid #00CC99;
+					border-radius: 50%;
+				}
+				text{
+					margin-left: 4px;
 				}
 			}
 		}
