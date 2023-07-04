@@ -5,8 +5,8 @@
 	"permission": {
 		"read": false,
 		"create": false,
-		"update": false,
-		"delete": false
+		"update": true,
+		"delete": "auth.uid != null"
 	},
 	"properties": {
 		"_id": {

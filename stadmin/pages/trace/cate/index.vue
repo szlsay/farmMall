@@ -4,12 +4,15 @@
 			<view class="st-box">
 				<view class="st-card-header">分类列表</view>
 				<view class="uni-group">
-					<button class="uni-button" type="default" size="mini" @click="onAddOne">新增一级</button>
-					<button class="uni-button" type="default" size="mini" @click="onAddTwo">新增二级</button>
+					<button class="uni-button" type="default" size="mini" @click="onAddOne" :disabled="disabledOne">新增一级</button>
+					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增二级</button>
 				</view>
-				<view class="">
-					<view class="" v-for="item in list" :key="item._id">
-						{{item.label}}
+				<view class="cate-list">
+					<view class="cate-item" v-for="item in list" :key="item._id" @click="onClickItem(item)">
+						<uni-icons type="right" size="20"></uni-icons>
+						<view class="level-1">
+							{{item.label}}
+						</view>
 					</view>
 				</view>
 			</view>
@@ -51,7 +54,9 @@
 	import {
 		validator
 	} from '@/js_sdk/validator/st-product-cate.js';
-
+	import {
+		cloneObject
+	} from '@/utils'
 	const db = uniCloud.database();
 	const dbCmd = db.command;
 	const dbCollectionName = 'st-product-cate';
@@ -71,12 +76,16 @@
 			let formData = {
 				"label": "",
 				"image": null,
-				"disabled": "false",
+				"disabled": false,
 				"parent_id": "",
 				"level": null,
 				"pinyin": ""
 			}
 			return {
+				disabledOne: false,
+				disabledTwo: true,
+				isEdit: false,
+				tempId: null,
 				list: [],
 				labelWidth: 80,
 				imageStyles: {
@@ -102,6 +111,13 @@
 			this.loadData()
 		},
 		methods: {
+			onClickItem(item) {
+				console.log(item)
+				this.isEdit = true
+				this.cateTitle = "分类信息(编辑一级)"
+				this.formData = cloneObject(item)
+				this.tempId = item._id
+			},
 			loadData() {
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				stproductcate.getList().then((res) => {
@@ -110,11 +126,27 @@
 				})
 			},
 			onAddOne() {
-				this.formData.level = 1
+				this.isEdit = false
+				this.formData = {
+					"label": "",
+					"image": null,
+					"disabled": false,
+					"parent_id": "",
+					"level": 1,
+					"pinyin": ""
+				}
 				this.cateTitle = "分类信息(新增一级)"
 			},
 			onAddTwo() {
-				this.formData.level = 2
+				this.isEdit = false
+				this.formData = {
+					"label": "",
+					"image": null,
+					"disabled": false,
+					"parent_id": "",
+					"level": 2,
+					"pinyin": ""
+				}
 				this.cateTitle = "分类信息(新增二级)"
 			},
 			submit() {
@@ -130,17 +162,31 @@
 			submitForm(value) {
 				console.log(value)
 				const stproductcate = uniCloud.importObject("st-product-cate")
-				stproductcate.add(value).then((res) => {
-					uni.showToast({
-						title: '新增成功'
+				if (this.isEdit) {
+					stproductcate.update(this.tempId, value).then((res) => {
+						uni.showToast({
+							title: '编辑成功'
+						})
+						this.loadData()
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
 					})
-					this.loadData()
-				}).catch((err) => {
-					uni.showModal({
-						content: err.message || '请求服务失败',
-						showCancel: false
+				} else {
+					stproductcate.add(value).then((res) => {
+						uni.showToast({
+							title: '新增成功'
+						})
+						this.loadData()
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
 					})
-				})
+				}
 			}
 		}
 	}
@@ -160,6 +206,20 @@
 		image {
 			width: 200px;
 			height: 200px;
+		}
+	}
+
+	.cate-list {
+		margin: 10px;
+
+		.cate-item {
+			padding: 4px;
+			display: flex;
+			align-items: center;
+
+			&:hover {
+				background-color: #eee;
+			}
 		}
 	}
 </style>
