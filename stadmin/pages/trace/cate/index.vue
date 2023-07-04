@@ -10,11 +10,11 @@
 				<view class="cate-list">
 					<view class="cate-item" v-for="item in list" :key="item._id">
 						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
-							<uni-icons type="right" size="20"></uni-icons>
+							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20"></uni-icons>
 							<text>{{item.label}}</text>
 						</view>
 						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
-							:key="subItem._id" @click="onClickSubItem(subItem)">
+							:key="subItem._id" @click="onClickSubItem(subItem)" v-if="item.isNext">
 							{{subItem.label}}
 						</view>
 					</view>
@@ -141,7 +141,7 @@
 				})
 			},
 			onClickItem(item) {
-				console.log(item)
+				item.isNext = !item.isNext
 				this.disabledTwo = false
 				this.isEdit = true
 				this.cateTitle = "分类信息(编辑一级)"
@@ -176,7 +176,7 @@
 			loadData() {
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				stproductcate.getList().then((res) => {
-					console.log(res)
+					res.map(item => item.isNext = false)
 					this.list = res
 				})
 			},
@@ -269,7 +269,6 @@
 		margin: 10px;
 
 		.cate-item {
-			// padding: 4px;
 			display: flex;
 			flex-direction: column;
 			.level-1 {
