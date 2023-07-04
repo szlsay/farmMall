@@ -166,7 +166,7 @@
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				stproductcate.getList().then((res) => {
 					console.log(res)
-					this.list = res.data
+					this.list = res
 				})
 			},
 			onAddOne() {

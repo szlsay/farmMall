@@ -27,8 +27,18 @@ module.exports = {
 		value.update_time = Date.now()
 		return dbJql.collection(dbCollectionName).doc(_id).update(value)
 	},
-	getList() {
-		return db.collection(dbCollectionName).get()
+	async getList() {
+		const result = await db.collection(dbCollectionName).get()
+		const level1List = result.data.filter(item => item.level === 1)
+		const level2List = result.data.filter(item => item.level === 2)
+		level2List.forEach(subitem => {
+			const parentItem = level1List.find(item => item._id === subitem.parent_id)
+			if (!parentItem.children) {
+				parentItem.children = []
+			}
+			parentItem.children.push(subitem)
+		})
+		return level1List
 	},
 	delete(_id) {
 		if (this.userInfo.errCode) {
