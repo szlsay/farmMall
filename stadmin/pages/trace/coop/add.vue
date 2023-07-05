@@ -6,25 +6,31 @@
 				<view class="st-card-header">基本信息</view>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="coop_name" label="合作社名称" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both" maxlength="50"></uni-easyinput>
+						<uni-forms-item name="coop_name" label="合作社名称" required :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both"
+								maxlength="50"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="contact_name" label="联系人姓名" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both" maxlength="10"></uni-easyinput>
+							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both"
+								maxlength="10"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="contact_phone" label="联系人电话" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both" maxlength="11"></uni-easyinput>
+						<uni-forms-item name="contact_phone" label="联系人电话" :label-width="labelWidth"
+							label-align="right">
+							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both"
+								maxlength="11"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="scope" label="主营范围" :label-width="labelWidth" label-align="right">
-							<uni-easyinput type="textarea" placeholder="请填写主营范围" v-model="formData.scope" trim="both"></uni-easyinput>
+							<uni-easyinput type="textarea" placeholder="请填写主营范围" v-model="formData.scope"
+								trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -35,15 +41,16 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
-							<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
+							<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled">
+							</switch>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="map_address" label="地图选址" :label-width="labelWidth" label-align="right">
-							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.map_address" trim="both"
-								disabled></uni-easyinput>
+							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.map_address"
+								trim="both" disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -54,10 +61,12 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
+							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
+							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -68,7 +77,8 @@
 				<uni-row :gutter="20">
 					<uni-col :xs="24" :sm="12">
 						<view class="map-search">
-							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
+							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch"
+								placeholder="请输入搜索地址" />
 							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
 						</view>
 						<view class="map-list" v-for="item in searchList" @click="onClickMap(item)">
@@ -128,7 +138,7 @@
 				"longitude": "",
 				"latitude": "",
 				"scope": "",
-				"image": null,
+				"image": undefined,
 				"disabled": false
 			}
 			return {
@@ -181,7 +191,9 @@
 				AMapLoader.load({
 						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-						plugins: ["AMap.AutoComplete", "AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+						plugins: ["AMap.AutoComplete", "AMap.CitySearch",
+							"AMap.Geocoder"
+						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
 						// 自动获取用户IP，返回当前城市
 						let citysearch = new AMap.CitySearch();
@@ -269,14 +281,18 @@
 				uni.showLoading({
 					mask: true
 				})
+				console.log('000')
 				this.$refs.form.validate().then((res) => {
+					console.log('111-', res)
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
 				})
 			},
-			
+
 			submitForm(value) {
+				console.log('222-', value)
+				// return
 				const stcoop = uniCloud.importObject("st-coop")
 				stcoop.add(value).then((res) => {
 					uni.showToast({
