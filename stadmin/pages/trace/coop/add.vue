@@ -41,9 +41,9 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
-						<uni-forms-item name="address" label="地图选址" :label-width="labelWidth" label-align="right">
-							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.address"
-								trim="both" disabled></uni-easyinput>
+						<uni-forms-item name="map_address" label="地图选址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.map_address" trim="both"
+								disabled></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -123,6 +123,7 @@
 				"coop_name": "",
 				"contact_name": "",
 				"contact_phone": "",
+				"map_address": "",
 				"address": "",
 				"longitude": "",
 				"latitude": "",
@@ -230,7 +231,7 @@
 				this.geocoder.getAddress([longitude, latitude], (status, result) => {
 					if (status === "complete" && result.info == "OK") {
 						let address = result.regeocode.formattedAddress;
-						this.formData.address = address
+						this.formData.map_address = address
 						// 更新点标记
 						this.updateMap(address, [longitude, latitude]);
 					} else {
@@ -322,11 +323,12 @@
 		height: 28px;
 		margin-top: 8px;
 		cursor: pointer;
-		
+
 		display: flex;
 		align-items: center;
 	}
-	.map-list:hover{
+
+	.map-list:hover {
 		background-color: #00CC99;
 	}
 </style>

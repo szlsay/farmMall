@@ -41,6 +41,12 @@
 			"pattern": "^1[34578][0-9]{9}$",
 			"trim": "both"
 		},
+		"map_address": {
+			"bsonType": "string",
+			"description": "请填写地图地址",
+			"label": "地图地址",
+			"trim": "both"
+		},
 		"address": {
 			"bsonType": "string",
 			"description": "请填写详细地址",

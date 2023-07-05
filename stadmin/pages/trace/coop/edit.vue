@@ -39,22 +39,41 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
-			</view>
-			<!-- 位置信息 -->
-			<view class="st-box">
-				<view class="st-card-header">位置信息</view>
-				<uni-row :gutter="20">
-					<uni-col :xs="24" :sm="12">
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="map_address" label="地图选址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.map_address" trim="both"
+								disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
 							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address"
 								trim="both"></uni-easyinput>
 						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
 						</uni-forms-item>
 						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
 						</uni-forms-item>
+					</uni-col>
+				</uni-row>
+			</view>
+			<!-- 位置信息 -->
+			<view class="st-box">
+				<view class="st-card-header">位置信息</view>
+				<uni-row :gutter="20">
+					<uni-col :xs="24" :sm="12">
+						<view class="map-search">
+							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
+							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
+						</view>
+						<view class="map-list" v-for="item in searchList" @click="onClickMap(item)">
+							{{item.name}}
+						</view>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<view id="map">
@@ -104,6 +123,7 @@
 				"coop_name": "",
 				"contact_name": "",
 				"contact_phone": "",
+				"map_address": "",
 				"address": "",
 				"longitude": "",
 				"latitude": "",
@@ -112,6 +132,9 @@
 				"disabled": false
 			}
 			return {
+				searchList: [],
+				autoComplete: null,
+				queryMap: null,
 				map: null, //高德实例
 				marker: null, //点标记 Marker
 				geocoder: null, //逆向地理
@@ -138,43 +161,78 @@
       this.$refs.form.setRules(this.rules)
     },
     methods: {
+			onClickMap(item) {
+				this.map.setCenter([item.location.lng, item.location.lat])
+			},
+			onSearch() {
+				if (!this.queryMap) {
+					uni.showToast({
+						title: "请输入搜索地址",
+						icon: "none"
+					})
+					return
+				} else {
+					const that = this
+					this.autoComplete.search(this.queryMap, function(status, result) {
+						if (status === "complete" && result.info == "OK") {
+							that.searchList = result.tips
+						}
+					})
+				}
+			},
 			//初始化
 			initMap() {
 				AMapLoader.load({
 						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-						plugins: ["AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+						plugins: ["AMap.AutoComplete", "AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
 						// 实例化
-						const longitude = parseFloat(this.formData.longitude)
-						const latitude = parseFloat(this.formData.latitude)
-						const center = [longitude, latitude]
-						this.map = new AMap.Map("map", { //设置地图容器id
-							viewMode: "3D", //是否为3D地图模式
-							zoom: 16, //初始化地图级别
-							center
-						});
-						this.updateMap(this.formData.address, center)
-						// 自动获取用户IP，返回当前城市
-						let citysearch = new AMap.CitySearch();
-						citysearch.getLocalCity((status, result) => {
-							if (status === "complete" && result.info === "OK") {
-								console.log(result);
-							}
-						});
-			
-						// 地图点击事件--点标记标注
-						this.map.on("click", this.handleClick);
-			
-						// 逆向地理编码插件
-						this.geocoder = new AMap.Geocoder({
-							// city: "010", //城市设为北京，默认：“全国”
-							radius: 1000, //范围，默认：500
-						});
+						const lng = parseFloat(this.formData.longitude)
+						const lat = parseFloat(this.formData.latitude)
+						
+						if (lng > 1  && lat > 1) {
+							this.loadMap([lng, lat])
+							this.updateMap(this.formData.address, [lng, lat])
+						} else {
+							// 自动获取用户IP，返回当前城市
+							let citysearch = new AMap.CitySearch();
+							citysearch.getLocalCity((status, result) => {
+								if (status === "complete" && result.info === "OK") {
+									const lat = (result.bounds.northEast.lat + result.bounds.southWest.lat) / 2
+									const lng = (result.bounds.northEast.lng + result.bounds.southWest.lng) / 2
+									console.log(lat, lng)
+									this.loadMap([lng, lat])
+								} else {
+									this.loadMap()
+								}
+							});
+						}
 					})
 					.catch((e) => {
 						console.log(e);
 					});
+			},
+			loadMap(center = [106.583541, 29.563475]) {
+				// 实例化
+				this.map = new AMap.Map("map", { //设置地图容器id
+					viewMode: "3D", //是否为3D地图模式
+					zoom: 16, //初始化地图级别
+					center //初始化地图中心点位置
+				});
+				// 地图点击事件--点标记标注
+				this.map.on("click", this.handleClick);
+			
+				// 逆向地理编码插件
+				this.geocoder = new AMap.Geocoder({
+					// city: "010", //城市设为北京，默认：“全国”
+					radius: 1000, //范围，默认：500
+				});
+			
+				const autoOptions = {
+					city: '全国'
+				}
+				this.autoComplete = new AMap.AutoComplete(autoOptions);
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
@@ -186,7 +244,7 @@
 				this.geocoder.getAddress([longitude, latitude], (status, result) => {
 					if (status === "complete" && result.info == "OK") {
 						let address = result.regeocode.formattedAddress;
-						this.formData.address = address
+						this.formData.map_address = address
 						// 更新点标记
 						this.updateMap(address, [longitude, latitude]);
 					} else {
@@ -260,7 +318,7 @@
         uni.showLoading({
           mask: true
         })
-        db.collection(dbCollectionName).doc(id).field("coop_name,contact_name,contact_phone,address,longitude,latitude,scope,image,disabled").get().then((res) => {
+        db.collection(dbCollectionName).doc(id).field("coop_name,contact_name,contact_phone,map_address,address,longitude,latitude,scope,image,disabled").get().then((res) => {
           const data = res.result.data[0]
           if (data) {
             this.formData = data
@@ -281,7 +339,34 @@
 <style lang="scss" scoped>
 	#map {
 		width: 100%;
-		height: 300px;
+		height: 400px;
 		border-radius: 20rpx;
+	}
+
+	.map-search {
+		display: flex;
+
+		button {
+			margin-left: 8px;
+		}
+	}
+
+	.map-list {
+		box-sizing: border-box;
+		border: 1px solid #00CC99;
+		border-radius: 14px;
+		padding-left: 8px;
+		font-size: 12px;
+
+		height: 28px;
+		margin-top: 8px;
+		cursor: pointer;
+
+		display: flex;
+		align-items: center;
+	}
+
+	.map-list:hover {
+		background-color: #00CC99;
 	}
 </style>

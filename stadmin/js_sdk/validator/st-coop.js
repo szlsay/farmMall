@@ -32,6 +32,14 @@ const validator = {
     ],
     "label": "联系人电话"
   },
+  "map_address": {
+    "rules": [
+      {
+        "format": "string"
+      }
+    ],
+    "label": "地图地址"
+  },
   "address": {
     "rules": [
       {
@@ -82,7 +90,7 @@ const validator = {
       }
     ],
     "label": "是否禁用",
-    "defaultValue": "false"
+    "defaultValue": false
   }
 }
 
