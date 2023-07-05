@@ -21,6 +21,9 @@
 							v-if="item.isNext">
 							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"
 								:class="{ 'image-disabled': subItem.disabled}"></image>
+							<view class="word-img" :class="{ 'word-img-disabled': subItem.disabled}" v-else>
+								{{subItem["pinyin"].slice(0, 1).toUpperCase()}}
+							</view>
 							<text :class="{ 'text-disabled': subItem.disabled}">{{subItem.label}}</text>
 						</view>
 					</view>
@@ -363,6 +366,24 @@
 				}
 
 				.image-disabled {
+					background-color: #ff442f66;
+					border: 1px solid #ff442f;
+				}
+
+				.word-img {
+					width: 30px;
+					height: 30px;
+					background-color: #00CC9966;
+					border: 1px solid #00CC99;
+					border-radius: 50%;
+					color: #333;
+					font-size: 18px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+
+				.word-img-disabled {
 					background-color: #ff442f66;
 					border: 1px solid #ff442f;
 				}
