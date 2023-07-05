@@ -54,8 +54,8 @@
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
 									type="primary">修改</button>
-								<button @click="confirmDelete(item._id)" class="uni-button" size="mini"
-									type="warn">删除</button>
+								<!-- <button @click="confirmDelete(item._id)" class="uni-button" size="mini"
+									type="warn">删除</button> -->
 							</view>
 						</uni-td>
 					</uni-tr>
