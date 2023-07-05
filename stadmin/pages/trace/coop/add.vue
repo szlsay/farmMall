@@ -41,6 +41,12 @@
 				</uni-row>
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="address" label="地图选址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.address"
+								trim="both" disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
 							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address"
 								trim="both"></uni-easyinput>
@@ -50,8 +56,6 @@
 						<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
 						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
 							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
 						</uni-forms-item>
