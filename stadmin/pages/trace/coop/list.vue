@@ -36,7 +36,7 @@
 						<uni-th align="center">详细地址</uni-th>
 						<uni-th align="center">主营范围</uni-th>
 						<uni-th align="center">合作社图片</uni-th>
-						<uni-th width="100" align="center" sortable @sort-change="sortChange($event, 'disabled')">是否启用</uni-th>
+						<uni-th width="100" align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -46,12 +46,10 @@
 						<uni-td align="center">{{item.map_address}}{{item.address}}</uni-td>
 						<uni-td align="center">{{item.scope}}</uni-td>
 						<uni-td align="center">
-							<uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image"
-								:file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles"
-								readonly></uni-file-picker>
-							<uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link>
+							<image style="width: 60px; height: 60px;"
+								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
 						</uni-td>
-						<uni-td align="center">{{item.disabled == true ? '否' : '是'}}</uni-td>
+						<uni-td align="center">{{item.disabled == true ? '是' : '否'}}</uni-td>
 						<uni-td align="center">
 							<view class="uni-group">
 								<button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini"
@@ -109,7 +107,7 @@
 					height: 64
 				},
 				exportExcel: {
-					"filename": "st-coop.xls",
+					"filename": "合作社列表.xls",
 					"type": "xls",
 					"fields": {
 						"合作社名称": "coop_name",
@@ -117,10 +115,7 @@
 						"联系人电话": "contact_phone",
 						"地图选址": "map_address",
 						"详细地址": "address",
-						"经度": "longitude",
-						"纬度": "latitude",
 						"主营范围": "scope",
-						"合作社图片": "image",
 						"是否禁用": "disabled"
 					}
 				},
