@@ -9,14 +9,14 @@
         <input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
         <button class="uni-button" type="default" size="mini" @click="search">搜索</button>
         <button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-        <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length" @click="delTable">批量删除</button>
+<!--        <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length" @click="delTable">批量删除</button> -->
         <download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData" :type="exportExcel.type" :name="exportExcel.filename">
           <button class="uni-button" type="primary" size="mini">导出 Excel</button>
         </download-excel>
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="coop_name,contact_name,contact_phone,address,longitude,latitude,scope,image,disabled" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="coop_name,contact_name,contact_phone,map_address,address,scope,image,disabled" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -24,27 +24,23 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'coop_name')" sortable @sort-change="sortChange($event, 'coop_name')">合作社名称</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'contact_name')" sortable @sort-change="sortChange($event, 'contact_name')">联系人姓名</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'contact_phone')" sortable @sort-change="sortChange($event, 'contact_phone')">联系人电话</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'address')" sortable @sort-change="sortChange($event, 'address')">详细地址</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'longitude')" sortable @sort-change="sortChange($event, 'longitude')">经度</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'latitude')" sortable @sort-change="sortChange($event, 'latitude')">纬度</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'scope')" sortable @sort-change="sortChange($event, 'scope')">主营范围</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">合作社图片</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
+            <uni-th align="center">详细地址</uni-th>
+            <uni-th align="center">主营范围</uni-th>
+            <uni-th align="center">合作社图片</uni-th>
+            <uni-th align="center" sortable @sort-change="sortChange($event, 'disabled')">是否启用</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
             <uni-td align="center">{{item.coop_name}}</uni-td>
             <uni-td align="center">{{item.contact_name}}</uni-td>
             <uni-td align="center">{{item.contact_phone}}</uni-td>
-            <uni-td align="center">{{item.address}}</uni-td>
-            <uni-td align="center">{{item.longitude}}</uni-td>
-            <uni-td align="center">{{item.latitude}}</uni-td>
+            <uni-td align="center">{{item.map_address}}{{item.address}}</uni-td>
             <uni-td align="center">{{item.scope}}</uni-td>
             <uni-td align="center">
               <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
               <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link>
             </uni-td>
-            <uni-td align="center">{{item.disabled == true ? '✅' : '❌'}}</uni-td>
+            <uni-td align="center">{{item.disabled == true ? '否' : '是'}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
