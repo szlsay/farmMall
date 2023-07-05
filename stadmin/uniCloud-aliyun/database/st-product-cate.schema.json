@@ -38,7 +38,7 @@
 			"bsonType": "bool",
 			"description": "禁用后，用户端不会显示",
 			"label": "是否禁用",
-			"defaultValue": "false"
+			"defaultValue": false
 		},
 		"parent_id": {
 			"bsonType": "string",
