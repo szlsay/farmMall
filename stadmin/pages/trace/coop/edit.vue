@@ -7,17 +7,17 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="coop_name" label="合作社名称" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both" maxlength="50"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="contact_name" label="联系人姓名" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both" maxlength="10"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="contact_phone" label="联系人电话" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both"></uni-easyinput>
+							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both" maxlength="11"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -193,7 +193,7 @@
 						
 						if (lng > 1  && lat > 1) {
 							this.loadMap([lng, lat])
-							this.updateMap(this.formData.address, [lng, lat])
+							this.updateMap(this.formData.map_address+this.formData.address, [lng, lat])
 						} else {
 							// 自动获取用户IP，返回当前城市
 							let citysearch = new AMap.CitySearch();
