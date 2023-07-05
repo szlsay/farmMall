@@ -116,6 +116,7 @@
 				"disabled": false
 			}
 			return {
+				autoComplete: null,
 				queryMap: null,
 				map: null, //高德实例
 				marker: null, //点标记 Marker
@@ -139,6 +140,19 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onSearch() {
+				if (!this.queryMap) {
+					uni.showToast({
+						title: "请输入搜索地址",
+						icon: "none"
+					})
+					return
+				} else {
+					this.autoComplete.search(this.queryMap, function(status, result) {
+						console.log("0000-", status, result)
+					})
+				}
+			},
 			//初始化
 			initMap() {
 				AMapLoader.load({
@@ -163,20 +177,15 @@
 						console.log(e);
 					});
 			},
-			loadAutocomplete() {
-				console.log("000-loadAutocomplete")
-				// 实例化Autocomplete
-				const autoOptions = {
-					// input: "tipinput"
-					//city 限定城市，默认全国
-					city: '全国',
-					// input: 'input_id'
-				}
-				const autoComplete = new AMap.AutoComplete(autoOptions);
-				autoComplete.search("莒县", function(status, result) {
-					console.log(status, result)
-				})
-			},
+			// loadAutocomplete() {
+			// 	const autoOptions = {
+			// 		city: '全国'
+			// 	}
+			// 	this.autoComplete = new AMap.AutoComplete(autoOptions);
+			// 	autoComplete.search("莒县", function(status, result) {
+			// 		console.log(status, result)
+			// 	})
+			// },
 			loadMap(center = [106.583541, 29.563475]) {
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
@@ -192,9 +201,11 @@
 					// city: "010", //城市设为北京，默认：“全国”
 					radius: 1000, //范围，默认：500
 				});
-				
-				// setTimeout(this.loadAutocomplete(), 3000)
-				this.loadAutocomplete()
+
+				const autoOptions = {
+					city: '全国'
+				}
+				this.autoComplete = new AMap.AutoComplete(autoOptions);
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
@@ -280,9 +291,11 @@
 		height: 400px;
 		border-radius: 20rpx;
 	}
+
 	.map-search {
 		display: flex;
-		button{
+
+		button {
 			margin-left: 8px;
 		}
 	}
