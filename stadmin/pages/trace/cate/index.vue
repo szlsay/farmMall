@@ -4,17 +4,21 @@
 			<view class="st-box">
 				<view class="st-card-header">分类列表</view>
 				<view class="uni-group">
-					<button class="uni-button" type="primary" size="mini" @click="onAddOne" :disabled="disabledOne">新增一级</button>
-					<button class="uni-button" type="default" size="mini" @click="onAddTwo" :disabled="disabledTwo">新增下级</button>
+					<button class="uni-button" type="primary" size="mini" @click="onAddOne"
+						:disabled="disabledOne">新增一级</button>
+					<button class="uni-button" type="default" size="mini" @click="onAddTwo"
+						:disabled="disabledTwo">新增下级</button>
 				</view>
 				<view class="cate-list" v-if="list && list.length > 0">
 					<view class="cate-item" v-for="item in list" :key="item._id">
 						<view class="level-1" :class="{ 'select-bg': item._id === selectId}" @click="onClickItem(item)">
-							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20" :color="item.disabled ? '#ff442f' : ''"></uni-icons>
+							<uni-icons :type="item.isNext ? 'bottom': 'right'" size="20"
+								:color="item.disabled ? '#ff442f' : ''"></uni-icons>
 							<text :class="{ 'text-disabled': item.disabled}">{{item.label}}</text>
 						</view>
-						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}" v-for="subItem in item.children"
-							:key="subItem._id" @click="onClickSubItem(subItem)" v-if="item.isNext">
+						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}"
+							v-for="subItem in item.children" :key="subItem._id" @click="onClickSubItem(subItem)"
+							v-if="item.isNext">
 							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"
 								:class="{ 'image-disabled': subItem.disabled}"></image>
 							<text :class="{ 'text-disabled': subItem.disabled}">{{subItem.label}}</text>
@@ -38,14 +42,16 @@
 							v-model="formData.image" :image-styles="imageStyles"></uni-file-picker>
 					</uni-forms-item>
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
-						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
+						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled">
+						</switch>
 					</uni-forms-item>
 					<uni-forms-item name="parent_id" :label="parentLabel" :label-width="labelWidth" label-align="right"
 						v-if="formData.level === 2">
 						<uni-easyinput placeholder="父级id，系统自动生成" v-model="formData.parent_id" disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="level" label="级别" :label-width="labelWidth" label-align="right">
-						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level" disabled></uni-easyinput>
+						<uni-easyinput placeholder="级别，系统自动生成" type="number" v-model="formData.level"
+							disabled></uni-easyinput>
 					</uni-forms-item>
 					<uni-forms-item name="pinyin" label="中文拼音" :label-width="labelWidth" label-align="right">
 						<uni-easyinput placeholder="中文拼音，系统自动生成" v-model="formData.pinyin" disabled></uni-easyinput>
@@ -122,7 +128,6 @@
 			"formData.parent_id": function(value) {
 				if (value) {
 					const item = this.list.find(item => item._id === value)
-					console.log("00000000000", item)
 					this.parentLabel = `父级id(${item.label})`
 				} else {
 					this.parentLabel = "父级id"
@@ -182,14 +187,19 @@
 				this.isEdit = true
 				this.cateTitle = "分类信息(编辑一级)"
 				this.formData = cloneObject(item)
+				if (this.formData.image && this.formData.image.url === '') {
+					this.formData.image = null
+				}
 				this.selectId = item._id
 			},
 			onClickSubItem(item) {
-				console.log(item)
 				this.disabledTwo = true
 				this.isEdit = true
 				this.cateTitle = "分类信息(编辑下级)"
 				this.formData = cloneObject(item)
+				if (this.formData.image && this.formData.image.url === '') {
+					this.formData.image = null
+				}
 				this.selectId = item._id
 			},
 			refreshData(title) {
@@ -251,13 +261,17 @@
 				})
 			},
 			submitForm(value) {
-				console.log(value)
 				if (!value.label) {
 					uni.showToast({
 						title: "请输入标题",
 						icon: "error"
 					})
 					return
+				}
+				if (!value.image) {
+					value.image = {
+						url: ''
+					}
 				}
 				const stproductcate = uniCloud.importObject("st-product-cate")
 				if (this.isEdit) {
