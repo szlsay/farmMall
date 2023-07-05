@@ -200,7 +200,7 @@
 						console.log(e);
 					});
 			},
-			loadMap(center = [106.583541, 29.563475]) {
+			loadMap(center = [118.84164, 35.586807]) {
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
@@ -276,12 +276,9 @@
 				})
 			},
 
-			/**
-			 * 提交表单
-			 */
 			submitForm(value) {
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				const stcoop = uniCloud.importObject("st-coop")
+				stcoop.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})

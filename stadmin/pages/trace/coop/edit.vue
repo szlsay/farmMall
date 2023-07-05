@@ -213,7 +213,7 @@
 						console.log(e);
 					});
 			},
-			loadMap(center = [106.583541, 29.563475]) {
+			loadMap(center = [118.84164, 35.586807]) {
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
