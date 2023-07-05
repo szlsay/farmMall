@@ -1,10 +1,10 @@
 // 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
 {
 	"bsonType": "object",
-	"required": ["label"],
+	"required": ["coop_name"],
 	"permission": {
-		"read": false,
-		"create": false,
+		"read": true,
+		"create": true,
 		"update": true,
 		"delete": true
 	},

@@ -165,6 +165,21 @@
 				"style": {
 					"navigationBarTitleText": "列表分类"
 				}
+			}, {
+				"path": "coop/add",
+				"style": {
+					"navigationBarTitleText": "新增合作社"
+				}
+			}, {
+				"path": "coop/edit",
+				"style": {
+					"navigationBarTitleText": "编辑合作社"
+				}
+			}, {
+				"path": "coop/list",
+				"style": {
+					"navigationBarTitleText": "列表合作社"
+				}
 			}]
 		}, {
 			"root": "pages/system",
