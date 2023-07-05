@@ -39,28 +39,36 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
+							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address"
+								trim="both"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="8">
+						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
 			</view>
 			<!-- 位置信息 -->
 			<view class="st-box">
 				<view class="st-card-header">位置信息</view>
 				<uni-row :gutter="20">
 					<uni-col :xs="24" :sm="12">
-						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
-							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address"
-								trim="both"></uni-easyinput>
-						</uni-forms-item>
-						<uni-forms-item name="longitude" label="经度" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择经度" v-model="formData.longitude" trim="both" disabled></uni-easyinput>
-						</uni-forms-item>
-						<uni-forms-item name="latitude" label="纬度" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择纬度" v-model="formData.latitude" trim="both" disabled></uni-easyinput>
-						</uni-forms-item>
-					</uni-col>
-					<uni-col :xs="24" :sm="12">
 						<view class="map-search">
 							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
 							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
 						</view>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
 						<view id="map">
 						</view>
 					</uni-col>
@@ -286,7 +294,6 @@
 
 <style lang="scss" scoped>
 	#map {
-		margin-top: 8px;
 		width: 100%;
 		height: 400px;
 		border-radius: 20rpx;
