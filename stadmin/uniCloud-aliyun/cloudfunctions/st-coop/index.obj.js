@@ -17,19 +17,12 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		if (!value.image) {
-			// value.image = undefined
-			value.image = ''
-		}
 		value.create_time = Date.now()
 		return db.collection(dbCollectionName).add(value)
 	},
 	update(_id, value) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
-		}
-		if (!value.image) {
-			value.image = ''
 		}
 		value.update_time = Date.now()
 		return dbJql.collection(dbCollectionName).doc(_id).update(value)

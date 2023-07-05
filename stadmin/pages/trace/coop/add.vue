@@ -138,7 +138,7 @@
 				"longitude": "",
 				"latitude": "",
 				"scope": "",
-				"image": undefined,
+				"image": null,
 				"disabled": false
 			}
 			return {
@@ -201,7 +201,6 @@
 							if (status === "complete" && result.info === "OK") {
 								const lat = (result.bounds.northEast.lat + result.bounds.southWest.lat) / 2
 								const lng = (result.bounds.northEast.lng + result.bounds.southWest.lng) / 2
-								console.log(lat, lng)
 								this.loadMap([lng, lat])
 							} else {
 								this.loadMap()
@@ -281,9 +280,7 @@
 				uni.showLoading({
 					mask: true
 				})
-				console.log('000')
 				this.$refs.form.validate().then((res) => {
-					console.log('111-', res)
 					return this.submitForm(res)
 				}).catch(() => {}).finally(() => {
 					uni.hideLoading()
@@ -291,8 +288,11 @@
 			},
 
 			submitForm(value) {
-				console.log('222-', value)
-				// return
+				if (!value.image) {
+					value.image = {
+						url: ''
+					}
+				}
 				const stcoop = uniCloud.importObject("st-coop")
 				stcoop.add(value).then((res) => {
 					uni.showToast({
