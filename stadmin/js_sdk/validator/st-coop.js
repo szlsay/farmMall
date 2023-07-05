@@ -76,11 +76,7 @@ const validator = {
     "label": "主营范围"
   },
   "image": {
-    "rules": [
-      {
-        "format": "file"
-      }
-    ],
+    "rules": [],
     "label": "合作社图片"
   },
   "disabled": {
