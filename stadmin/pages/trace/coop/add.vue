@@ -57,6 +57,10 @@
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
+						<view class="map-search">
+							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
+							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
+						</view>
 						<view id="map">
 						</view>
 					</uni-col>
@@ -112,6 +116,7 @@
 				"disabled": false
 			}
 			return {
+				queryMap: null,
 				map: null, //高德实例
 				marker: null, //点标记 Marker
 				geocoder: null, //逆向地理
@@ -139,7 +144,7 @@
 				AMapLoader.load({
 						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
-						plugins: ["AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+						plugins: ["AMap.AutoComplete", "AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
 						// 自动获取用户IP，返回当前城市
 						let citysearch = new AMap.CitySearch();
@@ -158,6 +163,20 @@
 						console.log(e);
 					});
 			},
+			loadAutocomplete() {
+				console.log("000-loadAutocomplete")
+				// 实例化Autocomplete
+				const autoOptions = {
+					// input: "tipinput"
+					//city 限定城市，默认全国
+					city: '全国',
+					// input: 'input_id'
+				}
+				const autoComplete = new AMap.AutoComplete(autoOptions);
+				autoComplete.search("莒县", function(status, result) {
+					console.log(status, result)
+				})
+			},
 			loadMap(center = [106.583541, 29.563475]) {
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
@@ -173,6 +192,9 @@
 					// city: "010", //城市设为北京，默认：“全国”
 					radius: 1000, //范围，默认：500
 				});
+				
+				// setTimeout(this.loadAutocomplete(), 3000)
+				this.loadAutocomplete()
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
@@ -253,8 +275,15 @@
 
 <style lang="scss" scoped>
 	#map {
+		margin-top: 8px;
 		width: 100%;
-		height: 300px;
+		height: 400px;
 		border-radius: 20rpx;
+	}
+	.map-search {
+		display: flex;
+		button{
+			margin-left: 8px;
+		}
 	}
 </style>
