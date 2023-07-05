@@ -43,7 +43,7 @@
 			<!-- 位置信息 -->
 			<view class="st-box">
 				<view class="st-card-header">位置信息</view>
-				<uni-row gutter="20">
+				<uni-row :gutter="20">
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="address" label="详细地址" :label-width="labelWidth" label-align="right">
 							<uni-easyinput type="textarea" placeholder="请填写详细地址" v-model="formData.address"
@@ -148,13 +148,13 @@
 							// center: [106.583541, 29.563475], //初始化地图中心点位置
 						});
 
-						// 自动获取用户IP，返回当前城市
-						let citysearch = new AMap.CitySearch();
-						citysearch.getLocalCity((status, result) => {
-							if (status === "complete" && result.info === "OK") {
-								console.log(result);
-							}
-						});
+						// // 自动获取用户IP，返回当前城市
+						// let citysearch = new AMap.CitySearch();
+						// citysearch.getLocalCity((status, result) => {
+						// 	if (status === "complete" && result.info === "OK") {
+						// 		console.log(result);
+						// 	}
+						// });
 
 						// 地图点击事件--点标记标注
 						this.map.on("click", this.handleClick);
