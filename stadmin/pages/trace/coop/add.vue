@@ -141,33 +141,38 @@
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
 						plugins: ["AMap.CitySearch", "AMap.Geocoder"], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
-						// 实例化
-						this.map = new AMap.Map("map", { //设置地图容器id
-							viewMode: "3D", //是否为3D地图模式
-							zoom: 16, //初始化地图级别
-							// center: [106.583541, 29.563475], //初始化地图中心点位置
-						});
-
-						// // 自动获取用户IP，返回当前城市
-						// let citysearch = new AMap.CitySearch();
-						// citysearch.getLocalCity((status, result) => {
-						// 	if (status === "complete" && result.info === "OK") {
-						// 		console.log(result);
-						// 	}
-						// });
-
-						// 地图点击事件--点标记标注
-						this.map.on("click", this.handleClick);
-
-						// 逆向地理编码插件
-						this.geocoder = new AMap.Geocoder({
-							// city: "010", //城市设为北京，默认：“全国”
-							radius: 1000, //范围，默认：500
+						// 自动获取用户IP，返回当前城市
+						let citysearch = new AMap.CitySearch();
+						citysearch.getLocalCity((status, result) => {
+							if (status === "complete" && result.info === "OK") {
+								const lat = (result.bounds.northEast.lat + result.bounds.southWest.lat) / 2
+								const lng = (result.bounds.northEast.lng + result.bounds.southWest.lng) / 2
+								console.log(lat, lng)
+								this.loadMap([lng, lat])
+							} else {
+								this.loadMap()
+							}
 						});
 					})
 					.catch((e) => {
 						console.log(e);
 					});
+			},
+			loadMap(center = [106.583541, 29.563475]) {
+				// 实例化
+				this.map = new AMap.Map("map", { //设置地图容器id
+					viewMode: "3D", //是否为3D地图模式
+					zoom: 16, //初始化地图级别
+					center //初始化地图中心点位置
+				});
+				// 地图点击事件--点标记标注
+				this.map.on("click", this.handleClick);
+
+				// 逆向地理编码插件
+				this.geocoder = new AMap.Geocoder({
+					// city: "010", //城市设为北京，默认：“全国”
+					radius: 1000, //范围，默认：500
+				});
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
