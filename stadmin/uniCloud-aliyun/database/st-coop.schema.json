@@ -41,6 +41,31 @@
 			"pattern": "^1[34578][0-9]{9}$",
 			"trim": "both"
 		},
+		"address": {
+			"bsonType": "string",
+			"description": "请填写详细地址",
+			"label": "详细地址",
+			"trim": "both"
+		},
+		"longitude": {
+			"bsonType": "string",
+			"description": "请选择经度",
+			"label": "经度",
+			"trim": "both"
+		},
+		"latitude": {
+			"bsonType": "string",
+			"description": "请选择纬度",
+			"label": "纬度",
+			"trim": "both"
+		},
+		"scope": {
+			"bsonType": "string",
+			"description": "请填写主营范围",
+			"label": "主营范围",
+			"maxLength": 200,
+			"trim": "both"
+		},
 		"image": {
 			"bsonType": "file",
 			"fileMediaType": "image",
