@@ -317,14 +317,16 @@
 	}
 
 	.cate-list {
-		margin: 10px;
+		// margin: 10px;
 
 		.cate-item {
 			display: flex;
 			flex-direction: column;
 
 			.level-1 {
-				padding: 8px;
+				// padding: 8px;
+				padding-top: 8px;
+				padding-bottom: 8px;
 				display: flex;
 				align-items: center;
 
@@ -338,8 +340,9 @@
 			}
 
 			.level-2 {
-				padding: 8px;
-				padding-left: 36px;
+				padding-top: 8px;
+				padding-bottom: 8px;
+				padding-left: 10px;
 				display: flex;
 				align-items: center;
 
