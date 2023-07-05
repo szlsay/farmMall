@@ -24,7 +24,7 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="scope" label="主营范围" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请填写主营范围" v-model="formData.scope" trim="both"></uni-easyinput>
+							<uni-easyinput type="textarea" placeholder="请填写主营范围" v-model="formData.scope" trim="both"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
@@ -101,13 +101,13 @@
 				"latitude": "",
 				"scope": "",
 				"image": null,
-				"disabled": "false"
+				"disabled": false
 			}
 			return {
 				labelWidth: 90,
 				imageStyles: {
-					width: 200,
-					height: 200,
+					width: 100,
+					height: 100,
 				},
 				formData,
 				formOptions: {},
