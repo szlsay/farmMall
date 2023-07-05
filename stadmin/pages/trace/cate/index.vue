@@ -124,7 +124,8 @@
 				formOptions: {},
 				rules: {
 					...getValidator(Object.keys(formData))
-				}
+				},
+				loadRule: false
 			}
 		},
 		watch: {
@@ -138,7 +139,10 @@
 			},
 			"formData.level": function(value) {
 				this.$nextTick(() => {
-					this.$refs.form.setRules(this.rules)
+					if (value && !this.loadRule) {
+						this.$refs.form.setRules(this.rules)
+						this.loadRule = true
+					}
 				})
 			},
 			"formData.label": function(value) {
@@ -220,6 +224,7 @@
 				uni.showToast({
 					title
 				})
+				const that = this
 				setTimeout(() => this.loadData(), 500)
 			},
 			loadData() {
@@ -254,6 +259,13 @@
 				this.cateTitle = "分类信息(新增下级)"
 			},
 			submit() {
+				if (!this.formData.label) {
+					uni.showToast({
+						title: "请输入标题",
+						icon: "none"
+					})
+					return
+				}
 				uni.showLoading({
 					mask: true
 				})
@@ -264,13 +276,6 @@
 				})
 			},
 			submitForm(value) {
-				if (!value.label) {
-					uni.showToast({
-						title: "请输入标题",
-						icon: "error"
-					})
-					return
-				}
 				if (!value.image) {
 					value.image = {
 						url: ''
