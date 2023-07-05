@@ -7,17 +7,20 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="coop_name" label="合作社名称" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both" maxlength="50"></uni-easyinput>
+							<uni-easyinput placeholder="请输入合作社名称" v-model="formData.coop_name" trim="both"
+								maxlength="50"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="contact_name" label="联系人姓名" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both" maxlength="10"></uni-easyinput>
+							<uni-easyinput placeholder="请输入联系人姓名" v-model="formData.contact_name" trim="both"
+								maxlength="10"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="contact_phone" label="联系人电话" :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both" maxlength="11"></uni-easyinput>
+							<uni-easyinput placeholder="请输入联系人电话" v-model="formData.contact_phone" trim="both"
+								maxlength="11"></uni-easyinput>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
@@ -150,17 +153,17 @@
 				}
 			}
 		},
-    onLoad(e) {
-      if (e.id) {
-        const id = e.id
-        this.formDataId = id
-        this.getDetail(id)
-      }
-    },
-    onReady() {
-      this.$refs.form.setRules(this.rules)
-    },
-    methods: {
+		onLoad(e) {
+			if (e.id) {
+				const id = e.id
+				this.formDataId = id
+				this.getDetail(id)
+			}
+		},
+		onReady() {
+			this.$refs.form.setRules(this.rules)
+		},
+		methods: {
 			onClickMap(item) {
 				this.map.setCenter([item.location.lng, item.location.lat])
 			},
@@ -190,10 +193,10 @@
 						// 实例化
 						const lng = parseFloat(this.formData.longitude)
 						const lat = parseFloat(this.formData.latitude)
-						
-						if (lng > 1  && lat > 1) {
+
+						if (lng > 1 && lat > 1) {
 							this.loadMap([lng, lat])
-							this.updateMap(this.formData.map_address+this.formData.address, [lng, lat])
+							this.updateMap(this.formData.map_address + this.formData.address, [lng, lat])
 						} else {
 							// 自动获取用户IP，返回当前城市
 							let citysearch = new AMap.CitySearch();
@@ -222,13 +225,13 @@
 				});
 				// 地图点击事件--点标记标注
 				this.map.on("click", this.handleClick);
-			
+
 				// 逆向地理编码插件
 				this.geocoder = new AMap.Geocoder({
 					// city: "010", //城市设为北京，默认：“全国”
 					radius: 1000, //范围，默认：500
 				});
-			
+
 				const autoOptions = {
 					city: '全国'
 				}
@@ -275,66 +278,63 @@
 					content //设置文本标注内容
 				});
 			},
-      
-      /**
-       * 验证表单并提交
-       */
-      submit() {
-        uni.showLoading({
-          mask: true
-        })
-        this.$refs.form.validate().then((res) => {
-          return this.submitForm(res)
-        }).catch(() => {
-        }).finally(() => {
-          uni.hideLoading()
-        })
-      },
 
-      /**
-       * 提交表单
-       */
-      submitForm(value) {
-        // 使用 clientDB 提交数据
-        return db.collection(dbCollectionName).doc(this.formDataId).update(value).then((res) => {
-          uni.showToast({
-            title: '修改成功'
-          })
-          this.getOpenerEventChannel().emit('refreshData')
-          setTimeout(() => uni.navigateBack(), 500)
-        }).catch((err) => {
-          uni.showModal({
-            content: err.message || '请求服务失败',
-            showCancel: false
-          })
-        })
-      },
+			/**
+			 * 验证表单并提交
+			 */
+			submit() {
+				uni.showLoading({
+					mask: true
+				})
+				this.$refs.form.validate().then((res) => {
+					return this.submitForm(res)
+				}).catch(() => {}).finally(() => {
+					uni.hideLoading()
+				})
+			},
+			submitForm(value) {
+				const stcoop = uniCloud.importObject("st-coop")
+				stcoop.update(this.formDataId, value).then((res) => {
+					uni.showToast({
+						title: '修改成功'
+					})
+					this.getOpenerEventChannel().emit('refreshData')
+					setTimeout(() => uni.navigateBack(), 500)
+				}).catch((err) => {
+					uni.showModal({
+						content: err.message || '请求服务失败',
+						showCancel: false
+					})
+				})
+			},
 
-      /**
-       * 获取表单数据
-       * @param {Object} id
-       */
-      getDetail(id) {
-        uni.showLoading({
-          mask: true
-        })
-        db.collection(dbCollectionName).doc(id).field("coop_name,contact_name,contact_phone,map_address,address,longitude,latitude,scope,image,disabled").get().then((res) => {
-          const data = res.result.data[0]
-          if (data) {
-            this.formData = data
-            this.initMap();
-          }
-        }).catch((err) => {
-          uni.showModal({
-            content: err.message || '请求服务失败',
-            showCancel: false
-          })
-        }).finally(() => {
-          uni.hideLoading()
-        })
-      }
-    }
-  }
+			/**
+			 * 获取表单数据
+			 * @param {Object} id
+			 */
+			getDetail(id) {
+				uni.showLoading({
+					mask: true
+				})
+				db.collection(dbCollectionName).doc(id).field(
+						"coop_name,contact_name,contact_phone,map_address,address,longitude,latitude,scope,image,disabled").get()
+					.then((res) => {
+						const data = res.result.data[0]
+						if (data) {
+							this.formData = data
+							this.initMap();
+						}
+					}).catch((err) => {
+						uni.showModal({
+							content: err.message || '请求服务失败',
+							showCancel: false
+						})
+					}).finally(() => {
+						uni.hideLoading()
+					})
+			}
+		}
+	}
 </script>
 <style lang="scss" scoped>
 	#map {

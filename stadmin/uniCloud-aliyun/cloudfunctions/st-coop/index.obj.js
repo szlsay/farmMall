@@ -27,6 +27,9 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
+		if (!value.image) {
+			value.image = {}
+		}
 		value.update_time = Date.now()
 		return dbJql.collection(dbCollectionName).doc(_id).update(value)
 	},

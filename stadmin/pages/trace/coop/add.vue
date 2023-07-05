@@ -275,7 +275,7 @@
 					uni.hideLoading()
 				})
 			},
-
+			
 			submitForm(value) {
 				const stcoop = uniCloud.importObject("st-coop")
 				stcoop.add(value).then((res) => {
