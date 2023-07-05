@@ -3,15 +3,15 @@
 
 const validator = {
 	"label": {
-		"rules": [
-			{
-				"format": "string",
-			}
-		],
+		"rules": [{
+			"format": "string",
+		}],
 		"label": "标题"
 	},
 	"image": {
-		"rules": [],
+		"rules": [{
+			"format": "file"
+		}],
 		"label": "分类图标"
 	},
 	"disabled": {

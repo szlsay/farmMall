@@ -17,9 +17,6 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		if (!value.image) {
-			value.image = {}
-		}
 		value.create_time = Date.now()
 		return db.collection(dbCollectionName).add(value)
 	},

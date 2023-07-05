@@ -151,21 +151,6 @@
 					"navigationBarTitleText": "产品分类"
 				}
 			}, {
-				"path": "cate/add",
-				"style": {
-					"navigationBarTitleText": "新增分类"
-				}
-			}, {
-				"path": "cate/edit",
-				"style": {
-					"navigationBarTitleText": "编辑分类"
-				}
-			}, {
-				"path": "cate/list",
-				"style": {
-					"navigationBarTitleText": "列表分类"
-				}
-			}, {
 				"path": "coop/add",
 				"style": {
 					"navigationBarTitleText": "新增合作社"
