@@ -67,6 +67,9 @@
 							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
 							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
 						</view>
+						<view class="map-list" v-for="item in searchList" @click="onClickMap(item)">
+							{{item.name}}
+						</view>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<view id="map">
@@ -124,6 +127,7 @@
 				"disabled": false
 			}
 			return {
+				searchList: [],
 				autoComplete: null,
 				queryMap: null,
 				map: null, //高德实例
@@ -148,6 +152,9 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onClickMap(item) {
+				this.map.setCenter([item.location.lng, item.location.lat])
+			},
 			onSearch() {
 				if (!this.queryMap) {
 					uni.showToast({
@@ -156,8 +163,11 @@
 					})
 					return
 				} else {
+					const that = this
 					this.autoComplete.search(this.queryMap, function(status, result) {
-						console.log("0000-", status, result)
+						if (status === "complete" && result.info == "OK") {
+							that.searchList = result.tips
+						}
 					})
 				}
 			},
@@ -185,15 +195,6 @@
 						console.log(e);
 					});
 			},
-			// loadAutocomplete() {
-			// 	const autoOptions = {
-			// 		city: '全国'
-			// 	}
-			// 	this.autoComplete = new AMap.AutoComplete(autoOptions);
-			// 	autoComplete.search("莒县", function(status, result) {
-			// 		console.log(status, result)
-			// 	})
-			// },
 			loadMap(center = [106.583541, 29.563475]) {
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
@@ -305,5 +306,23 @@
 		button {
 			margin-left: 8px;
 		}
+	}
+
+	.map-list {
+		box-sizing: border-box;
+		border: 1px solid #00CC99;
+		border-radius: 14px;
+		padding-left: 8px;
+		font-size: 12px;
+
+		height: 28px;
+		margin-top: 8px;
+		cursor: pointer;
+		
+		display: flex;
+		align-items: center;
+	}
+	.map-list:hover{
+		background-color: #00CC99;
 	}
 </style>
