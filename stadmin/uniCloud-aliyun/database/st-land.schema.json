@@ -1,0 +1,96 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["land_name", "land_type"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"label": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"label": "更新时间"
+		},
+		"land_name": {
+			"bsonType": "string",
+			"description": "例如：一号地块、一号大棚",
+			"label": "地块名称",
+			"maxLength": 19,
+			"trim": "both"
+		},
+		"land_type": {
+			"bsonType": "string",
+			"description": "请选择地块类型",
+			"label": "地块类型",
+			"trim": "both"
+		},
+		"contact_name": {
+			"bsonType": "string",
+			"description": "请输入负责人姓名",
+			"label": "负责人姓名",
+			"trim": "both"
+		},
+		"contact_phone": {
+			"bsonType": "string",
+			"description": "请输入负责人电话",
+			"label": "负责人电话",
+			"pattern": "^1[34578][0-9]{9}$",
+			"trim": "both"
+		},
+		"map_address": {
+			"bsonType": "string",
+			"description": "请填写地图地址",
+			"label": "地图地址",
+			"trim": "both"
+		},
+		"address": {
+			"bsonType": "string",
+			"description": "请填写详细地址",
+			"label": "详细地址",
+			"trim": "both"
+		},
+		"longitude": {
+			"bsonType": "string",
+			"description": "请选择经度",
+			"label": "经度",
+			"trim": "both"
+		},
+		"latitude": {
+			"bsonType": "string",
+			"description": "请选择纬度",
+			"label": "纬度",
+			"trim": "both"
+		},
+		"image_content": {
+			"bsonType": "array",
+			"arrayType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择地块实景图片",
+			"label": "地块实景"
+		},
+		"video": {
+			"bsonType": "file",
+			"fileMediaType": "file",
+			"description": "请选择实景视频",
+			"label": "实景视频"
+		},
+		"disabled": {
+			"bsonType": "bool",
+			"description": "禁用后，用户端不会显示",
+			"label": "是否禁用",
+			"defaultValue": false
+		}
+	}
+}
