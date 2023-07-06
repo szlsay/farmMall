@@ -225,7 +225,7 @@
 						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
 						plugins: ["AMap.AutoComplete", "AMap.CitySearch",
-							"AMap.Geocoder"
+							"AMap.Geocoder", "AMap.PolygonEditor"
 						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
 						// 自动获取用户IP，返回当前城市
