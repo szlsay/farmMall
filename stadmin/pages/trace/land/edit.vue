@@ -145,6 +145,7 @@
 				"disabled": false
 			}
 			return {
+				polygon: null,
 				isPolyEditor: false,
 				polyEditor: null,
 				searchList: [],
@@ -259,6 +260,18 @@
 				// 地图点击事件--点标记标注
 				this.map.on("click", this.handleClick);
 
+				// this.polygon = new AMap.Polygon({
+				// 	path: [],
+				// 	fillColor: '#fff', // 多边形填充颜色
+				// 	borderWeight: 2, // 线条宽度，默认为 1
+				// 	strokeColor: 'red', // 线条颜色
+				// });
+				// //多边形 Polygon对象添加到 Map
+				// this.map.add(this.polygon);
+				// // 缩放地图到合适的视野级别
+				// this.map.setFitView([ this.polygon ])
+
+				// this.polyEditor = new AMap.PolygonEditor(this.map, this.polygon);
 				this.polyEditor = new AMap.PolygonEditor(this.map);
 				const that = this
 				this.polyEditor.on('add', function(data) {
@@ -270,10 +283,21 @@
 						that.polyEditor.open();
 					})
 				})
-				
+
 				this.polyEditor.on('end', function(data) {
 					console.log("end", data)
-					console.log("data.target._opts.path", data.target.path)
+					console.log("data.target._opts.path", data.target._opts.path)
+					if (this.polygon) {
+						that.map.remove(this.polygon)
+					}
+					this.polygon = new AMap.Polygon({
+						path: data.target._opts.path,
+						fillColor: '#00CC9933', // 多边形填充颜色
+						borderWeight: 1, // 线条宽度，默认为 1
+						strokeColor: '#00CC99', // 线条颜色
+					});
+					that.polyEditor.addAdsorbPolygons(this.polygon);
+					that.map.add([this.polygon])
 				})
 				// 逆向地理编码插件
 				this.geocoder = new AMap.Geocoder({
@@ -324,7 +348,7 @@
 				this.marker.setMap(this.map);
 				// 设置label标签，label默认蓝框白底左上角显示，样式className为：amap-marker-label
 				const content =
-					"<div style='height: 20px; line-height: 20px; border-radius:10px; padding-left: 8px; padding-right: 8px; font-size: 16px; font-weight: 700; color: #00CC99; border: 1px solid #00CC99'>" +
+					"<div style='height: 20px; line-height: 20px; border-radius:10px; padding-left: 8px; padding-right: 8px; font-size: 16px; font-weight: 700; color: #00CC99; border: 1px solid #00CC99; text-shadow: 1px 1px 2px #eee;'>" +
 					address + "</div>"
 				this.marker.setLabel({
 					direction: "top-center",
@@ -402,12 +426,13 @@
 		border-radius: 20rpx;
 		position: relative;
 	}
-	
-	.input-card{
+
+	.input-card {
 		position: absolute;
 		top: 10px;
 		left: 10px;
 		z-index: 1;
+
 		button:first-child {
 			margin-right: 10px;
 		}
