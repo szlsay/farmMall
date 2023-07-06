@@ -19,24 +19,22 @@
 			<unicloud-db ref="udb" :collection="collectionList"
 				field="coop_name,contact_name,contact_phone,map_address,address,scope,image,disabled" :where="where"
 				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
-				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
-				:options="options" loadtime="manual" @load="onqueryload">
+				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}" :options="options"
+				loadtime="manual" @load="onqueryload">
 				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
 					<uni-tr>
-						<uni-th width="120" align="center" filter-type="search"
-							@filter-change="filterChange($event, 'coop_name')" sortable
-							@sort-change="sortChange($event, 'coop_name')">合作社名称</uni-th>
+						<uni-th width="120" align="center" filter-type="search" @filter-change="filterChange($event, 'coop_name')"
+							sortable @sort-change="sortChange($event, 'coop_name')">合作社名称</uni-th>
 						<uni-th width="120" align="center" filter-type="search"
 							@filter-change="filterChange($event, 'contact_name')" sortable
 							@sort-change="sortChange($event, 'contact_name')">联系人姓名</uni-th>
 						<uni-th width="120" align="center" filter-type="search"
 							@filter-change="filterChange($event, 'contact_phone')" sortable
 							@sort-change="sortChange($event, 'contact_phone')">联系人电话</uni-th>
-						<uni-th align="center">详细地址</uni-th>
-						<uni-th align="center">主营范围</uni-th>
+						<uni-th width="140" align="center">详细地址</uni-th>
+						<uni-th width="300" align="center">主营范围</uni-th>
 						<uni-th align="center">合作社图片</uni-th>
-						<uni-th width="100" align="center" sortable
-							@sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
+						<uni-th width="100" align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
@@ -46,8 +44,8 @@
 						<uni-td align="center">{{item.map_address}}{{item.address}}</uni-td>
 						<uni-td align="center">{{item.scope}}</uni-td>
 						<uni-td align="center">
-							<image style="width: 60px; height: 60px;"
-								v-if="item.image && item.image.fileType == 'image'" :src="item.image.url"></image>
+							<image style="width: 60px; height: 60px;" v-if="item.image && item.image.fileType == 'image'"
+								:src="item.image.url"></image>
 						</uni-td>
 						<uni-td align="center">{{item.disabled == true ? '是' : '否'}}</uni-td>
 						<uni-td align="center">
@@ -61,8 +59,8 @@
 					</uni-tr>
 				</uni-table>
 				<view class="uni-pagination-box">
-					<uni-pagination show-icon :page-size="pagination.size" v-model="pagination.current"
-						:total="pagination.count" @change="onPageChanged" />
+					<uni-pagination show-icon :page-size="pagination.size" v-model="pagination.current" :total="pagination.count"
+						@change="onPageChanged" />
 				</view>
 			</unicloud-db>
 		</view>
