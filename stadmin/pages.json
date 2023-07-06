@@ -180,6 +180,20 @@
 				"style": {
 					"navigationBarTitleText": "基础列表"
 				}
+			}, {
+				"path": "land/add",
+				"style": {
+					"navigationBarTitleText": "新增地块"
+				}
+			}, {
+				"path": "land/edit",
+				"style": {
+					"navigationBarTitleText": "编辑地块"
+				}
+			}, {
+				"path": "land/list",
+				"style": {
+				}
 			}]
 		}, {
 			"root": "pages/system",
