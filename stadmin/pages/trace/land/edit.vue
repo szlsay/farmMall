@@ -385,6 +385,7 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				value.path = this.path
 				const stland = uniCloud.importObject("st-land")
 				stland.update(this.formDataId, value).then((res) => {
 					uni.showToast({
@@ -411,7 +412,7 @@
 				const db = uniCloud.database();
 				const dbCollectionName = 'st-land';
 				db.collection(dbCollectionName).doc(id).field(
-					"land_name,land_type,contact_name,contact_phone,map_address,address,longitude,latitude,image_content,video,disabled"
+					"land_name,land_type,contact_name,contact_phone,path,map_address,address,longitude,latitude,image_content,video,disabled"
 				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
