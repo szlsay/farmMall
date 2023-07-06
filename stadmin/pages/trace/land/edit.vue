@@ -33,6 +33,23 @@
 					</uni-col>
 				</uni-row>
 				<uni-row>
+					<uni-forms-item name="image_content" label="地块实景" :label-width="labelWidth" label-align="right">
+						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
+							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
+						<text style="color: red; font-size: 14px;" class="title-alert">用于地块的详情展示，最多六张。格式：jpg,png,webp</text>
+					</uni-forms-item>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="video" label="实景视频" :label-width="labelWidth" label-align="right">
+						<uni-file-picker file-mediatype="file" return-type="object" v-model="formData.video"></uni-file-picker>
+					</uni-forms-item>
+				</uni-row>
+				<uni-row>
+					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
+						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
+					</uni-forms-item>
+				</uni-row>
+				<uni-row>
 					<uni-col :xs="24" :sm="8">
 						<uni-forms-item name="map_address" label="地图选址" :label-width="labelWidth" label-align="right">
 							<uni-easyinput type="textarea" placeholder="请从地图上选址" v-model="formData.map_address" trim="both"
@@ -54,23 +71,6 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
-				<uni-row>
-					<uni-forms-item name="image_content" label="地块实景" :label-width="labelWidth" label-align="right">
-						<uni-file-picker file-mediatype="image" file-extname="jpg,png,webp" return-type="array"
-							v-model="formData.image_content" limit="6" :image-styles="imageStyles"></uni-file-picker>
-						<text style="color: red; font-size: 14px;" class="title-alert">用于地块的详情展示，最多六张。格式：jpg,png,webp</text>
-					</uni-forms-item>
-				</uni-row>
-				<uni-row>
-					<uni-forms-item name="video" label="实景视频" :label-width="labelWidth" label-align="right">
-						<uni-file-picker file-mediatype="file" return-type="object" v-model="formData.video"></uni-file-picker>
-					</uni-forms-item>
-				</uni-row>
-				<uni-row>
-					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
-						<switch @change="binddata('disabled', $event.detail.value)" :checked="formData.disabled"></switch>
-					</uni-forms-item>
-				</uni-row>
 			</view>
 
 			<!-- 位置信息 -->
@@ -88,6 +88,11 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="18">
 						<view id="map">
+							<view class="input-card">
+								<!-- <button class="uni-button" type="default" size="mini" @click="createPolygon">新建</button> -->
+								<button class="uni-button" type="primary" size="mini" @click="openPolygon">编辑圈地</button>
+								<button class="uni-button" type="warn" size="mini" @click="closePolygon">保存圈地</button>
+							</view>
 						</view>
 					</uni-col>
 				</uni-row>
@@ -124,8 +129,6 @@
 		return result
 	}
 
-
-
 	export default {
 		data() {
 			let formData = {
@@ -142,6 +145,8 @@
 				"disabled": false
 			}
 			return {
+				isPolyEditor: false,
+				polyEditor: null,
 				searchList: [],
 				autoComplete: null,
 				queryMap: null,
@@ -171,6 +176,20 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			createPolygon() {
+				this.isPolyEditor = true
+				this.polyEditor.close();
+				this.polyEditor.setTarget();
+				this.polyEditor.open();
+			},
+			openPolygon() {
+				this.isPolyEditor = true
+				this.polyEditor.open()
+			},
+			closePolygon() {
+				this.isPolyEditor = false
+				this.polyEditor.close()
+			},
 			onClickMap(item) {
 				this.map.setCenter([item.location.lng, item.location.lat])
 			},
@@ -196,7 +215,7 @@
 						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
 						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
 						plugins: ["AMap.AutoComplete", "AMap.CitySearch",
-							"AMap.Geocoder"
+							"AMap.Geocoder", "AMap.PolygonEditor"
 						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
 					}).then((AMap) => {
 						// 实例化
@@ -230,7 +249,7 @@
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
-					zoom: 16, //初始化地图级别
+					zoom: 32, //初始化地图级别
 					layers: [
 						satellite,
 						roadNet
@@ -240,6 +259,22 @@
 				// 地图点击事件--点标记标注
 				this.map.on("click", this.handleClick);
 
+				this.polyEditor = new AMap.PolygonEditor(this.map);
+				const that = this
+				this.polyEditor.on('add', function(data) {
+					console.log(data);
+					const polygon = data.target;
+					that.polyEditor.addAdsorbPolygons(polygon);
+					polygon.on('dblclick', () => {
+						that.polyEditor.setTarget(polygon);
+						that.polyEditor.open();
+					})
+				})
+				
+				this.polyEditor.on('end', function(data) {
+					console.log("end", data)
+					console.log("data.target._opts.path", data.target.path)
+				})
 				// 逆向地理编码插件
 				this.geocoder = new AMap.Geocoder({
 					// city: "010", //城市设为北京，默认：“全国”
@@ -253,6 +288,9 @@
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
+				if (this.isPolyEditor) {
+					return
+				}
 				let longitude = e.lnglat.getLng(); //经度
 				let latitude = e.lnglat.getLat(); //纬度
 				this.formData.longitude = longitude.toString()
@@ -362,6 +400,17 @@
 		width: 100%;
 		height: 400px;
 		border-radius: 20rpx;
+		position: relative;
+	}
+	
+	.input-card{
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 1;
+		button:first-child {
+			margin-right: 10px;
+		}
 	}
 
 	.map-search {
