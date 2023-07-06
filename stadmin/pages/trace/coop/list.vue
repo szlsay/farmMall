@@ -33,9 +33,9 @@
 							@sort-change="sortChange($event, 'contact_phone')">联系人电话</uni-th>
 						<uni-th width="140" align="center">详细地址</uni-th>
 						<uni-th width="300" align="center">主营范围</uni-th>
-						<uni-th align="center">合作社图片</uni-th>
+						<uni-th width="100" align="center">合作社图片</uni-th>
 						<uni-th width="100" align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
-						<uni-th align="center">操作</uni-th>
+						<uni-th width="100" align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.coop_name}}</uni-td>
