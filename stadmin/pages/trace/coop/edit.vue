@@ -114,7 +114,6 @@
 	};
 
 	const db = uniCloud.database();
-	const dbCmd = db.command;
 	const dbCollectionName = 'st-coop';
 
 	function getValidator(fields) {
