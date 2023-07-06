@@ -78,6 +78,17 @@ const validator = {
     ],
     "label": "纬度"
   },
+  "path": {
+    "rules": [
+      {
+        "format": "array"
+      },
+      {
+        "arrayType": "string"
+      }
+    ],
+    "label": "圈地范围"
+  },
   "image_content": {
     "rules": [
       {
