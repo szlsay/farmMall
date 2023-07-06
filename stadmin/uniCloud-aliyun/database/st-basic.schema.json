@@ -1,0 +1,57 @@
+{
+	"bsonType": "object",
+	"required": ["text", "value"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"text": {
+			"bsonType": "string",
+			"description": "请输入标题",
+			"maxLength": 10,
+			"label": "标题",
+			"trim": "both"
+		},
+		"value": {
+			"bsonType": "string",
+			"description": "标题拼音，系统自动生成",
+			"maxLength": 20,
+			"label": "标题拼音",
+			"trim": "both"
+		},
+		"list": {
+			"bsonType": "array",
+			"description": "请输入列表",
+			"label": "列表",
+			"properties": {
+				"text": {
+					"bsonType": "string",
+					"description": "请输入标题",
+					"maxLength": 10,
+					"label": "标题",
+					"trim": "both"
+				},
+				"value": {
+					"bsonType": "string",
+					"description": "标题拼音，系统自动生成",
+					"maxLength": 20,
+					"label": "标题拼音",
+					"trim": "both"
+				},
+				"icon": {
+					"bsonType": "file",
+					"fileMediaType": "image",
+					"fileExtName": "jpg,png,webp",
+					"description": "请上传图标",
+					"label": "图标"
+				}
+			}
+		}
+	}
+}
