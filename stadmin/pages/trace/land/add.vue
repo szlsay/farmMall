@@ -72,15 +72,14 @@
 					</uni-forms-item>
 				</uni-row>
 			</view>
-			
+
 			<!-- 位置信息 -->
 			<view class="st-box">
 				<view class="st-card-header">位置信息</view>
 				<uni-row :gutter="20">
 					<uni-col :xs="24" :sm="12">
 						<view class="map-search">
-							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch"
-								placeholder="请输入搜索地址" />
+							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
 							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
 						</view>
 						<view class="map-list" v-for="item in searchList" @click="onClickMap(item)">
@@ -93,7 +92,7 @@
 					</uni-col>
 				</uni-row>
 			</view>
-			
+
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -109,9 +108,12 @@
 		validator
 	} from '@/js_sdk/validator/st-land.js';
 
-	const db = uniCloud.database();
-	const dbCmd = db.command;
-	const dbCollectionName = 'st-land';
+	//引入 amap-jsapi-loader
+	import AMapLoader from "@amap/amap-jsapi-loader";
+	//安全密钥引入
+	window._AMapSecurityConfig = {
+		securityJsCode: "6a80c5d3ba9586cdb3434946a291aecf",
+	};
 
 	function getValidator(fields) {
 		let result = {}
@@ -141,6 +143,12 @@
 				"disabled": false
 			}
 			return {
+				searchList: [],
+				autoComplete: null,
+				queryMap: null,
+				map: null, //高德实例
+				marker: null, //点标记 Marker
+				geocoder: null, //逆向地理
 				labelWidth: 90,
 				imageStyles: {
 					width: 100,
@@ -153,11 +161,119 @@
 				}
 			}
 		},
+		onLoad() {
+			this.initMap();
+		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			onClickMap(item) {
+				this.map.setCenter([item.location.lng, item.location.lat])
+			},
+			onSearch() {
+				if (!this.queryMap) {
+					uni.showToast({
+						title: "请输入搜索地址",
+						icon: "none"
+					})
+					return
+				} else {
+					const that = this
+					this.autoComplete.search(this.queryMap, function(status, result) {
+						if (status === "complete" && result.info == "OK") {
+							that.searchList = result.tips
+						}
+					})
+				}
+			},
+			//初始化
+			initMap() {
+				AMapLoader.load({
+						key: "902207ba23e27ca1ead75ebca4694010", // 申请好的Web端开发者Key，首次调用 load 时必填
+						version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+						plugins: ["AMap.AutoComplete", "AMap.CitySearch",
+							"AMap.Geocoder"
+						], // 需要使用的的插件列表，如比例尺'AMap.Scale'等
+					}).then((AMap) => {
+						// 自动获取用户IP，返回当前城市
+						let citysearch = new AMap.CitySearch();
+						citysearch.getLocalCity((status, result) => {
+							if (status === "complete" && result.info === "OK") {
+								const lat = (result.bounds.northEast.lat + result.bounds.southWest.lat) / 2
+								const lng = (result.bounds.northEast.lng + result.bounds.southWest.lng) / 2
+								this.loadMap([lng, lat])
+							} else {
+								this.loadMap()
+							}
+						});
+					})
+					.catch((e) => {
+						console.log(e);
+					});
+			},
+			loadMap(center = [118.84164, 35.586807]) {
+				// 实例化
+				this.map = new AMap.Map("map", { //设置地图容器id
+					viewMode: "3D", //是否为3D地图模式
+					zoom: 16, //初始化地图级别
+					center //初始化地图中心点位置
+				});
+				// 地图点击事件--点标记标注
+				this.map.on("click", this.handleClick);
 
+				// 逆向地理编码插件
+				this.geocoder = new AMap.Geocoder({
+					// city: "010", //城市设为北京，默认：“全国”
+					radius: 1000, //范围，默认：500
+				});
+
+				const autoOptions = {
+					city: '全国'
+				}
+				this.autoComplete = new AMap.AutoComplete(autoOptions);
+			},
+			// 地图点击之后更新点标记
+			handleClick(e) {
+				let longitude = e.lnglat.getLng(); //经度
+				let latitude = e.lnglat.getLat(); //纬度
+				this.formData.longitude = longitude.toString()
+				this.formData.latitude = latitude.toString()
+				// 逆向地理编码
+				this.geocoder.getAddress([longitude, latitude], (status, result) => {
+					if (status === "complete" && result.info == "OK") {
+						let address = result.regeocode.formattedAddress;
+						this.formData.map_address = address
+						// 更新点标记
+						this.updateMap(address, [longitude, latitude]);
+					} else {
+						console.log("定位失败，请稍后重试");
+					}
+				});
+			},
+			// 更新点标记
+			updateMap(address, lnglat) {
+				// 移除已创建的 marker
+				if (this.marker) this.map.remove(this.marker);
+				// 同时设置地图中心点和缩放级别
+				this.map.setZoomAndCenter(16, lnglat);
+				// 自定义标记点
+				this.marker = new AMap.Marker({
+					position: lnglat,
+					// icon: "http://vdata.amap.com/icons/b18/1/2.png",
+					anchor: "top-center",
+					offset: new AMap.Pixel(0, -30),
+				});
+				// 添加到实例
+				this.marker.setMap(this.map);
+				// 设置label标签，label默认蓝框白底左上角显示，样式className为：amap-marker-label
+				const content = "<div style='width:250px; font-size: 16px; font-weight: 700;'>" + address + "</div>"
+				this.marker.setLabel({
+					direction: "top-center",
+					offset: new AMap.Pixel(10, 0), //设置文本标注偏移量
+					content //设置文本标注内容
+				});
+			},
 			/**
 			 * 验证表单并提交
 			 */
@@ -176,8 +292,8 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
-				// 使用 clientDB 提交数据
-				return db.collection(dbCollectionName).add(value).then((res) => {
+				const stland = uniCloud.importObject("st-land")
+				stland.add(value).then((res) => {
 					uni.showToast({
 						title: '新增成功'
 					})
@@ -193,3 +309,38 @@
 		}
 	}
 </script>
+
+<style lang="scss" scoped>
+	#map {
+		width: 100%;
+		height: 400px;
+		border-radius: 20rpx;
+	}
+
+	.map-search {
+		display: flex;
+
+		button {
+			margin-left: 8px;
+		}
+	}
+
+	.map-list {
+		box-sizing: border-box;
+		border: 1px solid #00CC99;
+		border-radius: 14px;
+		padding-left: 8px;
+		font-size: 12px;
+
+		height: 28px;
+		margin-top: 8px;
+		cursor: pointer;
+
+		display: flex;
+		align-items: center;
+	}
+
+	.map-list:hover {
+		background-color: #00CC99;
+	}
+</style>
