@@ -16,7 +16,7 @@
       </view>
     </view>
     <view class="uni-container">
-      <unicloud-db ref="udb" :collection="collectionList" field="land_name,land_type,contact_name,contact_phone,map_address,address,longitude,latitude,image_content,video,disabled" :where="where" page-data="replace"
+      <unicloud-db ref="udb" :collection="collectionList" field="land_name,land_type,contact_name,contact_phone,map_address,address,longitude,latitude,disabled" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
         <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
@@ -29,8 +29,6 @@
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'address')" sortable @sort-change="sortChange($event, 'address')">详细地址</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'longitude')" sortable @sort-change="sortChange($event, 'longitude')">经度</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'latitude')" sortable @sort-change="sortChange($event, 'latitude')">纬度</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'image_content')">地块实景</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'video')">实景视频</uni-th>
             <uni-th align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
@@ -43,16 +41,6 @@
             <uni-td align="center">{{item.address}}</uni-td>
             <uni-td align="center">{{item.longitude}}</uni-td>
             <uni-td align="center">{{item.latitude}}</uni-td>
-            <uni-td align="center">
-              <template v-for="(file, j) in item.image_content">
-                <uni-file-picker v-if="file.fileType == 'image'" :value="file" :file-mediatype="file.fileType" :imageStyles="imageStyles" readonly></uni-file-picker>
-                <uni-link v-else :href="file.url" :text="file.url"></uni-link>
-              </template>
-            </uni-td>
-            <uni-td align="center">
-              <uni-file-picker v-if="item.video && item.video.fileType == 'image'" :value="item.video" :file-mediatype="item.video && item.video.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
-              <uni-link v-else :href="item.video && item.video.url" :text="item.video && item.video.url"></uni-link>
-            </uni-td>
             <uni-td align="center">{{item.disabled == true ? '✅' : '❌'}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
@@ -117,8 +105,6 @@
             "详细地址": "address",
             "经度": "longitude",
             "纬度": "latitude",
-            "地块实景": "image_content",
-            "实景视频": "video",
             "是否禁用": "disabled"
           }
         },

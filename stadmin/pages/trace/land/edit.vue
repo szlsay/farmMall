@@ -335,6 +335,7 @@
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
+						this.initMap();
 					}
 				}).catch((err) => {
 					uni.showModal({
