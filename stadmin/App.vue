@@ -7,13 +7,16 @@
 	import {
 		version
 	} from './package.json'
-	import { uniAdminCacheKey } from './store/constants.js'
+	import {
+		uniAdminCacheKey
+	} from './store/constants.js'
+	import store from '@/store'
 	export default {
 		created() {
 			this.clear = undefined
 		},
 		methods: {
-			...mapMutations('app',['SET_THEME']),
+			...mapMutations('app', ['SET_THEME']),
 			...mapActions({
 				init: 'app/init'
 			}),
@@ -61,7 +64,10 @@
 		},
 		onShow: function() {
 			console.log('App Show')
-			this.clear = setInterval(() => this.clearPlatform(), 15*60*1000)
+			this.clear = setInterval(() => this.clearPlatform(), 15 * 60 * 1000)
+			if (store.state.sys.basic.length === 0) {
+				store.dispatch("sys/getBasic")
+			}
 		},
 		onHide: function() {
 			console.log('App Hide')

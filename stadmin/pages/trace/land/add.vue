@@ -1,7 +1,6 @@
 <template>
 	<view class="uni-container">
 		<uni-forms ref="form" :model="formData" validateTrigger="bind">
-
 			<!-- 基本信息 -->
 			<view class="st-box">
 				<view class="st-card-header">基本信息</view>
@@ -14,7 +13,8 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="land_type" label="地块类型" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择地块类型" v-model="formData.land_type" trim="both"></uni-easyinput>
+							<uni-data-select placeholder="请选择地块类型" v-model="formData.land_type"
+								:localdata="$store.state.sys.land_types"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
