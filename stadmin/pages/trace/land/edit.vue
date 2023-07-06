@@ -77,7 +77,7 @@
 			<view class="st-box">
 				<view class="st-card-header">位置信息</view>
 				<uni-row :gutter="20">
-					<uni-col :xs="24" :sm="12">
+					<uni-col :xs="24" :sm="6">
 						<view class="map-search">
 							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch" placeholder="请输入搜索地址" />
 							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
@@ -86,7 +86,7 @@
 							{{item.name}}
 						</view>
 					</uni-col>
-					<uni-col :xs="24" :sm="12">
+					<uni-col :xs="24" :sm="18">
 						<view id="map">
 						</view>
 					</uni-col>
@@ -225,10 +225,16 @@
 					});
 			},
 			loadMap(center = [118.84164, 35.586807]) {
+				const satellite = new AMap.TileLayer.Satellite()
+				const roadNet = new AMap.TileLayer.RoadNet();
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
 					zoom: 16, //初始化地图级别
+					layers: [
+						satellite,
+						roadNet
+					],
 					center //初始化地图中心点位置
 				});
 				// 地图点击事件--点标记标注
@@ -279,7 +285,9 @@
 				// 添加到实例
 				this.marker.setMap(this.map);
 				// 设置label标签，label默认蓝框白底左上角显示，样式className为：amap-marker-label
-				const content = "<div style='width:250px; font-size: 16px; font-weight: 700;'>" + address + "</div>"
+				const content =
+					"<div style='height: 20px; line-height: 20px; border-radius:10px; padding-left: 8px; padding-right: 8px; font-size: 16px; font-weight: 700; color: #00CC99; border: 1px solid #00CC99'>" +
+					address + "</div>"
 				this.marker.setLabel({
 					direction: "top-center",
 					offset: new AMap.Pixel(10, 0), //设置文本标注偏移量
@@ -331,7 +339,7 @@
 				const dbCollectionName = 'st-land';
 				db.collection(dbCollectionName).doc(id).field(
 					"land_name,land_type,contact_name,contact_phone,map_address,address,longitude,latitude,image_content,video,disabled"
-					).get().then((res) => {
+				).get().then((res) => {
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
@@ -361,6 +369,7 @@
 
 		button {
 			margin-left: 8px;
+			min-width: 70px;
 		}
 	}
 
