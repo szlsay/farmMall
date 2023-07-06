@@ -165,6 +165,21 @@
 				"style": {
 					"navigationBarTitleText": "列表合作社"
 				}
+			}, {
+				"path": "basic/add",
+				"style": {
+					"navigationBarTitleText": "新增基础"
+				}
+			}, {
+				"path": "basic/edit",
+				"style": {
+					"navigationBarTitleText": "编辑基础"
+				}
+			}, {
+				"path": "basic/list",
+				"style": {
+					"navigationBarTitleText": "基础列表"
+				}
 			}]
 		}, {
 			"root": "pages/system",
