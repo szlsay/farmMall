@@ -73,6 +73,27 @@
 				</uni-row>
 			</view>
 			
+			<!-- 位置信息 -->
+			<view class="st-box">
+				<view class="st-card-header">位置信息</view>
+				<uni-row :gutter="20">
+					<uni-col :xs="24" :sm="12">
+						<view class="map-search">
+							<input class="uni-search" type="text" v-model="queryMap" @confirm="onSearch"
+								placeholder="请输入搜索地址" />
+							<button class="uni-button" type="default" size="mini" @click="onSearch">搜索</button>
+						</view>
+						<view class="map-list" v-for="item in searchList" @click="onClickMap(item)">
+							{{item.name}}
+						</view>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<view id="map">
+						</view>
+					</uni-col>
+				</uni-row>
+			</view>
+			
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
