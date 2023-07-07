@@ -1,7 +1,7 @@
 // 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
 {
 	"bsonType": "object",
-	"required": ["coop_name"],
+	"required": ["cate_id", "land_id", "standard_type"],
 	"permission": {
 		"read": true,
 		"create": true,
@@ -38,6 +38,11 @@
 			"bsonType": "string",
 			"description": "请选择地块",
 			"label": "地块",
+		},
+		"standard_type": {
+			"bsonType": "string",
+			"description": "请选择种植标准",
+			"label": "种植标准",
 		},
 		"plant_num": {
 			"bsonType": "int",

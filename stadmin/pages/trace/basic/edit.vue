@@ -126,17 +126,19 @@
 			},
 			"formData.list": {
 				handler(value) {
-					value.forEach(item => {
-						if (item.text && item.text.length > 0) {
-							item.value = pinyin(item.text, {
-								toneType: 'none',
-								type: 'array',
-								v: true
-							}).join("")
-						} else {
-							item.value = ""
-						}
-					})
+					if (value && value.length > 0) {
+						value.forEach(item => {
+							if (item.text && item.text.length > 0) {
+								item.value = pinyin(item.text, {
+									toneType: 'none',
+									type: 'array',
+									v: true
+								}).join("")
+							} else {
+								item.value = ""
+							}
+						})
+					}
 				},
 				deep: true
 			}
@@ -147,6 +149,9 @@
 					"text": null,
 					"value": null,
 					"icon": null
+				}
+				if (!this.formData.list) {
+					this.formData.list = []
 				}
 				this.formData.list.push(item)
 			},
