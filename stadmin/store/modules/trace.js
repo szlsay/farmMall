@@ -1,25 +1,26 @@
 export default {
 	namespaced: true,
 	state: {
-		basic: [],
-		land_types: []
+		cate_list: []
 	},
 	mutations: {
-		SET_Basic: (state, basic) => {
-			state.basic = basic
-			state.land_types = basic.filter(item => item.value === "dikuaileixing")[0]["list"]
+		SET_CateList: (state, cate_list) => {
+			state.cate_list = cate_list
 		}
 	},
 	actions: {
-		async getBasic({
+		async getCateList({
 			commit
 		}) {
-			const {
-				result
-			} = await uniCloud.database().collection('st-basic').get()
+			const result = await uniCloud.importObject("st-product-cate").getListApi()
+			console.log(result)
 			if (result.data && result.data.length > 0) {
-				commit("SET_Basic", result.data)
+				result.data.map(item => {
+					item.text = item.label
+					item.value = item._id
+				})
 			}
+			commit("SET_CateList", result.data)
 		}
 	}
 }

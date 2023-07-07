@@ -7,7 +7,8 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="cate_id" label="种类" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择种类" v-model="formData.cate_id"></uni-easyinput>
+							<uni-data-select placeholder="请选择种类" v-model="formData.cate_id"
+								:localdata="$store.state.trace.cate_list"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
@@ -106,6 +107,9 @@
 					...getValidator(Object.keys(formData))
 				}
 			}
+		},
+		onLoad() {
+			this.$store.dispatch("trace/getCateList")
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)

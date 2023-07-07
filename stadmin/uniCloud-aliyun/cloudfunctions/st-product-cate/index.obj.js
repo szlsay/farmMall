@@ -40,6 +40,13 @@ module.exports = {
 		})
 		return level1List
 	},
+	async getListApi() {
+		const result = await db.collection(dbCollectionName).where({
+			'disabled': false,
+			'level': 2
+		}).get()
+		return result
+	},
 	delete(_id) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
