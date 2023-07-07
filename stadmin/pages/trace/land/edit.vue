@@ -293,7 +293,7 @@
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
-					zoom: 32, //初始化地图级别
+					zoom: 16, //初始化地图级别
 					layers: [
 						defaultLayer,
 						this.satellite,

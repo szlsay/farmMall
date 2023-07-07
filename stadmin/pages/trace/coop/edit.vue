@@ -240,7 +240,7 @@
 				});
 
 				const autoOptions = {
-					city: '全国'
+					city: '日照市'
 				}
 				this.autoComplete = new AMap.AutoComplete(autoOptions);
 			},

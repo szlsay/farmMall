@@ -96,10 +96,13 @@
 					</uni-col>
 					<uni-col :xs="24" :sm="18">
 						<view id="map">
-							<view class="input-card">
+							<view class="cord-btn">
 								<!-- <button class="uni-button" type="default" size="mini" @click="createPolygon">新建</button> -->
 								<button class="uni-button" type="primary" size="mini" @click="openPolygon">编辑圈地</button>
 								<button class="uni-button" type="warn" size="mini" @click="closePolygon">保存圈地</button>
+							</view>
+							<view class="map-change">
+								<button class="uni-button" type="primary" size="mini" @click="changMap">切换场景</button>
 							</view>
 						</view>
 					</uni-col>
@@ -156,6 +159,9 @@
 				"disabled": false
 			}
 			return {
+				isShowSatellite: true,
+				satellite: null,
+				roadNet: null,
 				path: [],
 				polygon: null,
 				isPolyEditor: false,
@@ -185,6 +191,18 @@
 			this.$refs.form.setRules(this.rules)
 		},
 		methods: {
+			changMap() {
+				if (this.satellite) {
+					if (this.isShowSatellite) {
+						this.satellite.hide()
+						this.roadNet.hide()
+					} else {
+						this.satellite.show()
+						this.roadNet.show()
+					}
+					this.isShowSatellite = !this.isShowSatellite
+				}
+			},
 			createPolygon() {
 				this.isPolyEditor = true
 				this.polyEditor.close();
@@ -244,15 +262,19 @@
 					});
 			},
 			loadMap(center = [118.84164, 35.586807]) {
-				const satellite = new AMap.TileLayer.Satellite()
-				const roadNet = new AMap.TileLayer.RoadNet();
+				this.satellite = new AMap.TileLayer.Satellite()
+				this.roadNet = new AMap.TileLayer.RoadNet();
+				this.isShowSatellite = true
+				const defaultLayer = new AMap.TileLayer()
+
 				// 实例化
 				this.map = new AMap.Map("map", { //设置地图容器id
 					viewMode: "3D", //是否为3D地图模式
-					zoom: 32, //初始化地图级别
+					zoom: 16, //初始化地图级别
 					layers: [
-						satellite,
-						roadNet
+						defaultLayer,
+						this.satellite,
+						this.roadNet,
 					],
 					mapStyle: "amap://styles/darkblue",
 					features: ['bg', 'road', 'building', 'point'],
@@ -309,7 +331,7 @@
 				});
 
 				const autoOptions = {
-					city: '全国'
+					city: '日照市'
 				}
 				this.autoComplete = new AMap.AutoComplete(autoOptions);
 			},
@@ -409,7 +431,7 @@
 		position: relative;
 	}
 
-	.input-card {
+	.cord-btn {
 		position: absolute;
 		top: 10px;
 		left: 10px;
@@ -419,6 +441,15 @@
 			margin-right: 10px;
 		}
 	}
+
+	.map-change {
+		position: absolute;
+		top: 10px;
+		right: 10px;
+		z-index: 1;
+
+	}
+
 
 	.map-search {
 		display: flex;
