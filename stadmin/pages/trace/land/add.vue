@@ -40,9 +40,16 @@
 					</uni-forms-item>
 				</uni-row>
 				<uni-row>
-					<uni-forms-item name="video" label="实景视频" :label-width="labelWidth" label-align="right">
-						<uni-file-picker file-mediatype="file" return-type="object" v-model="formData.video"></uni-file-picker>
-					</uni-forms-item>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="video" label="实景视频" :label-width="labelWidth" label-align="right">
+							<uni-file-picker file-mediatype="video" return-type="object" v-model="formData.video"></uni-file-picker>
+						</uni-forms-item>
+					</uni-col>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item label="预览视频" :label-width="labelWidth" label-align="right">
+							<video v-if="formData.video && formData.video.url" :src="formData.video.url" controls></video>
+						</uni-forms-item>
+					</uni-col>
 				</uni-row>
 				<uni-row>
 					<uni-forms-item name="disabled" label="是否禁用" :label-width="labelWidth" label-align="right">
