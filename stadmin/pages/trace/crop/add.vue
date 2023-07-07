@@ -21,7 +21,8 @@
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
 						<uni-forms-item name="land_id" label="地块" required :label-width="labelWidth" label-align="right">
-							<uni-easyinput placeholder="请选择地块" v-model="formData.land_id"></uni-easyinput>
+							<uni-data-select placeholder="请选择地块" v-model="formData.land_id"
+								:localdata="$store.state.trace.land_list"></uni-data-select>
 						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
@@ -34,8 +35,14 @@
 
 				<uni-row>
 					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="plant_start_time" label="开始时间" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" v-model="formData.plant_start_time"></uni-datetime-picker>
+						</uni-forms-item>
 					</uni-col>
 					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="pick_time" label="收获时间" :label-width="labelWidth" label-align="right">
+							<uni-datetime-picker return-type="timestamp" v-model="formData.pick_time"></uni-datetime-picker>
+						</uni-forms-item>
 					</uni-col>
 				</uni-row>
 			</view>
@@ -47,12 +54,7 @@
 			<uni-forms-item name="plant_num" label="数量" :label-width="labelWidth" label-align="right">
 				<uni-easyinput placeholder="请输入数量" type="number" v-model="formData.plant_num"></uni-easyinput>
 			</uni-forms-item>
-			<uni-forms-item name="plant_start_time" label="开始时间" :label-width="labelWidth" label-align="right">
-				<uni-datetime-picker return-type="timestamp" v-model="formData.plant_start_time"></uni-datetime-picker>
-			</uni-forms-item>
-			<uni-forms-item name="pick_time" label="收获时间" :label-width="labelWidth" label-align="right">
-				<uni-datetime-picker return-type="timestamp" v-model="formData.pick_time"></uni-datetime-picker>
-			</uni-forms-item>
+
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
@@ -110,6 +112,7 @@
 		},
 		onLoad() {
 			this.$store.dispatch("trace/getCateList")
+			this.$store.dispatch("trace/getLandList")
 		},
 		onReady() {
 			this.$refs.form.setRules(this.rules)

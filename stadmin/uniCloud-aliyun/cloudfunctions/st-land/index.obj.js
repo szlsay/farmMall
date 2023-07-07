@@ -27,6 +27,12 @@ module.exports = {
 		value.update_time = Date.now()
 		return dbJql.collection(dbCollectionName).doc(_id).update(value)
 	},
+	async getListApi() {
+		const result = await db.collection(dbCollectionName).where({
+			'disabled': false
+		}).get()
+		return result
+	},
 	delete(_id) {
 		if (this.userInfo.errCode) {
 			return this.userInfo
