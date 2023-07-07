@@ -1,0 +1,58 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["coop_name"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"label": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"label": "更新时间"
+		},
+		"crop_name": {
+			"bsonType": "string",
+			"description": "请输入品种名称",
+			"label": "品种名称",
+			"maxLength": 10,
+			"trim": "both"
+		},
+		"cate_id": {
+			"bsonType": "string",
+			"description": "请选择种类",
+			"label": "种类",
+		},
+		"land_id": {
+			"bsonType": "string",
+			"description": "请选择地块",
+			"label": "地块",
+		},
+		"plant_num": {
+			"bsonType": "int",
+			"description": "请输入数量",
+			"label": "数量",
+		},
+		"plant_start_time": {
+			"bsonType": "timestamp",
+			"description": "开始时间",
+			"label": "开始时间"
+		},
+		"pick_time": {
+			"bsonType": "timestamp",
+			"description": "收获时间",
+			"label": "收获时间"
+		},
+	}
+}
