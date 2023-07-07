@@ -193,6 +193,22 @@
 			}, {
 				"path": "land/list",
 				"style": {
+					"navigationBarTitleText": "地块列表"
+				}
+			}, {
+				"path": "crop/add",
+				"style": {
+					"navigationBarTitleText": "新增种养"
+				}
+			}, {
+				"path": "crop/edit",
+				"style": {
+					"navigationBarTitleText": "编辑种养"
+				}
+			}, {
+				"path": "crop/list",
+				"style": {
+					"navigationBarTitleText": "种养列表"
 				}
 			}]
 		}, {
