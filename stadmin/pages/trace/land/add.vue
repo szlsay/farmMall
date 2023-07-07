@@ -323,6 +323,7 @@
 					});
 					that.polyEditor.addAdsorbPolygons(this.polygon);
 					that.map.add([this.polygon])
+					that.ringArea()
 				})
 				// 逆向地理编码插件
 				this.geocoder = new AMap.Geocoder({
@@ -334,6 +335,10 @@
 					city: '日照市'
 				}
 				this.autoComplete = new AMap.AutoComplete(autoOptions);
+			},
+			ringArea() {
+				const area = AMap.GeometryUtil.ringArea(this.path);
+				console.log(area)
 			},
 			// 地图点击之后更新点标记
 			handleClick(e) {
