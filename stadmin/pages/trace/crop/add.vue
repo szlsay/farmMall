@@ -45,16 +45,14 @@
 						</uni-forms-item>
 					</uni-col>
 				</uni-row>
+				<uni-row>
+					<uni-col :xs="24" :sm="12">
+						<uni-forms-item name="plant_num" label="数量" :label-width="labelWidth" label-align="right">
+							<uni-easyinput placeholder="请输入数量" type="number" v-model="formData.plant_num"></uni-easyinput>
+						</uni-forms-item>
+					</uni-col>
+				</uni-row>
 			</view>
-
-
-
-
-
-			<uni-forms-item name="plant_num" label="数量" :label-width="labelWidth" label-align="right">
-				<uni-easyinput placeholder="请输入数量" type="number" v-model="formData.plant_num"></uni-easyinput>
-			</uni-forms-item>
-
 			<view class="uni-button-group">
 				<button type="primary" class="uni-button" style="width: 100px;" @click="submit">提交</button>
 				<navigator open-type="navigateBack" style="margin-left: 15px;">
