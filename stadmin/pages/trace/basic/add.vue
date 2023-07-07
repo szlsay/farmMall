@@ -111,7 +111,8 @@
 				this.$nextTick(() => {
 					this.formData.value = pinyin(value, {
 						toneType: 'none',
-						type: 'array'
+						type: 'array',
+						v: true
 					}).join("")
 				})
 			},
@@ -121,7 +122,8 @@
 						if (item.text && item.text.length > 0) {
 							item.value = pinyin(item.text, {
 								toneType: 'none',
-								type: 'array'
+								type: 'array',
+								v: true
 							}).join("")
 						} else {
 							item.value = ""
