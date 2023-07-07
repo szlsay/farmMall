@@ -265,6 +265,8 @@
 						satellite,
 						roadNet
 					],
+					mapStyle: "amap://styles/darkblue",
+					features: ['bg', 'road', 'building', 'point'],
 					center //初始化地图中心点位置
 				});
 				// 地图点击事件--点标记标注
@@ -359,7 +361,7 @@
 				this.marker.setMap(this.map);
 				// 设置label标签，label默认蓝框白底左上角显示，样式className为：amap-marker-label
 				const content =
-					"<div style='height: 20px; line-height: 20px; border-radius:10px; padding-left: 8px; padding-right: 8px; font-size: 16px; font-weight: 700; color: #00CC99; border: 1px solid #00CC99; text-shadow: 1px 1px 2px #eee;'>" +
+					"<div style='height: 20px; line-height: 20px; border-radius:14px; padding-left: 12px; padding-right: 12px; font-size: 16px; font-weight: 700; color: white; border: 2px solid #00CC99; text-shadow: 1px 1px 2px #000;'>" +
 					address + "</div>"
 				this.marker.setLabel({
 					direction: "top-center",
