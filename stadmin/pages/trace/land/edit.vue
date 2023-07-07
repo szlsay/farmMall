@@ -387,7 +387,11 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
-				value.path = this.path
+				if (this.path) {
+					value.path = JSON.parse(JSON.stringify(this.path))
+				} else {
+					value.path = null
+				}
 				const stland = uniCloud.importObject("st-land")
 				stland.update(this.formDataId, value).then((res) => {
 					uni.showToast({

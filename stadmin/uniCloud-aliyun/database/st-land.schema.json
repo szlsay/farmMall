@@ -74,7 +74,6 @@
 		},
 		"path": {
 			"bsonType": "array",
-			"arrayType": "string",
 			"description": "请选择圈地范围",
 			"label": "圈地范围"
 		},
