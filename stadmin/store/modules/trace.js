@@ -2,14 +2,12 @@ export default {
 	namespaced: true,
 	state: {
 		basic: [],
-		land_types: [],
-		standard_types: []
+		land_types: []
 	},
 	mutations: {
 		SET_Basic: (state, basic) => {
 			state.basic = basic
 			state.land_types = basic.filter(item => item.value === "dikuaileixing")[0]["list"]
-			state.standard_types = basic.filter(item => item.value === "zhongzhibiaozhun")[0]["list"]
 		}
 	},
 	actions: {
