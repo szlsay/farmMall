@@ -19,7 +19,7 @@
 						<view class="level-2" :class="{ 'select-bg': subItem._id === selectId}"
 							v-for="subItem in item.children" :key="subItem._id" @click="onClickSubItem(subItem)"
 							v-if="item.isNext">
-							<image v-if="subItem.image.url" :src="subItem.image.url" mode="aspectFill"
+							<image v-if="subItem.image && subItem.image.url" :src="subItem.image.url" mode="aspectFill"
 								:class="{ 'image-disabled': subItem.disabled}"></image>
 							<view class="word-img" :class="{ 'word-img-disabled': subItem.disabled}" v-else>
 								{{subItem["pinyin"].slice(0, 1).toUpperCase()}}

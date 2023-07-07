@@ -370,6 +370,11 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				if (!value.video) {
+					value.video = {
+						url: ''
+					}
+				}
 				value.path = this.path
 				const stland = uniCloud.importObject("st-land")
 				stland.add(value).then((res) => {

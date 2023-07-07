@@ -19,7 +19,7 @@
       <unicloud-db ref="udb" :collection="collectionList" field="land_name,land_type,contact_name,contact_phone,map_address,address,disabled" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
-        <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
+        <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
           <uni-tr>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'land_name')" sortable @sort-change="sortChange($event, 'land_name')">地块名称</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'land_type')" sortable @sort-change="sortChange($event, 'land_type')">地块类型</uni-th>

@@ -387,6 +387,11 @@
 			 * 提交表单
 			 */
 			submitForm(value) {
+				if (!value.video) {
+					value.video = {
+						url: ''
+					}
+				}
 				if (this.path) {
 					value.path = JSON.parse(JSON.stringify(this.path))
 				} else {
@@ -423,6 +428,9 @@
 					const data = res.result.data[0]
 					if (data) {
 						this.formData = data
+						if (this.formData.video && this.formData.video.url === '') {
+							this.formData.video = null
+						}
 						this.path = data.path
 						this.initMap();
 					}
