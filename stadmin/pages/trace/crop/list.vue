@@ -47,8 +47,8 @@
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
 						<uni-td align="center">{{item.crop_name}}</uni-td>
-						<uni-td align="center">{{item.cate_id}}</uni-td>
-						<uni-td align="center">{{item.land_id}}</uni-td>
+						<uni-td align="center">{{getCateName(item.cate_id)}}</uni-td>
+						<uni-td align="center">{{getLandName(item.land_id)}}</uni-td>
 						<uni-td align="center">{{item.standard_type}}</uni-td>
 						<uni-td align="center">{{item.plant_num}}</uni-td>
 						<uni-td align="center">
@@ -139,6 +139,30 @@
 			this.$refs.udb.loadData()
 		},
 		methods: {
+			getStandardName(value) {
+				const lands = this.$store.state.sys.standard_types.filter(item => item._id === value)
+				if (lands && lands.length > 0) {
+					return lands[0].land_name
+				} else {
+					return ''
+				}
+			},
+			getLandName(value) {
+				const lands = this.$store.state.trace.land_list.filter(item => item._id === value)
+				if (lands && lands.length > 0) {
+					return lands[0].land_name
+				} else {
+					return ''
+				}
+			},
+			getCateName(value) {
+				const cates = this.$store.state.trace.cate_list.filter(item => item._id === value)
+				if (cates && cates.length > 0) {
+					return cates[0].label
+				} else {
+					return ''
+				}
+			},
 			onqueryload(data) {
 				this.exportExcelData = data
 			},
