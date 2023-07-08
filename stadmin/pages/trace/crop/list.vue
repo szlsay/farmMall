@@ -9,8 +9,8 @@
 				<input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
 				<button class="uni-button" type="default" size="mini" @click="search">搜索</button>
 				<button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-				<button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
-					@click="delTable">批量删除</button>
+				<!-- <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length"
+					@click="delTable">批量删除</button> -->
 				<download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData"
 					:type="exportExcel.type" :name="exportExcel.filename">
 					<button class="uni-button" type="primary" size="mini">导出 Excel</button>
@@ -23,13 +23,12 @@
 				page-data="replace" :orderby="orderby" :getcount="true" :page-size="options.pageSize"
 				:page-current="options.pageCurrent" v-slot:default="{data,pagination,loading,error,options}"
 				:options="options" loadtime="manual" @load="onqueryload">
-				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe
-					type="selection" @selection-change="selectionChange">
+				<uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
 					<uni-tr>
-						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'crop_name')"
-							sortable @sort-change="sortChange($event, 'crop_name')">品种名称</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'cate_id')"
 							sortable @sort-change="sortChange($event, 'cate_id')">种类</uni-th>
+						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'crop_name')"
+							sortable @sort-change="sortChange($event, 'crop_name')">品种名称</uni-th>
 						<uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'land_id')"
 							sortable @sort-change="sortChange($event, 'land_id')">地块</uni-th>
 						<uni-th align="center" filter-type="search"
@@ -46,10 +45,10 @@
 						<uni-th align="center">操作</uni-th>
 					</uni-tr>
 					<uni-tr v-for="(item,index) in data" :key="index">
-						<uni-td align="center">{{item.crop_name}}</uni-td>
 						<uni-td align="center">{{getCateName(item.cate_id)}}</uni-td>
+						<uni-td align="center">{{item.crop_name}}</uni-td>
 						<uni-td align="center">{{getLandName(item.land_id)}}</uni-td>
-						<uni-td align="center">{{item.standard_type}}</uni-td>
+						<uni-td align="center">{{getStandardName(item.standard_type)}}</uni-td>
 						<uni-td align="center">{{item.plant_num}}</uni-td>
 						<uni-td align="center">
 							<uni-dateformat :threshold="[0, 0]" :date="item.plant_start_time"></uni-dateformat>
@@ -140,9 +139,9 @@
 		},
 		methods: {
 			getStandardName(value) {
-				const lands = this.$store.state.sys.standard_types.filter(item => item._id === value)
-				if (lands && lands.length > 0) {
-					return lands[0].land_name
+				const types = this.$store.state.sys.standard_types.filter(item => item.value === value)
+				if (types && types.length > 0) {
+					return types[0].text
 				} else {
 					return ''
 				}
