@@ -72,7 +72,7 @@
 		"template": "template.h5.html",
 		"router": {
 			"mode": "hash",
-			"base": "/admin/"
+			"base": "/stadmin/"
 		},
 		"title": "福农管理后台"
 	},
