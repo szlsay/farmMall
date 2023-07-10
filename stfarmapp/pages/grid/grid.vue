@@ -49,7 +49,8 @@
 
 	import {
 		hasLogin,
-		hasAdmin
+		hasAdmin,
+		debounce
 	} from "@/utils"
 	export default {
 		// #ifdef APP-PLUS
@@ -75,6 +76,19 @@
 				gridList.push(this.$t('grid.adminVisible'))
 			}
 			this.gridList = gridList
+
+			debounce(() => {
+				console.log(this.gridList)
+			})
+			debounce(() => {
+				console.log(this.gridList)
+			})
+			debounce(() => {
+				console.log(this.gridList)
+			})
+			debounce(() => {
+				console.log(this.gridList)
+			})
 		},
 		methods: {
 			hasLogin,
