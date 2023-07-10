@@ -3,7 +3,7 @@
 		<!-- #ifdef APP-PLUS -->
 		<statusBar></statusBar>
 		<!-- #endif -->
-		{{hasLogin()}}
+		{{hasLogin()}} {{hasAdmin()}}
 		<!-- banner -->
 		<unicloud-db ref="bannerdb" v-slot:default="{data, loading, error, options}" collection="opendb-banner"
 			field="_id,bannerfile,open_url,title" @load="onqueryload">
@@ -29,7 +29,7 @@
 		<view class="example-body">
 			<uni-grid :column="3" :highlight="true" @change="change">
 				<template v-for="(item,i) in gridList">
-					<uni-grid-item :index="i" :key="i" v-if="i<3 || i>2&&i<6&&hasLogin || i>5&&uniIDHasRole('admin')">
+					<uni-grid-item :index="i" :key="i" v-if="i<3 || i>2&&i<6&&hasLogin || i>5&&hasAdmin()">
 						<view class="grid-item-box" style="background-color: #fff;">
 							<!-- <image :src="'/static/grid/c'+(i+1)+'.png'" class="image" mode="aspectFill" /> -->
 							<text class="big-number">{{i+1}}</text>
@@ -48,7 +48,8 @@
 	// #endif
 
 	import {
-		hasLogin
+		hasLogin,
+		hasAdmin
 	} from "@/utils"
 	export default {
 		// #ifdef APP-PLUS
@@ -77,6 +78,7 @@
 		},
 		methods: {
 			hasLogin,
+			hasAdmin,
 			change(e) {
 				uni.showToast({
 					title: this.$t('grid.clickTip') + " " + `${e.detail.index + 1}` + " " + this.$t('grid.clickTipGrid'),

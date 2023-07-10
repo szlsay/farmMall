@@ -13,6 +13,13 @@ export function hasLogin() {
 }
 
 /**
+ * 是否admin
+ */
+export function hasAdmin() {
+	return this.uniIDHasRole('admin')
+}
+
+/**
  * 深度克隆对象、数组
  * @param obj 被克隆的对象
  * @return 克隆后的对象
