@@ -82,6 +82,8 @@
 			console.log("tempList000", tempList, this.gridList)
 			// tempList.shift()
 			console.log("tempList111", tempList, this.gridList)
+			
+			uni.report('购买','购买成功')
 		},
 		methods: {
 			hasLogin,

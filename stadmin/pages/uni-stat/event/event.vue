@@ -16,7 +16,7 @@
 				<uni-data-select collection="opendb-app-versions" :where="versionQuery" class="ml-m" field="concat(version, '---',uni_platform) as value, version as text, uni_platform as label, create_date as date" format="{label} - {text}" orderby="date desc" label="版本选择" v-model="query.version_id" @change="changeVersion"/>
 			</view>
 			<view class="uni-stat--x flex">
-				<uni-stat-tabs label="日期选择" :current="currentDateTab" mode="date" @change="changeTimeRange" />
+				<uni-stat-tabs label="日期选择" :current="currentDateTab" mode="date" :today="true" @change="changeTimeRange" />
 				<uni-datetime-picker type="datetimerange" :end="new Date().getTime()" v-model="query.create_time"
 					returnType="timestamp" :clearIcon="false" class="uni-stat-datetime-picker"
 					:class="{'uni-stat__actived': currentDateTab < 0 && !!query.create_time.length}"

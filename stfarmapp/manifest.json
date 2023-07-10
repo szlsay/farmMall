@@ -42,6 +42,9 @@
                     "unipush" : null
                 }
             }
+        },
+        "uniStatistics" : {
+            "enable" : false
         }
     },
     "quickapp" : {},
@@ -53,19 +56,33 @@
         "usingComponents" : true,
         "optimization" : {
             "subPackages" : true
+        },
+        "uniStatistics" : {
+            "enable" : true
         }
     },
     "mp-alipay" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : false
+        }
     },
     "mp-baidu" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : false
+        }
     },
     "mp-toutiao" : {
-        "usingComponents" : true
+        "usingComponents" : true,
+        "uniStatistics" : {
+            "enable" : false
+        }
     },
     "uniStatistics" : {
-        "enable" : false
+        "enable" : false,
+        "version" : "2",
+				"debug" : true
     },
     "vueVersion" : "3",
     "h5" : {
@@ -80,6 +97,40 @@
                     "key" : ""
                 }
             }
+        },
+        "uniStatistics" : {
+						"debug" : true,
+            "enable" : true
+        }
+    },
+    "mp-jd" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-kuaishou" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-lark" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "mp-qq" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "quickapp-webview-huawei" : {
+        "uniStatistics" : {
+            "enable" : false
+        }
+    },
+    "quickapp-webview-union" : {
+        "uniStatistics" : {
+            "enable" : false
         }
     }
 }
