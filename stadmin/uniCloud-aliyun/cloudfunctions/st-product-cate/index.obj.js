@@ -24,8 +24,11 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
-		value.update_time = Date.now()
-		return dbJql.collection(dbCollectionName).doc(_id).update(value)
+		// value.update_time = Date.now()
+		console.log("cate-update-000")
+		const result = dbJql.collection(dbCollectionName).doc(_id).update(value)
+		console.log("cate-update-111")
+		return result
 	},
 	async getList() {
 		const result = await db.collection(dbCollectionName).get()
