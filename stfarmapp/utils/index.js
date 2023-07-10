@@ -1,3 +1,24 @@
+// 判断arr是否为一个数组，返回一个bool值
+function isArray(arr) {
+	return Object.prototype.toString.call(arr) === '[object Array]';
+}
+
+// 深度克隆
+export function deepClone(obj) {
+	// 对常见的“非”值，直接返回原来值
+	if ([null, undefined, NaN, false].includes(obj)) return obj;
+	if (typeof obj !== "object" && typeof obj !== 'function') {
+		//原始类型直接返回
+		return obj;
+	}
+	var o = isArray(obj) ? [] : {};
+	for (let i in obj) {
+		if (obj.hasOwnProperty(i)) {
+			o[i] = typeof obj[i] === "object" ? deepClone(obj[i]) : obj[i];
+		}
+	}
+	return o;
+}
 
 let timeoutArr = [];
 /**
@@ -14,7 +35,7 @@ vk.pubfn.debounce(() => {
  */
 export function debounce(fn, time = 500, isImmediate = true, timeoutName = "default") {
 	// 清除定时器
-	if(!timeoutArr[timeoutName]) timeoutArr[timeoutName] = null;
+	if (!timeoutArr[timeoutName]) timeoutArr[timeoutName] = null;
 	if (timeoutArr[timeoutName] !== null) clearTimeout(timeoutArr[timeoutName]);
 	// 立即执行一次
 	if (isImmediate) {
@@ -22,13 +43,13 @@ export function debounce(fn, time = 500, isImmediate = true, timeoutName = "defa
 		timeoutArr[timeoutName] = setTimeout(() => {
 			timeoutArr[timeoutName] = null;
 		}, time);
-		if (callNow){
-			if(typeof fn === 'function') return fn();
+		if (callNow) {
+			if (typeof fn === 'function') return fn();
 		}
 	} else {
 		// 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时time毫秒后执行fn回调方法
 		timeoutArr[timeoutName] = setTimeout(() => {
-			if(typeof fn === 'function') return fn();
+			if (typeof fn === 'function') return fn();
 		}, time);
 	}
 }

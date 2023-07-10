@@ -50,7 +50,8 @@
 	import {
 		hasLogin,
 		hasAdmin,
-		debounce
+		debounce,
+		deepClone
 	} from "@/utils"
 	export default {
 		// #ifdef APP-PLUS
@@ -76,19 +77,11 @@
 				gridList.push(this.$t('grid.adminVisible'))
 			}
 			this.gridList = gridList
-
-			debounce(() => {
-				console.log(this.gridList)
-			})
-			debounce(() => {
-				console.log(this.gridList)
-			})
-			debounce(() => {
-				console.log(this.gridList)
-			})
-			debounce(() => {
-				console.log(this.gridList)
-			})
+			
+			const tempList = deepClone(NaN)
+			console.log("tempList000", tempList, this.gridList)
+			// tempList.shift()
+			console.log("tempList111", tempList, this.gridList)
 		},
 		methods: {
 			hasLogin,
