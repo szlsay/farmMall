@@ -352,6 +352,11 @@
 					"style": {
 						"navigationBarTitleText": "表格"
 					}
+				}, {
+					"path": "demo/demo",
+					"style": {
+						"navigationBarTitleText": ""
+					}
 				}
 			]
 		},

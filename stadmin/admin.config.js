@@ -55,6 +55,11 @@ export default {
 				text: '表格',
 				icon: 'admin-icons-table',
 				value: '/pages/demo/table/table',
+			}, {
+				menu_id: "demo",
+				text: '案例',
+				icon: 'admin-icons-doc',
+				value: '/pages/demo/demo/demo',
 			}]
 		}, {
 			menu_id: "admim-doc-pulgin",
