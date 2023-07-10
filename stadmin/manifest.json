@@ -59,7 +59,7 @@
         },
         "usingComponents" : true,
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "mp-alipay" : {
@@ -94,7 +94,7 @@
         "title" : "福农管理后台",
         "uniStatistics" : {
             "debug" : true,
-            "enable" : true
+            "enable" : false
         }
     },
     "vueVersion" : "3",

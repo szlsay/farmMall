@@ -58,7 +58,7 @@
             "subPackages" : true
         },
         "uniStatistics" : {
-            "enable" : true
+            "enable" : false
         }
     },
     "mp-alipay" : {
@@ -82,7 +82,7 @@
     "uniStatistics" : {
         "enable" : false,
         "version" : "2",
-				"debug" : true
+        "debug" : true
     },
     "vueVersion" : "3",
     "h5" : {
@@ -99,8 +99,8 @@
             }
         },
         "uniStatistics" : {
-						"debug" : true,
-            "enable" : true
+            "debug" : true,
+            "enable" : false
         }
     },
     "mp-jd" : {
