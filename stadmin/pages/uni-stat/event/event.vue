@@ -111,7 +111,7 @@
 					total: 0, // 数据总量
 				},
 				loading: false,
-				currentDateTab: 1,
+				currentDateTab: 0,
 				tableData: [],
 				panelData: [],
 				queryId: '',
@@ -161,10 +161,22 @@
 			changeAppid(id) {
 				this.getChannelData(id, false)
 			},
+			// changeTimeRange(id, index) {
+			// 	this.currentDateTab = index
+			// 	const start = getTimeOfSomeDayAgo(id),
+			// 		end = getTimeOfSomeDayAgo(0) - 1
+			// 	this.query.create_time = [start, end]
+			// },
 			changeTimeRange(id, index) {
 				this.currentDateTab = index
-				const start = getTimeOfSomeDayAgo(id),
+				const day = 24 * 60 * 60 * 1000
+				let start, end
+				start = getTimeOfSomeDayAgo(id)
+				if (!id) {
+					end = getTimeOfSomeDayAgo(0) + day - 1
+				} else {
 					end = getTimeOfSomeDayAgo(0) - 1
+				}
 				this.query.create_time = [start, end]
 			},
 			changePageCurrent(e) {
