@@ -2,18 +2,10 @@
 module.exports = {
 	trigger: {
 		beforeCreate: async function(obj = {}) {
-			console.log('farm-beforeCreate', obj)
-			obj.addDataList.create_time = Date.now()
-		},
-		afterCreate: async function(obj = {}) {
-			console.log('farm-afterCreate', obj)
+			obj.addDataList.map(item => item.create_time = Date.now())
 		},
 		beforeUpdate: async function(obj = {}) {
-			console.log('farm-beforeUpdate', obj)
 			obj.updateData.update_time = Date.now()
-		},
-		afterUpdate: async function(obj = {}) {
-			console.log('farm-afterUpdate', obj)
 		}
 	}
 }
