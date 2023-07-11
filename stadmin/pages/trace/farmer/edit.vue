@@ -281,11 +281,11 @@
 				})
 			},
 			submitForm(value) {
-				// if (!value.image) {
-				// 	value.image = {
-				// 		url: ''
-				// 	}
-				// }
+				if (!value.image) {
+					value.image = {
+						url: ''
+					}
+				}
 				const stcoop = uniCloud.importObject("st-farmer")
 				stcoop.update(this.formDataId, value).then((res) => {
 					uni.showToast({
@@ -316,9 +316,9 @@
 						const data = res.result.data[0]
 						if (data) {
 							this.formData = data
-							// if (this.formData.image && this.formData.image.url === '') {
-							// 	this.formData.image = null
-							// }
+							if (this.formData.image && this.formData.image.url === '') {
+								this.formData.image = null
+							}
 							this.initMap();
 						}
 					}).catch((err) => {

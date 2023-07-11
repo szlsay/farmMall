@@ -269,11 +269,11 @@
 			},
 
 			submitForm(value) {
-				// if (!value.image) {
-				// 	value.image = {
-				// 		url: ''
-				// 	}
-				// }
+				if (!value.image) {
+					value.image = {
+						url: ''
+					}
+				}
 				const stcoop = uniCloud.importObject("st-farmer")
 				stcoop.add(value).then((res) => {
 					uni.showToast({
