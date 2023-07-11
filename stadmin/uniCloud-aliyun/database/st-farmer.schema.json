@@ -1,0 +1,76 @@
+// 文档教程: https://uniapp.dcloud.net.cn/uniCloud/schema
+{
+	"bsonType": "object",
+	"required": ["farmer_name", "contact_phone"],
+	"permission": {
+		"read": true,
+		"create": true,
+		"update": true,
+		"delete": true
+	},
+	"properties": {
+		"_id": {
+			"description": "ID，系统自动生成"
+		},
+		"create_time": {
+			"bsonType": "timestamp",
+			"description": "创建时间",
+			"label": "创建时间"
+		},
+		"update_time": {
+			"bsonType": "timestamp",
+			"description": "更新时间",
+			"label": "更新时间"
+		},
+		"farmer_name": {
+			"bsonType": "string",
+			"description": "请输入农户姓名",
+			"label": "农户姓名",
+			"trim": "both"
+		},
+		"contact_phone": {
+			"bsonType": "string",
+			"description": "请输入联系电话",
+			"label": "联系电话",
+			"pattern": "^1[34578][0-9]{9}$",
+			"trim": "both"
+		},
+		"map_address": {
+			"bsonType": "string",
+			"description": "请填写地图地址",
+			"label": "地图地址",
+			"trim": "both"
+		},
+		"address": {
+			"bsonType": "string",
+			"description": "请填写详细地址",
+			"label": "详细地址",
+			"trim": "both"
+		},
+		"longitude": {
+			"bsonType": "string",
+			"description": "请选择经度",
+			"label": "经度",
+			"trim": "both"
+		},
+		"latitude": {
+			"bsonType": "string",
+			"description": "请选择纬度",
+			"label": "纬度",
+			"trim": "both"
+		},
+		"image": {
+			"bsonType": "file",
+			"fileMediaType": "image",
+			"fileExtName": "jpg,png,webp",
+			"description": "请选择农户个人图片",
+			"label": "农户个人图片"
+		},
+		"disabled": {
+			"bsonType": "bool",
+			"description": "禁用后，用户端不会显示",
+			"label": "是否禁用",
+			"defaultValue": false
+		}
+	}
+}
