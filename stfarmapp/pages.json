@@ -104,6 +104,13 @@
 			}
 		}
 		// #endif
+		, {
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+		}
 	],
 	"subPackages": [{
 			"root": "uni_modules/uni-feedback",
