@@ -9,7 +9,7 @@
         <input class="uni-search" type="text" v-model="query" @confirm="search" placeholder="请输入搜索内容" />
         <button class="uni-button" type="default" size="mini" @click="search">搜索</button>
         <button class="uni-button" type="default" size="mini" @click="navigateTo('./add')">新增</button>
-        <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length" @click="delTable">批量删除</button>
+        <!-- <button class="uni-button" type="default" size="mini" :disabled="!selectedIndexs.length" @click="delTable">批量删除</button> -->
         <download-excel class="hide-on-phone" :fields="exportExcel.fields" :data="exportExcelData" :type="exportExcel.type" :name="exportExcel.filename">
           <button class="uni-button" type="primary" size="mini">导出 Excel</button>
         </download-excel>
@@ -19,16 +19,14 @@
       <unicloud-db ref="udb" :collection="collectionList" field="farmer_name,contact_phone,map_address,address,longitude,latitude,image,disabled" :where="where" page-data="replace"
         :orderby="orderby" :getcount="true" :page-size="options.pageSize" :page-current="options.pageCurrent"
         v-slot:default="{data,pagination,loading,error,options}" :options="options" loadtime="manual" @load="onqueryload">
-        <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe type="selection" @selection-change="selectionChange">
+        <uni-table ref="table" :loading="loading" :emptyText="error.message || '没有更多数据'" border stripe>
           <uni-tr>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'farmer_name')" sortable @sort-change="sortChange($event, 'farmer_name')">农户姓名</uni-th>
             <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'contact_phone')" sortable @sort-change="sortChange($event, 'contact_phone')">联系电话</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'map_address')" sortable @sort-change="sortChange($event, 'map_address')">地图地址</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'address')" sortable @sort-change="sortChange($event, 'address')">详细地址</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'longitude')" sortable @sort-change="sortChange($event, 'longitude')">经度</uni-th>
-            <uni-th align="center" filter-type="search" @filter-change="filterChange($event, 'latitude')" sortable @sort-change="sortChange($event, 'latitude')">纬度</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'image')">农户个人图片</uni-th>
-            <uni-th align="center" sortable @sort-change="sortChange($event, 'disabled')">是否禁用</uni-th>
+            <uni-th align="center">地图地址</uni-th>
+            <uni-th align="center">详细地址</uni-th>
+            <uni-th align="center">农户个人图片</uni-th>
+            <uni-th align="center">是否禁用</uni-th>
             <uni-th align="center">操作</uni-th>
           </uni-tr>
           <uni-tr v-for="(item,index) in data" :key="index">
@@ -36,13 +34,11 @@
             <uni-td align="center">{{item.contact_phone}}</uni-td>
             <uni-td align="center">{{item.map_address}}</uni-td>
             <uni-td align="center">{{item.address}}</uni-td>
-            <uni-td align="center">{{item.longitude}}</uni-td>
-            <uni-td align="center">{{item.latitude}}</uni-td>
             <uni-td align="center">
-<!--              <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
-              <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link> -->
+							<image style="width: 60px; height: 60px;" v-if="item.image && item.image.fileType == 'image'"
+								:src="item.image.url" mode="aspectFit"></image>
             </uni-td>
-            <uni-td align="center">{{item.disabled == true ? '✅' : '❌'}}</uni-td>
+            <uni-td align="center">{{item.disabled == true ? '是' : '否'}}</uni-td>
             <uni-td align="center">
               <view class="uni-group">
                 <button @click="navigateTo('./edit?id='+item._id, false)" class="uni-button" size="mini" type="primary">修改</button>
