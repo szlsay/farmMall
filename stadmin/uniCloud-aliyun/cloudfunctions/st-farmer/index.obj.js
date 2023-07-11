@@ -17,6 +17,7 @@ module.exports = {
 		if (this.userInfo.errCode) {
 			return this.userInfo
 		}
+		value.create_time = Date.now()
 		return db.collection(dbCollectionName).add(value)
 	},
 	update(_id, value) {
