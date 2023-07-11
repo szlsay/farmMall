@@ -39,8 +39,8 @@
             <uni-td align="center">{{item.longitude}}</uni-td>
             <uni-td align="center">{{item.latitude}}</uni-td>
             <uni-td align="center">
-              <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
-              <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link>
+<!--              <uni-file-picker v-if="item.image && item.image.fileType == 'image'" :value="item.image" :file-mediatype="item.image && item.image.fileType" return-type="object" :imageStyles="imageStyles" readonly></uni-file-picker>
+              <uni-link v-else :href="item.image && item.image.url" :text="item.image && item.image.url"></uni-link> -->
             </uni-td>
             <uni-td align="center">{{item.disabled == true ? '✅' : '❌'}}</uni-td>
             <uni-td align="center">
