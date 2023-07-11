@@ -210,6 +210,21 @@
 				"style": {
 					"navigationBarTitleText": "种养列表"
 				}
+			}, {
+				"path": "farmer/add",
+				"style": {
+					"navigationBarTitleText": "新增"
+				}
+			}, {
+				"path": "farmer/edit",
+				"style": {
+					"navigationBarTitleText": "编辑"
+				}
+			}, {
+				"path": "farmer/list",
+				"style": {
+					"navigationBarTitleText": "列表"
+				}
 			}]
 		}, {
 			"root": "pages/system",
