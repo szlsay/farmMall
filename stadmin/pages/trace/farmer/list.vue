@@ -60,7 +60,7 @@
 </template>
 
 <script>
-  import { enumConverter, filterToWhere } from '../../js_sdk/validator/st-farmer.js';
+  import { enumConverter, filterToWhere } from '@/js_sdk/validator/st-farmer.js';
 
   const db = uniCloud.database()
   // 表查询配置

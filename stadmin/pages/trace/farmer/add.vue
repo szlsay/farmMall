@@ -36,7 +36,7 @@
 </template>
 
 <script>
-  import { validator } from '../../js_sdk/validator/st-farmer.js';
+  import { validator } from '@/js_sdk/validator/st-farmer.js';
 
   const db = uniCloud.database();
   const dbCmd = db.command;
