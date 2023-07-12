@@ -4,6 +4,10 @@
 			<image src="@/static/login-bg.webp" mode="heightFix" class="move-animation"></image>
 		</view>
 		<view class="login-content">
+			<view class="login-type">
+				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="login-wechat">微信登录</button>
+			</view>
+
 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 				<view class="quickLogin">
 					<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn">
@@ -157,11 +161,28 @@
 
 
 <style lang="scss" scoped>
-	.login-content{
+	.login-content {
 		background-color: #00000040;
 		height: 100vh;
 	}
-	
+
+	.login-type {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+    width: 100%;
+		height: 100%;
+		.login-wechat {
+			margin: 0 100rpx;
+			height: 100rpx;
+			line-height: 100rpx;
+			background-color: #00CC99;
+			border-radius: 50rpx;
+			color: #FFFFFF;
+			letter-spacing: 10rpx;
+		}
+	}
+
 	.uni-content,
 	.quickLogin {
 		/* #ifndef APP-NVUE */
