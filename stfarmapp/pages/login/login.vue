@@ -7,11 +7,10 @@
 			<view class="login-type">
 				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="type-wechat">微信登录</button>
 				<button class="type-sms">短信验证码登录</button>
-
-				<st-agreements></st-agreements>
 			</view>
+			<st-agreements class="login-agreements"></st-agreements>
 
-			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
+<!-- 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 				<view class="quickLogin">
 					<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn">
 					</image>
@@ -30,8 +29,7 @@
 				<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
 				<button class="uni-btn" type="primary" @click="toSmsPage">获取验证码</button>
 			</template>
-			<!-- 固定定位的快捷登录按钮 -->
-			<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login>
+			<uni-id-pages-fab-login ref="uniFabLogin"></uni-id-pages-fab-login> -->
 		</view>
 	</view>
 </template>
@@ -167,6 +165,13 @@
 	.login-content {
 		background-color: #00000040;
 		height: 100vh;
+	}
+	
+	.login-agreements{
+		position: fixed;
+		bottom: 100rpx;
+		right: 0;
+		left: 0;
 	}
 
 	.login-type {
