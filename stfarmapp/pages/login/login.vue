@@ -252,6 +252,7 @@
 			animation-duration: 30s;
 			animation-timing-function: linear;
 			animation-iteration-count: infinite;
+			animation-direction: alternate;
 		}
 
 		@keyframes move {
