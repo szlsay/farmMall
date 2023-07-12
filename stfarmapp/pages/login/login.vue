@@ -8,7 +8,7 @@
 				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="type-wechat">微信登录</button>
 				<button class="type-sms">短信验证码登录</button>
 
-				<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
+				<st-agreements></st-agreements>
 			</view>
 
 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
