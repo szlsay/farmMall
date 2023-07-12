@@ -5,7 +5,10 @@
 		</view>
 		<view class="login-content">
 			<view class="login-type">
-				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="login-wechat">微信登录</button>
+				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="type-wechat">微信登录</button>
+				<button class="type-sms">短信验证码登录</button>
+
+				<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
 			</view>
 
 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
@@ -170,16 +173,28 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
-    width: 100%;
+		width: 100%;
 		height: 100%;
-		.login-wechat {
+
+		.type-wechat {
 			margin: 0 100rpx;
 			height: 100rpx;
 			line-height: 100rpx;
 			background-color: #00CC99;
 			border-radius: 50rpx;
+			font-size: 40rpx;
 			color: #FFFFFF;
 			letter-spacing: 10rpx;
+		}
+
+		.type-sms {
+			margin: 40rpx 100rpx;
+			height: 100rpx;
+			line-height: 100rpx;
+			background-color: #00000000;
+			border-radius: 50rpx;
+			color: #FFFFFF;
+			letter-spacing: 4rpx;
 		}
 	}
 
