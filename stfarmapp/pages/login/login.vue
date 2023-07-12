@@ -3,15 +3,8 @@
 		<view class="login-bg">
 			<image src="@/static/login-bg.webp" mode="heightFix" class="move-animation"></image>
 		</view>
-		<view class="uni-content">
-			<view class="login-logo">
-				<image :src="logo"></image>
-			</view>
-			<!-- 顶部文字 -->
-			<text class="title">请选择登录方式</text>
-			<!-- 快捷登录框 当url带参数时有效 -->
+		<view class="login-content">
 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
-				<text class="tip">将根据第三方账号服务平台的授权范围获取你的信息</text>
 				<view class="quickLogin">
 					<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn">
 					</image>
@@ -164,14 +157,11 @@
 
 
 <style lang="scss" scoped>
-	@import "@/uni_modules/uni-id-pages/common/login-page.scss";
-
-	@media screen and (min-width: 690px) {
-		.uni-content {
-			height: 350px;
-		}
+	.login-content{
+		background-color: #00000040;
+		height: 100vh;
 	}
-
+	
 	.uni-content,
 	.quickLogin {
 		/* #ifndef APP-NVUE */
