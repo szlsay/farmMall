@@ -2,6 +2,9 @@
 	<view class="login-bg">
 		<image src="https://mp-e548ea67-cedb-4a2f-b6fe-005d83c724b8.cdn.bspapp.com/images/login-bg.webp" mode="heightFix"
 			class="move-animation"></image>
+		<view class="mask">
+
+		</view>
 	</view>
 </template>
 
@@ -18,11 +21,23 @@
 
 <style lang="scss" scoped>
 	.login-bg {
+		// position: fixed;
+		// inset: 0;
+		// z-index: -100;
+
+		.mask {
+			position: fixed;
+			inset: 0;
+			background-color: #00000050;
+			z-index: -99;
+		}
+
 		image {
 			height: 100%;
 			position: absolute;
 			top: 0;
 			right: 0;
+			z-index: -100;
 		}
 
 		.move-animation {

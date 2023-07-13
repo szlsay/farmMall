@@ -1,6 +1,7 @@
 <!-- 免密登录页 -->
 <template>
-	<view class="uni-content">
+	<view class="uni-content" catchtouchmove="true">
+		<st-loginbg></st-loginbg>
 		<view class="login-logo">
 			<image :src="logo"></image>
 		</view>
@@ -10,8 +11,8 @@
 		<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 			<text class="tip">将根据第三方账号服务平台的授权范围获取你的信息</text>
 			<view class="quickLogin">
-				<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix"
-					class="quickLoginBtn"></image>
+				<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn">
+				</image>
 				<button v-else type="primary" open-type="getPhoneNumber" @getphonenumber="quickLogin"
 					class="uni-btn">微信授权手机号登录</button>
 				<uni-id-pages-agreements scope="register" ref="agreements"></uni-id-pages-agreements>
@@ -107,7 +108,7 @@
 			//#endif
 		},
 		methods: {
-			showCurrentWebview(){
+			showCurrentWebview() {
 				// 恢复当前页面窗体的显示 一键登录，默认不显示当前窗口
 				currentWebview.setStyle({
 					"top": 0
