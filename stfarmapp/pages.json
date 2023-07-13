@@ -226,7 +226,7 @@
 		}
 	],
 	"globalStyle": {
-		"navigationBarTextStyle": "#FFFFFF",
+		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
 		"navigationBarBackgroundColor": "#00CC99",
 		"backgroundColor": "#F8F8F8",
