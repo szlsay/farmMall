@@ -17,7 +17,7 @@
 					</view>
 				</view>
 				<view class="right-item">
-					<view class="right-btn" :style="{backgroundColor: item.color}">去{{item.text}}</view>
+					<view class="right-btn" :style="{backgroundColor: item.color}">{{item.action}}</view>
 					<image :src="item.img" mode=""></image>
 				</view>
 			</view>
@@ -33,13 +33,22 @@
 					"img": "/static/home/home-map.png",
 					"text": "圈地",
 					"color": "#2294da",
-					"num": "5",
+					"action": "去圈地",
+					"num": "0",
 					"to": ""
 				}, {
 					"img": "/static/home/home-crop.png",
 					"text": "种植",
 					"color": "#2dc5ab",
-					"num": "5",
+					"action": "去种植",
+					"num": "0",
+					"to": ""
+				}, {
+					"img": "/static/home/home-work.png",
+					"text": "农事",
+					"color": "#ecac44",
+					"action": "做农事",
+					"num": "0",
 					"to": ""
 				}]
 			}
@@ -140,6 +149,7 @@
 	.login-container {
 		padding: 40rpx 40rpx 0rpx;
 		color: white;
+		font-size: 38rpx;
 	}
 
 	.work-container {
