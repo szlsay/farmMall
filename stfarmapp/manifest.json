@@ -15,7 +15,9 @@
             "autoclose" : true,
             "delay" : 0
         },
-        "modules" : {},
+        "modules" : {
+            "OAuth" : {}
+        },
         "distribute" : {
             "android" : {
                 "permissions" : [
@@ -40,7 +42,8 @@
             "sdkConfigs" : {
                 "push" : {
                     "unipush" : null
-                }
+                },
+                "oauth" : {}
             }
         },
         "uniStatistics" : {
