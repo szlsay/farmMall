@@ -138,10 +138,18 @@
 					}
 				},
 				{
-					"path": "login/login-withoutpwd"
+					"path": "login/login-withoutpwd",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"navigationStyle": "custom"
+					}
 				},
 				{
-					"path": "login/login-withpwd"
+					"path": "login/login-withpwd",
+					"style": {
+						"navigationBarTitleText": "登录",
+						"navigationStyle": "custom"
+					}
 				},
 				{
 					"path": "userinfo/deactivate/deactivate",

@@ -1,6 +1,7 @@
 <!-- 账号密码登录页 -->
 <template>
-	<view class="uni-content">
+	<view class="uni-content" catchtouchmove="true" style="padding-top: 300rpx;">
+		<st-loginbg></st-loginbg>
 		<view class="login-logo">
 			<image :src="logo"></image>
 		</view>

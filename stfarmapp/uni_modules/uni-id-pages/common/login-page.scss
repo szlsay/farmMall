@@ -74,14 +74,17 @@
   padding: 18px 0;
   font-weight: 800;
   flex-direction: column;
+	color: #FFF;
+	 font-size: 16px;
 }
 
 .tip {
   /* #ifndef APP-NVUE */
   display: flex;
   /* #endif */
-  color: #BDBDC0;
-  font-size: 11px;
+  // color: #BDBDC0;
+	color: #FFF;
+  font-size: 14px;
   margin: 6px 0;
 }
 
