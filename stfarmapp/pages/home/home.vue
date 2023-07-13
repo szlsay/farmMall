@@ -17,6 +17,7 @@
 					</view>
 				</view>
 				<view class="right-item">
+					<view class="right-btn" :style="{backgroundColor: item.color}">去操作</view>
 					<image :src="item.img" mode=""></image>
 				</view>
 			</view>
@@ -102,17 +103,28 @@
 	}
 
 	.right-item {
-		height: 100%;
-		// position: relative;
-		// overflow: hidden;
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+
+		.right-btn {
+			width: 160rpx;
+			height: 64rpx;
+			color: #FFF;
+			text-align: center;
+			line-height: 64rpx;
+			border-radius: 32rpx;
+			margin-right: 200rpx;
+		}
 
 		image {
 			position: absolute;
-			bottom: -10rpx;
-			right: -10rpx;
+			bottom: -20rpx;
+			right: -20rpx;
 			opacity: 0.5;
-			width: 128rpx;
-			height: 128rpx;
+			width: 180rpx;
+			height: 180rpx;
 		}
 	}
 
