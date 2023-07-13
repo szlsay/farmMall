@@ -1,10 +1,6 @@
 <template>
 	<view class="pages" catchtouchmove="true">
 		<st-loginbg></st-loginbg>
-<!-- 		<view class="login-bg">
-			<image src="https://mp-e548ea67-cedb-4a2f-b6fe-005d83c724b8.cdn.bspapp.com/images/login-bg.webp" mode="heightFix"
-				class="move-animation"></image>
-		</view> -->
 		<view class="login-content">
 			<view class="login-type">
 				<button open-type="getPhoneNumber" @getphonenumber="quickLogin" class="type-wechat">微信登录</button>
@@ -175,34 +171,6 @@
 		border: none;
 	}
 	
-	// .login-bg {
-	// 	image {
-	// 		height: 100%;
-	// 		position: absolute;
-	// 		top: 0;
-	// 		right: 0;
-	// 	}
-
-	// 	.move-animation {
-	// 		animation-name: move;
-	// 		animation-delay: 100ms;
-	// 		animation-duration: 30s;
-	// 		animation-timing-function: linear;
-	// 		animation-iteration-count: infinite;
-	// 		animation-direction: alternate;
-	// 	}
-
-	// 	@keyframes move {
-	// 		from {
-	// 			transform: translateX(0%);
-	// 		}
-
-	// 		to {
-	// 			transform: translateX(50%);
-	// 		}
-	// 	}
-	// }
-
 	.login-content {
 		height: 100%;
 	}
