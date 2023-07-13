@@ -18,10 +18,10 @@
 		<uni-popup v-if="needAgreements||needPopupAgreements" ref="popupAgreement" type="center">
 			<uni-popup-dialog confirmText="同意" @confirm="popupConfirm">
 				<view class="content">
-					<text class="text">请先阅读并同意</text>
+					<text class="text-dialog">请先阅读并同意</text>
 					<view class="item" v-for="(agreement,index) in agreements" :key="index">
 						<text class="agreement text" @click="navigateTo(agreement)">{{agreement.title}}</text>
-						<text class="text and" v-if="hasAnd(agreements,index)" space="nbsp"> 和 </text>
+						<text class="text-dialog and" v-if="hasAnd(agreements,index)" space="nbsp"> 和 </text>
 					</view>
 				</view>
 			</uni-popup-dialog>
@@ -141,6 +141,11 @@
 	}
 	.text{
 		line-height: 26px;
+	}
+	
+	.text-dialog {
+		line-height: 26px;
+		color: #8a8f8b;
 	}
 	.agreement {
 		// color: #04498c;

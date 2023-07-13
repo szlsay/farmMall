@@ -158,8 +158,8 @@
 	}
 
 	.forget {
-		font-size: 12px;
-		color: #8a8f8b;
+		font-size: 14px;
+		color: #FFF;
 	}
 
 	.link-box {
@@ -172,6 +172,7 @@
 	}
 
 	.link {
-		font-size: 12px;
+		font-size: 14px;
+		color: #00CC99;
 	}
 </style>

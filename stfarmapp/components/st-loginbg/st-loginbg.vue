@@ -28,7 +28,7 @@
 		.mask {
 			position: fixed;
 			inset: 0;
-			background-color: #00000050;
+			background-color: #00000090;
 			z-index: -99;
 		}
 
