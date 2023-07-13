@@ -1,7 +1,8 @@
 <template>
-	<view>
+	<view class="pages" catchtouchmove="true">
 		<view class="login-bg">
-			<image src="@/static/login-bg.webp" mode="heightFix" class="move-animation"></image>
+			<image src="https://mp-e548ea67-cedb-4a2f-b6fe-005d83c724b8.cdn.bspapp.com/images/login-bg.webp" mode="heightFix"
+				class="move-animation"></image>
 		</view>
 		<view class="login-content">
 			<view class="login-type">
@@ -10,7 +11,7 @@
 			</view>
 			<st-agreements class="login-agreements"></st-agreements>
 
-<!-- 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
+			<!-- 			<template v-if="['apple','weixin', 'weixinMobile'].includes(type)">
 				<view class="quickLogin">
 					<image v-if="type !== 'weixinMobile'" @click="quickLogin" :src="imgSrc" mode="widthFix" class="quickLoginBtn">
 					</image>
@@ -162,12 +163,45 @@
 
 
 <style lang="scss" scoped>
-	.login-content {
+	.pages {
+		position: fixed;
 		background-color: #00000040;
-		height: 100vh;
+		inset: 0;
+		overflow: hidden;
 	}
-	
-	.login-agreements{
+
+	.login-bg {
+		image {
+			height: 100%;
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+
+		.move-animation {
+			animation-name: move;
+			animation-duration: 3s;
+			animation-timing-function: linear;
+			animation-iteration-count: infinite;
+			// animation-direction: alternate;
+		}
+
+		@keyframes move {
+			from {
+				transform: translateX(10%);
+			}
+
+			to {
+				transform: translateX(49%);
+			}
+		}
+	}
+
+	.login-content {
+		height: 100%;
+	}
+
+	.login-agreements {
 		position: fixed;
 		bottom: 100rpx;
 		right: 0;
@@ -272,38 +306,6 @@
 	@media screen and (min-width: 690px) {
 		.quickLogin {
 			height: auto;
-		}
-	}
-
-	.login-bg {
-		height: 100vh;
-		position: fixed;
-		z-index: -1;
-		inset: 0;
-
-		image {
-			height: 100%;
-			position: absolute;
-			top: 0;
-			right: 0;
-		}
-
-		.move-animation {
-			animation-name: move;
-			animation-duration: 30s;
-			animation-timing-function: linear;
-			animation-iteration-count: infinite;
-			animation-direction: alternate;
-		}
-
-		@keyframes move {
-			from {
-				transform: translateX(0);
-			}
-
-			to {
-				transform: translateX(50%);
-			}
 		}
 	}
 </style>
