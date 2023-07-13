@@ -1,11 +1,11 @@
 <template>
 	<view class="page-home">
-		<view class="login-container">
+		<view class="login-container" @click="onClickLogin" v-if="!hasLogin()">
 			<text>请先进行登录</text>
 		</view>
 		<view class="work-container">
 			<text class="title">流程操作</text>
-			<view class="st-box" v-for="(item, index) in menus" :key="index">
+			<view class="st-box" v-for="(item, index) in menus" :key="index" @click="onClickItem(item)">
 				<view class="left-item">
 					<view class="left-up">
 						<image :src="item.img" mode="" class="icon"></image>
@@ -26,6 +26,9 @@
 </template>
 
 <script>
+	import {
+		hasLogin
+	} from "@/utils"
 	export default {
 		data() {
 			return {
@@ -54,7 +57,20 @@
 			}
 		},
 		methods: {
+			hasLogin,
+			onClickLogin() {
+				uni.navigateTo({
+					url: '/uni_modules/uni-id-pages/pages/login/login-withoutpwd'
+				})
+			},
+			onClickItem(item) {
+				if (!hasLogin()) {
+					this.onClickLogin()
+				} else {
 
+				}
+
+			},
 		}
 	}
 </script>
