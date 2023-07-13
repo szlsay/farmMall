@@ -3,7 +3,7 @@
 		<template v-if="needAgreements">
 			<checkbox-group @change="setAgree">
 				<label class="checkbox-box">
-					<checkbox :checked="isAgree" style="transform: scale(0.5);margin-right: -6px;" />
+					<checkbox :checked="isAgree" style="transform: scale(0.6);margin-right: -6px;" />
 					<text class="text">同意</text>
 				</label>
 			</checkbox-group>
@@ -125,8 +125,9 @@
 	.root {
 		flex-direction: row;
 		align-items: center;
-		font-size: 12px;
-		color: #8a8f8b;
+		font-size: 14px;
+		color: #FFF;
+		// color: #8a8f8b;
 	}
 
 	.checkbox-box ,.uni-label-pointer{
@@ -142,7 +143,8 @@
 		line-height: 26px;
 	}
 	.agreement {
-		color: #04498c;
+		// color: #04498c;
+		color: #00CC99;
 		cursor: pointer;
 	}
 	

@@ -563,7 +563,7 @@
 		margin-top: 6px;
 		// color: #999;
 		color: #00CC99;
-		font-size: 10px;
+		font-size: 14px;
 		width: 70px;
 	}
 </style>
