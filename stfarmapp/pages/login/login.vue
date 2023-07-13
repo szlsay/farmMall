@@ -184,7 +184,8 @@
 
 		.move-animation {
 			animation-name: move;
-			animation-duration: 3s;
+			animation-delay: 100ms;
+			animation-duration: 30s;
 			animation-timing-function: linear;
 			animation-iteration-count: infinite;
 			animation-direction: alternate;
@@ -192,11 +193,11 @@
 
 		@keyframes move {
 			from {
-				transform: translateX(10%);
+				transform: translateX(0%);
 			}
 
 			to {
-				transform: translateX(49%);
+				transform: translateX(50%);
 			}
 		}
 	}
