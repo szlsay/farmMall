@@ -169,7 +169,11 @@
 		inset: 0;
 		overflow: hidden;
 	}
-
+	
+	::v-deep uni-button:after {
+		border: none;
+	}
+	
 	.login-bg {
 		image {
 			height: 100%;
@@ -183,7 +187,7 @@
 			animation-duration: 3s;
 			animation-timing-function: linear;
 			animation-iteration-count: infinite;
-			// animation-direction: alternate;
+			animation-direction: alternate;
 		}
 
 		@keyframes move {

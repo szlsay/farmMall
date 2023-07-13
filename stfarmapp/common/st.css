@@ -2,14 +2,10 @@
 		color: black !important;
 	}
 	
-	::v-deep uni-button:after {
-		border: none;
-	}
-	
-	::v-deep .uni-button::after {
-		border: none;
-	}
-	
 	::v-deep button::after {
+		border: none;
+	}
+	
+	::v-deep uni-button:after {
 		border: none;
 	}
