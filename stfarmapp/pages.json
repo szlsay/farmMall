@@ -2,9 +2,8 @@
 	"pages": [{
 			"path": "pages/home/home",
 			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false,
-				"navigationStyle": "custom"
+				"navigationBarTitleText": "农户端",
+				"enablePullDownRefresh": false
 			}
 		}, {
 			"path": "pages/list/list",
