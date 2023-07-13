@@ -4,7 +4,7 @@
 			<text>请先进行登录</text>
 		</view>
 		<view class="work-container">
-			<text class="title">信息操作</text>
+			<text class="title">流程操作</text>
 			<view class="st-box" v-for="(item, index) in menus" :key="index">
 				<view class="left-item">
 					<view class="left-up">
@@ -17,7 +17,7 @@
 					</view>
 				</view>
 				<view class="right-item">
-					<view class="right-btn" :style="{backgroundColor: item.color}">去操作</view>
+					<view class="right-btn" :style="{backgroundColor: item.color}">去{{item.text}}</view>
 					<image :src="item.img" mode=""></image>
 				</view>
 			</view>
@@ -33,6 +33,12 @@
 					"img": "/static/home/home-map.png",
 					"text": "圈地",
 					"color": "#2294da",
+					"num": "5",
+					"to": ""
+				}, {
+					"img": "/static/home/home-crop.png",
+					"text": "种植",
+					"color": "#2dc5ab",
 					"num": "5",
 					"to": ""
 				}]
@@ -107,6 +113,7 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		overflow: hidden;
 
 		.right-btn {
 			width: 160rpx;
